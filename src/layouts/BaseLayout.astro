@@ -1,0 +1,118 @@
+---
+import "../styles/global.css";
+import { site } from "../data/site";
+import { locations } from "../data/locations";
+
+type Props = {
+  title?: string;
+  description?: string;
+  canonical?: string;
+};
+
+const {
+  title = `${site.name} - ${site.tagline}`,
+  description = site.description,
+  canonical = site.url,
+} = Astro.props;
+
+const ogImage = new URL(site.ogImage, site.url).toString();
+
+const localBusiness = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  image: ogImage,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+  sameAs: [site.social.facebook, site.social.instagram],
+  address: locations.map((l) => ({
+    "@type": "PostalAddress",
+    streetAddress: l.street,
+    addressLocality: l.city,
+    postalCode: l.zip,
+    addressCountry: "CZ",
+  })),
+  areaServed: ["Zdice", "Hořovice", "Beroun", "Středočeský kraj"],
+  audience: {
+    "@type": "Audience",
+    audienceType: "rodiče s dětmi 3 měsíce - 3 roky",
+  },
+};
+---
+
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#FF4FA3" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={site.name} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* Fonts - preconnect for performance */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;700;800&display=swap"
+    />
+
+    {/* Schema.org LocalBusiness */}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(localBusiness)} />
+  </head>
+
+  <body>
+    <a href="#hero" class="skip-link">Přeskočit na obsah</a>
+    <slot />
+
+    {/* Reveal-on-scroll observer (vanilla, lightweight) */}
+    <script>
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = document.querySelectorAll(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) {
+        els.forEach((e) => e.classList.add("is-visible"));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+        );
+        els.forEach((e) => io.observe(e));
+      }
+    </script>
+  </body>
+</html>

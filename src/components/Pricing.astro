@@ -1,0 +1,221 @@
+---
+import { pricing, pricingNote } from "../data/pricing";
+import { site } from "../data/site";
+---
+
+<section id="cenik" class="section pricing" aria-labelledby="pricing-title">
+  <div class="container-x">
+    <header class="pricing__header reveal">
+      <span class="eyebrow">Ceník</span>
+      <h2 id="pricing-title">
+        Vyberte si <em>variantu</em>
+      </h2>
+      <p>Bez skrytých poplatků. Permanentky můžete využívat na obě studia.</p>
+    </header>
+
+    <div class="pricing__grid">
+      {pricing.map((p, i) => (
+        <article
+          class={`tier tier--${p.accent} ${p.highlight ? "is-highlight" : ""} reveal`}
+          style={`transition-delay: ${i * 80}ms`}
+        >
+          {p.highlight && <div class="tier__ribbon">Nejoblíbenější</div>}
+
+          <h3>{p.name}</h3>
+          <p class="tier__desc">{p.description}</p>
+
+          <div class="tier__price">
+            <span class="tier__amount">{p.price}</span>
+            <span class="tier__unit">{p.unit}</span>
+          </div>
+
+          <ul class="tier__features">
+            {p.features.map((f) => (
+              <li>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                  <path d="M 3 8 L 7 12 L 13 4" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={site.reservationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`btn ${p.highlight ? "btn-primary" : "btn-ghost"}`}
+          >
+            Rezervovat
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <p class="pricing__note reveal">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+        <path d="M 12 8 L 12 13 M 12 16 L 12 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      {pricingNote}
+    </p>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    background: linear-gradient(180deg, transparent 0%, var(--color-cream-100) 30%, var(--color-cream-100) 70%, transparent 100%);
+  }
+
+  .pricing__header {
+    text-align: center;
+    max-width: 44rem;
+    margin: 0 auto 3rem;
+  }
+
+  .pricing__header h2 {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    margin: 0 0 1rem;
+  }
+
+  .pricing__header h2 em {
+    font-style: italic;
+    color: var(--color-sky-deep);
+  }
+
+  .pricing__header p { color: var(--color-ink-soft); margin: 0; }
+
+  .pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+
+  .tier {
+    --accent-color: var(--color-blush-deep);
+    --bg-soft: var(--color-blush-soft);
+
+    position: relative;
+    background: white;
+    border-radius: var(--radius-card);
+    padding: 2.5rem 2rem;
+    border: 2px solid var(--color-lilac-soft);
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+  }
+
+  .tier--blush { --accent-color: var(--color-blush-vivid); --bg-soft: var(--color-blush-soft); }
+  .tier--sky   { --accent-color: var(--color-sky-deep);    --bg-soft: var(--color-sky-soft); }
+  .tier--lilac { --accent-color: var(--color-lilac-deep);  --bg-soft: var(--color-lilac-soft); }
+
+  .tier:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent-color);
+    box-shadow: 0 24px 50px -20px color-mix(in srgb, var(--accent-color) 40%, transparent);
+  }
+
+  .tier.is-highlight {
+    border-color: var(--accent-color);
+    background: linear-gradient(165deg, white 0%, var(--bg-soft) 100%);
+    box-shadow: 0 24px 50px -20px color-mix(in srgb, var(--accent-color) 35%, transparent);
+    transform: scale(1.03);
+  }
+
+  .tier.is-highlight:hover {
+    transform: scale(1.03) translateY(-6px);
+  }
+
+  .tier__ribbon {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff6fb3, var(--color-blush-vivid));
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+    box-shadow: var(--shadow-pop);
+    white-space: nowrap;
+  }
+
+  .tier h3 {
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 800;
+  }
+
+  .tier__desc {
+    color: var(--color-ink-soft);
+    font-size: 0.92rem;
+    margin: 0 0 1.5rem;
+    min-height: 2.6rem;
+  }
+
+  .tier__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--color-lilac-soft);
+  }
+
+  .tier__amount {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+  }
+
+  .tier__unit {
+    font-size: 0.95rem;
+    color: var(--color-ink-soft);
+    font-weight: 600;
+  }
+
+  .tier__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: grid;
+    gap: 0.75rem;
+    flex-grow: 1;
+  }
+
+  .tier__features li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.95rem;
+  }
+
+  .tier__features svg { color: var(--accent-color); flex-shrink: 0; }
+
+  .tier .btn { width: 100%; }
+
+  .pricing__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
+    margin: 2.5rem auto 0;
+    max-width: 44rem;
+    color: var(--color-ink-muted);
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 880px) {
+    .tier.is-highlight { transform: none; }
+    .tier.is-highlight:hover { transform: translateY(-6px); }
+  }
+</style>

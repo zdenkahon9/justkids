@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://justkids.cz/sitemap-index.xml

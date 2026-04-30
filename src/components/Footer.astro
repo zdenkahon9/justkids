@@ -1,0 +1,248 @@
+---
+import { site } from "../data/site";
+import { locations } from "../data/locations";
+
+const navLinks = [
+  { href: "#o-mne", label: "O mně" },
+  { href: "#kurzy", label: "Kurzy" },
+  { href: "#vekove-skupiny", label: "Věkové skupiny" },
+  { href: "#lokace", label: "Lokace" },
+  { href: "#cenik", label: "Ceník" },
+  { href: "#novinky", label: "Novinky" },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" aria-labelledby="footer-title">
+  <div class="container-x footer__inner">
+    <div class="footer__brand">
+      <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>
+        <img src="/images/logo.png" alt="" width="56" height="56" />
+        <div>
+          <h2 id="footer-title">{site.name}</h2>
+          <span class="footer__tagline">{site.tagline}</span>
+        </div>
+      </a>
+      <p class="footer__about">
+        Hravé cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve Zdicích.
+      </p>
+
+      <div class="footer__social">
+        <a
+          href={site.social.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          class="footer__social-link"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M 13 22 L 13 13 L 16 13 L 16.5 9.5 L 13 9.5 L 13 7.5 Q 13 6 14.5 6 L 16.5 6 L 16.5 2.5 Q 14 2 12.5 2 Q 9 2 9 6 L 9 9.5 L 6 9.5 L 6 13 L 9 13 L 9 22 Z" fill="currentColor"/>
+          </svg>
+          <span>Facebook</span>
+        </a>
+        <a
+          href={site.social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          class="footer__social-link"
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h3>Navigace</h3>
+      <ul>
+        {navLinks.map((l) => (
+          <li><a href={l.href}>{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Kontakt</h3>
+      <ul>
+        <li>
+          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
+        <li>
+          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>{site.contact.phone}</a>
+        </li>
+        <li class="footer__instructor">{site.contact.instructorName}</li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Lokace</h3>
+      <ul>
+        {locations.map((l) => (
+          <li>
+            <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
+              <strong>{l.city}</strong>
+              <span>{l.street}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container-x footer__bottom-inner">
+      <span>© {year} {site.name}. Všechna práva vyhrazena.</span>
+      <span class="footer__made">Vyrobeno s láskou pro maminky a tatínky 🤍</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 4rem;
+    background: linear-gradient(180deg, #fff9f4 0%, #ffe1ed 30%, #ece1f7 70%, #d6ecfa 100%);
+    border-top: 1px solid var(--color-lilac-soft);
+    color: var(--color-ink);
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding: 4rem 0 3rem;
+  }
+
+  .footer__brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 1rem;
+  }
+
+  .footer__brand-link img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+
+  .footer__brand h2 {
+    font-size: 1.6rem;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .footer__tagline {
+    font-family: var(--font-script);
+    font-size: 1.1rem;
+    color: var(--color-blush-vivid);
+    line-height: 1;
+  }
+
+  .footer__about {
+    color: var(--color-ink-soft);
+    margin: 0 0 1.5rem;
+    max-width: 28rem;
+    font-size: 0.95rem;
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .footer__social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: white;
+    border-radius: 9999px;
+    border: 1.5px solid var(--color-lilac-soft);
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 220ms ease, border-color 220ms ease, color 220ms ease, background-color 220ms ease;
+  }
+
+  .footer__social-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-blush-mid);
+    color: var(--color-blush-vivid);
+  }
+
+  .footer__col h3 {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-muted);
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+  }
+
+  .footer__col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .footer__col a {
+    color: var(--color-ink);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 220ms ease;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .footer__col a:hover {
+    color: var(--color-blush-vivid);
+  }
+
+  .footer__col a strong { font-weight: 700; }
+  .footer__col a span { font-size: 0.85rem; color: var(--color-ink-soft); }
+  .footer__instructor { color: var(--color-ink-soft); }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(42, 31, 56, 0.08);
+    padding: 1.5rem 0;
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .footer__bottom-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-soft);
+  }
+
+  @media (max-width: 880px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 3rem 0 2rem;
+    }
+    .footer__brand { grid-column: span 2; }
+  }
+
+  @media (max-width: 540px) {
+    .footer__inner { grid-template-columns: 1fr; }
+    .footer__brand { grid-column: span 1; }
+    .footer__bottom-inner { justify-content: center; text-align: center; }
+  }
+</style>

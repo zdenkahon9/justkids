@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Courses from "../components/Courses.astro";
+import AgeGroups from "../components/AgeGroups.astro";
+import Locations from "../components/Locations.astro";
+import Gallery from "../components/Gallery.astro";
+import Pricing from "../components/Pricing.astro";
+import News from "../components/News.astro";
+import CtaBanner from "../components/CtaBanner.astro";
+import Footer from "../components/Footer.astro";
+
+import Navbar from "../components/Navbar.tsx";
+import { site } from "../data/site";
+
+const navLinks = [
+  { href: "#o-mne", label: "O mně" },
+  { href: "#kurzy", label: "Kurzy" },
+  { href: "#vekove-skupiny", label: "Pro koho" },
+  { href: "#lokace", label: "Lokace" },
+  { href: "#cenik", label: "Ceník" },
+  { href: "#novinky", label: "Novinky" },
+];
+---
+
+<BaseLayout>
+  <Navbar
+    client:load
+    links={navLinks}
+    reservationUrl={site.reservationUrl}
+    logoSrc="/images/logo.png"
+    brand={site.name}
+  />
+
+  <main id="main">
+    <Hero />
+    <About />
+    <Courses />
+    <AgeGroups />
+    <Locations />
+    <Gallery />
+    <Pricing />
+    <News />
+    <CtaBanner />
+  </main>
+
+  <Footer />
+</BaseLayout>
