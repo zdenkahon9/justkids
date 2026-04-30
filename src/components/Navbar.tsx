@@ -326,7 +326,16 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
 
         @media (max-width: 880px) {
           .nav__links, .nav__cta { display: none; }
-          .nav__toggle { display: inline-flex; }
+          .nav__toggle {
+            display: inline-flex;
+            margin-left: auto;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .nav__brand-sub { display: none; }
+          .nav__brand-name { font-size: 1.25rem; }
+          .nav__inner { gap: 0.5rem; }
         }
 
         @media (min-width: 881px) {

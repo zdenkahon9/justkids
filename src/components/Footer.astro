@@ -4,17 +4,19 @@ import { locations } from "../data/locations";
 
 const navLinks = [
   { href: "#o-mne", label: "O mně" },
-  { href: "#kurzy", label: "Kurzy" },
-  { href: "#vekove-skupiny", label: "Věkové skupiny" },
-  { href: "#lokace", label: "Lokace" },
-  { href: "#cenik", label: "Ceník" },
-  { href: "#novinky", label: "Novinky" },
+  { href: "#vekove-skupiny", label: "Věkové kategorie" },
+  { href: "#lokace", label: "Kde cvičíme" },
+  { href: "#workshopy", label: "Workshopy" },
+  { href: "#kempy", label: "Kempy & výjezdy" },
+  { href: "#absolvovane-kurzy", label: "Absolvované kurzy" },
+  { href: "#recenze", label: "Recenze" },
+  { href: "#provozni-rad", label: "Provozní řád" },
 ];
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer" aria-labelledby="footer-title">
+<footer id="kontakt" class="footer" aria-labelledby="footer-title">
   <div class="container-x footer__inner">
     <div class="footer__brand">
       <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>

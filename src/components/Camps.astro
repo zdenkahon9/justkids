@@ -1,0 +1,182 @@
+---
+import { camps } from "../data/camps";
+import { site } from "../data/site";
+---
+
+<section id="kempy" class="section camps" aria-labelledby="camps-title">
+  <div class="container-x">
+    <header class="camps__header reveal">
+      <span class="eyebrow">Pojďte s námi ven</span>
+      <h2 id="camps-title">
+        Kempy <em>&amp; výjezdy</em>
+      </h2>
+      <p>
+        Společné víkendy a výlety, kde si rodiny užijí pohyb, přírodu a vzájemné poznání.
+      </p>
+    </header>
+
+    <ol class="camps__list">
+      {camps.map((c, i) => (
+        <li class={`camp camp--${c.accent} reveal`} style={`transition-delay: ${i * 100}ms`}>
+          <div class="camp__date">
+            <span class="camp__date-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20">
+                <rect x="3" y="5" width="18" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M 3 9 L 21 9" stroke="currentColor" stroke-width="2"/>
+                <path d="M 8 3 L 8 7 M 16 3 L 16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>{c.date}</span>
+          </div>
+
+          <div class="camp__body">
+            <h3>{c.title}</h3>
+            <p class="camp__place">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path d="M 12 22 C 12 22 4 14 4 9 C 4 4.5 7.5 1 12 1 C 16.5 1 20 4.5 20 9 C 20 14 12 22 12 22 Z M 12 12 C 13.6 12 15 10.6 15 9 C 15 7.4 13.6 6 12 6 C 10.4 6 9 7.4 9 9 C 9 10.6 10.4 12 12 12 Z"
+                  fill="currentColor"/>
+              </svg>
+              {c.place}
+            </p>
+            <p class="camp__summary">{c.summary}</p>
+          </div>
+
+          <a
+            href={site.reservationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="camp__cta"
+          >
+            Více info
+            <span aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .camps {
+    background: linear-gradient(180deg, transparent 0%, var(--color-cream-100) 30%, var(--color-cream-100) 70%, transparent 100%);
+  }
+
+  .camps__header {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto 3rem;
+  }
+
+  .camps__header h2 {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    margin: 0 0 1rem;
+  }
+
+  .camps__header h2 em {
+    font-style: italic;
+    color: var(--color-lilac-deep);
+  }
+
+  .camps__header p { color: var(--color-ink-soft); margin: 0; }
+
+  .camps__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 60rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .camp {
+    --accent-color: var(--color-blush-vivid);
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    background: white;
+    border-radius: var(--radius-card);
+    border: 1.5px solid var(--color-lilac-soft);
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .camp--blush { --accent-color: var(--color-blush-vivid); }
+  .camp--sky   { --accent-color: var(--color-sky-deep); }
+  .camp--lilac { --accent-color: var(--color-lilac-deep); }
+
+  .camp:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent-color) 40%, white);
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent-color) 40%, transparent);
+  }
+
+  .camp__date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 140px;
+  }
+
+  .camp__date-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--accent-color) 18%, white);
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .camp__body h3 {
+    font-size: 1.3rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .camp__place {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+
+  .camp__summary {
+    margin: 0;
+    color: var(--color-ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .camp__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent-color);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    white-space: nowrap;
+    transition: border-color 220ms ease;
+  }
+
+  .camp__cta:hover {
+    border-bottom-color: var(--accent-color);
+  }
+
+  @media (max-width: 720px) {
+    .camp {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+    }
+    .camp__date { min-width: 0; }
+    .camp__cta { justify-self: start; }
+  }
+</style>

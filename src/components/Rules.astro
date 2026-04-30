@@ -1,0 +1,106 @@
+---
+import { rules } from "../data/rules";
+---
+
+<section id="provozni-rad" class="section rules" aria-labelledby="rules-title">
+  <div class="container-x">
+    <header class="rules__header reveal">
+      <span class="eyebrow">Provozní řád</span>
+      <h2 id="rules-title">
+        Desatero <em>chování na lekci</em>
+      </h2>
+      <p>
+        Pár jednoduchých pravidel, díky kterým je u nás všem dobře.
+      </p>
+    </header>
+
+    <ol class="rules__grid">
+      {rules.map((r, i) => (
+        <li class="rule reveal" style={`transition-delay: ${i * 50}ms`}>
+          <span class="rule__num" aria-hidden="true">{r.id}</span>
+          <div class="rule__body">
+            <h3>{r.title}</h3>
+            <p>{r.detail}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .rules__header {
+    text-align: center;
+    max-width: 42rem;
+    margin: 0 auto 3rem;
+  }
+
+  .rules__header h2 {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    margin: 0 0 1rem;
+  }
+
+  .rules__header h2 em {
+    font-style: italic;
+    color: var(--color-sky-deep);
+  }
+
+  .rules__header p { color: var(--color-ink-soft); margin: 0; }
+
+  .rules__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    counter-reset: rule;
+  }
+
+  .rule {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.25rem 1.4rem;
+    background: white;
+    border-radius: 1.25rem;
+    border: 1.5px solid var(--color-lilac-soft);
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .rule:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-blush-mid);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .rule__num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-blush-mid), var(--color-lilac-mid));
+    color: white;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+    box-shadow: 0 6px 16px -6px rgba(236, 47, 142, 0.4);
+  }
+
+  .rule__body h3 {
+    font-size: 1.05rem;
+    margin: 0 0 0.25rem;
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+
+  .rule__body p {
+    margin: 0;
+    color: var(--color-ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+</style>
