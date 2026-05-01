@@ -7,12 +7,14 @@ type NavLink = {
 
 type NavbarProps = {
   links: NavLink[];
+  mobileLinks?: NavLink[];
   reservationUrl: string;
   logoSrc: string;
   brand: string;
 };
 
-const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
+const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarProps) => {
+  const mobileItems = mobileLinks ?? links;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -113,14 +115,14 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
         hidden={!open}
       >
         <ul>
-          {links.map((l, i) => (
+          {mobileItems.map((l, i) => (
             <li key={l.href} style={{ ["--i" as string]: i }}>
               <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
                 {l.label}
               </a>
             </li>
           ))}
-          <li style={{ ["--i" as string]: links.length }}>
+          <li style={{ ["--i" as string]: mobileItems.length }}>
             <a
               href={reservationUrl}
               target="_blank"

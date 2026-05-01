@@ -24,12 +24,25 @@ const navLinks = [
   { href: "#absolvovane-kurzy", label: "Kurzy" },
   { href: "#kontakt", label: "Kontakt" },
 ];
+
+const mobileNavLinks = [
+  { href: "#o-mne", label: "O mně" },
+  { href: "#vekove-skupiny", label: "Věkové kategorie" },
+  { href: "#lokace", label: "Kde cvičíme" },
+  { href: "#workshopy", label: "Workshopy" },
+  { href: "#kempy", label: "Kempy & výjezdy" },
+  { href: "#absolvovane-kurzy", label: "Absolvované kurzy" },
+  { href: "#recenze", label: "Recenze" },
+  { href: "#provozni-rad", label: "Provozní řád" },
+  { href: "#kontakt", label: "Kontakt" },
+];
 ---
 
 <BaseLayout>
   <Navbar
     client:load
     links={navLinks}
+    mobileLinks={mobileNavLinks}
     reservationUrl={site.reservationUrl}
     logoSrc="/images/logo.png"
     brand={site.name}
