@@ -144,12 +144,18 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
           z-index: 50;
           padding: 1.1rem 0;
           transition: background-color 280ms ease, padding 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
-          background: transparent;
-          border-bottom: 1px solid transparent;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 249, 244, 0.55) 0%,
+            rgba(255, 249, 244, 0.25) 100%
+          );
+          backdrop-filter: saturate(140%) blur(10px);
+          -webkit-backdrop-filter: saturate(140%) blur(10px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
         }
 
         .nav.is-scrolled {
-          background: rgba(255, 249, 244, 0.85);
+          background: rgba(255, 249, 244, 0.88);
           backdrop-filter: saturate(150%) blur(14px);
           -webkit-backdrop-filter: saturate(150%) blur(14px);
           padding: 0.55rem 0;
@@ -197,6 +203,12 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
           font-weight: 700;
           font-size: 1.45rem;
           letter-spacing: -0.02em;
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+          transition: text-shadow 280ms ease;
+        }
+
+        .nav.is-scrolled .nav__brand-name {
+          text-shadow: none;
         }
 
         .nav__brand-sub {
@@ -204,6 +216,12 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
           font-size: 0.95rem;
           color: var(--color-blush-deep);
           margin-top: 2px;
+          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
+          transition: text-shadow 280ms ease;
+        }
+
+        .nav.is-scrolled .nav__brand-sub {
+          text-shadow: none;
         }
 
         .nav__links {
@@ -276,12 +294,15 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
 
         .nav__mobile {
           position: fixed;
-          inset: 0;
-          top: 72px;
+          left: 0;
+          right: 0;
+          top: 64px;
+          height: calc(100svh - 64px);
           background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
-          padding: 2.5rem 1.5rem;
+          padding: 1rem 1.25rem 1.25rem;
           z-index: 49;
           overflow-y: auto;
+          overscroll-behavior: contain;
         }
 
         .nav__mobile[hidden] { display: none; }
@@ -292,14 +313,15 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
           margin: 0;
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
+          gap: 0.15rem;
+          height: 100%;
         }
 
         .nav__mobile li {
           opacity: 0;
           transform: translateY(12px);
           animation: nav-mobile-in 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: calc(var(--i, 0) * 60ms);
+          animation-delay: calc(var(--i, 0) * 50ms);
         }
 
         @keyframes nav-mobile-in {
@@ -308,9 +330,9 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
 
         .nav__mobile a:not(.btn) {
           display: block;
-          padding: 1rem 1.25rem;
+          padding: 0.7rem 1rem;
           font-family: var(--font-display);
-          font-size: 1.6rem;
+          font-size: clamp(1rem, 4.4vw, 1.25rem);
           font-weight: 600;
           color: var(--color-ink);
           text-decoration: none;
@@ -318,10 +340,10 @@ const Navbar = ({ links, reservationUrl, logoSrc, brand }: NavbarProps) => {
         }
 
         .nav__mobile .btn {
-          margin-top: 1.5rem;
+          margin-top: auto;
           width: 100%;
-          font-size: 1.1rem;
-          padding: 1.1rem 1.6rem;
+          font-size: 1rem;
+          padding: 0.85rem 1.4rem;
         }
 
         @media (max-width: 880px) {

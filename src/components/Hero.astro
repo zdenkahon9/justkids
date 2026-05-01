@@ -2,21 +2,14 @@
 import { site } from "../data/site";
 ---
 
-<section id="hero" class="hero atmosphere" aria-label="Úvod">
+<section id="hero" class="hero" aria-label="Úvod">
   <div class="hero__bg" aria-hidden="true">
-    <div class="hero__balloon hero__balloon--1"></div>
-    <div class="hero__balloon hero__balloon--2"></div>
-    <div class="hero__balloon hero__balloon--3"></div>
-    <div class="hero__balloon hero__balloon--4"></div>
-    <svg class="hero__shape" viewBox="0 0 600 600" fill="none" aria-hidden="true">
-      <circle cx="300" cy="300" r="240" stroke="rgba(255,79,163,0.25)" stroke-dasharray="3 8" stroke-width="2"/>
-      <circle cx="300" cy="300" r="180" stroke="rgba(91,169,221,0.25)" stroke-dasharray="3 8" stroke-width="2"/>
-    </svg>
+    <div class="hero__photo"></div>
+    <div class="hero__veil"></div>
   </div>
 
   <div class="container-x hero__inner">
     <div class="hero__copy">
-      <span class="eyebrow">Pojďte si hrát</span>
       <h1 class="hero__title">
         Hravé cvičení<br />
         s <em>láskou</em> a klidem
@@ -42,11 +35,6 @@ import { site } from "../data/site";
         </a>
       </div>
 
-      <ul class="hero__pills" aria-label="Klíčové výhody">
-        <li class="pill pill-blush">3 - 36 měsíců</li>
-        <li class="pill pill-sky">2 lokace</li>
-        <li class="pill pill-lilac">Malé skupinky</li>
-      </ul>
     </div>
 
     <div class="hero__media">
@@ -81,6 +69,7 @@ import { site } from "../data/site";
     align-items: center;
     padding: 7rem 0 5rem;
     overflow: hidden;
+    isolation: isolate;
   }
 
   .hero__bg {
@@ -90,51 +79,32 @@ import { site } from "../data/site";
     pointer-events: none;
   }
 
-  .hero__shape {
+  .hero__photo {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: min(80vw, 700px);
-    height: min(80vw, 700px);
-    transform: translate(-50%, -50%);
-    opacity: 0.6;
-    animation: spin 60s linear infinite;
+    inset: -3%;
+    background-image: url("/images/hero-balloons.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px) saturate(1.05);
+    transform: scale(1.06);
+    will-change: transform;
+    animation: hero-drift 22s ease-in-out infinite alternate;
   }
 
-  @keyframes spin {
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+  @keyframes hero-drift {
+    from { transform: scale(1.06) translate(0, 0); }
+    to   { transform: scale(1.08) translate(-1%, -1%); }
   }
 
-  .hero__balloon {
+  /* Soft pastel veil — keeps text readable, blends with brand colors */
+  .hero__veil {
     position: absolute;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    filter: blur(0.5px);
-    opacity: 0.85;
-  }
-
-  .hero__balloon--1 {
-    width: 110px; height: 130px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #ffd1e0 60%, #ff9bbf);
-    top: 12%; left: 8%;
-    animation: float-slow 9s ease-in-out infinite;
-  }
-  .hero__balloon--2 {
-    width: 80px; height: 95px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #d6ecfa 60%, #a9d4f0);
-    top: 28%; right: 14%;
-    animation: float-medium 7s ease-in-out infinite;
-  }
-  .hero__balloon--3 {
-    width: 65px; height: 78px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #ece1f7 60%, #d4bff5);
-    bottom: 18%; left: 18%;
-    animation: drift 11s ease-in-out infinite;
-  }
-  .hero__balloon--4 {
-    width: 55px; height: 65px;
-    background: radial-gradient(circle at 30% 30%, #ffffff, #ffe1ed 60%, #fcc2d6);
-    bottom: 30%; right: 8%;
-    animation: float-slow 10s ease-in-out infinite reverse;
+    inset: 0;
+    background:
+      radial-gradient(60% 50% at 18% 20%, rgba(255, 249, 244, 0.55) 0%, rgba(255, 249, 244, 0) 70%),
+      radial-gradient(55% 55% at 82% 30%, rgba(255, 225, 237, 0.45) 0%, rgba(255, 225, 237, 0) 70%),
+      linear-gradient(180deg, rgba(255, 249, 244, 0.45) 0%, rgba(255, 249, 244, 0.12) 35%, rgba(255, 249, 244, 0.55) 100%);
   }
 
   @keyframes float-slow {
