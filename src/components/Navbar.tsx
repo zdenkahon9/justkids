@@ -145,7 +145,7 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           right: 0;
           z-index: 50;
           padding: 1.1rem 0;
-          transition: background-color 280ms ease, padding 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+          transition: background-color 280ms ease, padding 280ms ease, box-shadow 280ms ease;
           background: linear-gradient(
             180deg,
             rgba(255, 249, 244, 0.55) 0%,
@@ -153,7 +153,6 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           );
           backdrop-filter: saturate(140%) blur(10px);
           -webkit-backdrop-filter: saturate(140%) blur(10px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
         }
 
         .nav.is-scrolled {
@@ -162,7 +161,6 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           -webkit-backdrop-filter: saturate(150%) blur(14px);
           padding: 0.55rem 0;
           box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
-          border-bottom-color: rgba(212, 191, 245, 0.4);
         }
 
         .nav__inner {

@@ -50,6 +50,8 @@
 
 /* ---------- Base ---------- */
 html {
+  /* Fixed .nav: 1.1rem + 1.1rem padding + 48px logo row (Navbar.tsx) */
+  --nav-height: calc(2.2rem + 48px);
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
