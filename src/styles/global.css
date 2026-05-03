@@ -84,7 +84,10 @@ body {
   max-width: 100%;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -109,9 +112,21 @@ h1, h2, h3, h4 {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60% 50% at 12% 10%, rgba(169, 212, 240, 0.45) 0%, transparent 70%),
-    radial-gradient(45% 45% at 92% 18%, rgba(252, 194, 214, 0.55) 0%, transparent 70%),
-    radial-gradient(60% 60% at 75% 85%, rgba(212, 191, 245, 0.45) 0%, transparent 70%);
+    radial-gradient(
+      60% 50% at 12% 10%,
+      rgba(169, 212, 240, 0.45) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      45% 45% at 92% 18%,
+      rgba(252, 194, 214, 0.55) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 60% at 75% 85%,
+      rgba(212, 191, 245, 0.45) 0%,
+      transparent 70%
+    );
   pointer-events: none;
 }
 
@@ -141,7 +156,11 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-pill);
   border: 1.5px solid transparent;
   cursor: pointer;
-  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 220ms ease, background-color 220ms ease, color 220ms ease;
+  transition:
+    transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -152,8 +171,13 @@ h1, h2, h3, h4 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #ff6fb3 0%, var(--color-blush-deep) 50%, var(--color-blush-vivid) 100%);
-  color: white;
+  background: linear-gradient(
+    135deg,
+    #ff6fb3 0%,
+    var(--color-blush-deep) 50%,
+    var(--color-blush-vivid) 100%
+  );
+  color: #f5f5f5;
   box-shadow: var(--shadow-pop);
 }
 
@@ -195,9 +219,21 @@ h1, h2, h3, h4 {
   color: var(--color-ink-soft);
 }
 
-.pill-blush { background: var(--color-blush-soft); border-color: var(--color-blush-mid); color: var(--color-blush-vivid); }
-.pill-sky   { background: var(--color-sky-soft);   border-color: var(--color-sky-mid);   color: var(--color-sky-deep);   }
-.pill-lilac { background: var(--color-lilac-soft); border-color: var(--color-lilac-mid); color: var(--color-lilac-deep); }
+.pill-blush {
+  background: var(--color-blush-soft);
+  border-color: var(--color-blush-mid);
+  color: var(--color-blush-vivid);
+}
+.pill-sky {
+  background: var(--color-sky-soft);
+  border-color: var(--color-sky-mid);
+  color: var(--color-sky-deep);
+}
+.pill-lilac {
+  background: var(--color-lilac-soft);
+  border-color: var(--color-lilac-mid);
+  color: var(--color-lilac-deep);
+}
 
 /* Section wrapper */
 .section {
@@ -224,35 +260,66 @@ h1, h2, h3, h4 {
 
 /* ---------- Animations ---------- */
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-14px) rotate(2deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
 }
 
 @keyframes float-medium {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%      { transform: translateY(-10px) rotate(-2deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
 }
 
 @keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  50%      { transform: translate(8px, -8px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(8px, -8px);
+  }
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.animate-float-slow   { animation: float-slow 7s ease-in-out infinite; }
-.animate-float-medium { animation: float-medium 5s ease-in-out infinite; }
-.animate-drift        { animation: drift 9s ease-in-out infinite; }
-.animate-fade-up      { animation: fade-up 700ms ease both; }
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+.animate-float-medium {
+  animation: float-medium 5s ease-in-out infinite;
+}
+.animate-drift {
+  animation: drift 9s ease-in-out infinite;
+}
+.animate-fade-up {
+  animation: fade-up 700ms ease both;
+}
 
 /* Reveal on scroll (respects prefers-reduced-motion via JS) */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .reveal.is-visible {
