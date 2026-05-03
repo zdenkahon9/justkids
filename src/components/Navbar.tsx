@@ -13,7 +13,13 @@ type NavbarProps = {
   brand: string;
 };
 
-const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarProps) => {
+const Navbar = ({
+  links,
+  mobileLinks,
+  reservationUrl,
+  logoSrc,
+  brand,
+}: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -83,25 +89,28 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const handleNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    const menuWasOpen = openRef.current;
-    setOpen(false);
-    const scrollToTarget = () => {
-      const el = document.querySelector(href);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", href);
+  const handleNav = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (!href.startsWith("#")) return;
+      e.preventDefault();
+      const menuWasOpen = openRef.current;
+      setOpen(false);
+      const scrollToTarget = () => {
+        const el = document.querySelector(href);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          history.replaceState(null, "", href);
+        }
+      };
+      // Mobile: scroll-lock cleanup does window.scrollTo(previousY) and would undo an immediate scrollIntoView
+      if (menuWasOpen) {
+        setTimeout(scrollToTarget, 0);
+      } else {
+        scrollToTarget();
       }
-    };
-    // Mobile: scroll-lock cleanup does window.scrollTo(previousY) and would undo an immediate scrollIntoView
-    if (menuWasOpen) {
-      setTimeout(scrollToTarget, 0);
-    } else {
-      scrollToTarget();
-    }
-  }, []);
+    },
+    [],
+  );
 
   return (
     <header
@@ -115,7 +124,13 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           onClick={(e) => handleNav(e, "#hero")}
           aria-label={`${brand} - na začátek stránky`}
         >
-          <img src={logoSrc} alt="" width={48} height={48} className="nav__logo" />
+          <img
+            src={logoSrc}
+            alt=""
+            width={48}
+            height={48}
+            className="nav__logo"
+          />
           <span className="nav__brand-text">
             <span className="nav__brand-name">{brand}</span>
             <span className="nav__brand-sub">pohybem k radosti</span>
@@ -134,7 +149,12 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           </ul>
         </nav>
 
-        <a href={reservationUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm nav__cta">
+        <a
+          href={reservationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary btn-sm nav__cta"
+        >
           Rezervace
           <span aria-hidden="true">→</span>
         </a>
@@ -413,7 +433,7 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
         }
 
         @media (max-width: 420px) {
-          .nav__brand-name { font-size: 1.25rem; }
+          .nav__brand-name { font-size: 1.4rem; }
           .nav__inner { gap: 0.5rem; }
         }
 
