@@ -50,8 +50,9 @@
 
 /* ---------- Base ---------- */
 html {
-  /* Fixed .nav: 1.1rem + 1.1rem padding + 48px logo row (Navbar.tsx) */
+  /* Fixed .nav: vertical padding + logo row (see Navbar.tsx .nav / .nav.is-scrolled) */
   --nav-height: calc(2.2rem + 48px);
+  --nav-height-scrolled: calc(1.1rem + 40px);
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
@@ -171,19 +172,55 @@ h4 {
 }
 
 .btn-primary {
-  background: linear-gradient(
-    135deg,
-    #ff6fb3 0%,
-    var(--color-blush-deep) 50%,
-    var(--color-blush-vivid) 100%
-  );
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
+  background: transparent;
+  /* Jemný lem: maskuje vnější subpixel u křivky; není „silný“ obrys */
+  border-color: rgba(255, 130, 185, 0.28);
   color: #f5f5f5;
   box-shadow: var(--shadow-pop);
 }
 
+/* Gradient na vrstvě pod textem + clip uvnitř pilulky (bez změny HTML) */
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    #ff6fb3 0%,
+    #ff6fb3 2.5%,
+    var(--color-blush-deep) 50%,
+    var(--color-blush-vivid) 97.5%,
+    var(--color-blush-vivid) 100%
+  );
+}
+
+@supports (background: linear-gradient(135deg in oklab, red, blue)) {
+  .btn-primary::before {
+    background: linear-gradient(
+      135deg in oklab,
+      #ff6fb3 0%,
+      #ff6fb3 2.5%,
+      var(--color-blush-deep) 50%,
+      var(--color-blush-vivid) 97.5%,
+      var(--color-blush-vivid) 100%
+    );
+  }
+}
+
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translate3d(0, -2px, 0) scale(1.02);
   box-shadow: 0 22px 50px -16px rgba(236, 47, 142, 0.6);
+}
+
+.btn-primary:focus-visible {
+  overflow: visible;
 }
 
 .btn-ghost {

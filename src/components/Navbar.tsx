@@ -28,11 +28,47 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock page scroll when mobile menu is open (html + body; fixed + scrollY for iOS Safari)
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+
+    const prev = {
+      htmlOverflow: html.style.overflow,
+      htmlOverscroll: html.style.overscrollBehavior,
+      bodyOverflow: body.style.overflow,
+      bodyOverscroll: body.style.overscrollBehavior,
+      bodyPosition: body.style.position,
+      bodyTop: body.style.top,
+      bodyLeft: body.style.left,
+      bodyRight: body.style.right,
+      bodyWidth: body.style.width,
+    };
+
+    html.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.overscrollBehavior = "none";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+
     return () => {
-      document.body.style.overflow = "";
+      html.style.overflow = prev.htmlOverflow;
+      html.style.overscrollBehavior = prev.htmlOverscroll;
+      body.style.overflow = prev.bodyOverflow;
+      body.style.overscrollBehavior = prev.bodyOverscroll;
+      body.style.position = prev.bodyPosition;
+      body.style.top = prev.bodyTop;
+      body.style.left = prev.bodyLeft;
+      body.style.right = prev.bodyRight;
+      body.style.width = prev.bodyWidth;
+      window.scrollTo(0, scrollY);
     };
   }, [open]);
 
@@ -164,6 +200,8 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
         }
 
         .nav__inner {
+          position: relative;
+          z-index: 1;
           display: grid;
           grid-template-columns: auto 1fr auto auto;
           align-items: center;
@@ -296,13 +334,18 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           position: fixed;
           left: 0;
           right: 0;
-          top: 64px;
-          height: calc(100svh - 64px);
+          top: var(--nav-height);
+          height: calc(100svh - var(--nav-height));
           background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
-          padding: 1rem 1.25rem 1.25rem;
-          z-index: 49;
+          padding: 0 1.25rem 1.25rem;
+          z-index: 0;
           overflow-y: auto;
           overscroll-behavior: contain;
+        }
+
+        .nav.is-scrolled .nav__mobile {
+          top: var(--nav-height-scrolled);
+          height: calc(100svh - var(--nav-height-scrolled));
         }
 
         .nav__mobile[hidden] { display: none; }
@@ -315,6 +358,10 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
           flex-direction: column;
           gap: 0.15rem;
           height: 100%;
+        }
+
+        .nav__mobile ul li:last-child {
+          padding-top: 1rem;
         }
 
         .nav__mobile li {
@@ -355,7 +402,6 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
         }
 
         @media (max-width: 420px) {
-          .nav__brand-sub { display: none; }
           .nav__brand-name { font-size: 1.25rem; }
           .nav__inner { gap: 0.5rem; }
         }
