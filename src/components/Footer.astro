@@ -19,7 +19,11 @@ const year = new Date().getFullYear();
 <footer id="kontakt" class="footer" aria-labelledby="footer-title">
   <div class="container-x footer__inner">
     <div class="footer__brand">
-      <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>
+      <a
+        href="#hero"
+        class="footer__brand-link"
+        aria-label={`${site.name} - na začátek`}
+      >
         <img src="/images/logo.png" alt="" width="56" height="56" />
         <div>
           <h2 id="footer-title">{site.name}</h2>
@@ -27,7 +31,8 @@ const year = new Date().getFullYear();
         </div>
       </a>
       <p class="footer__about">
-        Hravé cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve Zdicích.
+        Hravé cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve
+        Zdicích.
       </p>
 
       <div class="footer__social">
@@ -39,7 +44,9 @@ const year = new Date().getFullYear();
           class="footer__social-link"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path d="M 13 22 L 13 13 L 16 13 L 16.5 9.5 L 13 9.5 L 13 7.5 Q 13 6 14.5 6 L 16.5 6 L 16.5 2.5 Q 14 2 12.5 2 Q 9 2 9 6 L 9 9.5 L 6 9.5 L 6 13 L 9 13 L 9 22 Z" fill="currentColor"/>
+            <path
+              d="M 13 22 L 13 13 L 16 13 L 16.5 9.5 L 13 9.5 L 13 7.5 Q 13 6 14.5 6 L 16.5 6 L 16.5 2.5 Q 14 2 12.5 2 Q 9 2 9 6 L 9 9.5 L 6 9.5 L 6 13 L 9 13 L 9 22 Z"
+              fill="currentColor"></path>
           </svg>
           <span>Facebook</span>
         </a>
@@ -51,9 +58,23 @@ const year = new Date().getFullYear();
           class="footer__social-link"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+            <rect
+              x="3"
+              y="3"
+              width="18"
+              height="18"
+              rx="5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"></rect>
+            <circle
+              cx="12"
+              cy="12"
+              r="4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"></circle>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"></circle>
           </svg>
           <span>Instagram</span>
         </a>
@@ -63,9 +84,13 @@ const year = new Date().getFullYear();
     <div class="footer__col">
       <h3>Navigace</h3>
       <ul>
-        {navLinks.map((l) => (
-          <li><a href={l.href}>{l.label}</a></li>
-        ))}
+        {
+          navLinks.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
       </ul>
     </div>
 
@@ -76,7 +101,9 @@ const year = new Date().getFullYear();
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </li>
         <li>
-          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>{site.contact.phone}</a>
+          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
+            >{site.contact.phone}</a
+          >
         </li>
         <li class="footer__instructor">{site.contact.instructorName}</li>
       </ul>
@@ -85,14 +112,16 @@ const year = new Date().getFullYear();
     <div class="footer__col">
       <h3>Lokace</h3>
       <ul>
-        {locations.map((l) => (
-          <li>
-            <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
-              <strong>{l.city}</strong>
-              <span>{l.street}</span>
-            </a>
-          </li>
-        ))}
+        {
+          locations.map((l) => (
+            <li>
+              <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
+                <strong>{l.city}</strong>
+                <span>{l.street}</span>
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
   </div>
@@ -100,7 +129,9 @@ const year = new Date().getFullYear();
   <div class="footer__bottom">
     <div class="container-x footer__bottom-inner">
       <span>© {year} {site.name}. Všechna práva vyhrazena.</span>
-      <span class="footer__made">Vyrobeno s láskou pro maminky a tatínky 🤍</span>
+      <span class="footer__made"
+        >Vyrobeno s láskou pro maminky a tatínky 🤍</span
+      >
     </div>
   </div>
 </footer>
@@ -109,7 +140,13 @@ const year = new Date().getFullYear();
   .footer {
     scroll-margin-top: var(--nav-height);
     margin-top: 4rem;
-    background: linear-gradient(180deg, #fff9f4 0%, #ffe1ed 30%, #ece1f7 70%, #d6ecfa 100%);
+    background: linear-gradient(
+      180deg,
+      #fff9f4 0%,
+      #ffe1ed 30%,
+      #ece1f7 70%,
+      #d6ecfa 100%
+    );
     border-top: 1px solid var(--color-lilac-soft);
     color: var(--color-ink);
   }
@@ -144,9 +181,11 @@ const year = new Date().getFullYear();
 
   .footer__tagline {
     font-family: var(--font-script);
-    font-size: 1.1rem;
-    color: var(--color-blush-vivid);
+    font-size: 1.05rem;
+    color: var(--color-blush-deep);
+    margin-top: 2px;
     line-height: 1;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
   }
 
   .footer__about {
@@ -173,7 +212,11 @@ const year = new Date().getFullYear();
     text-decoration: none;
     font-weight: 600;
     font-size: 0.9rem;
-    transition: transform 220ms ease, border-color 220ms ease, color 220ms ease, background-color 220ms ease;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      color 220ms ease,
+      background-color 220ms ease;
   }
 
   .footer__social-link:hover {
@@ -214,9 +257,16 @@ const year = new Date().getFullYear();
     color: var(--color-blush-vivid);
   }
 
-  .footer__col a strong { font-weight: 700; }
-  .footer__col a span { font-size: 0.85rem; color: var(--color-ink-soft); }
-  .footer__instructor { color: var(--color-ink-soft); }
+  .footer__col a strong {
+    font-weight: 700;
+  }
+  .footer__col a span {
+    font-size: 0.85rem;
+    color: var(--color-ink-soft);
+  }
+  .footer__instructor {
+    color: var(--color-ink-soft);
+  }
 
   .footer__bottom {
     border-top: 1px solid rgba(42, 31, 56, 0.08);
@@ -240,12 +290,21 @@ const year = new Date().getFullYear();
       gap: 2rem;
       padding: 3rem 0 2rem;
     }
-    .footer__brand { grid-column: span 2; }
+    .footer__brand {
+      grid-column: span 2;
+    }
   }
 
   @media (max-width: 540px) {
-    .footer__inner { grid-template-columns: 1fr; }
-    .footer__brand { grid-column: span 1; }
-    .footer__bottom-inner { justify-content: center; text-align: center; }
+    .footer__inner {
+      grid-template-columns: 1fr;
+    }
+    .footer__brand {
+      grid-column: span 1;
+    }
+    .footer__bottom-inner {
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>

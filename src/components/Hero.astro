@@ -87,7 +87,6 @@ import { site } from "../data/site";
     box-sizing: border-box;
     /* Full viewport height; fixed nav overlaps only the top — do NOT subtract nav from height (that caused the gap under the wave) */
     min-height: 100svh;
-    min-height: 100dvh;
     display: flex;
     align-items: center;
     padding: 0;
@@ -318,8 +317,25 @@ import { site } from "../data/site";
       padding: 0;
       padding-top: var(--nav-height);
       min-height: 100svh;
-      min-height: 100dvh;
       height: auto;
+      /* meet: width on .hero__wave-svg--mobile follows height × 1440/100 */
+      --hero-wave-mobile-h: 10vh;
+      /* gap under lifted wave — same value on .hero::after + .hero__wave bottom */
+      --hero-wave-mobile-lift: 0.75rem;
+    }
+
+    /* Cream strip under lifted wave — +2px / bottom:-1 kills subpixel hairline
+       (rem/vh vs device px; z-index:-1 photo peeking between layers) */
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: calc(var(--hero-wave-mobile-lift) + 2px);
+      background: var(--color-cream);
+      z-index: 0;
+      pointer-events: none;
     }
 
     .hero__copy {
@@ -330,17 +346,18 @@ import { site } from "../data/site";
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      max-height: none;
+      overflow-x: clip;
+      bottom: var(--hero-wave-mobile-lift);
     }
     .hero__wave-svg--desktop {
       display: none;
     }
     .hero__wave-svg--mobile {
       display: block;
-      width: min(100%, calc(var(--hero-wave-max) * 1440 / 100));
-      max-width: 100%;
-      height: auto;
-      aspect-ratio: 1440 / 100;
-      max-height: var(--hero-wave-max);
+      flex-shrink: 0;
+      height: var(--hero-wave-mobile-h);
+      width: calc(var(--hero-wave-mobile-h) + 2rem * 1440 / 100);
     }
     .hero__inner {
       grid-template-columns: 1fr;

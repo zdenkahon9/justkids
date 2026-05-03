@@ -5,7 +5,7 @@
 
 export const site = {
   name: "JustKids",
-  tagline: "Cvičení s miminky a dětmi",
+  tagline: "pohybem k radosti",
   description:
     "Cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve Zdicích. Hravě, klidně, s láskou. Rezervujte si lekci online.",
   url: "https://justkids.cz",
@@ -17,8 +17,8 @@ export const site = {
   // Kontaktní údaje
   contact: {
     email: "info@justkids.cz",
-    phone: "+420 000 000 000",
-    instructorName: "Zdenka Honzalová",
+    phone: "+420 731 818 841",
+    instructorName: "Aneta Justychová",
   },
 
   // Sociální sítě - nahraď reálnými odkazy
