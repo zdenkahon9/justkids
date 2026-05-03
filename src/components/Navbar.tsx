@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 type NavLink = {
   href: string;
@@ -17,6 +17,8 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
   const mobileItems = mobileLinks ?? links;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const openRef = useRef(open);
+  openRef.current = open;
 
   // Sticky / shrink on scroll (Omnifood-like)
   useEffect(() => {
@@ -84,11 +86,20 @@ const Navbar = ({ links, mobileLinks, reservationUrl, logoSrc, brand }: NavbarPr
   const handleNav = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith("#")) return;
     e.preventDefault();
+    const menuWasOpen = openRef.current;
     setOpen(false);
-    const el = document.querySelector(href);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      history.replaceState(null, "", href);
+    const scrollToTarget = () => {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", href);
+      }
+    };
+    // Mobile: scroll-lock cleanup does window.scrollTo(previousY) and would undo an immediate scrollIntoView
+    if (menuWasOpen) {
+      setTimeout(scrollToTarget, 0);
+    } else {
+      scrollToTarget();
     }
   }, []);
 
