@@ -13,6 +13,16 @@ type NavbarProps = {
   brand: string;
 };
 
+/** Desktop submenu under „O mně“ — same section anchors as elsewhere on the site */
+const ABOUT_DROPDOWN_LINKS: NavLink[] = [
+  { href: "#o-mne", label: "Kdo jsem" },
+  { href: "#absolvovane-kurzy", label: "Absolvované kurzy" },
+  { href: "#recenze", label: "Recenze" },
+];
+
+const isAboutNavItem = (l: NavLink) =>
+  l.href === "#o-mne" && l.label === "O mně";
+
 const Navbar = ({
   links,
   mobileLinks,
@@ -139,13 +149,59 @@ const Navbar = ({
 
         <nav className="nav__links" aria-label="Hlavní navigace">
           <ul>
-            {links.map((l) => (
-              <li key={l.href}>
-                <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
-                  {l.label}
-                </a>
-              </li>
-            ))}
+            {links.map((l) =>
+              isAboutNavItem(l) ? (
+                <li key={l.href} className="nav__dropdown">
+                  <button
+                    type="button"
+                    className="nav__dropdown-trigger"
+                    aria-haspopup="true"
+                    aria-controls="nav-submenu-o-mne"
+                  >
+                    <span className="nav__dropdown-trigger-inner">
+                      {l.label}
+                      <svg
+                        className="nav__dropdown-chevron"
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M2.5 4.25L6 7.75L9.5 4.25"
+                          stroke="currentColor"
+                          strokeWidth="1.75"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <div className="nav__dropdown-surface">
+                    <ul id="nav-submenu-o-mne" className="nav__dropdown-list">
+                      {ABOUT_DROPDOWN_LINKS.map((sub) => (
+                        <li key={sub.href + sub.label}>
+                          <a
+                            href={sub.href}
+                            onClick={(e) => handleNav(e, sub.href)}
+                          >
+                            {sub.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                <li key={l.href}>
+                  <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
+                    {l.label}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
         </nav>
 
@@ -307,7 +363,7 @@ const Navbar = ({
           margin: 0;
         }
 
-        .nav__links a {
+        .nav__links > ul > li > a {
           display: inline-block;
           padding: 0.6rem 0.95rem;
           color: var(--color-ink);
@@ -318,9 +374,138 @@ const Navbar = ({
           transition: background-color 220ms ease, color 220ms ease;
         }
 
-        .nav__links a:hover {
+        /*
+          Match <a> nav items: same unitless line-height as body (global.css) + same font-size
+          as other nav links, so the pill’s vertical rhythm matches. Only this button rule.
+        */
+        .nav__links > ul > li > button.nav__dropdown-trigger {
+          display: inline-block;
+          padding: 0.6rem 0.95rem;
+          margin: 0;
+          color: var(--color-ink);
+          font-weight: 600;
+          font-size: 0.95rem;
+          line-height: 1.65;
+          text-decoration: none;
+          border-radius: 9999px;
+          transition: background-color 220ms ease, color 220ms ease;
+          appearance: none;
+          -webkit-appearance: none;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-family: inherit;
+          text-align: center;
+        }
+
+        .nav__links > ul > li > button.nav__dropdown-trigger:focus-visible {
+          outline: 2px solid var(--color-blush-vivid);
+          outline-offset: 2px;
+        }
+
+        /*
+          Same outer box as other nav links; label + chevron use inner inline-flex row.
+        */
+        .nav__dropdown-trigger-inner {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+        }
+
+        .nav__links > ul > li > a:hover,
+        .nav__links > ul > li > button.nav__dropdown-trigger:hover {
           background: rgba(252, 194, 214, 0.4);
           color: var(--color-blush-vivid);
+        }
+
+        .nav__links > ul > li > button.nav__dropdown-trigger:active {
+          background: rgba(252, 194, 214, 0.55);
+          color: var(--color-blush-deep);
+        }
+
+        .nav__dropdown {
+          position: relative;
+          z-index: 2;
+        }
+
+        .nav__dropdown-chevron {
+          display: block;
+          flex-shrink: 0;
+          align-self: center;
+          color: var(--color-blush-vivid);
+          transform: translateY(0.07em);
+          transition: color 220ms ease, transform 220ms ease;
+        }
+
+        .nav__dropdown:hover .nav__dropdown-chevron,
+        .nav__dropdown:focus-within .nav__dropdown-chevron {
+          color: var(--color-blush-deep);
+          transform: translateY(0.07em);
+        }
+
+        /* Hoverable air gap (~12–14px): bridge keeps :hover while moving to the panel */
+        .nav__dropdown-surface {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 100%;
+          padding-top: 1.4rem;
+          min-width: 100%;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition: opacity 180ms ease, visibility 180ms ease;
+        }
+
+        .nav__dropdown:hover .nav__dropdown-surface,
+        .nav__dropdown:focus-within .nav__dropdown-surface {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+        }
+
+        .nav__dropdown-list {
+          list-style: none;
+          margin: 0;
+          padding: 0.4rem 0.25rem;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.1rem;
+          border-radius: 1.125rem;
+          background: rgba(255, 249, 244, 0.96);
+          backdrop-filter: saturate(150%) blur(12px);
+          -webkit-backdrop-filter: saturate(150%) blur(12px);
+          box-shadow: 0 14px 40px -16px rgba(123, 90, 160, 0.32),
+            0 0 0 1px rgba(236, 47, 142, 0.1);
+        }
+
+        .nav__dropdown-list a {
+          display: block;
+          padding: 0.6rem 0.95rem;
+          color: var(--color-ink);
+          font-weight: 600;
+          font-size: 0.95rem;
+          text-decoration: none;
+          border-radius: 9999px;
+          text-align: center;
+          white-space: nowrap;
+          transition: background-color 220ms ease, color 220ms ease;
+        }
+
+        .nav__dropdown-list a:hover {
+          background: rgba(252, 194, 214, 0.4);
+          color: var(--color-blush-vivid);
+        }
+
+        .nav__dropdown-list a:active {
+          background: rgba(252, 194, 214, 0.55);
+          color: var(--color-blush-deep);
+        }
+
+        .nav__links > ul > li > a:active {
+          background: rgba(252, 194, 214, 0.55);
+          color: var(--color-blush-deep);
         }
 
         .nav__cta {
