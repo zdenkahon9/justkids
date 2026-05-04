@@ -353,7 +353,7 @@ const Navbar = ({
           justify-self: center;
         }
 
-        .nav__links ul {
+        .nav__links > ul {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -443,6 +443,13 @@ const Navbar = ({
           transform: translateY(0.07em);
         }
 
+        /* Point chevron the other way only while a submenu row is hovered / keyboard-focused */
+        .nav__dropdown:has(.nav__dropdown-list a:hover) .nav__dropdown-chevron,
+        .nav__dropdown:has(.nav__dropdown-list a:focus-visible) .nav__dropdown-chevron {
+          color: var(--color-blush-deep);
+          transform: rotate(180deg) translateY(-0.07em);
+        }
+
         /* Hoverable air gap (~12–14px): bridge keeps :hover while moving to the panel */
         .nav__dropdown-surface {
           position: absolute;
@@ -467,7 +474,7 @@ const Navbar = ({
         .nav__dropdown-list {
           list-style: none;
           margin: 0;
-          padding: 0.4rem 0.25rem;
+          padding: 0.4rem;
           display: flex;
           flex-direction: column;
           align-items: stretch;
@@ -487,7 +494,7 @@ const Navbar = ({
           font-weight: 600;
           font-size: 0.95rem;
           text-decoration: none;
-          border-radius: 9999px;
+          border-radius: 1.125rem;
           text-align: center;
           white-space: nowrap;
           transition: background-color 220ms ease, color 220ms ease;

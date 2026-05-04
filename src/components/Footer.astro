@@ -41,23 +41,37 @@ const year = new Date().getFullYear();
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"
-          class="footer__social-link"
+          class="footer__social-link footer__social-link--facebook"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path
               d="M 13 22 L 13 13 L 16 13 L 16.5 9.5 L 13 9.5 L 13 7.5 Q 13 6 14.5 6 L 16.5 6 L 16.5 2.5 Q 14 2 12.5 2 Q 9 2 9 6 L 9 9.5 L 6 9.5 L 6 13 L 9 13 L 9 22 Z"
               fill="currentColor"></path>
           </svg>
-          <span>Facebook</span>
         </a>
         <a
           href={site.social.instagram}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
-          class="footer__social-link"
+          class="footer__social-link footer__social-link--instagram"
         >
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <defs>
+              <linearGradient
+                id="footer-ig-grad"
+                x1="0%"
+                y1="100%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop offset="0%" stop-color="#f09433"></stop>
+                <stop offset="25%" stop-color="#e6683c"></stop>
+                <stop offset="50%" stop-color="#dc2743"></stop>
+                <stop offset="75%" stop-color="#cc2366"></stop>
+                <stop offset="100%" stop-color="#bc1888"></stop>
+              </linearGradient>
+            </defs>
             <rect
               x="3"
               y="3"
@@ -65,18 +79,18 @@ const year = new Date().getFullYear();
               height="18"
               rx="5"
               fill="none"
-              stroke="currentColor"
+              stroke="url(#footer-ig-grad)"
               stroke-width="2"></rect>
             <circle
               cx="12"
               cy="12"
               r="4"
               fill="none"
-              stroke="currentColor"
+              stroke="url(#footer-ig-grad)"
               stroke-width="2"></circle>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"></circle>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="url(#footer-ig-grad)"
+            ></circle>
           </svg>
-          <span>Instagram</span>
         </a>
       </div>
     </div>
@@ -130,7 +144,20 @@ const year = new Date().getFullYear();
     <div class="container-x footer__bottom-inner">
       <span>© {year} {site.name}. Všechna práva vyhrazena.</span>
       <span class="footer__made"
-        >Vyrobeno s láskou pro maminky a tatínky 🤍</span
+        >Vyrobeno s láskou pro maminky a tatínky
+        <span class="footer__made-heart" aria-hidden="true">
+          <svg
+            class="footer__made-heart-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            ></path>
+          </svg>
+        </span></span
       >
     </div>
   </div>
@@ -189,7 +216,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__about {
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
     margin: 0 0 1.5rem;
     max-width: 28rem;
     font-size: 0.95rem;
@@ -203,15 +230,17 @@ const year = new Date().getFullYear();
   .footer__social-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
     background: white;
     border-radius: 9999px;
     border: 1.5px solid var(--color-lilac-soft);
     color: var(--color-ink);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
+    flex-shrink: 0;
+    transform-origin: center;
     transition:
       transform 220ms ease,
       border-color 220ms ease,
@@ -219,10 +248,31 @@ const year = new Date().getFullYear();
       background-color 220ms ease;
   }
 
+  .footer__social-link svg {
+    display: block;
+  }
+
+  /* Barvy značek (Facebook modrá, Instagram gradient je v SVG) */
+  .footer__social-link--facebook {
+    color: #1877f2;
+  }
+
+  .footer__social-link--instagram svg {
+    transition: filter 220ms ease;
+  }
+
   .footer__social-link:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.12);
     border-color: var(--color-blush-mid);
     color: var(--color-blush-vivid);
+  }
+
+  .footer__social-link--facebook:hover {
+    color: #166fe5;
+  }
+
+  .footer__social-link--instagram:hover svg {
+    filter: brightness(0.92);
   }
 
   .footer__col h3 {
@@ -282,6 +332,19 @@ const year = new Date().getFullYear();
     gap: 1rem;
     font-size: 0.85rem;
     color: var(--color-ink-soft);
+  }
+
+  .footer__made-heart {
+    display: inline-flex;
+    vertical-align: -0.12em;
+    margin-left: 0.15em;
+    color: #fda2e6;
+  }
+
+  .footer__made-heart-icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
   }
 
   @media (max-width: 880px) {

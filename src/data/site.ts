@@ -21,10 +21,10 @@ export const site = {
     instructorName: "Aneta Justychová",
   },
 
-  // Sociální sítě - nahraď reálnými odkazy
+  // Sociální sítě
   social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
+    facebook: "https://www.facebook.com/profile.php?id=61564479295700",
+    instagram: "https://www.instagram.com/justkids.cz/",
   },
 } as const;
 
