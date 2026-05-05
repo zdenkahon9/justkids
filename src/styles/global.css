@@ -288,11 +288,11 @@ h4 {
 .eyebrow {
   display: inline-block;
   font-family: var(--font-script);
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   color: var(--color-blush-deep);
   line-height: 1;
-  transform: rotate(-3deg);
-  margin-bottom: 0.75rem;
+  margin-bottom: 2rem;
+  padding-top: 1.5rem;
 }
 
 /* ---------- Animations ---------- */

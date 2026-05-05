@@ -17,44 +17,47 @@ import { site } from "../data/site";
 
     <div class="about__text reveal">
       <span class="eyebrow">O mně</span>
-      <h2 id="about-title">
-        Ahoj, jsem <em>{site.contact.instructorName.split(" ")[0]}</em>
-      </h2>
+
       <p class="about__lead">
-        Jsem maminka, instruktorka cvičení a hlavně velký fanoušek pohybu od
-        těch nejmenších věků. S dětmi pracuji už přes 10 let a vím, že každé
-        dítě je originál - cvičení proto vždy přizpůsobuji konkrétní skupince i
-        náladě.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. A illo
+        inventore, libero accusamus officia reiciendis cumque at modi harum
+        deserunt laborum ratione ad eum neque doloribus quaerat ex! Explicabo,
+        sunt!
       </p>
       <p class="about__body">
-        Lekce stavím na <strong>klidu, hře a respektu</strong>. Nikoho nikam
-        netlačíme. Společně si zazpíváme, vyzkoušíme nové polohy, masírujeme
-        bříška a možná i trochu kutáme po zemi. Maminkám i tatínkům dávám
-        prostor, aby si po cvičení popovídali u čaje.
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officia amet
+        corrupti excepturi assumenda quam nobis ipsum temporibus provident
+        repudiandae, sapiente fugit beatae, dolorem facilis quaerat est quas
+        rerum. Explicabo, pariatur!
       </p>
 
       <ul class="about__values">
-        <li>
-          <span class="about__value-icon" aria-hidden="true">🌿</span>
+        <li class="about__value-item-link">
+          <a
+            href="#absolvovane-kurzy"
+            class="about__value-link"
+            aria-label="Certifikovaná lektorka – přejít na sekci Absolvované kurzy"
+          >
+            <span class="about__value-icon" aria-hidden="true">🎓</span>
+            <div>
+              <span><strong>Certifikovaná lektorka</strong></span>
+            </div>
+          </a>
+        </li>
+        <!-- <li>
+          <span class="about__value-icon" aria-hidden="true"></span>
           <div>
-            <strong>Klid a hra</strong>
-            <span>Žádný stres ani výkonnostní tlak</span>
+            <strong></strong>
+            <span></span>
           </div>
         </li>
         <li>
-          <span class="about__value-icon" aria-hidden="true">🤝</span>
+          <span class="about__value-icon" aria-hidden="true"></span>
           <div>
-            <strong>Malé skupinky</strong>
-            <span>Maximálně 8 dvojic na lekci</span>
+            <strong></strong>
+            <span></span>
           </div>
-        </li>
-        <li>
-          <span class="about__value-icon" aria-hidden="true">💛</span>
-          <div>
-            <strong>Individuální přístup</strong>
-            <span>Každé dítě cvičí ve svém tempu</span>
-          </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -80,6 +83,7 @@ import { site } from "../data/site";
     border-radius: 50%;
     overflow: hidden;
     box-shadow: var(--shadow-soft);
+    border: 0.4rem solid transparent;
   }
 
   .about__portrait img {
@@ -103,7 +107,7 @@ import { site } from "../data/site";
   .about__lead {
     font-size: 1.15rem;
     color: var(--color-ink);
-    margin: 0 0 1rem;
+    margin: 0 0 2rem;
   }
 
   .about__body {
@@ -137,7 +141,43 @@ import { site } from "../data/site";
       border-color 220ms ease;
   }
 
-  .about__values li:hover {
+  .about__values li.about__value-item-link {
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .about__value-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    margin: 0;
+    border-radius: 1rem;
+    border: 1.5px solid var(--color-lilac-soft);
+    background: white;
+    color: inherit;
+    cursor: pointer;
+    text-align: inherit;
+    text-decoration: none;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease;
+  }
+
+  .about__values li.about__value-item-link:hover .about__value-link {
+    transform: translateX(4px);
+    border-color: var(--color-blush-mid);
+  }
+
+  .about__value-link:focus-visible {
+    outline: 2px solid var(--color-blush-mid);
+    outline-offset: 2px;
+  }
+
+  .about__values li:not(.about__value-item-link):hover {
     transform: translateX(4px);
     border-color: var(--color-blush-mid);
   }

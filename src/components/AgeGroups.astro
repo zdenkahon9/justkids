@@ -14,82 +14,190 @@ const accentMap: Record<string, string> = {
     <header class="age__header reveal">
       <span class="eyebrow">Pro koho cvičíme</span>
       <h2 id="age-title">
-        Věkové <em>skupinky</em>
+        Věkové <em>skupiny</em>
       </h2>
-      <p>Každý věk má svoje kouzlo. Lekce přizpůsobujeme tomu, co děti právě potřebují.</p>
+      <p>
+        Každý věk má svoje kouzlo. Lekce přizpůsobujeme tomu, co děti právě
+        potřebují.
+      </p>
     </header>
 
     <ul class="age__grid">
-      {ageGroups.map((g, i) => (
-        <li
-          class="age__card reveal"
-          data-accent={g.accent}
-          style={`--accent: ${accentMap[g.accent]}; transition-delay: ${i * 80}ms;`}
-        >
-          {g.optional && <span class="age__optional">volitelné</span>}
-          <div class="age__icon" aria-hidden="true">
-            {g.id === "3-6" && (
-              <svg viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="22" fill="var(--accent)" opacity="0.5"/>
-                <circle cx="32" cy="28" r="9" fill="white"/>
-                <ellipse cx="32" cy="42" rx="13" ry="8" fill="white"/>
-                <circle cx="29" cy="27" r="1.5" fill="#2a1f38"/>
-                <circle cx="35" cy="27" r="1.5" fill="#2a1f38"/>
-                <path d="M 28 31 Q 32 33 36 31" stroke="#2a1f38" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-              </svg>
-            )}
-            {g.id === "6-12" && (
-              <svg viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="22" fill="var(--accent)" opacity="0.5"/>
-                <circle cx="32" cy="26" r="10" fill="white"/>
-                <path d="M 18 48 Q 32 36 46 48 L 46 52 L 18 52 Z" fill="white"/>
-                <circle cx="28" cy="25" r="1.5" fill="#2a1f38"/>
-                <circle cx="36" cy="25" r="1.5" fill="#2a1f38"/>
-                <path d="M 28 30 Q 32 33 36 30" stroke="#2a1f38" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-                <circle cx="48" cy="20" r="3" fill="#ff4fa3"/>
-              </svg>
-            )}
-            {g.id === "1-2" && (
-              <svg viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="22" fill="var(--accent)" opacity="0.5"/>
-                <circle cx="32" cy="22" r="9" fill="white"/>
-                <rect x="24" y="30" width="16" height="20" rx="4" fill="white"/>
-                <rect x="22" y="48" width="6" height="6" rx="2" fill="white"/>
-                <rect x="36" y="48" width="6" height="6" rx="2" fill="white"/>
-                <circle cx="29" cy="21" r="1.5" fill="#2a1f38"/>
-                <circle cx="35" cy="21" r="1.5" fill="#2a1f38"/>
-                <path d="M 28 26 Q 32 28 36 26" stroke="#2a1f38" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-              </svg>
-            )}
-            {g.id === "2-3" && (
-              <svg viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="22" fill="var(--accent)" opacity="0.5"/>
-                <circle cx="32" cy="20" r="8" fill="white"/>
-                <path d="M 22 30 L 42 30 L 38 50 L 26 50 Z" fill="white"/>
-                <rect x="24" y="48" width="6" height="6" rx="2" fill="white"/>
-                <rect x="34" y="48" width="6" height="6" rx="2" fill="white"/>
-                <circle cx="29" cy="19" r="1.5" fill="#2a1f38"/>
-                <circle cx="35" cy="19" r="1.5" fill="#2a1f38"/>
-                <path d="M 28 23 Q 32 25 36 23" stroke="#2a1f38" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-                <path d="M 24 14 L 40 14" stroke="#2a1f38" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            )}
-          </div>
-          <div class="age__range">{g.range}</div>
-          <h3>{g.title}</h3>
-          <p>{g.description}</p>
-          <ul class="age__highlights">
-            {g.highlights.map((h) => (
-              <li>
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path d="M 3 8 L 7 12 L 13 4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      {
+        ageGroups.map((g, i) => (
+          <li
+            class="age__card reveal"
+            data-accent={g.accent}
+            style={`--accent: ${accentMap[g.accent]}; transition-delay: ${i * 80}ms;`}
+          >
+            {g.optional && <span class="age__optional">volitelné</span>}
+            <div class="age__icon" aria-hidden="true">
+              {g.id === "3-6" && (
+                <svg viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="22"
+                    fill="var(--accent)"
+                    opacity="0.5"
+                  />
+                  <circle cx="32" cy="28" r="9" fill="white" />
+                  <ellipse cx="32" cy="42" rx="13" ry="8" fill="white" />
+                  <circle cx="29" cy="27" r="1.5" fill="#2a1f38" />
+                  <circle cx="35" cy="27" r="1.5" fill="#2a1f38" />
+                  <path
+                    d="M 28 31 Q 32 33 36 31"
+                    stroke="#2a1f38"
+                    stroke-width="1.4"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
                 </svg>
-                {h}
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))}
+              )}
+              {g.id === "6-12" && (
+                <svg viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="22"
+                    fill="var(--accent)"
+                    opacity="0.5"
+                  />
+                  <circle cx="32" cy="26" r="10" fill="white" />
+                  <path
+                    d="M 18 48 Q 32 36 46 48 L 46 52 L 18 52 Z"
+                    fill="white"
+                  />
+                  <circle cx="28" cy="25" r="1.5" fill="#2a1f38" />
+                  <circle cx="36" cy="25" r="1.5" fill="#2a1f38" />
+                  <path
+                    d="M 28 30 Q 32 33 36 30"
+                    stroke="#2a1f38"
+                    stroke-width="1.4"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="48" cy="20" r="3" fill="#ff4fa3" />
+                </svg>
+              )}
+              {g.id === "1-2" && (
+                <svg viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="22"
+                    fill="var(--accent)"
+                    opacity="0.5"
+                  />
+                  <circle cx="32" cy="22" r="9" fill="white" />
+                  <rect
+                    x="24"
+                    y="30"
+                    width="16"
+                    height="20"
+                    rx="4"
+                    fill="white"
+                  />
+                  <rect
+                    x="22"
+                    y="48"
+                    width="6"
+                    height="6"
+                    rx="2"
+                    fill="white"
+                  />
+                  <rect
+                    x="36"
+                    y="48"
+                    width="6"
+                    height="6"
+                    rx="2"
+                    fill="white"
+                  />
+                  <circle cx="29" cy="21" r="1.5" fill="#2a1f38" />
+                  <circle cx="35" cy="21" r="1.5" fill="#2a1f38" />
+                  <path
+                    d="M 28 26 Q 32 28 36 26"
+                    stroke="#2a1f38"
+                    stroke-width="1.4"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              )}
+              {g.id === "2-3" && (
+                <svg viewBox="0 0 64 64" fill="none">
+                  <circle
+                    cx="32"
+                    cy="32"
+                    r="22"
+                    fill="var(--accent)"
+                    opacity="0.5"
+                  />
+                  <circle cx="32" cy="20" r="8" fill="white" />
+                  <path d="M 22 30 L 42 30 L 38 50 L 26 50 Z" fill="white" />
+                  <rect
+                    x="24"
+                    y="48"
+                    width="6"
+                    height="6"
+                    rx="2"
+                    fill="white"
+                  />
+                  <rect
+                    x="34"
+                    y="48"
+                    width="6"
+                    height="6"
+                    rx="2"
+                    fill="white"
+                  />
+                  <circle cx="29" cy="19" r="1.5" fill="#2a1f38" />
+                  <circle cx="35" cy="19" r="1.5" fill="#2a1f38" />
+                  <path
+                    d="M 28 23 Q 32 25 36 23"
+                    stroke="#2a1f38"
+                    stroke-width="1.4"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M 24 14 L 40 14"
+                    stroke="#2a1f38"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              )}
+            </div>
+            <div class="age__range">{g.range}</div>
+            <h3>{g.title}</h3>
+            <p>{g.description}</p>
+            <ul class="age__highlights">
+              {g.highlights.map((h) => (
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="14"
+                    height="14"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M 3 8 L 7 12 L 13 4"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </section>
@@ -111,7 +219,10 @@ const accentMap: Record<string, string> = {
     color: var(--color-blush-vivid);
   }
 
-  .age__header p { color: var(--color-ink-soft); margin: 0; }
+  .age__header p {
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
 
   .age__grid {
     list-style: none;
@@ -128,12 +239,15 @@ const accentMap: Record<string, string> = {
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
     border: 2px solid var(--accent);
-    transition: transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 280ms ease;
+    transition:
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 280ms ease;
   }
 
   .age__card:hover {
     transform: translateY(-6px) rotate(-0.5deg);
-    box-shadow: 0 20px 50px -16px color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 20px 50px -16px
+      color-mix(in srgb, var(--accent) 60%, transparent);
   }
 
   .age__optional {
@@ -160,7 +274,10 @@ const accentMap: Record<string, string> = {
     margin-bottom: 1.25rem;
   }
 
-  .age__icon svg { width: 56px; height: 56px; }
+  .age__icon svg {
+    width: 56px;
+    height: 56px;
+  }
 
   .age__range {
     display: inline-block;
