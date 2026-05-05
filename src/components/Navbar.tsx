@@ -617,10 +617,22 @@ const Navbar = ({
         }
 
         @media (max-width: 880px) {
-          .nav__links, .nav__cta { display: none; }
+          .nav__inner {
+            padding-inline: 1.5rem;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+          }
+          .nav__brand {
+            justify-self: start;
+            min-width: 0;
+          }
+          .nav__links,
+          .nav__cta {
+            display: none;
+          }
           .nav__toggle {
             display: inline-flex;
-            margin-left: auto;
+            justify-self: end;
           }
         }
 

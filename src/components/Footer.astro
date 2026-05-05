@@ -222,6 +222,22 @@ const year = new Date().getFullYear();
     font-size: 0.95rem;
   }
 
+  @media (max-width: 880px) {
+    .footer__about {
+      text-align: justify;
+    }
+  }
+
+  @media (min-width: 881px) {
+    .footer__brand-link {
+      margin-bottom: 1.5rem;
+    }
+    .footer__about {
+      max-width: 240px;
+      text-align: left;
+    }
+  }
+
   .footer__social {
     display: flex;
     gap: 0.75rem;
@@ -351,7 +367,7 @@ const year = new Date().getFullYear();
     .footer__inner {
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      padding: 3rem 0 2rem;
+      padding: 3rem 1.5rem 2rem;
     }
     .footer__brand {
       grid-column: span 2;
@@ -359,6 +375,9 @@ const year = new Date().getFullYear();
   }
 
   @media (max-width: 540px) {
+    .footer__brand-link {
+      margin-bottom: 1.5rem;
+    }
     .footer__inner {
       grid-template-columns: 1fr;
     }
