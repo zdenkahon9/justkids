@@ -33,7 +33,9 @@ const Navbar = ({
   const mobileItems = mobileLinks ?? links;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [lockAboutDropdown, setLockAboutDropdown] = useState(false);
   const openRef = useRef(open);
+  const aboutDropdownRef = useRef<HTMLLIElement | null>(null);
   openRef.current = open;
 
   // Sticky / shrink on scroll (Omnifood-like)
@@ -99,10 +101,31 @@ const Navbar = ({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Keep dropdown locked after submenu click while pointer still hovers the dropdown
+  useEffect(() => {
+    if (!lockAboutDropdown) return;
+    const onPointerMove = () => {
+      const dropdownEl = aboutDropdownRef.current;
+      if (!dropdownEl) return;
+      if (!dropdownEl.matches(":hover")) {
+        setLockAboutDropdown(false);
+      }
+    };
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onPointerMove);
+  }, [lockAboutDropdown]);
+
   const handleNav = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    (
+      e: React.MouseEvent<HTMLAnchorElement>,
+      href: string,
+      options?: { closeDropdownAfterClick?: boolean },
+    ) => {
       if (!href.startsWith("#")) return;
       e.preventDefault();
+      if (options?.closeDropdownAfterClick) {
+        setLockAboutDropdown(true);
+      }
       const menuWasOpen = openRef.current;
       setOpen(false);
       const scrollToTarget = () => {
@@ -151,7 +174,11 @@ const Navbar = ({
           <ul>
             {links.map((l) =>
               isAboutNavItem(l) ? (
-                <li key={l.href} className="nav__dropdown">
+                <li
+                  key={l.href}
+                  ref={aboutDropdownRef}
+                  className={`nav__dropdown ${lockAboutDropdown ? "nav__dropdown--locked" : ""}`}
+                >
                   <button
                     type="button"
                     className="nav__dropdown-trigger"
@@ -185,7 +212,11 @@ const Navbar = ({
                         <li key={sub.href + sub.label}>
                           <a
                             href={sub.href}
-                            onClick={(e) => handleNav(e, sub.href)}
+                            onClick={(e) =>
+                              handleNav(e, sub.href, {
+                                closeDropdownAfterClick: true,
+                              })
+                            }
                           >
                             {sub.label}
                           </a>
@@ -469,6 +500,12 @@ const Navbar = ({
           opacity: 1;
           visibility: visible;
           pointer-events: auto;
+        }
+
+        .nav__dropdown.nav__dropdown--locked .nav__dropdown-surface {
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
         }
 
         .nav__dropdown-list {
