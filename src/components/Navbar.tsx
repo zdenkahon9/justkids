@@ -368,7 +368,8 @@ const Navbar = ({
         }
 
         .nav__brand-sub {
-          font-family: var(--font-script);
+          font-family: "Caveat", cursive;
+          font-weight: 600;
           font-size: 0.95rem;
           color: var(--color-blush-deep);
           margin-top: 2px;

@@ -35,9 +35,9 @@
   --color-accent: var(--color-sky-deep);
 
   /* Fonts */
-  --font-display: "Poppins", "Inter", system-ui, sans-serif;
+  --font-display: "Baloo 2", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
-  --font-script: "Caveat", cursive;
+  --font-script: "Nunito", system-ui, sans-serif;
 
   /* Radius */
   --radius-pill: 9999px;
@@ -288,10 +288,10 @@ h4 {
 .eyebrow {
   display: inline-block;
   font-family: var(--font-script);
-  font-size: 2.5rem;
+  font-size: 1.25rem;
   color: var(--color-blush-deep);
   line-height: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   padding-top: 1.5rem;
 }
 

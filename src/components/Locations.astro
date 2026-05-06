@@ -2,64 +2,108 @@
 import { locations } from "../data/locations";
 ---
 
-<section id="lokace" class="section locations" aria-labelledby="locations-title">
+<section
+  id="lokace"
+  class="section locations"
+  aria-labelledby="locations-title"
+>
   <div class="container-x">
     <header class="locations__header reveal">
       <span class="eyebrow">Kde nás najdete</span>
       <h2 id="locations-title">
         Cvičíme na <em>dvou místech</em>
       </h2>
-      <p>Vyberte si, co je vám blíž. Obě studia jsou útulná a přizpůsobená pro miminka i batolata.</p>
     </header>
 
     <div class="locations__grid">
-      {locations.map((l, i) => (
-        <article
-          class={`location location--${l.accent} reveal`}
-          style={`transition-delay: ${i * 100}ms`}
-        >
-          <div class="location__top">
-            <div class="location__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22">
-                <path d="M 12 22 C 12 22 4 14 4 9 C 4 4.5 7.5 1 12 1 C 16.5 1 20 4.5 20 9 C 20 14 12 22 12 22 Z M 12 12 C 13.6 12 15 10.6 15 9 C 15 7.4 13.6 6 12 6 C 10.4 6 9 7.4 9 9 C 9 10.6 10.4 12 12 12 Z"
-                  fill="currentColor"/>
-              </svg>
-            </div>
-            <div class="location__city">{l.city}</div>
-          </div>
-
-          <h3>{l.name}</h3>
-          <address class="location__address">
-            <span>{l.street}</span>
-            <span>{l.zip} {l.city}</span>
-          </address>
-
-          <div class="location__parking">
-            <span class="location__parking-label">
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                <rect x="4" y="4" width="16" height="16" rx="3" fill="currentColor" opacity="0.15"/>
-                <text x="12" y="17" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="12" fill="currentColor">P</text>
-              </svg>
-              Parkování
-            </span>
-            <p>{l.parking}</p>
-          </div>
-
-          <a
-            href={l.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="location__map-link"
+      {
+        locations.map((l, i) => (
+          <article
+            class={`location location--${l.accent} reveal`}
+            style={`transition-delay: ${i * 100}ms`}
           >
-            Otevřít v mapě
-            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-              <path d="M 7 17 L 17 7 M 9 7 L 17 7 L 17 15" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+            <div class="location__top">
+              <div class="location__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22">
+                  <path
+                    d="M 12 22 C 12 22 4 14 4 9 C 4 4.5 7.5 1 12 1 C 16.5 1 20 4.5 20 9 C 20 14 12 22 12 22 Z M 12 12 C 13.6 12 15 10.6 15 9 C 15 7.4 13.6 6 12 6 C 10.4 6 9 7.4 9 9 C 9 10.6 10.4 12 12 12 Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div class="location__city">{l.city}</div>
+            </div>
 
-          <div class="location__decor" aria-hidden="true"></div>
-        </article>
-      ))}
+            <h3>{l.name}</h3>
+            <address class="location__address">
+              <span>{l.street}</span>
+              <span>
+                {l.zip} {l.city}
+              </span>
+            </address>
+
+            <div class="location__parking">
+              <span class="location__parking-label">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="4"
+                    y="4"
+                    width="16"
+                    height="16"
+                    rx="3"
+                    fill="currentColor"
+                    opacity="0.15"
+                  />
+                  <text
+                    x="12"
+                    y="17"
+                    text-anchor="middle"
+                    font-family="sans-serif"
+                    font-weight="800"
+                    font-size="12"
+                    fill="currentColor"
+                  >
+                    P
+                  </text>
+                </svg>
+                Parkování
+              </span>
+              <p>{l.parking}</p>
+            </div>
+
+            <a
+              href={l.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="location__map-link"
+            >
+              Otevřít v mapě
+              <svg
+                viewBox="0 0 24 24"
+                width="14"
+                height="14"
+                aria-hidden="true"
+              >
+                <path
+                  d="M 7 17 L 17 7 M 9 7 L 17 7 L 17 15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <div class="location__decor" aria-hidden="true" />
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -81,7 +125,10 @@ import { locations } from "../data/locations";
     color: var(--color-lilac-deep);
   }
 
-  .locations__header p { color: var(--color-ink-soft); margin: 0; }
+  .locations__header p {
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
 
   .locations__grid {
     display: grid;
@@ -99,7 +146,9 @@ import { locations } from "../data/locations";
     padding: 2.25rem;
     border: 2px solid transparent;
     overflow: hidden;
-    transition: transform 280ms ease, box-shadow 280ms ease;
+    transition:
+      transform 280ms ease,
+      box-shadow 280ms ease;
   }
 
   .location--blush {
@@ -117,7 +166,8 @@ import { locations } from "../data/locations";
 
   .location:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 50px -20px color-mix(in srgb, var(--accent-color) 40%, transparent);
+    box-shadow: 0 24px 50px -20px
+      color-mix(in srgb, var(--accent-color) 40%, transparent);
   }
 
   .location__top {
