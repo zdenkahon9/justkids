@@ -56,9 +56,9 @@ import { site } from "../data/site";
 
   <div class="hero__wave" aria-hidden="true">
     <svg
-      class="hero__wave-svg hero__wave-svg--desktop"
+      class="hero__wave-svg"
       viewBox="0 0 1440 100"
-      preserveAspectRatio="none"
+      preserveAspectRatio="xMidYMax meet"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
@@ -66,23 +66,14 @@ import { site } from "../data/site";
         d="M0,51 C180,51 340,68 540,68 C720,68 820,51 920,51 C1080,51 1240,81 1440,85 L1440,100 L0,100 Z"
       ></path>
     </svg>
-    <svg
-      class="hero__wave-svg hero__wave-svg--mobile"
-      viewBox="0 0 1440 100"
-      preserveAspectRatio="xMidYMax meet"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fill="var(--color-cream)"
-        d="M0,46 C180,46 345,74 540,74 C722,74 820,48 920,48 C1080,48 1240,86 1440,89 L1440,100 L0,100 Z"
-      ></path>
-    </svg>
   </div>
 </section>
 
 <style>
   .hero {
-    --hero-wave-max: 10vh;
+    /* Uniform scale (meet): height tracks viewBox aspect 100/1440 so steepness does not explode on narrow widths.
+       Floor keeps iPhone SE from a paper-thin divider; no hard max — caps would force horizontal gutters with meet */
+    --hero-wave-h: max(2.75rem, calc(100svw * 100 / 1440));
     position: relative;
     box-sizing: border-box;
     /* Full viewport height; fixed nav overlaps only the top — do NOT subtract nav from height (that caused the gap under the wave) */
@@ -247,6 +238,7 @@ import { site } from "../data/site";
     animation: float-slow 8s ease-in-out infinite;
   }
 
+  /* +1px: masks sub-pixel seam vs hero clip / compositor rounding */
   .hero__wave {
     position: absolute;
     left: 0;
@@ -255,23 +247,18 @@ import { site } from "../data/site";
     z-index: 1;
     line-height: 0;
     pointer-events: none;
-    max-height: var(--hero-wave-max);
+    transform: translateY(1px);
   }
 
-  .hero__wave-svg--desktop {
+  .hero__wave-svg {
     display: block;
     width: 100%;
-    max-height: var(--hero-wave-max);
-    height: min(var(--hero-wave-max), clamp(48px, 7.5vw, 108px));
-  }
-
-  .hero__wave-svg--mobile {
-    display: none;
+    height: var(--hero-wave-h);
   }
 
   .hero__scroll {
     position: absolute;
-    bottom: calc(min(var(--hero-wave-max), clamp(48px, 7.5vw, 108px)) + 1rem);
+    bottom: calc(var(--hero-wave-h) + 1rem);
     left: 50%;
     z-index: 3;
     transform: translate(-50%, 52px);
@@ -318,8 +305,6 @@ import { site } from "../data/site";
       padding-top: var(--nav-height);
       min-height: 100svh;
       height: auto;
-      /* meet: width on .hero__wave-svg--mobile follows height × 1440/100 */
-      --hero-wave-mobile-h: 10vh;
       /* gap under lifted wave — same value on .hero::after + .hero__wave bottom */
       --hero-wave-mobile-lift: 0.75rem;
     }
@@ -343,21 +328,7 @@ import { site } from "../data/site";
     }
 
     .hero__wave {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      max-height: none;
-      overflow-x: clip;
       bottom: var(--hero-wave-mobile-lift);
-    }
-    .hero__wave-svg--desktop {
-      display: none;
-    }
-    .hero__wave-svg--mobile {
-      display: block;
-      flex-shrink: 0;
-      height: var(--hero-wave-mobile-h);
-      width: calc(var(--hero-wave-mobile-h) + 2rem * 1440 / 100);
     }
     .hero__inner {
       grid-template-columns: 1fr;
