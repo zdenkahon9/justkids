@@ -7,7 +7,7 @@ import { courses } from "../data/courses";
     <header class="courses__header reveal">
       <span class="eyebrow">Vzdělání</span>
       <h2 id="courses-title">
-        Absolvované <em>kurzy</em>
+        Absolvované <span class="section-title-accent">kurzy</span>
       </h2>
       <p>Pravidelně se vzdělávám, abych vám i vašim dětem mohla nabídnout opravdu kvalitní lekce.</p>
     </header>
@@ -47,8 +47,7 @@ import { courses } from "../data/courses";
     margin: 0 0 1rem;
   }
 
-  .courses__header h2 em {
-    font-style: italic;
+  .courses__header h2 .section-title-accent {
     color: var(--color-sky-deep);
   }
 

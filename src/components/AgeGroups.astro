@@ -14,7 +14,7 @@ const accentMap: Record<string, string> = {
     <header class="age__header reveal">
       <span class="eyebrow">Věkové skupiny</span>
       <h2 id="age-title">
-        Věkové <em>skupiny</em>
+        Věkové <span class="section-title-accent">skupiny</span>
       </h2>
     </header>
 
@@ -210,8 +210,7 @@ const accentMap: Record<string, string> = {
     margin: 0 0 1rem;
   }
 
-  .age__header h2 em {
-    font-style: italic;
+  .age__header h2 .section-title-accent {
     color: var(--color-blush-vivid);
   }
 

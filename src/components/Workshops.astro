@@ -14,7 +14,7 @@ const accentMap: Record<string, string> = {
     <header class="workshops__header reveal">
       <span class="eyebrow">Speciální akce</span>
       <h2 id="workshops-title">
-        Workshopy <em>pro rodiče</em>
+        Workshopy <span class="section-title-accent">pro rodiče</span>
       </h2>
       <p>
         Krátké akce mimo pravidelné lekce. Naučíte se konkrétní dovednost a odnesete si ji domů.
@@ -82,8 +82,7 @@ const accentMap: Record<string, string> = {
     margin: 0 0 1rem;
   }
 
-  .workshops__header h2 em {
-    font-style: italic;
+  .workshops__header h2 .section-title-accent {
     color: var(--color-blush-vivid);
   }
 

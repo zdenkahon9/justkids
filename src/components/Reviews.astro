@@ -13,7 +13,7 @@ const accentMap: Record<string, string> = {
     <header class="reviews__header reveal">
       <span class="eyebrow">Co o nás říkají</span>
       <h2 id="reviews-title">
-        Recenze <em>od rodičů</em>
+        Recenze <span class="section-title-accent">od rodičů</span>
       </h2>
       <p>
         Pár slov od maminek, které u nás cvičí. Děkujeme za vaši důvěru.
@@ -70,8 +70,7 @@ const accentMap: Record<string, string> = {
     margin: 0 0 1rem;
   }
 
-  .reviews__header h2 em {
-    font-style: italic;
+  .reviews__header h2 .section-title-accent {
     color: var(--color-blush-vivid);
   }
 

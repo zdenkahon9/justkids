@@ -15,7 +15,7 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     <header class="news__header reveal">
       <span class="eyebrow">Co je nového</span>
       <h2 id="news-title">
-        <em>Novinky</em> a aktuality
+        <span class="section-title-accent">Novinky</span> a aktuality
       </h2>
       <p>Otevřené kurzy, prázdninové programy nebo změny rozvrhu - tady najdete všechno aktuální.</p>
     </header>
@@ -72,8 +72,7 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     margin: 0 0 1rem;
   }
 
-  .news__header h2 em {
-    font-style: italic;
+  .news__header h2 .section-title-accent {
     color: var(--color-lilac-deep);
   }
 
