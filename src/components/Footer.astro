@@ -111,15 +111,16 @@ const year = new Date().getFullYear();
     <div class="footer__col">
       <h3>Kontakt</h3>
       <ul>
-        <li>
-          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-        </li>
+        <li class="footer__instructor">{site.contact.instructorName}</li>
+
         <li>
           <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
             >{site.contact.phone}</a
           >
         </li>
-        <li class="footer__instructor">{site.contact.instructorName}</li>
+        <li>
+          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        </li>
       </ul>
     </div>
 
@@ -130,7 +131,7 @@ const year = new Date().getFullYear();
           locations.map((l) => (
             <li>
               <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
-                <strong>{l.city}</strong>
+                <strong>{l.name}</strong>
                 <span>{l.street}</span>
               </a>
             </li>
@@ -220,7 +221,7 @@ const year = new Date().getFullYear();
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
     margin: 0 0 1.5rem;
     max-width: 28rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   @media (max-width: 880px) {
@@ -313,6 +314,7 @@ const year = new Date().getFullYear();
   .footer__col a {
     color: var(--color-ink);
     text-decoration: none;
+    font-size: 0.95rem;
     font-weight: 500;
     transition: color 220ms ease;
     display: inline-flex;
@@ -329,10 +331,13 @@ const year = new Date().getFullYear();
   }
   .footer__col a span {
     font-size: 0.85rem;
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
+
   .footer__instructor {
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+    font-size: 0.95rem;
+    font-weight: 600;
   }
 
   .footer__bottom {
@@ -384,6 +389,10 @@ const year = new Date().getFullYear();
     }
     .footer__brand {
       grid-column: span 1;
+    }
+    .footer__col {
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(236, 47, 142, 0.16);
     }
     .footer__bottom-inner {
       justify-content: center;

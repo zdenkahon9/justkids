@@ -289,10 +289,17 @@ h4 {
   display: inline-block;
   font-family: var(--font-script);
   font-size: 1.25rem;
+  font-weight: 500;
   color: var(--color-blush-deep);
   line-height: 1;
   margin-bottom: 1.5rem;
   padding-top: 1.5rem;
+}
+
+@media (max-width: 880px) {
+  .eyebrow {
+    font-weight: 500;
+  }
 }
 
 /* ---------- Animations ---------- */
