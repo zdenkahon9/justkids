@@ -284,6 +284,28 @@ h4 {
   padding-inline: 2rem;
 }
 
+@media (max-width: 639px) {
+  .container-x {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .container-x {
+    padding-inline: 4rem;
+  }
+
+  header.nav .nav__mobile {
+    padding-inline: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-x {
+    padding-inline: 4rem;
+  }
+}
+
 /* Eyebrow label above headlines */
 .eyebrow {
   display: inline-block;
@@ -294,12 +316,6 @@ h4 {
   line-height: 1;
   margin-bottom: 1.5rem;
   padding-top: 1.5rem;
-}
-
-@media (max-width: 880px) {
-  .eyebrow {
-    font-weight: 500;
-  }
 }
 
 /* ---------- Animations ---------- */

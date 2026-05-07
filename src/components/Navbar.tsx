@@ -598,7 +598,8 @@ const Navbar = ({
           top: var(--nav-height);
           height: calc(100svh - var(--nav-height));
           background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
-          padding: 0 1.25rem 1.25rem;
+          padding-block: 0 1.25rem;
+          padding-inline: 1.25rem;
           z-index: 0;
           overflow-y: auto;
           overscroll-behavior: contain;
@@ -654,9 +655,8 @@ const Navbar = ({
           padding: 0.85rem 1.4rem;
         }
 
-        @media (max-width: 880px) {
+        @media (max-width: 1023px) {
           .nav__inner {
-            padding-inline: 1.5rem;
             grid-template-columns: minmax(0, 1fr) auto;
             align-items: center;
           }
@@ -674,13 +674,16 @@ const Navbar = ({
           }
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 639px) {
           .nav__brand-name { font-size: 1.4rem; }
           .nav__inner { gap: 0.5rem; }
         }
 
-        @media (min-width: 881px) {
+        @media (min-width: 1024px) {
           .nav__mobile { display: none; }
+          .nav__inner.container-x {
+            padding-inline: 0;
+          }
         }
       `}</style>
     </header>

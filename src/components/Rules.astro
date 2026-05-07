@@ -9,26 +9,31 @@ import { rules } from "../data/rules";
       <h2 id="rules-title">
         Desatero <span class="section-title-accent">chování na lekci</span>
       </h2>
-      <p>
-        Pár jednoduchých pravidel, díky kterým je u nás všem dobře.
-      </p>
+      <p>Pár jednoduchých pravidel, díky kterým je u nás všem dobře.</p>
     </header>
 
     <ol class="rules__grid">
-      {rules.map((r, i) => (
-        <li class="rule reveal" style={`transition-delay: ${i * 50}ms`}>
-          <span class="rule__num" aria-hidden="true">{r.id}</span>
-          <div class="rule__body">
-            <h3>{r.title}</h3>
-            <p>{r.detail}</p>
-          </div>
-        </li>
-      ))}
+      {
+        rules.map((r, i) => (
+          <li class="rule reveal" style={`transition-delay: ${i * 50}ms`}>
+            <span class="rule__num" aria-hidden="true">
+              {r.id}
+            </span>
+            <div class="rule__body">
+              <h3>{r.title}</h3>
+              <p>{r.detail}</p>
+            </div>
+          </li>
+        ))
+      }
     </ol>
   </div>
 </section>
 
 <style>
+  #provozni-rad {
+    scroll-margin-top: -5.5rem;
+  }
   .rules__header {
     text-align: center;
     max-width: 42rem;
@@ -44,7 +49,10 @@ import { rules } from "../data/rules";
     color: var(--color-sky-deep);
   }
 
-  .rules__header p { color: var(--color-ink-soft); margin: 0; }
+  .rules__header p {
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
 
   .rules__grid {
     list-style: none;
@@ -65,7 +73,10 @@ import { rules } from "../data/rules";
     background: white;
     border-radius: 1.25rem;
     border: 1.5px solid var(--color-lilac-soft);
-    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease;
   }
 
   .rule:hover {
@@ -78,7 +89,11 @@ import { rules } from "../data/rules";
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-blush-mid), var(--color-lilac-mid));
+    background: linear-gradient(
+      135deg,
+      var(--color-blush-mid),
+      var(--color-lilac-mid)
+    );
     color: white;
     display: grid;
     place-items: center;

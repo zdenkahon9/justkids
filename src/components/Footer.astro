@@ -183,7 +183,7 @@ const year = new Date().getFullYear();
     display: grid;
     grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 3rem;
-    padding: 4rem 0 3rem;
+    padding-block: 4rem 3rem;
   }
 
   .footer__brand-link {
@@ -224,13 +224,13 @@ const year = new Date().getFullYear();
     font-size: 0.9rem;
   }
 
-  @media (max-width: 880px) {
+  @media (max-width: 1023px) {
     .footer__about {
       text-align: justify;
     }
   }
 
-  @media (min-width: 881px) {
+  @media (min-width: 1024px) {
     .footer__brand-link {
       margin-bottom: 1.5rem;
     }
@@ -342,7 +342,7 @@ const year = new Date().getFullYear();
 
   .footer__bottom {
     border-top: 1px solid rgba(42, 31, 56, 0.08);
-    padding: 1.5rem 0;
+    padding-block: 1.5rem;
     background: rgba(255, 255, 255, 0.4);
   }
 
@@ -369,23 +369,27 @@ const year = new Date().getFullYear();
     flex-shrink: 0;
   }
 
-  @media (max-width: 880px) {
+  @media (min-width: 640px) and (max-width: 1023px) {
     .footer__inner {
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
-      padding: 3rem 1.5rem 2rem;
+      padding-block: 3rem 2rem;
     }
     .footer__brand {
       grid-column: span 2;
     }
   }
 
-  @media (max-width: 540px) {
+  @media (max-width: 639px) {
+    #kontakt {
+      scroll-margin-top: -2rem;
+    }
     .footer__brand-link {
       margin-bottom: 1.5rem;
     }
     .footer__inner {
       grid-template-columns: 1fr;
+      padding-block: 3rem 2rem;
     }
     .footer__brand {
       grid-column: span 1;

@@ -2,38 +2,66 @@
 import { courses } from "../data/courses";
 ---
 
-<section id="absolvovane-kurzy" class="section courses" aria-labelledby="courses-title">
+<section
+  id="absolvovane-kurzy"
+  class="section courses"
+  aria-labelledby="courses-title"
+>
   <div class="container-x">
     <header class="courses__header reveal">
       <span class="eyebrow">Vzdělání</span>
       <h2 id="courses-title">
         Absolvované <span class="section-title-accent">kurzy</span>
       </h2>
-      <p>Pravidelně se vzdělávám, abych vám i vašim dětem mohla nabídnout opravdu kvalitní lekce.</p>
+      <p>
+        Pravidelně se vzdělávám, abych vám i vašim dětem mohla nabídnout opravdu
+        kvalitní lekce.
+      </p>
     </header>
 
     <ol class="courses__list">
-      {courses.map((c, i) => (
-        <li class="courses__item reveal" style={`transition-delay: ${i * 80}ms`}>
-          <div class="courses__year">{c.year ?? ""}</div>
-          <div class="courses__body">
-            <h3>{c.title}</h3>
-            {c.detail && <p>{c.detail}</p>}
-          </div>
-          <div class="courses__check" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path d="M 5 12 L 10 17 L 19 7" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </li>
-      ))}
+      {
+        courses.map((c, i) => (
+          <li
+            class="courses__item reveal"
+            style={`transition-delay: ${i * 80}ms`}
+          >
+            <div class="courses__year">{c.year ?? ""}</div>
+            <div class="courses__body">
+              <h3>{c.title}</h3>
+              {c.detail && <p>{c.detail}</p>}
+            </div>
+            <div class="courses__check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path
+                  d="M 5 12 L 10 17 L 19 7"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </li>
+        ))
+      }
     </ol>
   </div>
 </section>
 
 <style>
+  #absolvovane-kurzy {
+    scroll-margin-top: -5.5rem;
+  }
   .courses {
-    background: linear-gradient(180deg, transparent 0%, var(--color-cream-100) 30%, var(--color-cream-100) 70%, transparent 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--color-cream-100) 30%,
+      var(--color-cream-100) 70%,
+      transparent 100%
+    );
   }
 
   .courses__header {
@@ -51,7 +79,10 @@ import { courses } from "../data/courses";
     color: var(--color-sky-deep);
   }
 
-  .courses__header p { color: var(--color-ink-soft); margin: 0; }
+  .courses__header p {
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
 
   .courses__list {
     list-style: none;
@@ -71,7 +102,10 @@ import { courses } from "../data/courses";
     background: white;
     border-radius: 1.25rem;
     border: 1.5px solid var(--color-lilac-soft);
-    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    transition:
+      transform 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease;
   }
 
   .courses__item:hover {
@@ -112,15 +146,22 @@ import { courses } from "../data/courses";
     flex-shrink: 0;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 639px) {
     .courses__item {
       grid-template-columns: 1fr auto;
       grid-template-areas:
         "year check"
         "body body";
     }
-    .courses__year { grid-area: year; font-size: 1.2rem; }
-    .courses__body { grid-area: body; }
-    .courses__check { grid-area: check; }
+    .courses__year {
+      grid-area: year;
+      font-size: 1.2rem;
+    }
+    .courses__body {
+      grid-area: body;
+    }
+    .courses__check {
+      grid-area: check;
+    }
   }
 </style>
