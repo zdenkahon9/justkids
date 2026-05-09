@@ -69,13 +69,16 @@ import { site } from "../data/site";
   }
   .about__inner {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr;
     gap: clamp(2rem, 5vw, 5rem);
     align-items: center;
+    text-align: left;
   }
 
   .about__media {
     position: relative;
+    max-width: 380px;
+    margin: 0 auto;
   }
 
   .about__portrait {
@@ -202,14 +205,14 @@ import { site } from "../data/site";
     color: var(--color-ink-soft);
   }
 
-  @media (max-width: 1023px) {
+  @media (min-width: 1024px) {
     .about__inner {
-      grid-template-columns: 1fr;
-      text-align: left;
+      grid-template-columns: 1fr 1.2fr;
     }
+
     .about__media {
-      max-width: 380px;
-      margin: 0 auto;
+      max-width: none;
+      margin: 0;
     }
   }
 </style>

@@ -179,11 +179,15 @@ const year = new Date().getFullYear();
     color: var(--color-ink);
   }
 
+  #kontakt {
+    scroll-margin-top: -2rem;
+  }
+
   .footer__inner {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 3rem;
-    padding-block: 4rem 3rem;
+    padding-block: 3rem 2rem;
   }
 
   .footer__brand-link {
@@ -192,7 +196,7 @@ const year = new Date().getFullYear();
     gap: 0.85rem;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .footer__brand-link img {
@@ -222,22 +226,12 @@ const year = new Date().getFullYear();
     margin: 0 0 1.5rem;
     max-width: 28rem;
     font-size: 0.9rem;
+    text-align: justify;
   }
 
-  @media (max-width: 1023px) {
-    .footer__about {
-      text-align: justify;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .footer__brand-link {
-      margin-bottom: 1.5rem;
-    }
-    .footer__about {
-      max-width: 240px;
-      text-align: left;
-    }
+  .footer__col {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(236, 47, 142, 0.16);
   }
 
   .footer__social {
@@ -349,7 +343,8 @@ const year = new Date().getFullYear();
   .footer__bottom-inner {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
     align-items: center;
     gap: 1rem;
     font-size: 0.85rem;
@@ -369,38 +364,57 @@ const year = new Date().getFullYear();
     flex-shrink: 0;
   }
 
+  @media (min-width: 640px) {
+    #kontakt {
+      scroll-margin-top: var(--nav-height);
+    }
+
+    .footer__brand-link {
+      margin-bottom: 1rem;
+    }
+
+    .footer__bottom-inner {
+      justify-content: space-between;
+      text-align: unset;
+    }
+  }
+
   @media (min-width: 640px) and (max-width: 1023px) {
     .footer__inner {
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
       padding-block: 3rem 2rem;
     }
+
     .footer__brand {
       grid-column: span 2;
     }
+
+    .footer__col {
+      padding-top: 0;
+      border-top: none;
+    }
   }
 
-  @media (max-width: 639px) {
-    #kontakt {
-      scroll-margin-top: -2rem;
+  @media (min-width: 1024px) {
+    .footer__inner {
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-block: 4rem 3rem;
     }
+
     .footer__brand-link {
       margin-bottom: 1.5rem;
     }
-    .footer__inner {
-      grid-template-columns: 1fr;
-      padding-block: 3rem 2rem;
+
+    .footer__about {
+      max-width: 240px;
+      text-align: left;
     }
-    .footer__brand {
-      grid-column: span 1;
-    }
+
     .footer__col {
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(236, 47, 142, 0.16);
-    }
-    .footer__bottom-inner {
-      justify-content: center;
-      text-align: center;
+      padding-top: 0;
+      border-top: none;
     }
   }
 </style>

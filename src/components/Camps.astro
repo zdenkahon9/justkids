@@ -134,10 +134,11 @@ import { site } from "../data/site";
     --accent-color: var(--color-blush-vivid);
 
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     align-items: center;
-    padding: 1.75rem 2rem;
+    padding-block: 1.5rem;
+    padding-inline: 1.5rem;
     background: white;
     border-radius: var(--radius-card);
     border: 1.5px solid var(--color-lilac-soft);
@@ -172,7 +173,7 @@ import { site } from "../data/site";
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1rem;
-    min-width: 140px;
+    min-width: 0;
   }
 
   .camp__date-icon {
@@ -216,24 +217,26 @@ import { site } from "../data/site";
     border-bottom: 1.5px solid transparent;
     white-space: nowrap;
     transition: border-color 220ms ease;
+    justify-self: start;
   }
 
   .camp__cta:hover {
     border-bottom-color: var(--accent-color);
   }
 
-  @media (max-width: 1023px) {
+  @media (min-width: 1024px) {
     .camp {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      padding-block: 1.5rem;
-      padding-inline: 1.5rem;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      padding: 1.75rem 2rem;
     }
+
     .camp__date {
-      min-width: 0;
+      min-width: 140px;
     }
+
     .camp__cta {
-      justify-self: start;
+      justify-self: auto;
     }
   }
 </style>

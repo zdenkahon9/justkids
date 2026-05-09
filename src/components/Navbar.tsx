@@ -321,15 +321,17 @@ const Navbar = ({
           position: relative;
           z-index: 1;
           display: grid;
-          grid-template-columns: auto 1fr auto auto;
+          grid-template-columns: minmax(0, 1fr) auto;
           align-items: center;
-          gap: 1rem;
+          gap: 0.5rem;
         }
 
         .nav__brand {
           display: inline-flex;
           align-items: center;
           gap: 0.7rem;
+          justify-self: start;
+          min-width: 0;
           text-decoration: none;
           color: var(--color-ink);
         }
@@ -357,7 +359,7 @@ const Navbar = ({
         .nav__brand-name {
           font-family: var(--font-display);
           font-weight: 700;
-          font-size: 1.45rem;
+          font-size: 1.4rem;
           letter-spacing: -0.02em;
           text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
           transition: text-shadow 280ms ease;
@@ -382,6 +384,7 @@ const Navbar = ({
         }
 
         .nav__links {
+          display: none;
           justify-self: center;
         }
 
@@ -554,11 +557,13 @@ const Navbar = ({
         }
 
         .nav__cta {
+          display: none;
           margin-left: 0;
         }
 
         .nav__toggle {
-          display: none;
+          display: inline-flex;
+          justify-self: end;
           flex-direction: column;
           justify-content: center;
           align-items: center;
@@ -655,32 +660,32 @@ const Navbar = ({
           padding: 0.85rem 1.4rem;
         }
 
-        @media (max-width: 1023px) {
+        @media (min-width: 640px) {
           .nav__inner {
-            grid-template-columns: minmax(0, 1fr) auto;
-            align-items: center;
+            gap: 1rem;
           }
-          .nav__brand {
-            justify-self: start;
-            min-width: 0;
+          .nav__brand-name {
+            font-size: 1.45rem;
           }
-          .nav__links,
-          .nav__cta {
-            display: none;
-          }
-          .nav__toggle {
-            display: inline-flex;
-            justify-self: end;
-          }
-        }
-
-        @media (max-width: 639px) {
-          .nav__brand-name { font-size: 1.4rem; }
-          .nav__inner { gap: 0.5rem; }
         }
 
         @media (min-width: 1024px) {
-          .nav__mobile { display: none; }
+          .nav__inner {
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1rem;
+          }
+          .nav__links {
+            display: block;
+          }
+          .nav__cta {
+            display: block;
+          }
+          .nav__toggle {
+            display: none;
+          }
+          .nav__mobile {
+            display: none;
+          }
           .nav__inner.container-x {
             padding-inline: 0;
           }
