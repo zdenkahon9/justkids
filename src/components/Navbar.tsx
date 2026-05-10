@@ -674,6 +674,9 @@ const Navbar = ({
             grid-template-columns: auto 1fr auto auto;
             gap: 1rem;
           }
+          .nav__brand {
+            margin-inline-start: 0.75rem;
+          }
           .nav__links {
             display: block;
           }
@@ -688,6 +691,33 @@ const Navbar = ({
           }
           .nav__inner.container-x {
             padding-inline: 0;
+          }
+        }
+
+        /*
+          Narrow desktop: only logo + inline links.
+          - global.css .btn (inline-flex) beats .nav__cta display:none when global loads last;
+            use !important so CTA leaves the layout.
+          - Four-column grid keeps empty tracks + gaps when CTA/toggle are gone;
+            two columns (auto 1fr) removes ghost gaps on the right.
+        */
+        @media (min-width: 1024px) and (max-width: 1155px) {
+          .nav__inner {
+            grid-template-columns: auto 1fr;
+            gap: 0.3rem;
+          }
+          /* Desktop nav normally strips container-x inset (padding-inline: 0); restore equal left/right gutter here */
+          .nav__inner.container-x {
+            padding-inline: 1.2rem;
+          }
+          .nav__cta.btn {
+            display: none !important;
+          }
+          .nav__toggle {
+            display: none !important;
+          }
+          .nav__mobile {
+            display: none !important;
           }
         }
       `}</style>
