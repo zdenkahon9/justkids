@@ -670,18 +670,22 @@ const Navbar = ({
         }
 
         @media (min-width: 1024px) {
+          /*
+            Three tracks only: brand | links | CTA. .nav__toggle is display:none so it is not a grid
+            item — a fourth track (auto auto) left an empty column and gap after Rezervace (DevTools gap stripes).
+          */
           .nav__inner {
-            grid-template-columns: auto 1fr auto auto;
+            grid-template-columns: auto 1fr auto;
             gap: 1rem;
-          }
-          .nav__brand {
-            margin-inline-start: 0.75rem;
           }
           .nav__links {
             display: block;
           }
+          /* Must stay flex like .btn — display:block removed gap between label and arrow */
           .nav__cta {
-            display: block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
           }
           .nav__toggle {
             display: none;
@@ -698,14 +702,14 @@ const Navbar = ({
           Narrow desktop: only logo + inline links.
           - global.css .btn (inline-flex) beats .nav__cta display:none when global loads last;
             use !important so CTA leaves the layout.
-          - Four-column grid keeps empty tracks + gaps when CTA/toggle are gone;
-            two columns (auto 1fr) removes ghost gaps on the right.
+          - Wide desktop uses three grid tracks so no empty fourth column when toggle is hidden.
         */
         @media (min-width: 1024px) and (max-width: 1155px) {
           .nav__inner {
             grid-template-columns: auto 1fr;
             gap: 0.3rem;
           }
+            
           /* Desktop nav normally strips container-x inset (padding-inline: 0); restore equal left/right gutter here */
           .nav__inner.container-x {
             padding-inline: 1.2rem;
@@ -718,6 +722,12 @@ const Navbar = ({
           }
           .nav__mobile {
             display: none !important;
+          }
+        }
+
+        @media (min-width: 1156px) {
+          .nav__inner.container-x {
+            padding-inline: 0.9rem;
           }
         }
       `}</style>

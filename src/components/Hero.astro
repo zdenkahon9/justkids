@@ -354,6 +354,22 @@ import { site } from "../data/site";
     }
   }
 
+  /* Narrow desktop: two-column hero — heading reads huge vs logo; keep title smaller than full desktop clamp */
+  @media (min-width: 1024px) and (max-width: 1155px) {
+    .hero__title {
+      font-size: 3.5rem;
+      margin: 0rem 0 3rem;
+    }
+  }
+
+  /* Wide desktop (1156px+) — optional overrides; stacks after min-width 1024 rules */
+  @media (min-width: 1156px) {
+    .hero__title {
+      font-size: 4.4rem;
+    }
+    /* Add styles here */
+  }
+
   .hero__scroll:hover {
     border-color: var(--color-blush-deep);
   }
