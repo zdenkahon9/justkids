@@ -180,7 +180,7 @@ const year = new Date().getFullYear();
   }
 
   #kontakt {
-    scroll-margin-top: -2rem;
+    scroll-margin-top: -3rem;
   }
 
   .footer__inner {
@@ -380,27 +380,57 @@ const year = new Date().getFullYear();
   }
 
   @media (min-width: 640px) and (max-width: 1023px) {
+    .footer__about {
+      font-size: 0.95rem;
+      text-align: left;
+      max-width: 21rem;
+    }
+
+    /* Kontakt + Lokace vlevo pod sebou, Navigace vpravo přes obě řádky */
     .footer__inner {
       grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "brand brand"
+        "kontakt navigace"
+        "lokace navigace";
       gap: 2rem;
       padding-block: 3rem 2rem;
+      align-items: start;
     }
 
     .footer__brand {
-      grid-column: span 2;
+      grid-area: brand;
     }
 
-    .footer__col {
-      padding-top: 0;
-      border-top: none;
+    .footer__inner > .footer__col:nth-child(2) {
+      grid-area: navigace;
+    }
+
+    .footer__inner > .footer__col:nth-child(3) {
+      grid-area: kontakt;
+    }
+
+    .footer__inner > .footer__col:nth-child(4) {
+      grid-area: lokace;
     }
   }
 
   @media (min-width: 1024px) {
     .footer__inner {
       grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      grid-template-areas: none;
       gap: 3rem;
       padding-block: 4rem 3rem;
+    }
+
+    .footer__brand {
+      grid-area: auto;
+    }
+
+    .footer__inner > .footer__col:nth-child(2),
+    .footer__inner > .footer__col:nth-child(3),
+    .footer__inner > .footer__col:nth-child(4) {
+      grid-area: auto;
     }
 
     .footer__brand-link {
