@@ -13,7 +13,7 @@ import { courses } from "../data/courses";
       <h2 id="courses-title">
         Absolvované <span class="section-title-accent">kurzy</span>
       </h2>
-      <p>
+      <p class="courses__subtitle">
         Pravidelně se vzdělávám, abych vám i vašim dětem mohla nabídnout opravdu
         kvalitní lekce.
       </p>
@@ -71,7 +71,7 @@ import { courses } from "../data/courses";
   }
 
   .courses__header h2 {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
     margin: 0 0 1rem;
   }
 
@@ -79,9 +79,19 @@ import { courses } from "../data/courses";
     color: var(--color-sky-deep);
   }
 
-  .courses__header p {
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  .courses__subtitle {
     margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  }
+
+  @media (min-width: 1024px) {
+    .courses__subtitle {
+      font-size: 1.0625rem;
+    }
   }
 
   .courses__list {

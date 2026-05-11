@@ -9,7 +9,9 @@ import { rules } from "../data/rules";
       <h2 id="rules-title">
         Desatero <span class="section-title-accent">chování na lekci</span>
       </h2>
-      <p>Pár jednoduchých pravidel, díky kterým je u nás všem dobře.</p>
+      <p class="rules__subtitle">
+        Pár jednoduchých pravidel, díky kterým je u nás všem dobře.
+      </p>
     </header>
 
     <ol class="rules__grid">
@@ -41,7 +43,7 @@ import { rules } from "../data/rules";
   }
 
   .rules__header h2 {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
     margin: 0 0 1rem;
   }
 
@@ -49,9 +51,19 @@ import { rules } from "../data/rules";
     color: var(--color-sky-deep);
   }
 
-  .rules__header p {
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  .rules__subtitle {
     margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  }
+
+  @media (min-width: 1024px) {
+    .rules__subtitle {
+      font-size: 1.0625rem;
+    }
   }
 
   .rules__grid {

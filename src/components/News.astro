@@ -17,46 +17,65 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
       <h2 id="news-title">
         <span class="section-title-accent">Novinky</span> a aktuality
       </h2>
-      <p>Otevřené kurzy, prázdninové programy nebo změny rozvrhu - tady najdete všechno aktuální.</p>
+      <p class="news__subtitle">
+        Otevřené kurzy, prázdninové programy nebo změny rozvrhu - tady najdete
+        všechno aktuální.
+      </p>
     </header>
 
-    {sorted.length === 0 ? (
-      <p class="news__empty">Zatím tu nic nového není - sledujte nás na sítích.</p>
-    ) : (
-      <ul class="news__grid">
-        {sorted.map((n, i) => (
-          <li
-            class="news-card reveal"
-            style={`transition-delay: ${i * 80}ms`}
-          >
-            <time datetime={n.date} class="news-card__date">
-              {formatter.format(new Date(n.date))}
-            </time>
-            <h3 class="news-card__title">{n.title}</h3>
-            <p class="news-card__text">{n.text}</p>
-            {n.link && (
-              <a
-                href={n.link.href}
-                class="news-card__link"
-                {...(n.link.href.startsWith("http")
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-              >
-                {n.link.label}
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                  <path d="M 3 8 L 13 8 M 9 4 L 13 8 L 9 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            )}
-            <div class="news-card__decor" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </li>
-        ))}
-      </ul>
-    )}
+    {
+      sorted.length === 0 ? (
+        <p class="news__empty">
+          Zatím tu nic nového není - sledujte nás na sítích.
+        </p>
+      ) : (
+        <ul class="news__grid">
+          {sorted.map((n, i) => (
+            <li
+              class="news-card reveal"
+              style={`transition-delay: ${i * 80}ms`}
+            >
+              <time datetime={n.date} class="news-card__date">
+                {formatter.format(new Date(n.date))}
+              </time>
+              <h3 class="news-card__title">{n.title}</h3>
+              <p class="news-card__text">{n.text}</p>
+              {n.link && (
+                <a
+                  href={n.link.href}
+                  class="news-card__link"
+                  {...(n.link.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {n.link.label}
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="14"
+                    height="14"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M 3 8 L 13 8 M 9 4 L 13 8 L 9 12"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              )}
+              <div class="news-card__decor" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </div>
 </section>
 
@@ -68,7 +87,7 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
   }
 
   .news__header h2 {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
     margin: 0 0 1rem;
   }
 
@@ -76,7 +95,20 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     color: var(--color-lilac-deep);
   }
 
-  .news__header p { color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%); margin: 0; }
+  .news__subtitle {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  }
+
+  @media (min-width: 1024px) {
+    .news__subtitle {
+      font-size: 1.0625rem;
+    }
+  }
 
   .news__empty {
     text-align: center;
@@ -104,7 +136,10 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+    transition:
+      transform 280ms ease,
+      border-color 280ms ease,
+      box-shadow 280ms ease;
   }
 
   .news-card:hover {
@@ -149,7 +184,9 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     align-self: flex-start;
     border-bottom: 1.5px solid transparent;
     padding-bottom: 2px;
-    transition: gap 220ms ease, border-color 220ms ease;
+    transition:
+      gap 220ms ease,
+      border-color 220ms ease;
   }
 
   .news-card__link:hover {
@@ -173,6 +210,10 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     background: var(--color-lilac-mid);
   }
 
-  .news-card__decor span:nth-child(2) { background: var(--color-blush-mid); }
-  .news-card__decor span:nth-child(3) { background: var(--color-sky-mid); }
+  .news-card__decor span:nth-child(2) {
+    background: var(--color-blush-mid);
+  }
+  .news-card__decor span:nth-child(3) {
+    background: var(--color-sky-mid);
+  }
 </style>
