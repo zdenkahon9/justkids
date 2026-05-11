@@ -76,7 +76,7 @@ const sorted = [...news].sort((a, b) => (a.date < b.date ? 1 : -1));
     color: var(--color-lilac-deep);
   }
 
-  .news__header p { color: var(--color-ink-soft); margin: 0; }
+  .news__header p { color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%); margin: 0; }
 
   .news__empty {
     text-align: center;

@@ -12,10 +12,14 @@ const accentMap: Record<string, string> = {
 <section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
   <div class="container-x">
     <header class="age__header reveal">
-      <span class="eyebrow">Věkové skupiny</span>
+      <span class="eyebrow">Věkové kategorie</span>
       <h2 id="age-title">
         Pro každý věk <span class="section-title-accent">to pravé cvičení</span>
       </h2>
+      <p class="age__subtitle">
+        Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka po
+        hravé překážky pro batolata. Vše v klidu a v tempu, které dítěti vyhovuje.
+      </p>
     </header>
 
     <ul class="age__grid">
@@ -217,9 +221,13 @@ const accentMap: Record<string, string> = {
     color: var(--color-blush-vivid);
   }
 
-  .age__header p {
-    color: var(--color-ink-soft);
+  .age__subtitle {
     margin: 0;
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.0625rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .age__grid {
