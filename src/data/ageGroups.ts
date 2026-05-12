@@ -44,6 +44,5 @@ export const ageGroups: AgeGroup[] = [
       "Skupinové hry, jednoduché cviky podle pokynů a první gymnastické prvky. Stavíme zdravé pohybové návyky.",
     highlights: ["Hry ve skupině", "Prvky gymnastiky", "Koncentrace a poslouchání"],
     accent: "cream",
-    optional: true,
   },
 ];

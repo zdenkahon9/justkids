@@ -7,9 +7,23 @@ const accentMap: Record<string, string> = {
   lilac: "var(--color-lilac-mid)",
   cream: "var(--color-cream-200)",
 };
+
+const emojiMap: Record<string, string> = {
+  "3-6": "🌸",
+  "6-12": "🐣",
+  "1-2": "🦁",
+  "2-3": "🐵",
+};
+
+/** Which card skin: `wave` | `bubbles`. Maps to <li data-variant="…"> + CSS below. */
+const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
 ---
 
-<section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
+<section
+  id="vekove-skupiny"
+  class="section age"
+  aria-labelledby="age-title"
+>
   <div class="container-x">
     <header class="age__header reveal">
       <span class="eyebrow">Věkové kategorie</span>
@@ -29,147 +43,14 @@ const accentMap: Record<string, string> = {
           <li
             class="age__card reveal"
             data-accent={g.accent}
+            data-variant={cardVariant(i)}
             style={`--accent: ${accentMap[g.accent]}; transition-delay: ${i * 80}ms;`}
           >
-            {g.optional && <span class="age__optional">volitelné</span>}
+            {g.optional ? (
+              <span class="age__optional">Dle kurzu</span>
+            ) : null}
             <div class="age__icon" aria-hidden="true">
-              {g.id === "3-6" && (
-                <svg viewBox="0 0 64 64" fill="none">
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r="22"
-                    fill="var(--accent)"
-                    opacity="0.5"
-                  />
-                  <circle cx="32" cy="28" r="9" fill="white" />
-                  <ellipse cx="32" cy="42" rx="13" ry="8" fill="white" />
-                  <circle cx="29" cy="27" r="1.5" fill="#2a1f38" />
-                  <circle cx="35" cy="27" r="1.5" fill="#2a1f38" />
-                  <path
-                    d="M 28 31 Q 32 33 36 31"
-                    stroke="#2a1f38"
-                    stroke-width="1.4"
-                    fill="none"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              )}
-              {g.id === "6-12" && (
-                <svg viewBox="0 0 64 64" fill="none">
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r="22"
-                    fill="var(--accent)"
-                    opacity="0.5"
-                  />
-                  <circle cx="32" cy="26" r="10" fill="white" />
-                  <path
-                    d="M 18 48 Q 32 36 46 48 L 46 52 L 18 52 Z"
-                    fill="white"
-                  />
-                  <circle cx="28" cy="25" r="1.5" fill="#2a1f38" />
-                  <circle cx="36" cy="25" r="1.5" fill="#2a1f38" />
-                  <path
-                    d="M 28 30 Q 32 33 36 30"
-                    stroke="#2a1f38"
-                    stroke-width="1.4"
-                    fill="none"
-                    stroke-linecap="round"
-                  />
-                  <circle cx="48" cy="20" r="3" fill="#ff4fa3" />
-                </svg>
-              )}
-              {g.id === "1-2" && (
-                <svg viewBox="0 0 64 64" fill="none">
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r="22"
-                    fill="var(--accent)"
-                    opacity="0.5"
-                  />
-                  <circle cx="32" cy="22" r="9" fill="white" />
-                  <rect
-                    x="24"
-                    y="30"
-                    width="16"
-                    height="20"
-                    rx="4"
-                    fill="white"
-                  />
-                  <rect
-                    x="22"
-                    y="48"
-                    width="6"
-                    height="6"
-                    rx="2"
-                    fill="white"
-                  />
-                  <rect
-                    x="36"
-                    y="48"
-                    width="6"
-                    height="6"
-                    rx="2"
-                    fill="white"
-                  />
-                  <circle cx="29" cy="21" r="1.5" fill="#2a1f38" />
-                  <circle cx="35" cy="21" r="1.5" fill="#2a1f38" />
-                  <path
-                    d="M 28 26 Q 32 28 36 26"
-                    stroke="#2a1f38"
-                    stroke-width="1.4"
-                    fill="none"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              )}
-              {g.id === "2-3" && (
-                <svg viewBox="0 0 64 64" fill="none">
-                  <circle
-                    cx="32"
-                    cy="32"
-                    r="22"
-                    fill="var(--accent)"
-                    opacity="0.5"
-                  />
-                  <circle cx="32" cy="20" r="8" fill="white" />
-                  <path d="M 22 30 L 42 30 L 38 50 L 26 50 Z" fill="white" />
-                  <rect
-                    x="24"
-                    y="48"
-                    width="6"
-                    height="6"
-                    rx="2"
-                    fill="white"
-                  />
-                  <rect
-                    x="34"
-                    y="48"
-                    width="6"
-                    height="6"
-                    rx="2"
-                    fill="white"
-                  />
-                  <circle cx="29" cy="19" r="1.5" fill="#2a1f38" />
-                  <circle cx="35" cy="19" r="1.5" fill="#2a1f38" />
-                  <path
-                    d="M 28 23 Q 32 25 36 23"
-                    stroke="#2a1f38"
-                    stroke-width="1.4"
-                    fill="none"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M 24 14 L 40 14"
-                    stroke="#2a1f38"
-                    stroke-width="1.4"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              )}
+              <span class="age__emoji">{emojiMap[g.id]}</span>
             </div>
             <div class="age__range">{g.range}</div>
             <h3>{g.title}</h3>
@@ -204,6 +85,17 @@ const accentMap: Record<string, string> = {
 </section>
 
 <style>
+  /*
+   * ---------------------------------------------------------------------------
+   * AgeGroups — věkové karty
+   * • ŽIVÉ styly: sekce LIVE WAVE / LIVE BUBBLES (nepřesouvat bez úmyslu).
+   * • Archiv: na konci souboru v <style> je zakomentovaný duplikát obou variant
+   *   (ARCHIVED PATTERN: WAVE / BUBBLES) — kopírování pro jinou sekci nebo obnovu.
+   * • HTML: <li class="age__card" data-variant="wave"|"bubbles"
+   *         style="--accent: …; transition-delay: …">
+   * ---------------------------------------------------------------------------
+   */
+
   #vekove-skupiny {
     scroll-margin-top: -5.5rem;
   }
@@ -231,16 +123,6 @@ const accentMap: Record<string, string> = {
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
-  @media (min-width: 1024px) {
-    .age__header h2 {
-      margin: 0 0 1rem;
-    }
-
-    .age__subtitle {
-      font-size: 1.0625rem;
-    }
-  }
-
   .age__grid {
     list-style: none;
     padding: 0;
@@ -252,29 +134,23 @@ const accentMap: Record<string, string> = {
 
   .age__card {
     position: relative;
-    background: white;
-    border-radius: var(--radius-card);
-    padding: 2rem 1.75rem;
-    border: 2px solid var(--accent);
+    list-style: none;
+    box-sizing: border-box;
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 280ms ease;
-  }
-
-  .age__card:hover {
-    transform: translateY(-6px) rotate(-0.5deg);
-    box-shadow: 0 20px 50px -16px
-      color-mix(in srgb, var(--accent) 60%, transparent);
+      box-shadow 280ms ease,
+      filter 280ms ease;
   }
 
   .age__optional {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    font-size: 0.7rem;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 4;
+    font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: var(--color-ink-muted);
     background: var(--color-cream);
     padding: 0.3rem 0.6rem;
@@ -288,12 +164,12 @@ const accentMap: Record<string, string> = {
     border-radius: 50%;
     display: grid;
     place-items: center;
-    margin-bottom: 1.25rem;
+    margin: 0 auto 1.25rem;
   }
 
-  .age__icon svg {
-    width: 56px;
-    height: 56px;
+  .age__emoji {
+    font-size: 2.5rem;
+    line-height: 1;
   }
 
   .age__range {
@@ -336,5 +212,364 @@ const accentMap: Record<string, string> = {
   .age__highlights svg {
     color: var(--color-blush-vivid);
     flex-shrink: 0;
+  }
+
+  /* ========== LIVE: wave (data-variant="wave") ========== */
+  .age__card[data-variant="wave"] {
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    padding-top: 4.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+    background: linear-gradient(
+      180deg,
+      var(--color-cream-50) 0%,
+      #fefefe 45%,
+      color-mix(in srgb, var(--accent) 14%, white) 100%
+    );
+    overflow: hidden;
+  }
+
+  .age__card[data-variant="wave"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4%;
+    right: -4%;
+    height: 3.5rem;
+    background: color-mix(in srgb, var(--accent) 38%, white);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+
+  .age__card[data-variant="wave"] .age__icon {
+    position: relative;
+    z-index: 1;
+    background: white;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 10px 28px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
+  }
+
+  .age__card[data-variant="wave"] .age__range {
+    color: var(--color-ink-soft);
+  }
+
+  .age__card[data-variant="wave"]:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .age__card[data-variant="wave"]:hover .age__icon {
+    transform: scale(1.05);
+  }
+
+  /* ========== LIVE: bubbles (data-variant="bubbles") ========== */
+  .age__card[data-variant="bubbles"] {
+    text-align: center;
+    border-radius: 1.75rem;
+    padding: 4.35rem 1.55rem 1.85rem;
+    border: 2px solid color-mix(in srgb, var(--accent) 28%, white);
+    background-color: #fffefb;
+    background-image:
+      radial-gradient(
+        85% 70% at 8% 0%,
+        color-mix(in srgb, var(--color-lilac-mid) 38%, transparent),
+        transparent 58%
+      ),
+      radial-gradient(
+        75% 65% at 100% 8%,
+        color-mix(in srgb, var(--color-blush-mid) 42%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        90% 55% at 50% 100%,
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        transparent 52%
+      ),
+      linear-gradient(180deg, var(--color-cream-50) 0%, #fffefb 55%);
+    box-shadow: none;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .age__card[data-variant="bubbles"] > *:not(.age__optional) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .age__card[data-variant="bubbles"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -7%;
+    right: -7%;
+    height: 3.85rem;
+    z-index: 0;
+    background: color-mix(in srgb, var(--accent) 44%, white);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+
+  .age__card[data-variant="bubbles"] .age__emoji {
+    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
+  }
+
+  .age__card[data-variant="bubbles"] .age__icon {
+    width: 80px;
+    height: 80px;
+    margin: -2.85rem auto 1.05rem;
+    border-radius: 999px;
+    background: #fff;
+    border: none;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
+  }
+
+  .age__card[data-variant="bubbles"] .age__range {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.7rem;
+    padding: 0.38rem 1.1rem;
+    font-family: "Sniglet", var(--font-display), system-ui, sans-serif;
+    font-size: 1.06rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--color-ink);
+    background: color-mix(in srgb, var(--accent) 24%, white);
+    border-radius: 999px;
+    border: 2px solid color-mix(in srgb, var(--accent) 38%, white);
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .age__card[data-variant="bubbles"] h3 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 20ch;
+  }
+
+  .age__card[data-variant="bubbles"] p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 32ch;
+  }
+
+  .age__card[data-variant="bubbles"] .age__highlights li {
+    justify-content: flex-start;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--color-cream-100) 88%, var(--accent));
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    text-align: left;
+  }
+
+  .age__card[data-variant="bubbles"] .age__highlights svg {
+    color: color-mix(in srgb, var(--accent) 55%, var(--color-blush-vivid));
+  }
+
+  .age__card[data-variant="bubbles"]:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .age__card[data-variant="bubbles"]:hover .age__icon {
+    transform: scale(1.05);
+  }
+
+  /*
+   * ===========================================================================
+   * ARCHIVED PATTERNS — zakomentovaný SNAPSHOT pro pozdější použití
+   * (kopírovat do aktivní části výše; po úpravě LIVE bloků aktualizuj i tady)
+   * ===========================================================================
+
+  ---------- ARCHIVED PATTERN: WAVE ----------
+  .age__card[data-variant="wave"] {
+    border-radius: var(--radius-card);
+    padding: 2rem 1.75rem;
+    padding-top: 4.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+    background: linear-gradient(
+      180deg,
+      var(--color-cream-50) 0%,
+      #fefefe 45%,
+      color-mix(in srgb, var(--accent) 14%, white) 100%
+    );
+    overflow: hidden;
+  }
+
+  .age__card[data-variant="wave"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4%;
+    right: -4%;
+    height: 3.5rem;
+    background: color-mix(in srgb, var(--accent) 38%, white);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+
+  .age__card[data-variant="wave"] .age__icon {
+    position: relative;
+    z-index: 1;
+    background: white;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 10px 28px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
+  }
+
+  .age__card[data-variant="wave"] .age__range {
+    color: var(--color-ink-soft);
+  }
+
+  .age__card[data-variant="wave"]:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .age__card[data-variant="wave"]:hover .age__icon {
+    transform: scale(1.05);
+  }
+
+  ---------- ARCHIVED PATTERN: BUBBLES ----------
+  .age__card[data-variant="bubbles"] {
+    text-align: center;
+    border-radius: 1.75rem;
+    padding: 4.35rem 1.55rem 1.85rem;
+    border: 2px solid color-mix(in srgb, var(--accent) 28%, white);
+    background-color: #fffefb;
+    background-image:
+      radial-gradient(
+        85% 70% at 8% 0%,
+        color-mix(in srgb, var(--color-lilac-mid) 38%, transparent),
+        transparent 58%
+      ),
+      radial-gradient(
+        75% 65% at 100% 8%,
+        color-mix(in srgb, var(--color-blush-mid) 42%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        90% 55% at 50% 100%,
+        color-mix(in srgb, var(--accent) 22%, transparent),
+        transparent 52%
+      ),
+      linear-gradient(180deg, var(--color-cream-50) 0%, #fffefb 55%);
+    box-shadow: none;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .age__card[data-variant="bubbles"] > *:not(.age__optional) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .age__card[data-variant="bubbles"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -7%;
+    right: -7%;
+    height: 3.85rem;
+    z-index: 0;
+    background: color-mix(in srgb, var(--accent) 44%, white);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    pointer-events: none;
+  }
+
+  .age__card[data-variant="bubbles"] .age__emoji {
+    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
+  }
+
+  .age__card[data-variant="bubbles"] .age__icon {
+    width: 80px;
+    height: 80px;
+    margin: -2.85rem auto 1.05rem;
+    border-radius: 999px;
+    background: #fff;
+    border: none;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
+  }
+
+  .age__card[data-variant="bubbles"] .age__range {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.7rem;
+    padding: 0.38rem 1.1rem;
+    font-family: "Sniglet", var(--font-display), system-ui, sans-serif;
+    font-size: 1.06rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--color-ink);
+    background: color-mix(in srgb, var(--accent) 24%, white);
+    border-radius: 999px;
+    border: 2px solid color-mix(in srgb, var(--accent) 38%, white);
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .age__card[data-variant="bubbles"] h3 {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 20ch;
+  }
+
+  .age__card[data-variant="bubbles"] p {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 32ch;
+  }
+
+  .age__card[data-variant="bubbles"] .age__highlights li {
+    justify-content: flex-start;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--color-cream-100) 88%, var(--accent));
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+    text-align: left;
+  }
+
+  .age__card[data-variant="bubbles"] .age__highlights svg {
+    color: color-mix(in srgb, var(--accent) 55%, var(--color-blush-vivid));
+  }
+
+  .age__card[data-variant="bubbles"]:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .age__card[data-variant="bubbles"]:hover .age__icon {
+    transform: scale(1.05);
+  }
+
+   * ===========================================================================
+   */
+
+  @media (min-width: 1024px) {
+    .age__header h2 {
+      margin: 0 0 1rem;
+    }
+
+    .age__subtitle {
+      font-size: 1.0625rem;
+    }
   }
 </style>
