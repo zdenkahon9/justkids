@@ -30,101 +30,125 @@ const mapEmbed = (lat: number, lng: number) =>
               class={`location location--${l.accent} reveal`}
               style={`transition-delay: ${i * 100}ms`}
             >
-              <div class="location__content">
-                <div class="location__head">
-                  <div class="location__icon" aria-hidden="true">
+              <details class="location__details">
+                <summary class="location__summary">
+                  <div class="location__head">
+                    <div class="location__icon" aria-hidden="true">
+                      <svg
+                        class="location__pin"
+                        viewBox="0 0 24 24"
+                        width="30"
+                        height="30"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="var(--accent-color)"
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                        />
+                        <circle cx="12" cy="9" r="2.75" fill="#fff" />
+                      </svg>
+                    </div>
+                    <div class="location__head-text">
+                      <h3>{l.name}</h3>
+                      <address class="location__address">
+                        {l.street}, {l.zip} {l.city}
+                      </address>
+                    </div>
+                  </div>
+                  <span class="location__chevron" aria-hidden="true">
                     <svg
-                      class="location__pin"
+                      class="location__chevron-icon"
                       viewBox="0 0 24 24"
-                      width="30"
-                      height="30"
+                      width="22"
+                      height="22"
                       aria-hidden="true"
                     >
                       <path
-                        fill="var(--accent-color)"
-                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 9l6 6 6-6"
                       />
-                      <circle cx="12" cy="9" r="2.75" fill="#fff" />
                     </svg>
-                  </div>
-                  <div class="location__head-text">
-                    <h3>{l.name}</h3>
-                    <address class="location__address">
-                      {l.street}, {l.zip} {l.city}
-                    </address>
-                  </div>
-                </div>
-
-                <div class="location__parking">
-                  <span class="location__parking-label">
-                    <span class="location__p-mark" aria-hidden="true">
-                      P
-                    </span>
-                    Parkování
                   </span>
-                  <p>{l.parking}</p>
+                </summary>
+
+                <div class="location__panel">
+                  <div class="location__expandable">
+                    <div class="location__parking">
+                      <span class="location__parking-label">
+                        <span class="location__p-mark" aria-hidden="true">
+                          P
+                        </span>
+                        Parkování
+                      </span>
+                      <p>{l.parking}</p>
+                    </div>
+
+                    <a
+                      href={l.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="location__nav-link"
+                    >
+                      Navigovat v Google Maps
+                      <svg
+                        class="location__extern-icon"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+
+                  <div class="location__map-shell">
+                    <iframe
+                      class="location__map-frame"
+                      src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
+                      title={`Mapa: ${l.name}`}
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      allowfullscreen
+                    />
+                    <a
+                      href={l.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="location__map-overlay"
+                    >
+                      Otevřít v Mapách
+                      <svg
+                        class="location__extern-icon"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                        />
+                        <path
+                          fill="currentColor"
+                          d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
                 </div>
-
-                <a
-                  href={l.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="location__nav-link"
-                >
-                  Navigovat v Google Maps
-                  <svg
-                    class="location__extern-icon"
-                    viewBox="0 0 24 24"
-                    width="16"
-                    height="16"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                    />
-                  </svg>
-                </a>
-              </div>
-
-              <div class="location__map-shell">
-                <iframe
-                  class="location__map-frame"
-                  src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
-                  title={`Mapa: ${l.name}`}
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
-                  allowfullscreen
-                />
-                <a
-                  href={l.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="location__map-overlay"
-                >
-                  Otevřít v Mapách
-                  <svg
-                    class="location__extern-icon"
-                    viewBox="0 0 24 24"
-                    width="16"
-                    height="16"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                    />
-                    <path
-                      fill="currentColor"
-                      d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                    />
-                  </svg>
-                </a>
-              </div>
+              </details>
             </article>
           ))
         }
@@ -152,7 +176,7 @@ const mapEmbed = (lat: number, lng: number) =>
 
   .locations__header h2 {
     font-size: clamp(2.5rem, 4.5vw, 3.5rem);
-    margin: 0 0 1rem;
+    margin: 0 0 1.5rem;
   }
 
   .locations__header h2 .section-title-accent {
@@ -168,17 +192,13 @@ const mapEmbed = (lat: number, lng: number) =>
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
-  @media (min-width: 1024px) {
-    .locations__subtitle {
-      font-size: 1.0625rem;
-    }
-  }
-
   /* Fallback: no container queries → same intrinsic columns as before */
   .locations__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 1.5rem;
+    /* Short cards are not stretched to the taller row (accordion close + blank area) */
+    align-items: start;
   }
 
   @supports (container-type: inline-size) {
@@ -188,6 +208,7 @@ const mapEmbed = (lat: number, lng: number) =>
 
     .locations__grid {
       grid-template-columns: 1fr;
+      align-items: start;
     }
 
     @container locations (min-width: 664px) {
@@ -205,7 +226,8 @@ const mapEmbed = (lat: number, lng: number) =>
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    width: 100%;
+    min-height: 0;
     background: #fefefe;
     border-radius: var(--radius-card);
     overflow: hidden;
@@ -227,20 +249,6 @@ const mapEmbed = (lat: number, lng: number) =>
     --accent-color: var(--color-lilac-deep);
   }
 
-  @media (min-width: 1024px) {
-    .location:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 56px -12px
-        color-mix(in srgb, var(--color-lilac-deep) 56%, transparent);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .location:hover {
-        transform: none;
-      }
-    }
-  }
-
   .location__map-shell {
     position: relative;
     flex-shrink: 0;
@@ -260,12 +268,6 @@ const mapEmbed = (lat: number, lng: number) =>
     display: block;
     /* Slightly softer than raw Google embed — easier on long viewing */
     filter: contrast(0.97) saturate(0.94);
-  }
-
-  @media (prefers-contrast: more) {
-    .location__map-frame {
-      filter: none;
-    }
   }
 
   .location__map-overlay {
@@ -300,20 +302,79 @@ const mapEmbed = (lat: number, lng: number) =>
     opacity: 0.9;
   }
 
-  .location__content {
+  .location__details {
     position: relative;
-    padding: 1.35rem 1.5rem 1.5rem;
+    flex: 0 1 auto;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  .location__panel {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .location__summary {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.35rem 1.5rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .location__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .location__summary:focus {
+    outline: none;
+  }
+
+  .location__summary:focus-visible {
+    outline: 2px solid var(--color-lilac-deep);
+    outline-offset: 3px;
+    border-radius: 0.35rem;
+  }
+
+  .location__chevron {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    align-self: center;
+    margin-top: 0.35rem;
+    color: color-mix(in srgb, var(--color-ink-soft) 65%, var(--color-ink) 35%);
+    transition: transform 220ms ease;
+  }
+
+  .location__details[open] .location__chevron {
+    transform: rotate(180deg);
+  }
+
+  .location__chevron-icon {
+    display: block;
+  }
+
+  .location__expandable {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0 1.5rem 1.5rem;
   }
 
   .location__head {
     display: flex;
     align-items: flex-start;
     gap: 0.85rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0;
     padding-top: 0.5rem;
   }
 
@@ -417,4 +478,73 @@ const mapEmbed = (lat: number, lng: number) =>
   .location__nav-link:hover {
     border-bottom-color: var(--color-blush-vivid);
   }
+
+  @media (prefers-contrast: more) {
+    .location__map-frame {
+      filter: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .locations__header h2 {
+      margin: 0 0 1rem;
+    }
+
+    .locations__subtitle {
+      font-size: 1.0625rem;
+    }
+
+    .location__summary {
+      cursor: default;
+      user-select: auto;
+    }
+
+    .location__chevron {
+      display: none;
+    }
+
+    .location:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 56px -12px
+        color-mix(in srgb, var(--color-lilac-deep) 56%, transparent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .location:hover {
+        transform: none;
+      }
+    }
+  }
 </style>
+
+<script>
+  function initLocationDetailsPanel() {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const root = document.getElementById("lokace");
+    if (!root) return;
+
+    const detailsList = root.querySelectorAll<HTMLDetailsElement>(
+      ".location__details",
+    );
+
+    const syncOpenFromViewport = () => {
+      const wide = mq.matches;
+      detailsList.forEach((el) => {
+        el.open = wide;
+      });
+    };
+
+    detailsList.forEach((details) => {
+      details.addEventListener("toggle", () => {
+        if (mq.matches && !details.open) {
+          details.open = true;
+        }
+      });
+    });
+
+    mq.addEventListener("change", syncOpenFromViewport);
+    syncOpenFromViewport();
+  }
+
+  initLocationDetailsPanel();
+</script>
