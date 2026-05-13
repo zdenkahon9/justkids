@@ -30,7 +30,7 @@ const mapEmbed = (lat: number, lng: number) =>
               class={`location location--${l.accent} reveal`}
               style={`transition-delay: ${i * 100}ms`}
             >
-              <details class="location__details">
+              <details class="location__details" open>
                 <summary class="location__summary">
                   <div class="location__head">
                     <div class="location__icon" aria-hidden="true">
@@ -55,24 +55,6 @@ const mapEmbed = (lat: number, lng: number) =>
                       </address>
                     </div>
                   </div>
-                  <span class="location__chevron" aria-hidden="true">
-                    <svg
-                      class="location__chevron-icon"
-                      viewBox="0 0 24 24"
-                      width="22"
-                      height="22"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.25"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 9l6 6 6-6"
-                      />
-                    </svg>
-                  </span>
                 </summary>
 
                 <div class="location__panel">
@@ -197,7 +179,7 @@ const mapEmbed = (lat: number, lng: number) =>
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 1.5rem;
-    /* Short cards are not stretched to the taller row (accordion close + blank area) */
+    /* Short cards are not stretched to the taller row */
     align-items: start;
   }
 
@@ -322,11 +304,11 @@ const mapEmbed = (lat: number, lng: number) =>
     list-style: none;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 0.75rem;
     padding: 1.35rem 1.5rem 1.25rem;
-    cursor: pointer;
-    user-select: none;
+    cursor: default;
+    user-select: auto;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -342,24 +324,6 @@ const mapEmbed = (lat: number, lng: number) =>
     outline: 2px solid var(--color-lilac-deep);
     outline-offset: 3px;
     border-radius: 0.35rem;
-  }
-
-  .location__chevron {
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    align-self: center;
-    margin-top: 0.35rem;
-    color: color-mix(in srgb, var(--color-ink-soft) 65%, var(--color-ink) 35%);
-    transition: transform 220ms ease;
-  }
-
-  .location__details[open] .location__chevron {
-    transform: rotate(180deg);
-  }
-
-  .location__chevron-icon {
-    display: block;
   }
 
   .location__expandable {
@@ -494,15 +458,6 @@ const mapEmbed = (lat: number, lng: number) =>
       font-size: 1.0625rem;
     }
 
-    .location__summary {
-      cursor: default;
-      user-select: auto;
-    }
-
-    .location__chevron {
-      display: none;
-    }
-
     .location:hover {
       transform: translateY(-4px);
       box-shadow: 0 24px 56px -12px
@@ -518,8 +473,8 @@ const mapEmbed = (lat: number, lng: number) =>
 </style>
 
 <script>
+  /** Panely lokací jsou vždy rozbalené; po zavření (např. klávesnicí) znovu otevřeme */
   function initLocationDetailsPanel() {
-    const mq = window.matchMedia("(min-width: 1024px)");
     const root = document.getElementById("lokace");
     if (!root) return;
 
@@ -527,23 +482,14 @@ const mapEmbed = (lat: number, lng: number) =>
       ".location__details",
     );
 
-    const syncOpenFromViewport = () => {
-      const wide = mq.matches;
-      detailsList.forEach((el) => {
-        el.open = wide;
-      });
-    };
-
     detailsList.forEach((details) => {
+      details.open = true;
       details.addEventListener("toggle", () => {
-        if (mq.matches && !details.open) {
+        if (!details.open) {
           details.open = true;
         }
       });
     });
-
-    mq.addEventListener("change", syncOpenFromViewport);
-    syncOpenFromViewport();
   }
 
   initLocationDetailsPanel();
