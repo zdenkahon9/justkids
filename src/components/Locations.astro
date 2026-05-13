@@ -49,7 +49,9 @@ const mapEmbed = (lat: number, lng: number) =>
                       </svg>
                     </div>
                     <div class="location__head-text">
-                      <h3>{l.name}</h3>
+                      <h3>
+                        {l.id === "zdice" ? "Fitcentrum Zdice" : l.name}
+                      </h3>
                       <address class="location__address">
                         {l.street}, {l.zip} {l.city}
                       </address>
