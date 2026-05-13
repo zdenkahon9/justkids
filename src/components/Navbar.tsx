@@ -704,7 +704,7 @@ const Navbar = ({
             use !important so CTA leaves the layout.
           - Wide desktop uses three grid tracks so no empty fourth column when toggle is hidden.
         */
-        @media (min-width: 1024px) and (max-width: 1155px) {
+        @media (min-width: 1024px) and (max-width: 1179px) {
           .nav__inner {
             grid-template-columns: auto 1fr;
             gap: 0.3rem;
@@ -725,7 +725,7 @@ const Navbar = ({
           }
         }
 
-        @media (min-width: 1156px) {
+        @media (min-width: 1179px) {
           .nav__inner.container-x {
             padding-inline: 0.9rem;
           }

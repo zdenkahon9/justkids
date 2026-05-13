@@ -28,7 +28,7 @@ const cardVariant = (_index: number) => "wave";
 ---
 
 <section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
-  <div class="container-x">
+  <div class="container-x age__container">
     <header class="age__header reveal">
       <span class="eyebrow">Věkové kategorie</span>
       <h2 id="age-title">
@@ -101,6 +101,7 @@ const cardVariant = (_index: number) => "wave";
   #vekove-skupiny {
     scroll-margin-top: -5.5rem;
   }
+
   .age__header {
     text-align: center;
     max-width: 42rem;
@@ -130,7 +131,7 @@ const cardVariant = (_index: number) => "wave";
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
@@ -379,167 +380,26 @@ const cardVariant = (_index: number) => "wave";
     transform: scale(1.05);
   }
 
-  /*
-   * ===========================================================================
-   * ARCHIVED PATTERNS — zakomentovaný SNAPSHOT pro pozdější použití
-   * (kopírovat do aktivní části výše; po úpravě LIVE bloků aktualizuj i tady)
-   * ===========================================================================
-
-  ---------- ARCHIVED PATTERN: WAVE ----------
-  .age__card[data-variant="wave"] {
-    border-radius: var(--radius-card);
-    padding: 2rem 1.75rem;
-    padding-top: 4.5rem;
-    border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-    background: #fefefe;
-    overflow: hidden;
+  /* Kontejner: šířka jako při viewportu 416px */
+  @media (min-width: 416px) and (max-width: 639px) {
+    #vekove-skupiny .age__container {
+      max-width: 416px;
+    }
   }
 
-  .age__card[data-variant="wave"]::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -4%;
-    right: -4%;
-    height: 3.5rem;
-    background: color-mix(in srgb, var(--accent) 38%, white);
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
-    pointer-events: none;
+  /* Grid: tablet — 2 sloupce (2+2 karty) */
+  @media (min-width: 640px) and (max-width: 1179px) {
+    .age__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
-  .age__card[data-variant="wave"] .age__icon {
-    position: relative;
-    z-index: 1;
-    width: 80px;
-    height: 80px;
-    margin: -2.85rem auto 1.2rem;
-    border-radius: 999px;
-    background: #fff;
-    border: none;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-    transition: transform 280ms ease;
+  /* Kontejner: šířka jako při viewportu 843px (padding 4rem od 640px v global.css) */
+  @media (min-width: 843px) and (max-width: 1179px) {
+    #vekove-skupiny .age__container {
+      max-width: 843px;
+    }
   }
-
-  .age__card[data-variant="wave"] .age__emoji {
-    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
-  }
-
-  .age__card[data-variant="wave"]:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-
-  .age__card[data-variant="wave"]:hover .age__icon {
-    transform: scale(1.05);
-  }
-
-  ---------- ARCHIVED PATTERN: BUBBLES ----------
-  .age__card[data-variant="bubbles"] {
-    text-align: center;
-    border-radius: 1.75rem;
-    padding: 4.35rem 1.55rem 1.85rem;
-    border: 2px solid color-mix(in srgb, var(--accent) 28%, white);
-    background-color: #fffefb;
-    background-image:
-      radial-gradient(
-        85% 70% at 8% 0%,
-        color-mix(in srgb, var(--color-lilac-mid) 38%, transparent),
-        transparent 58%
-      ),
-      radial-gradient(
-        75% 65% at 100% 8%,
-        color-mix(in srgb, var(--color-blush-mid) 42%, transparent),
-        transparent 55%
-      ),
-      radial-gradient(
-        90% 55% at 50% 100%,
-        color-mix(in srgb, var(--accent) 22%, transparent),
-        transparent 52%
-      ),
-      linear-gradient(180deg, var(--color-cream-50) 0%, #fffefb 55%);
-    box-shadow: none;
-    overflow: hidden;
-    isolation: isolate;
-  }
-
-  .age__card[data-variant="bubbles"] > *:not(.age__optional) {
-    position: relative;
-    z-index: 1;
-  }
-
-  .age__card[data-variant="bubbles"]::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -7%;
-    right: -7%;
-    height: 3.85rem;
-    z-index: 0;
-    background: color-mix(in srgb, var(--accent) 44%, white);
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
-    pointer-events: none;
-  }
-
-  .age__card[data-variant="bubbles"] .age__emoji {
-    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
-  }
-
-  .age__card[data-variant="bubbles"] .age__icon {
-    width: 80px;
-    height: 80px;
-    margin: -2.85rem auto 1.2rem;
-    border-radius: 999px;
-    background: #fff;
-    border: none;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-    transition: transform 280ms ease;
-  }
-
-  .age__card[data-variant="bubbles"] h3 {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 20ch;
-  }
-
-  .age__card[data-variant="bubbles"] p {
-    text-align: left;
-    margin: 0 0 1.2rem;
-  }
-
-  .age__card[data-variant="bubbles"] .age__highlights li {
-    justify-content: flex-start;
-    padding: 0.5rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.88rem;
-    font-weight: 600;
-    background: color-mix(in srgb, var(--color-cream-100) 88%, var(--accent));
-    border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-    text-align: left;
-  }
-
-  .age__card[data-variant="bubbles"] .age__highlights svg {
-    color: color-mix(in srgb, var(--accent) 55%, var(--color-blush-vivid));
-  }
-
-  .age__card[data-variant="bubbles"]:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-
-  .age__card[data-variant="bubbles"]:hover .age__icon {
-    transform: scale(1.05);
-  }
-
-   * ===========================================================================
-   */
 
   @media (min-width: 1024px) {
     .age__header h2 {
@@ -548,6 +408,21 @@ const cardVariant = (_index: number) => "wave";
 
     .age__subtitle {
       font-size: 1.0625rem;
+    }
+  }
+
+  /* Grid: desktop — 4 karty v řádku */
+  @media (min-width: 1180px) {
+    .age__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .age__card p {
+      font-size: 1rem;
+    }
+
+    .age__highlights li {
+      font-size: 1rem;
     }
   }
 </style>
