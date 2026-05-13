@@ -24,6 +24,12 @@
   --color-lilac-mid: #d4bff5;
   --color-lilac-deep: #b58be0;
 
+  /*
+   * 4th sibling accent (age card 4): continues the balloon arc in pozadi.png — sky ~204°,
+   * lilac ~266°, blush ~330° — this sits ~348° (rose-coral toward peach), not yellow-brown.
+   */
+  --color-coral-deep: #d46e86;
+
   /* Ink */
   --color-ink: #2a1f38;
   --color-ink-soft: #5b4d6b;

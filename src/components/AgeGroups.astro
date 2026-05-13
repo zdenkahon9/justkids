@@ -8,6 +8,14 @@ const accentMap: Record<string, string> = {
   cream: "var(--color-cream-200)",
 };
 
+const cardAccentVar = (index: number, accent: keyof typeof accentMap) => {
+  if (index === 0) return "var(--color-sky-deep)";
+  if (index === 1) return "var(--color-blush-deep)";
+  if (index === 2) return "var(--color-lilac-deep)";
+  if (index === 3) return "var(--color-coral-deep)";
+  return accentMap[accent];
+};
+
 const emojiMap: Record<string, string> = {
   "3-6": "🌸",
   "6-12": "🐣",
@@ -15,15 +23,11 @@ const emojiMap: Record<string, string> = {
   "2-3": "🐵",
 };
 
-/** Which card skin: `wave` | `bubbles`. Maps to <li data-variant="…"> + CSS below. */
-const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
+/** Card skin: all rows use `wave`. `--accent`: 0 sky-deep, 1 blush-deep, 2 lilac-deep, 3 coral-deep, else from data. */
+const cardVariant = (_index: number) => "wave";
 ---
 
-<section
-  id="vekove-skupiny"
-  class="section age"
-  aria-labelledby="age-title"
->
+<section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
   <div class="container-x">
     <header class="age__header reveal">
       <span class="eyebrow">Věkové kategorie</span>
@@ -44,16 +48,14 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
             class="age__card reveal"
             data-accent={g.accent}
             data-variant={cardVariant(i)}
-            style={`--accent: ${accentMap[g.accent]}; transition-delay: ${i * 80}ms;`}
+            style={`--accent: ${cardAccentVar(i, g.accent)}; transition-delay: ${i * 80}ms;`}
           >
-            {g.optional ? (
-              <span class="age__optional">Dle kurzu</span>
-            ) : null}
+            {g.optional ? <span class="age__optional">Dle kurzu</span> : null}
             <div class="age__icon" aria-hidden="true">
               <span class="age__emoji">{emojiMap[g.id]}</span>
             </div>
             <div class="age__range">{g.range}</div>
-            <h3>{g.title}</h3>
+            {/* <h3>{g.title}</h3> */}
             <p>{g.description}</p>
             <ul class="age__highlights">
               {g.highlights.map((h) => (
@@ -91,7 +93,7 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
    * • ŽIVÉ styly: sekce LIVE WAVE / LIVE BUBBLES (nepřesouvat bez úmyslu).
    * • Archiv: na konci souboru v <style> je zakomentovaný duplikát obou variant
    *   (ARCHIVED PATTERN: WAVE / BUBBLES) — kopírování pro jinou sekci nebo obnovu.
-   * • HTML: <li class="age__card" data-variant="wave"|"bubbles"
+   * • HTML: <li class="age__card" data-variant="wave"
    *         style="--accent: …; transition-delay: …">
    * ---------------------------------------------------------------------------
    */
@@ -173,23 +175,29 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   }
 
   .age__range {
-    display: inline-block;
-    font-family: var(--font-script);
-    font-size: 1.4rem;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.5rem;
     color: var(--color-blush-vivid);
     line-height: 1;
-    margin-bottom: 0.4rem;
+    text-align: center;
   }
 
-  .age__card h3 {
+  /* .age__card h3 {
     font-size: 1.4rem;
     margin: 0 0 0.65rem;
-  }
+  } */
 
   .age__card p {
     color: var(--color-ink-soft);
-    margin: 0 0 1.25rem;
-    font-size: 0.95rem;
+    margin: 0 0 1.75rem;
+    font-size: 1.125rem;
   }
 
   .age__highlights {
@@ -204,7 +212,7 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 0.9rem;
+    font-size: 1.125rem;
     color: var(--color-ink);
     font-weight: 500;
   }
@@ -220,12 +228,7 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
     padding: 2rem 1.75rem;
     padding-top: 4.5rem;
     border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-    background: linear-gradient(
-      180deg,
-      var(--color-cream-50) 0%,
-      #fefefe 45%,
-      color-mix(in srgb, var(--accent) 14%, white) 100%
-    );
+    background: #fefefe;
     overflow: hidden;
   }
 
@@ -244,21 +247,29 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   .age__card[data-variant="wave"] .age__icon {
     position: relative;
     z-index: 1;
-    background: white;
+    width: 80px;
+    height: 80px;
+    margin: -2.85rem auto 1.25rem;
+    border-radius: 999px;
+    background: #fff;
+    border: none;
     box-shadow:
       inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 10px 28px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="wave"] .age__range {
-    color: var(--color-ink-soft);
+  .age__card[data-variant="wave"] .age__emoji {
+    filter: drop-shadow(
+      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+    );
   }
 
   .age__card[data-variant="wave"]:hover {
     transform: translateY(-4px);
-    box-shadow:
-      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
   }
 
   .age__card[data-variant="wave"]:hover .age__icon {
@@ -313,13 +324,15 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   }
 
   .age__card[data-variant="bubbles"] .age__emoji {
-    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
+    filter: drop-shadow(
+      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+    );
   }
 
   .age__card[data-variant="bubbles"] .age__icon {
     width: 80px;
     height: 80px;
-    margin: -2.85rem auto 1.05rem;
+    margin: -2.85rem auto 1.2rem;
     border-radius: 999px;
     background: #fff;
     border: none;
@@ -330,23 +343,6 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="bubbles"] .age__range {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.7rem;
-    padding: 0.38rem 1.1rem;
-    font-family: "Sniglet", var(--font-display), system-ui, sans-serif;
-    font-size: 1.06rem;
-    font-weight: 800;
-    letter-spacing: 0.03em;
-    color: var(--color-ink);
-    background: color-mix(in srgb, var(--accent) 24%, white);
-    border-radius: 999px;
-    border: 2px solid color-mix(in srgb, var(--accent) 38%, white);
-    box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 22%, transparent);
-  }
-
   .age__card[data-variant="bubbles"] h3 {
     margin-left: auto;
     margin-right: auto;
@@ -354,9 +350,8 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   }
 
   .age__card[data-variant="bubbles"] p {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 32ch;
+    text-align: left;
+    margin: 0 0 1.2rem;
   }
 
   .age__card[data-variant="bubbles"] .age__highlights li {
@@ -376,8 +371,8 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
 
   .age__card[data-variant="bubbles"]:hover {
     transform: translateY(-4px);
-    box-shadow:
-      0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
   }
 
   .age__card[data-variant="bubbles"]:hover .age__icon {
@@ -396,12 +391,7 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
     padding: 2rem 1.75rem;
     padding-top: 4.5rem;
     border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-    background: linear-gradient(
-      180deg,
-      var(--color-cream-50) 0%,
-      #fefefe 45%,
-      color-mix(in srgb, var(--accent) 14%, white) 100%
-    );
+    background: #fefefe;
     overflow: hidden;
   }
 
@@ -420,15 +410,21 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   .age__card[data-variant="wave"] .age__icon {
     position: relative;
     z-index: 1;
-    background: white;
+    width: 80px;
+    height: 80px;
+    margin: -2.85rem auto 1.2rem;
+    border-radius: 999px;
+    background: #fff;
+    border: none;
     box-shadow:
       inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 10px 28px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="wave"] .age__range {
-    color: var(--color-ink-soft);
+  .age__card[data-variant="wave"] .age__emoji {
+    filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
   }
 
   .age__card[data-variant="wave"]:hover {
@@ -495,7 +491,7 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   .age__card[data-variant="bubbles"] .age__icon {
     width: 80px;
     height: 80px;
-    margin: -2.85rem auto 1.05rem;
+    margin: -2.85rem auto 1.2rem;
     border-radius: 999px;
     background: #fff;
     border: none;
@@ -506,23 +502,6 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="bubbles"] .age__range {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.7rem;
-    padding: 0.38rem 1.1rem;
-    font-family: "Sniglet", var(--font-display), system-ui, sans-serif;
-    font-size: 1.06rem;
-    font-weight: 800;
-    letter-spacing: 0.03em;
-    color: var(--color-ink);
-    background: color-mix(in srgb, var(--accent) 24%, white);
-    border-radius: 999px;
-    border: 2px solid color-mix(in srgb, var(--accent) 38%, white);
-    box-shadow: 0 2px 0 color-mix(in srgb, var(--accent) 22%, transparent);
-  }
-
   .age__card[data-variant="bubbles"] h3 {
     margin-left: auto;
     margin-right: auto;
@@ -530,9 +509,8 @@ const cardVariant = (index: number) => (index < 2 ? "wave" : "bubbles");
   }
 
   .age__card[data-variant="bubbles"] p {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 32ch;
+    text-align: left;
+    margin: 0 0 1.2rem;
   }
 
   .age__card[data-variant="bubbles"] .age__highlights li {

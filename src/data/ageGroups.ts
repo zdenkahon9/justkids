@@ -14,8 +14,12 @@ export const ageGroups: AgeGroup[] = [
     range: "3-6 měsíců",
     title: "První dotek pohybu",
     description:
-      "Jemná stimulace, masáže a polohování. Posilujeme krční svalstvo a otáčení, učíme se vnímat rytmus.",
-    highlights: ["Masáž miminka", "Polohování na bříšku", "Říkanky a písničky"],
+      "Společně pracujeme na podpoře zdravého vývoje pohybem a hrou a posilujeme pouto mezi miminkem a maminkou.",
+    highlights: [
+      "Zábavné říkanky",
+      "Jemná masáž miminek",
+      "Hravé cviky pro radost",
+    ],
     accent: "sky",
   },
   {
@@ -42,7 +46,11 @@ export const ageGroups: AgeGroup[] = [
     title: "Šikulové v pohybu",
     description:
       "Skupinové hry, jednoduché cviky podle pokynů a první gymnastické prvky. Stavíme zdravé pohybové návyky.",
-    highlights: ["Hry ve skupině", "Prvky gymnastiky", "Koncentrace a poslouchání"],
+    highlights: [
+      "Hry ve skupině",
+      "Prvky gymnastiky",
+      "Koncentrace a poslouchání",
+    ],
     accent: "cream",
   },
 ];
