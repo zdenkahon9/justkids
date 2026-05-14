@@ -66,7 +66,25 @@ import { site } from "../data/site";
 <style>
   #o-mne {
     scroll-margin-top: -5.5rem;
+    position: relative;
+    z-index: 1;
+    background-color: var(--color-cream);
+    /* Extra cream band above section — covers subpixel seam when zoom ≠ 100% */
+    margin-top: -6px;
+    padding-top: calc(5.5rem + 6px);
   }
+
+  #o-mne::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -10px;
+    height: 10px;
+    background-color: var(--color-cream);
+    pointer-events: none;
+  }
+
   .about__inner {
     display: grid;
     grid-template-columns: 1fr;

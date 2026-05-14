@@ -50,6 +50,11 @@ const cardVariant = (_index: number) => "wave";
             data-variant={cardVariant(i)}
             style={`--accent: ${cardAccentVar(i, g.accent)}; transition-delay: ${i * 80}ms;`}
           >
+            {i === 0 ? (
+              <span class="age__new" aria-label="Novinka">
+                Nově
+              </span>
+            ) : null}
             {g.optional ? <span class="age__optional">Dle kurzu</span> : null}
             <div class="age__icon" aria-hidden="true">
               <span class="age__emoji">{emojiMap[g.id]}</span>
@@ -87,17 +92,6 @@ const cardVariant = (_index: number) => "wave";
 </section>
 
 <style>
-  /*
-   * ---------------------------------------------------------------------------
-   * AgeGroups — věkové karty
-   * • ŽIVÉ styly: sekce LIVE WAVE / LIVE BUBBLES (nepřesouvat bez úmyslu).
-   * • Archiv: na konci souboru v <style> je zakomentovaný duplikát obou variant
-   *   (ARCHIVED PATTERN: WAVE / BUBBLES) — kopírování pro jinou sekci nebo obnovu.
-   * • HTML: <li class="age__card" data-variant="wave"
-   *         style="--accent: …; transition-delay: …">
-   * ---------------------------------------------------------------------------
-   */
-
   #vekove-skupiny {
     scroll-margin-top: -5.5rem;
   }
@@ -143,6 +137,27 @@ const cardVariant = (_index: number) => "wave";
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease,
       filter 280ms ease;
+  }
+
+  /** „Nově“ — první karta (3–6 měsíců); pill + border, horní levý roh */
+  .age__new {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    z-index: 5;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-ink);
+    background: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    border: 2px solid
+      color-mix(in srgb, var(--accent) 55%, var(--color-ink) 12%);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+      0 4px 14px -6px color-mix(in srgb, var(--accent) 40%, transparent);
   }
 
   .age__optional {

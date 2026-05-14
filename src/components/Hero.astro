@@ -83,8 +83,12 @@ import { site } from "../data/site";
     align-items: center;
     padding: 0;
     padding-top: var(--nav-height);
+    /* Tucks cream under the wave for zoom / subpixel rounding at the next section */
+    padding-bottom: max(8px, 0.5rem);
     overflow: hidden;
     isolation: isolate;
+    /* Fills any 1px compositor gap so pink veil / photo never show at section fold */
+    background-color: var(--color-cream);
     /* gap under lifted wave — same value on .hero::after + .hero__wave bottom */
     --hero-wave-mobile-lift: 0.75rem;
   }
@@ -158,7 +162,8 @@ import { site } from "../data/site";
         180deg,
         rgba(255, 249, 244, 0.2) 0%,
         rgba(255, 249, 244, 0.05) 35%,
-        rgba(255, 249, 244, 0.45) 100%
+        rgba(255, 249, 244, 0.55) 72%,
+        rgba(255, 249, 244, 0.95) 100%
       );
   }
 
@@ -258,7 +263,6 @@ import { site } from "../data/site";
     animation: float-slow 8s ease-in-out infinite;
   }
 
-  /* +1px: masks sub-pixel seam vs hero clip / compositor rounding */
   .hero__wave {
     position: absolute;
     left: 0;
@@ -267,7 +271,6 @@ import { site } from "../data/site";
     z-index: 1;
     line-height: 0;
     pointer-events: none;
-    transform: translateY(1px);
   }
 
   .hero__wave-svg {
@@ -320,6 +323,10 @@ import { site } from "../data/site";
 
     .hero__wave {
       bottom: 0;
+    }
+
+    .hero__logo {
+      filter: drop-shadow(0 18px 36px rgba(236, 47, 142, 0.22));
     }
 
     .hero__inner {
