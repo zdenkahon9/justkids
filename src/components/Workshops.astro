@@ -42,7 +42,9 @@ const accentMap: Record<string, string> = {
                   />
                 </svg>
               </span>
-              <span class="workshop__duration">{w.duration}</span>
+              {w.duration && (
+                <span class="workshop__duration">{w.duration}</span>
+              )}
             </div>
 
             <h3>{w.title}</h3>

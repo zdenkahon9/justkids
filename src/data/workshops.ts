@@ -2,7 +2,8 @@ export type Workshop = {
   id: string;
   title: string;
   summary: string;
-  duration: string;
+  /** When omitted, the card hides the duration pill */
+  duration?: string;
   forWhom: string;
   accent: "blush" | "sky" | "lilac";
   upcoming?: string;
@@ -10,11 +11,11 @@ export type Workshop = {
 
 export const workshops: Workshop[] = [
   {
-    id: "masaze-kojencu",
-    title: "Masáže kojenců",
+    id: "prvni-pomoc-u-deti",
+    title: "První pomoc u dětí",
     summary:
       "Naučíte se základní hmaty pro každodenní zklidnění miminka. Krátký workshop, ze kterého si odnesete praktické dovednosti.",
-    duration: "90 min",
+    // duration: "90 min",
     forWhom: "Rodiče s miminky 0–6 měsíců",
     accent: "blush",
     upcoming: "Termín na vyžádání",

@@ -143,10 +143,20 @@ const mapEmbed = (lat: number, lng: number) =>
 
 <style>
   /*
-   * Mobile-first: base rules apply to the narrowest layout first.
-   * Two columns activate when the layout container is wide enough (same break as
-   * the former minmax(320px) + gap auto-fit grid).
+   * Mobile-first: jedna řada; od 664px dva pružné sloupce.
    */
+  .locations__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 664px) {
+    .locations__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
 
   #lokace {
     scroll-margin-top: -5.5rem;
@@ -174,32 +184,6 @@ const mapEmbed = (lat: number, lng: number) =>
     font-weight: 400;
     line-height: 1.6;
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
-  /* Fallback: no container queries → same intrinsic columns as before */
-  .locations__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: 1.5rem;
-    /* Short cards are not stretched to the taller row */
-    align-items: start;
-  }
-
-  @supports (container-type: inline-size) {
-    .locations__layout {
-      container: locations / inline-size;
-    }
-
-    .locations__grid {
-      grid-template-columns: 1fr;
-      align-items: start;
-    }
-
-    @container locations (min-width: 664px) {
-      .locations__grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
   }
 
   /* Divider matches .footer__col (mobile / tablet): light pink line */
@@ -470,6 +454,27 @@ const mapEmbed = (lat: number, lng: number) =>
       .location:hover {
         transform: none;
       }
+    }
+  }
+
+  /*
+   * Sekce #lokace: od viewportu 1180px dvě karty po 450px, gap zůstává 1.5rem z .locations__grid.
+   * Selektor s #lokace přebije pravidlo .locations__grid z @media (min-width: 664px).
+   */
+  @media (min-width: 1180px) {
+    #lokace .locations__grid {
+      grid-template-columns: repeat(2, 450px);
+      justify-content: center;
+      width: fit-content;
+      max-width: calc(450px + 1.5rem + 450px);
+      margin-inline: auto;
+    }
+
+    #lokace .locations__grid > .location {
+      width: 450px;
+      max-width: 450px;
+      min-width: 450px;
+      box-sizing: border-box;
     }
   }
 </style>
