@@ -61,7 +61,9 @@ const cardVariant = (_index: number) => "wave";
             </div>
             <div class="age__range">{g.range}</div>
             {/* <h3>{g.title}</h3> */}
-            <p>{g.description}</p>
+            <div class="age__desc">
+              <p>{g.description}</p>
+            </div>
             <ul class="age__highlights">
               {g.highlights.map((h) => (
                 <li>
@@ -210,10 +212,21 @@ const cardVariant = (_index: number) => "wave";
     margin: 0 0 0.65rem;
   } */
 
-  .age__card p {
-    color: var(--color-ink-soft);
+  /**
+   * Varianta A (viewport pod 650px): min. výška bloku popisu → stejný začátek .age__highlights v řádku mřížky
+   */
+  .age__desc {
     margin: 0 0 1.75rem;
     font-size: 1.125rem;
+    line-height: 1.6;
+    min-height: calc(4 * 1.6em);
+  }
+
+  .age__card p {
+    color: var(--color-ink-soft);
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
   }
 
   .age__highlights {
@@ -365,9 +378,9 @@ const cardVariant = (_index: number) => "wave";
     max-width: 20ch;
   }
 
-  .age__card[data-variant="bubbles"] p {
+  .age__card[data-variant="bubbles"] .age__desc {
     text-align: left;
-    margin: 0 0 1.2rem;
+    margin-bottom: 1.2rem;
   }
 
   .age__card[data-variant="bubbles"] .age__highlights li {
@@ -426,13 +439,22 @@ const cardVariant = (_index: number) => "wave";
     }
   }
 
+  /**
+   * Varianta A: od ~tabletů (2 sloupce od 640px) větší rezerva řádků
+   */
+  @media (min-width: 650px) {
+    .age__desc {
+      min-height: calc(5 * 1.6em);
+    }
+  }
+
   /* Grid: desktop — 4 karty v řádku */
   @media (min-width: 1180px) {
     .age__grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .age__card p {
+    .age__desc {
       font-size: 1rem;
     }
 
