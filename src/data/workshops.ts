@@ -1,11 +1,20 @@
+/** One bullet in the card; optional `points` render as a nested list under the same `<li>`. */
+export type WorkshopHighlight =
+  | string
+  | {
+      text: string;
+      points?: string[];
+    };
+
 export type Workshop = {
   id: string;
   title: string;
-  summary: string;
+  /** Short bullet points shown under the title */
+  highlights: WorkshopHighlight[];
   /** When omitted, the card hides the duration pill */
   duration?: string;
   forWhom: string;
-  accent: "blush" | "sky" | "lilac";
+  accent: "blush" | "blush-deep" | "sky" | "sky-deep" | "lilac" | "lilac-deep";
   upcoming?: string;
 };
 
@@ -13,31 +22,44 @@ export const workshops: Workshop[] = [
   {
     id: "prvni-pomoc-u-deti",
     title: "První pomoc u dětí",
-    summary:
-      "Naučíte se základní hmaty pro každodenní zklidnění miminka. Krátký workshop, ze kterého si odnesete praktické dovednosti.",
+    highlights: [
+      "Specifika dětské první pomoci",
+      {
+        text: "Řešení nejčastějších situací:",
+        points: ["resuscitace", "dušení", "úrazy", "krvácení", "popáleniny"],
+      },
+    ],
     // duration: "90 min",
     forWhom: "Rodiče s miminky 0–6 měsíců",
-    accent: "blush",
+    accent: "sky-deep",
     upcoming: "Termín na vyžádání",
   },
   {
-    id: "nosenidetí",
-    title: "Nošení dětí v šátku",
-    summary:
-      "Ukážeme si bezpečné vázání šátku a nosítka. Probereme správné polohy a tipy do běžného dne.",
-    duration: "2 h",
-    forWhom: "Rodiče s dětmi 0–18 měsíců",
-    accent: "sky",
+    id: "handling-a-psychomotoricky-vyvoj",
+    title: "Handling a psychomotorický vývoj",
+    highlights: [
+      "Správná manipulace",
+      "Správné polohování",
+      "Vývoj krok za krokem",
+      "Podpora přirozeného vývoje",
+      "Vhodné / nevhodné pomůcky",
+      "Kdy vyhledat odborníka",
+    ],
+    // duration: "2 h",
+    forWhom: "Miminka 0–6 měsíců",
+    accent: "lilac-deep",
     upcoming: "Termín na vyžádání",
   },
   {
-    id: "psychomotoricky-vyvoj",
-    title: "Psychomotorický vývoj",
-    summary:
-      "Co se v miminku děje vývojově a jak ho podpořit doma? Workshop plný praktických ukázek a doporučení.",
-    duration: "2 h",
+    id: "psychomotoricky-vyvoj-prevence",
+    title: "Psychomotorický vývoj & prevence",
+    highlights: [
+      "Vývojové milníky a podpora doma",
+      "Praktické ukázky a doporučení",
+    ],
+    // duration: "2 h",
     forWhom: "Rodiče miminek 0–12 měsíců",
-    accent: "lilac",
+    accent: "blush-deep",
     upcoming: "Termín na vyžádání",
   },
 ];

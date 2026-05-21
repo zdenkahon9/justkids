@@ -29,7 +29,7 @@ export const ageGroups: AgeGroup[] = [
     description:
       "Plazení, lezení, sed a první stavění. Hravé cviky, které podpoří přirozený vývoj a koordinaci.",
     highlights: ["Lezení a plazení", "Hrubá motorika", "Smyslové podněty"],
-    accent: "blush",
+    accent: "lilac",
   },
   {
     id: "1-2",
@@ -38,7 +38,7 @@ export const ageGroups: AgeGroup[] = [
     description:
       "Chůze, běh, první přeskoky a překážkové dráhy. Spousta her, balónků a společné radosti.",
     highlights: ["Překážkové dráhy", "Rovnováha a koordinace", "Hudba a tanec"],
-    accent: "lilac",
+    accent: "blush",
   },
   {
     id: "2-3",

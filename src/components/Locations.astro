@@ -49,9 +49,7 @@ const mapEmbed = (lat: number, lng: number) =>
                       </svg>
                     </div>
                     <div class="location__head-text">
-                      <h3>
-                        {l.id === "zdice" ? "Fitcentrum Zdice" : l.name}
-                      </h3>
+                      <h3>{l.id === "zdice" ? "Fitcentrum Zdice" : l.name}</h3>
                       <address class="location__address">
                         {l.street}, {l.zip} {l.city}
                       </address>
@@ -354,7 +352,7 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   .location__head-text h3 {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
     margin: 0 0 0.35rem;
     line-height: 1.2;
     color: var(--color-ink);
@@ -463,17 +461,17 @@ const mapEmbed = (lat: number, lng: number) =>
    */
   @media (min-width: 1180px) {
     #lokace .locations__grid {
-      grid-template-columns: repeat(2, 450px);
+      grid-template-columns: repeat(2, 490px);
       justify-content: center;
       width: fit-content;
-      max-width: calc(450px + 1.5rem + 450px);
+      max-width: calc(450px + 1.5rem + 490px);
       margin-inline: auto;
     }
 
     #lokace .locations__grid > .location {
-      width: 450px;
-      max-width: 450px;
-      min-width: 450px;
+      width: 490px;
+      max-width: 490px;
+      min-width: 490px;
       box-sizing: border-box;
     }
   }
@@ -485,9 +483,8 @@ const mapEmbed = (lat: number, lng: number) =>
     const root = document.getElementById("lokace");
     if (!root) return;
 
-    const detailsList = root.querySelectorAll<HTMLDetailsElement>(
-      ".location__details",
-    );
+    const detailsList =
+      root.querySelectorAll<HTMLDetailsElement>(".location__details");
 
     detailsList.forEach((details) => {
       details.open = true;

@@ -10,8 +10,8 @@ const accentMap: Record<string, string> = {
 
 const cardAccentVar = (index: number, accent: keyof typeof accentMap) => {
   if (index === 0) return "var(--color-sky-deep)";
-  if (index === 1) return "var(--color-blush-deep)";
-  if (index === 2) return "var(--color-lilac-deep)";
+  if (index === 1) return "var(--color-lilac-deep)";
+  if (index === 2) return "var(--color-blush-deep)";
   if (index === 3) return "var(--color-coral-deep)";
   return accentMap[accent];
 };
@@ -23,7 +23,7 @@ const emojiMap: Record<string, string> = {
   "2-3": "🐵",
 };
 
-/** Card skin: all rows use `wave`. `--accent`: 0 sky-deep, 1 blush-deep, 2 lilac-deep, 3 coral-deep, else from data. */
+/** Card skin: all rows use `wave`. `--accent`: 0 sky-deep, 1 lilac-deep, 2 blush-deep, 3 coral-deep, else from data. */
 const cardVariant = (_index: number) => "wave";
 ---
 
@@ -59,7 +59,7 @@ const cardVariant = (_index: number) => "wave";
             <div class="age__icon" aria-hidden="true">
               <span class="age__emoji">{emojiMap[g.id]}</span>
             </div>
-            <div class="age__range">{g.range}</div>
+            <h3 class="age__range">{g.range}</h3>
             {/* <h3>{g.title}</h3> */}
             <div class="age__desc">
               <p>{g.description}</p>
@@ -196,9 +196,7 @@ const cardVariant = (_index: number) => "wave";
     display: block;
     width: fit-content;
     max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.75rem;
+    margin: 0 auto 1.75rem;
     font-family: var(--font-display);
     font-weight: 500;
     font-size: 1.5rem;
@@ -223,7 +221,7 @@ const cardVariant = (_index: number) => "wave";
   }
 
   .age__card p {
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
     margin: 0;
     font-size: inherit;
     line-height: inherit;
