@@ -1,11 +1,29 @@
 ---
+import Icon from "astro-iconify";
 import { workshops } from "../data/workshops";
-import { site } from "../data/site";
 
-const accentMap: Record<string, string> = {
-  blush: "var(--color-blush-mid)",
-  sky: "var(--color-sky-mid)",
-  lilac: "var(--color-lilac-mid)",
+type WorkshopIcon = "firstaid" | "brain" | "heart";
+
+/** Stejné akcenty jako karty ve věkových skupinách (index 0–2). */
+const workshopAccentVar = (index: number) => {
+  if (index === 0) return "var(--color-sky-deep)";
+  if (index === 1) return "var(--color-lilac-deep)";
+  if (index === 2) return "var(--color-blush-deep)";
+  return "var(--color-blush-deep)";
+};
+
+const workshopSoftVar = (index: number) => {
+  if (index === 0) return "var(--color-sky-soft)";
+  if (index === 1) return "var(--color-lilac-soft)";
+  if (index === 2) return "var(--color-blush-soft)";
+  return "var(--color-blush-soft)";
+};
+
+/** Ikona karty — prezentace v Astro, obsah karty je v `workshops.ts` */
+const workshopIconById: Record<string, WorkshopIcon> = {
+  "prvni-pomoc-u-deti": "firstaid",
+  "handling-a-psychomotoricky-vyvoj": "brain",
+  "psychomotoricky-vyvoj-prevence": "heart",
 };
 ---
 
@@ -21,59 +39,88 @@ const accentMap: Record<string, string> = {
         Workshopy <span class="section-title-accent">pro rodiče</span>
       </h2>
       <p class="workshops__subtitle">
-        Krátké akce mimo pravidelné lekce. Naučíte se konkrétní dovednost a
-        odnesete si ji domů.
+        Praktické workshopy pro rodiče miminek a malých dětí. Dopřejte svému
+        miminku ten nejlepší start do života.
       </p>
     </header>
 
     <ul class="workshops__grid">
       {
-        workshops.map((w, i) => (
-          <li
-            class="workshop reveal"
-            style={`--accent: ${accentMap[w.accent]}; transition-delay: ${i * 80}ms;`}
-          >
-            <div class="workshop__top">
-              <span class="workshop__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="22" height="22">
+        workshops.map((w, i) => {
+          const icon = workshopIconById[w.id] ?? "heart";
+
+          return (
+            <li
+              class="workshop reveal"
+              style={`--accent: ${workshopAccentVar(i)}; --theme-light: ${workshopSoftVar(i)}; transition-delay: ${i * 80}ms`}
+            >
+              <svg
+                class="workshop__blob"
+                viewBox="-32 0 132 100"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M100 20 A20 20 0 0 0 80 0 H-32 L0 0 A100 100 0 0 1 100 90 L100 20 Z" />
+              </svg>
+
+              <div class="workshop__header">
+                <div class="workshop__lead">
+                  <span class="workshop__icon" aria-hidden="true">
+                    {icon === "firstaid" && (
+                      <Icon
+                        name="streamline:medical-bag"
+                        class="workshop__icon-graphic"
+                      />
+                    )}
+                    {icon === "brain" && (
+                      <Icon
+                        name="streamline:health-care-2"
+                        class="workshop__icon-graphic"
+                      />
+                    )}
+                    {icon === "heart" && (
+                      <Icon
+                        name="streamline:brain"
+                        class="workshop__icon-graphic"
+                      />
+                    )}
+                  </span>
+                  <h3>{w.title}</h3>
+                </div>
+                <span class="workshop__rule" aria-hidden="true" />
+              </div>
+
+              <p class="workshop__summary">{w.summary}</p>
+
+              <div class="workshop__details">
+                <ul class="workshop__highlights">
+                  {w.highlights.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* <button type="button" class="workshop__more">
+                Více informací
+                <svg
+                  viewBox="0 0 24 24"
+                  width="14"
+                  height="14"
+                  aria-hidden="true"
+                >
                   <path
-                    d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
-                    fill="currentColor"
+                    d="M6 9l6 6 6-6"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   />
                 </svg>
-              </span>
-              {w.duration && (
-                <span class="workshop__duration">{w.duration}</span>
-              )}
-            </div>
-
-            <h3>{w.title}</h3>
-            <p class="workshop__summary">{w.summary}</p>
-
-            <dl class="workshop__meta">
-              <div>
-                <dt>Pro koho</dt>
-                <dd>{w.forWhom}</dd>
-              </div>
-              {w.upcoming && (
-                <div>
-                  <dt>Termín</dt>
-                  <dd>{w.upcoming}</dd>
-                </div>
-              )}
-            </dl>
-
-            <a
-              href={site.reservationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="workshop__cta"
-            >
-              Mám zájem
-              <span aria-hidden="true">→</span>
-            </a>
-          </li>
-        ))
+              </button> */}
+            </li>
+          );
+        })
       }
     </ul>
   </div>
@@ -83,6 +130,7 @@ const accentMap: Record<string, string> = {
   #workshopy {
     scroll-margin-top: -5.5rem;
   }
+
   .workshops__header {
     text-align: center;
     max-width: 42rem;
@@ -117,116 +165,212 @@ const accentMap: Record<string, string> = {
     }
   }
 
+  /* Mobile first (≤639px): 1 sloupec, karta 25.75rem (~412px) → od 640px 2 → od 1024px 3 */
   .workshops__grid {
+    --workshop-card-width: 25.75rem; /* 412px = viewport 460px − 2× padding container-x (1.5rem) */
+    --workshop-card-height: 34.75rem; /* Current height of the first workshop card */
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: min(100%, var(--workshop-card-width));
+    gap: 1.25rem;
+    justify-content: center;
+  }
+
+  @media (min-width: 640px) {
+    .workshops__grid {
+      --workshop-card-width: 20.5rem; /* ~328px */
+      grid-template-columns: repeat(2, var(--workshop-card-width));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .workshops__grid {
+      grid-template-columns: repeat(3, var(--workshop-card-width));
+    }
   }
 
   .workshop {
+    --workshop-title: #2d3748;
+    --workshop-body: #4a5568;
     position: relative;
-    background: white;
-    border-radius: var(--radius-card);
+    overflow: hidden;
+    background: #fefefe;
+    border-radius: 1.5rem;
     padding: 2rem 1.75rem;
-    border: 2px solid var(--accent);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    min-height: var(--workshop-card-height);
+    box-shadow: 0 8px 28px -14px rgba(45, 55, 72, 0.22);
+    border: none;
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease;
   }
 
   .workshop:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 50px -16px
-      color-mix(in srgb, var(--accent) 60%, transparent);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px -16px rgba(45, 55, 72, 0.28);
   }
 
-  .workshop__top {
+  .workshop:hover .workshop__icon {
+    transform: scale(1.05);
+  }
+
+  /* Čtvrtkruh vpravo nahoře — vnější roh zaoblený jako karta (r=20 ve viewBox) */
+  .workshop__blob {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    width: 9.9rem;
+    height: 7.5rem;
+    display: block;
+    pointer-events: none;
+  }
+
+  .workshop__blob path {
+    fill: var(--theme-light);
+  }
+
+  .workshop__summary,
+  .workshop__details,
+  .workshop__more {
+    position: relative;
+    z-index: 1;
+  }
+
+  .workshop__header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    margin: 0 0 1.75rem 0;
+  }
+
+  /* Stejná výška leadu; ikona + h3 vertikálně uprostřed na všech kartách */
+  .workshop__lead {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
+    gap: 1.2rem;
+    width: 100%;
+    height: 5.875rem;
+    min-height: 5.875rem;
+    box-sizing: border-box;
   }
 
+  /* Krátký pruh pod ikonou i nadpisem — barva karty přes --accent */
+  .workshop__rule {
+    display: block;
+    width: 2.75rem;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  /* Stejný kruh jako .age__card[data-variant="wave"] .age__icon — barva přes --accent */
   .workshop__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--accent) 35%, white);
-    color: color-mix(in srgb, var(--accent) 70%, var(--color-ink));
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 999px;
+    background: #fff;
+    border: none;
+    color: var(--accent);
     display: grid;
     place-items: center;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
   }
 
-  .workshop__duration {
-    font-family: var(--font-script);
-    font-size: 1.25rem;
-    color: var(--color-blush-vivid);
-    line-height: 1;
+  .workshop__icon-graphic {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    filter: drop-shadow(
+      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+    );
   }
 
-  .workshop h3 {
-    font-size: 1.4rem;
+  .workshop__lead h3 {
+    flex: 1;
+    min-width: 0;
     margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--workshop-title);
   }
 
   .workshop__summary {
-    color: var(--color-ink-soft);
+    margin: 0 0 1.75rem 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+    min-height: calc(3 * 1.6em);
+  }
+
+  .workshop__details {
+    padding: 1rem 1.1rem;
+    border-radius: 0.75rem;
+    background: var(--theme-light);
+  }
+
+  .workshop__highlights {
+    list-style-type: disc;
+    list-style-position: outside;
     margin: 0;
-    font-size: 0.95rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
   }
 
-  .workshop__meta {
-    display: grid;
-    gap: 0.65rem;
-    margin: 0.25rem 0 0;
+  .workshop__highlights > li {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.35;
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
-  .workshop__meta div {
-    margin: 0;
-  }
-
-  .workshop__meta dt {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-ink-muted);
-    font-weight: 700;
-    margin-bottom: 0.15rem;
-  }
-
-  .workshop__meta dd {
-    margin: 0;
-    color: var(--color-ink);
-    font-size: 0.92rem;
-    font-weight: 500;
-  }
-
-  .workshop__cta {
-    margin-top: auto;
+  .workshop__more {
+    margin: 0.35rem auto 0;
+    padding: 0;
+    border: none;
+    background: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.7rem 1.1rem;
-    border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--accent) 30%, white);
-    color: color-mix(in srgb, var(--accent) 70%, var(--color-ink));
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    align-self: flex-start;
-    transition:
-      background-color 220ms ease,
-      transform 220ms ease;
+    gap: 0.35rem;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: pointer;
+    transition: opacity 180ms ease;
   }
 
-  .workshop__cta:hover {
-    background: color-mix(in srgb, var(--accent) 50%, white);
-    transform: translateX(2px);
+  .workshop__more:hover {
+    opacity: 0.82;
+  }
+
+  .workshop__more:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
   }
 </style>

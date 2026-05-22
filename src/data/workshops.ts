@@ -1,16 +1,10 @@
-/** One bullet in the card; optional `points` render as a nested list under the same `<li>`. */
-export type WorkshopHighlight =
-  | string
-  | {
-      text: string;
-      points?: string[];
-    };
-
 export type Workshop = {
   id: string;
   title: string;
-  /** Short bullet points shown under the title */
-  highlights: WorkshopHighlight[];
+  /** Text v `.workshop__summary` */
+  summary: string;
+  /** Odrážky v `.workshop__details` — jedna položka = jedno `<li>` */
+  highlights: string[];
   /** When omitted, the card hides the duration pill */
   duration?: string;
   forWhom: string;
@@ -22,14 +16,17 @@ export const workshops: Workshop[] = [
   {
     id: "prvni-pomoc-u-deti",
     title: "První pomoc u dětí",
+    summary:
+      "Jak reagovat v krizových situacích a poskytnout dítěti první pomoc.",
     highlights: [
       "Specifika dětské první pomoci",
-      {
-        text: "Řešení nejčastějších situací:",
-        points: ["resuscitace", "dušení", "úrazy", "krvácení", "popáleniny"],
-      },
+      "Řešení nejčastějších situací",
+      "Resuscitace",
+      "Dušení",
+      "Úrazy",
+      "Krvácení",
+      "Popáleniny",
     ],
-    // duration: "90 min",
     forWhom: "Rodiče s miminky 0–6 měsíců",
     accent: "sky-deep",
     upcoming: "Termín na vyžádání",
@@ -37,6 +34,8 @@ export const workshops: Workshop[] = [
   {
     id: "handling-a-psychomotoricky-vyvoj",
     title: "Handling a psychomotorický vývoj",
+    summary:
+      "Porozumění pohybovému vývoji dítěte a správnému zacházení v každodenních situacích.",
     highlights: [
       "Správná manipulace",
       "Správné polohování",
@@ -45,7 +44,6 @@ export const workshops: Workshop[] = [
       "Vhodné / nevhodné pomůcky",
       "Kdy vyhledat odborníka",
     ],
-    // duration: "2 h",
     forWhom: "Miminka 0–6 měsíců",
     accent: "lilac-deep",
     upcoming: "Termín na vyžádání",
@@ -53,11 +51,12 @@ export const workshops: Workshop[] = [
   {
     id: "psychomotoricky-vyvoj-prevence",
     title: "Psychomotorický vývoj & prevence",
+    summary:
+      "Jak předcházet obtížím ve vývoji a podpořit přirozený rozvoj pohybu a vnímání.",
     highlights: [
       "Vývojové milníky a podpora doma",
       "Praktické ukázky a doporučení",
     ],
-    // duration: "2 h",
     forWhom: "Rodiče miminek 0–12 měsíců",
     accent: "blush-deep",
     upcoming: "Termín na vyžádání",
