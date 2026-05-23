@@ -1,4 +1,5 @@
 ---
+import Icon from "astro-iconify";
 import { ageGroups } from "../data/ageGroups";
 
 const accentMap: Record<string, string> = {
@@ -16,11 +17,12 @@ const cardAccentVar = (index: number, accent: keyof typeof accentMap) => {
   return accentMap[accent];
 };
 
-const emojiMap: Record<string, string> = {
-  "3-6": "🌸",
-  "6-12": "🐣",
-  "1-2": "🦁",
-  "2-3": "🐵",
+/** Iconify názvy (sada:id) — mapování podle id z ageGroups.ts */
+const ageIconById: Record<string, string> = {
+  "3-6": "fxemoji:cherryblossom",
+  "6-12": "twemoji:hatching-chick",
+  "1-2": "noto-v1:lion",
+  "2-3": "emojione:monkey-face",
 };
 
 /** Card skin: all rows use `wave`. `--accent`: 0 sky-deep, 1 lilac-deep, 2 blush-deep, 3 coral-deep, else from data. */
@@ -57,7 +59,10 @@ const cardVariant = (_index: number) => "wave";
             ) : null}
             {g.optional ? <span class="age__optional">Dle kurzu</span> : null}
             <div class="age__icon" aria-hidden="true">
-              <span class="age__emoji">{emojiMap[g.id]}</span>
+              <Icon
+                name={ageIconById[g.id] ?? "emojione:monkey-face"}
+                class="age__icon-graphic"
+              />
             </div>
             <h3 class="age__range">{g.range}</h3>
             {/* <h3>{g.title}</h3> */}
@@ -123,18 +128,22 @@ const cardVariant = (_index: number) => "wave";
   }
 
   .age__grid {
+    --age-card-height: 30rem; /* menší než workshopy (34.75rem) */
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
   .age__card {
     position: relative;
     list-style: none;
     box-sizing: border-box;
+    min-height: var(--age-card-height);
+    display: flex;
+    flex-direction: column;
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease,
@@ -187,9 +196,10 @@ const cardVariant = (_index: number) => "wave";
     margin: 0 auto 1.25rem;
   }
 
-  .age__emoji {
-    font-size: 2.5rem;
-    line-height: 1;
+  .age__icon-graphic {
+    width: 2.375rem;
+    height: 2.375rem;
+    flex-shrink: 0;
   }
 
   .age__range {
@@ -280,6 +290,8 @@ const cardVariant = (_index: number) => "wave";
     border-radius: 999px;
     background: #fff;
     border: none;
+    display: grid;
+    place-items: center;
     box-shadow:
       inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
       0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
@@ -287,7 +299,9 @@ const cardVariant = (_index: number) => "wave";
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="wave"] .age__emoji {
+  .age__card[data-variant="wave"] .age__icon-graphic {
+    width: 2.75rem;
+    height: 2.75rem;
     filter: drop-shadow(
       0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
     );
@@ -350,7 +364,9 @@ const cardVariant = (_index: number) => "wave";
     pointer-events: none;
   }
 
-  .age__card[data-variant="bubbles"] .age__emoji {
+  .age__card[data-variant="bubbles"] .age__icon-graphic {
+    width: 2.75rem;
+    height: 2.75rem;
     filter: drop-shadow(
       0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
     );
