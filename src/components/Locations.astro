@@ -361,7 +361,7 @@ const mapEmbed = (lat: number, lng: number) =>
   .location__address {
     font-style: normal;
     margin: 0;
-    font-size: 0.92rem;
+    font-size: 1rem;
     line-height: 1.45;
     color: var(--color-ink-soft);
   }
@@ -377,12 +377,12 @@ const mapEmbed = (lat: number, lng: number) =>
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-ink-muted);
+    color: var(--color-ink-soft);
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .location__p-mark {
@@ -401,7 +401,7 @@ const mapEmbed = (lat: number, lng: number) =>
 
   .location__parking p {
     margin: 0;
-    font-size: 0.92rem;
+    font-size: 1rem;
     color: var(--color-ink);
     line-height: 1.5;
   }
@@ -436,10 +436,6 @@ const mapEmbed = (lat: number, lng: number) =>
   @media (min-width: 1024px) {
     .locations__header h2 {
       margin: 0 0 1rem;
-    }
-
-    .locations__subtitle {
-      font-size: 1.0625rem;
     }
 
     .location:hover {

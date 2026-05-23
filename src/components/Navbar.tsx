@@ -337,8 +337,8 @@ const Navbar = ({
         }
 
         .nav__logo {
-          width: 48px;
-          height: 48px;
+          width: 52px;
+          height: 52px;
           border-radius: 50%;
           object-fit: cover;
           transition: width 280ms ease, height 280ms ease, transform 280ms ease;
@@ -359,7 +359,7 @@ const Navbar = ({
         .nav__brand-name {
           font-family: var(--font-display);
           font-weight: 700;
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           letter-spacing: -0.02em;
           text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
           transition: text-shadow 280ms ease;
@@ -372,7 +372,7 @@ const Navbar = ({
         .nav__brand-sub {
           font-family: "Caveat", cursive;
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 1rem;
           color: var(--color-blush-deep);
           margin-top: 2px;
           text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
@@ -392,7 +392,7 @@ const Navbar = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.4rem;
+          gap: 0.7rem;
           list-style: none;
           padding: 0;
           margin: 0;
@@ -403,7 +403,7 @@ const Navbar = ({
           padding: 0.6rem 0.95rem;
           color: var(--color-ink);
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 1rem;
           text-decoration: none;
           border-radius: 9999px;
           transition: background-color 220ms ease, color 220ms ease;
@@ -419,7 +419,7 @@ const Navbar = ({
           margin: 0;
           color: var(--color-ink);
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 1rem;
           line-height: 1.65;
           text-decoration: none;
           border-radius: 9999px;
@@ -515,7 +515,7 @@ const Navbar = ({
         .nav__dropdown-list {
           list-style: none;
           margin: 0;
-          padding: 0.4rem;
+          padding: 0.7rem;
           display: flex;
           flex-direction: column;
           align-items: stretch;
@@ -533,7 +533,7 @@ const Navbar = ({
           padding: 0.6rem 0.95rem;
           color: var(--color-ink);
           font-weight: 600;
-          font-size: 0.95rem;
+          font-size: 1rem;
           text-decoration: none;
           border-radius: 1.125rem;
           text-align: center;
@@ -646,7 +646,7 @@ const Navbar = ({
           display: block;
           padding: 0.7rem 1rem;
           font-family: var(--font-display);
-          font-size: clamp(1rem, 4.4vw, 1.25rem);
+          font-size: 1.125rem;
           font-weight: 600;
           color: var(--color-ink);
           text-decoration: none;
@@ -686,6 +686,11 @@ const Navbar = ({
             display: inline-flex;
             align-items: center;
             justify-content: center;
+
+            height: 46px;
+            padding-inline: 1.4rem;
+
+   
           }
           .nav__toggle {
             display: none;
@@ -704,7 +709,7 @@ const Navbar = ({
             use !important so CTA leaves the layout.
           - Wide desktop uses three grid tracks so no empty fourth column when toggle is hidden.
         */
-        @media (min-width: 1024px) and (max-width: 1179px) {
+        @media (min-width: 1024px) and (max-width: 1229px) {
           .nav__inner {
             grid-template-columns: auto 1fr;
             gap: 0.3rem;
@@ -725,10 +730,10 @@ const Navbar = ({
           }
         }
 
-        @media (min-width: 1179px) {
-          .nav__inner.container-x {
-            padding-inline: 0.9rem;
-          }
+        // @media (min-width: 1230px) {
+        //   .nav__inner.container-x {
+        //     padding-inline: 0.9rem;
+        //   }
         }
       `}</style>
     </header>
