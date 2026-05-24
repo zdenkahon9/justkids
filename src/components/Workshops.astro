@@ -90,6 +90,10 @@ const workshopIconById: Record<string, WorkshopIcon> = {
                 <span class="workshop__rule" aria-hidden="true" />
               </div>
 
+              <span class="workshop__age" aria-hidden={!w.ageRange}>
+                {w.ageRange}
+              </span>
+
               <p class="workshop__summary">{w.summary}</p>
 
               <div class="workshop__details">
@@ -155,16 +159,10 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
-  @media (min-width: 1024px) {
-    .workshops__header h2 {
-      margin: 0 0 1rem;
-    }
-  }
-
-  /* Mobile first (≤639px): 1 sloupec, karta 25.75rem (~412px) → od 640px 2 → od 1024px 3 */
+  /* Do 767px: 25.75rem; od 768px 2× pevně 24rem (šířka jako při viewportu 920px) */
   .workshops__grid {
     --workshop-card-width: 25.75rem; /* 412px = viewport 460px − 2× padding container-x (1.5rem) */
-    --workshop-card-height: 34.75rem; /* Current height of the first workshop card */
+    --workshop-card-height: 34.75rem;
     list-style: none;
     padding: 0;
     margin: 0 auto;
@@ -174,19 +172,6 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     grid-template-columns: min(100%, var(--workshop-card-width));
     gap: 1.5rem;
     justify-content: center;
-  }
-
-  @media (min-width: 640px) {
-    .workshops__grid {
-      --workshop-card-width: 20.5rem; /* ~328px */
-      grid-template-columns: repeat(2, var(--workshop-card-width));
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .workshops__grid {
-      grid-template-columns: repeat(3, var(--workshop-card-width));
-    }
   }
 
   .workshop {
@@ -232,6 +217,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     fill: var(--theme-light);
   }
 
+  .workshop__age,
   .workshop__summary,
   .workshop__details,
   .workshop__more {
@@ -310,6 +296,23 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     color: var(--workshop-title);
   }
 
+  .workshop__age {
+    display: block;
+    width: 100%;
+    min-height: calc(1rem * 1.4);
+    margin: -0.75rem 0 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--color-blush-vivid);
+  }
+
+  .workshop__age:empty {
+    visibility: hidden;
+  }
+
   .workshop__summary {
     margin: 0 0 1.75rem 0;
     font-family: var(--font-body);
@@ -368,5 +371,26 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .workshops__grid {
+      /* 920px − 2×4rem padding − 1.5rem gap → (792−24)/2 = 384px */
+      --workshop-card-width: 22rem;
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--workshop-card-width));
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .workshops__header h2 {
+      margin: 0 0 1rem;
+    }
+
+    .workshops__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>

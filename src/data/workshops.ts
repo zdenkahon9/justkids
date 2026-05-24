@@ -7,6 +7,8 @@ export type Workshop = {
   highlights: string[];
   /** When omitted, the card hides the duration pill */
   duration?: string;
+  /** Věkový rozsah mezi `.workshop__header` a `.workshop__summary` */
+  ageRange?: string;
   forWhom: string;
   accent: "blush" | "blush-deep" | "sky" | "sky-deep" | "lilac" | "lilac-deep";
   upcoming?: string;
@@ -34,8 +36,7 @@ export const workshops: Workshop[] = [
   {
     id: "handling-a-psychomotoricky-vyvoj",
     title: "Handling a psychomotorický vývoj",
-    summary:
-      "Porozumění pohybovému vývoji dítěte a správnému zacházení v každodenních situacích.",
+    summary: "Porozumění pohybovému vývoji dítěte a správnému zacházení.",
     highlights: [
       "Správná manipulace",
       "Správné polohování",
@@ -45,6 +46,7 @@ export const workshops: Workshop[] = [
       "Kdy vyhledat odborníka",
     ],
     forWhom: "Miminka 0–6 měsíců",
+    ageRange: "0-6 měsíců",
     accent: "lilac-deep",
     upcoming: "Termín na vyžádání",
   },
@@ -58,6 +60,7 @@ export const workshops: Workshop[] = [
       "Praktické ukázky a doporučení",
     ],
     forWhom: "Rodiče miminek 0–12 měsíců",
+    ageRange: "6-12 měsíců",
     accent: "blush-deep",
     upcoming: "Termín na vyžádání",
   },

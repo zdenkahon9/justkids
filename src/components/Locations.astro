@@ -141,18 +141,32 @@ const mapEmbed = (lat: number, lng: number) =>
 
 <style>
   /*
-   * Mobile-first: jedna řada; od 664px dva pružné sloupce.
+   * Mobile-first: jedna řada, karty max 512px; od 768px dva pružné sloupce.
    */
   .locations__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
     align-items: start;
+    justify-items: center;
   }
 
-  @media (min-width: 664px) {
+  @media (max-width: 767px) {
+    .locations__grid > .location {
+      width: 100%;
+      max-width: 32rem; /* 512px */
+      box-sizing: border-box;
+    }
+  }
+
+  @media (min-width: 768px) {
     .locations__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-items: stretch;
+    }
+
+    .locations__grid > .location {
+      max-width: none;
     }
   }
 
@@ -362,7 +376,8 @@ const mapEmbed = (lat: number, lng: number) =>
     font-style: normal;
     margin: 0;
     font-size: 1rem;
-    line-height: 1.45;
+    line-height: 1.5;
+    min-height: 3rem;
     color: var(--color-ink-soft);
   }
 
@@ -371,6 +386,10 @@ const mapEmbed = (lat: number, lng: number) =>
     padding-top: 1.25rem;
     margin-bottom: 1.25rem;
     border-top: var(--location-divider);
+
+    & > p {
+      min-height: 3rem;
+    }
   }
 
   .location__parking-label {
@@ -406,7 +425,7 @@ const mapEmbed = (lat: number, lng: number) =>
     line-height: 1.5;
   }
 
-  .location__nav-link {
+  #lokace .location__nav-link {
     margin-top: auto;
     padding-top: 1.25rem;
     border-top: var(--location-divider);
@@ -416,14 +435,14 @@ const mapEmbed = (lat: number, lng: number) =>
     color: var(--color-blush-vivid);
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: 0.92rem;
+    font-size: 1rem;
     text-decoration: none;
     border-bottom: 1.5px solid transparent;
     transition: border-color 180ms ease;
     align-self: flex-start;
   }
 
-  .location__nav-link:hover {
+  #lokace .location__nav-link:hover {
     border-bottom-color: var(--color-blush-vivid);
   }
 
@@ -453,7 +472,7 @@ const mapEmbed = (lat: number, lng: number) =>
 
   /*
    * Sekce #lokace: od viewportu 1180px dvě karty po 450px, gap zůstává 1.5rem z .locations__grid.
-   * Selektor s #lokace přebije pravidlo .locations__grid z @media (min-width: 664px).
+   * Selektor s #lokace přebije pravidlo .locations__grid z @media (min-width: 768px).
    */
   @media (min-width: 1180px) {
     #lokace .locations__grid {

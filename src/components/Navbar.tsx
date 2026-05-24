@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
+import styles from "./Navbar.module.css";
 
 type NavLink = {
   href: string;
@@ -147,13 +148,13 @@ const Navbar = ({
 
   return (
     <header
-      className={`nav ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}
+      className={`${styles.nav} ${scrolled ? styles.isScrolled : ""} ${open ? styles.isOpen : ""}`}
       data-component="navbar"
     >
-      <div className="nav__inner container-x">
+      <div className={`${styles.navInner} container-x`}>
         <a
           href="#hero"
-          className="nav__brand"
+          className={styles.navBrand}
           onClick={(e) => handleNav(e, "#hero")}
           aria-label={`${brand} - na začátek stránky`}
         >
@@ -162,33 +163,33 @@ const Navbar = ({
             alt=""
             width={48}
             height={48}
-            className="nav__logo"
+            className={styles.navLogo}
           />
-          <span className="nav__brand-text">
-            <span className="nav__brand-name">{brand}</span>
-            <span className="nav__brand-sub">pohybem k radosti</span>
+          <span className={styles.brandText}>
+            <span className={styles.brandName}>{brand}</span>
+            <span className={styles.brandSub}>pohybem k radosti</span>
           </span>
         </a>
 
-        <nav className="nav__links" aria-label="Hlavní navigace">
+        <nav className={styles.navLinks} aria-label="Hlavní navigace">
           <ul>
             {links.map((l) =>
               isAboutNavItem(l) ? (
                 <li
                   key={l.href}
                   ref={aboutDropdownRef}
-                  className={`nav__dropdown ${lockAboutDropdown ? "nav__dropdown--locked" : ""}`}
+                  className={`${styles.dropdown} ${lockAboutDropdown ? styles.dropdownLocked : ""}`}
                 >
                   <button
                     type="button"
-                    className="nav__dropdown-trigger"
+                    className={styles.dropdownTrigger}
                     aria-haspopup="true"
                     aria-controls="nav-submenu-o-mne"
                   >
-                    <span className="nav__dropdown-trigger-inner">
+                    <span className={styles.dropdownTriggerInner}>
                       {l.label}
                       <svg
-                        className="nav__dropdown-chevron"
+                        className={styles.dropdownChevron}
                         width="12"
                         height="12"
                         viewBox="0 0 12 12"
@@ -206,8 +207,8 @@ const Navbar = ({
                       </svg>
                     </span>
                   </button>
-                  <div className="nav__dropdown-surface">
-                    <ul id="nav-submenu-o-mne" className="nav__dropdown-list">
+                  <div className={styles.dropdownSurface}>
+                    <ul id="nav-submenu-o-mne" className={styles.dropdownList}>
                       {ABOUT_DROPDOWN_LINKS.map((sub) => (
                         <li key={sub.href + sub.label}>
                           <a
@@ -240,14 +241,14 @@ const Navbar = ({
           href={reservationUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-primary btn-sm nav__cta"
+          className={`btn btn-primary btn-sm ${styles.navCta}`}
         >
           Rezervace
           <span aria-hidden="true">→</span>
         </a>
 
         <button
-          className="nav__toggle"
+          className={styles.navToggle}
           type="button"
           aria-expanded={open}
           aria-controls="mobile-menu"
@@ -262,7 +263,7 @@ const Navbar = ({
 
       <div
         id="mobile-menu"
-        className="nav__mobile"
+        className={styles.navMobile}
         role="dialog"
         aria-modal="true"
         aria-label="Menu"
@@ -291,451 +292,6 @@ const Navbar = ({
         </ul>
       </div>
 
-      <style>{`
-        .nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 50;
-          padding: 1.1rem 0;
-          transition: background-color 280ms ease, padding 280ms ease, box-shadow 280ms ease;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 249, 244, 0.55) 0%,
-            rgba(255, 249, 244, 0.25) 100%
-          );
-          backdrop-filter: saturate(140%) blur(10px);
-          -webkit-backdrop-filter: saturate(140%) blur(10px);
-        }
-
-        .nav.is-scrolled {
-          background: rgba(255, 249, 244, 0.88);
-          backdrop-filter: saturate(150%) blur(14px);
-          -webkit-backdrop-filter: saturate(150%) blur(14px);
-          padding: 0.55rem 0;
-          box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
-        }
-
-        .nav__inner {
-          position: relative;
-          z-index: 1;
-          display: grid;
-          grid-template-columns: minmax(0, 1fr) auto;
-          align-items: center;
-          gap: 0.5rem;
-        }
-
-        .nav__brand {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.7rem;
-          justify-self: start;
-          min-width: 0;
-          text-decoration: none;
-          color: var(--color-ink);
-        }
-
-        .nav__logo {
-          width: 52px;
-          height: 52px;
-          border-radius: 50%;
-          object-fit: cover;
-          transition: width 280ms ease, height 280ms ease, transform 280ms ease;
-          box-shadow: 0 8px 22px -8px rgba(236, 47, 142, 0.4);
-        }
-
-        .nav.is-scrolled .nav__logo {
-          width: 40px;
-          height: 40px;
-        }
-
-        .nav__brand-text {
-          display: flex;
-          flex-direction: column;
-          line-height: 1.05;
-        }
-
-        .nav__brand-name {
-          font-family: var(--font-display);
-          font-weight: 700;
-          font-size: 1.5rem;
-          letter-spacing: -0.02em;
-          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-          transition: text-shadow 280ms ease;
-        }
-
-        .nav.is-scrolled .nav__brand-name {
-          text-shadow: none;
-        }
-
-        .nav__brand-sub {
-          font-family: "Caveat", cursive;
-          font-weight: 600;
-          font-size: 1rem;
-          color: var(--color-blush-deep);
-          margin-top: 2px;
-          text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-          transition: text-shadow 280ms ease;
-        }
-
-        .nav.is-scrolled .nav__brand-sub {
-          text-shadow: none;
-        }
-
-        .nav__links {
-          display: none;
-          justify-self: center;
-        }
-
-        .nav__links > ul {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.7rem;
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-
-        .nav__links > ul > li > a {
-          display: inline-block;
-          padding: 0.6rem 0.95rem;
-          color: var(--color-ink);
-          font-weight: 600;
-          font-size: 1rem;
-          text-decoration: none;
-          border-radius: 9999px;
-          transition: background-color 220ms ease, color 220ms ease;
-        }
-
-        /*
-          Match <a> nav items: same unitless line-height as body (global.css) + same font-size
-          as other nav links, so the pill’s vertical rhythm matches. Only this button rule.
-        */
-        .nav__links > ul > li > button.nav__dropdown-trigger {
-          display: inline-block;
-          padding: 0.6rem 0.95rem;
-          margin: 0;
-          color: var(--color-ink);
-          font-weight: 600;
-          font-size: 1rem;
-          line-height: 1.65;
-          text-decoration: none;
-          border-radius: 9999px;
-          transition: background-color 220ms ease, color 220ms ease;
-          appearance: none;
-          -webkit-appearance: none;
-          border: none;
-          background: transparent;
-          cursor: pointer;
-          font-family: inherit;
-          text-align: center;
-        }
-
-        .nav__links > ul > li > button.nav__dropdown-trigger:focus-visible {
-          outline: 2px solid var(--color-blush-vivid);
-          outline-offset: 2px;
-        }
-
-        /*
-          Same outer box as other nav links; label + chevron use inner inline-flex row.
-        */
-        .nav__dropdown-trigger-inner {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.35rem;
-        }
-
-        .nav__links > ul > li > a:hover,
-        .nav__links > ul > li > button.nav__dropdown-trigger:hover {
-          background: rgba(252, 194, 214, 0.4);
-          color: var(--color-blush-vivid);
-        }
-
-        .nav__links > ul > li > button.nav__dropdown-trigger:active {
-          background: rgba(252, 194, 214, 0.55);
-          color: var(--color-blush-deep);
-        }
-
-        .nav__dropdown {
-          position: relative;
-          z-index: 2;
-        }
-
-        .nav__dropdown-chevron {
-          display: block;
-          flex-shrink: 0;
-          align-self: center;
-          color: var(--color-blush-vivid);
-          transform: translateY(0.07em);
-          transition: color 220ms ease, transform 220ms ease;
-        }
-
-        .nav__dropdown:hover .nav__dropdown-chevron,
-        .nav__dropdown:focus-within .nav__dropdown-chevron {
-          color: var(--color-blush-deep);
-          transform: translateY(0.07em);
-        }
-
-        /* Point chevron the other way only while a submenu row is hovered / keyboard-focused */
-        .nav__dropdown:has(.nav__dropdown-list a:hover) .nav__dropdown-chevron,
-        .nav__dropdown:has(.nav__dropdown-list a:focus-visible) .nav__dropdown-chevron {
-          color: var(--color-blush-deep);
-          transform: rotate(180deg) translateY(-0.07em);
-        }
-
-        /* Hoverable air gap (~12–14px): bridge keeps :hover while moving to the panel */
-        .nav__dropdown-surface {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-          top: 100%;
-          padding-top: 1.4rem;
-          min-width: 100%;
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-          transition: opacity 180ms ease, visibility 180ms ease;
-        }
-
-        .nav__dropdown:hover .nav__dropdown-surface,
-        .nav__dropdown:focus-within .nav__dropdown-surface {
-          opacity: 1;
-          visibility: visible;
-          pointer-events: auto;
-        }
-
-        .nav__dropdown.nav__dropdown--locked .nav__dropdown-surface {
-          opacity: 0;
-          visibility: hidden;
-          pointer-events: none;
-        }
-
-        .nav__dropdown-list {
-          list-style: none;
-          margin: 0;
-          padding: 0.7rem;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0.1rem;
-          border-radius: 1.125rem;
-          background: rgba(255, 249, 244, 0.96);
-          backdrop-filter: saturate(150%) blur(12px);
-          -webkit-backdrop-filter: saturate(150%) blur(12px);
-          box-shadow: 0 14px 40px -16px rgba(123, 90, 160, 0.32),
-            0 0 0 1px rgba(236, 47, 142, 0.1);
-        }
-
-        .nav__dropdown-list a {
-          display: block;
-          padding: 0.6rem 0.95rem;
-          color: var(--color-ink);
-          font-weight: 600;
-          font-size: 1rem;
-          text-decoration: none;
-          border-radius: 1.125rem;
-          text-align: center;
-          white-space: nowrap;
-          transition: background-color 220ms ease, color 220ms ease;
-        }
-
-        .nav__dropdown-list a:hover {
-          background: rgba(252, 194, 214, 0.4);
-          color: var(--color-blush-vivid);
-        }
-
-        .nav__dropdown-list a:active {
-          background: rgba(252, 194, 214, 0.55);
-          color: var(--color-blush-deep);
-        }
-
-        .nav__links > ul > li > a:active {
-          background: rgba(252, 194, 214, 0.55);
-          color: var(--color-blush-deep);
-        }
-
-        .nav__cta {
-          display: none;
-          margin-left: 0;
-        }
-
-        .nav__toggle {
-          display: inline-flex;
-          justify-self: end;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
-          width: 44px;
-          height: 44px;
-          border: 1.5px solid rgba(42, 31, 56, 0.15);
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.7);
-          cursor: pointer;
-          transition: background-color 220ms ease;
-        }
-
-        .nav__toggle:hover { background: white; }
-
-        .nav__toggle span {
-          display: block;
-          width: 22px;
-          height: 2px;
-          background: var(--color-ink);
-          border-radius: 2px;
-          transition: transform 280ms ease, opacity 220ms ease;
-        }
-
-        .nav.is-open .nav__toggle span:nth-child(1) {
-          transform: translateY(7px) rotate(45deg);
-        }
-        .nav.is-open .nav__toggle span:nth-child(2) { opacity: 0; }
-        .nav.is-open .nav__toggle span:nth-child(3) {
-          transform: translateY(-7px) rotate(-45deg);
-        }
-
-        .nav__mobile {
-          position: fixed;
-          left: 0;
-          right: 0;
-          top: var(--nav-height);
-          height: calc(100svh - var(--nav-height));
-          background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
-          padding-block: 0 1.25rem;
-          padding-inline: 1.25rem;
-          z-index: 0;
-          overflow-y: auto;
-          overscroll-behavior: contain;
-        }
-
-        .nav.is-scrolled .nav__mobile {
-          top: var(--nav-height-scrolled);
-          height: calc(100svh - var(--nav-height-scrolled));
-        }
-
-        .nav__mobile[hidden] { display: none; }
-
-        .nav__mobile ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 0.15rem;
-          height: 100%;
-        }
-
-        .nav__mobile ul li:last-child {
-          padding-top: 1rem;
-        }
-
-        .nav__mobile li {
-          opacity: 0;
-          transform: translateY(12px);
-          animation: nav-mobile-in 380ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-          animation-delay: calc(var(--i, 0) * 50ms);
-        }
-
-        @keyframes nav-mobile-in {
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .nav__mobile a:not(.btn) {
-          display: block;
-          padding: 0.7rem 1rem;
-          font-family: var(--font-display);
-          font-size: 1.125rem;
-          font-weight: 600;
-          color: var(--color-ink);
-          text-decoration: none;
-          border-bottom: 1px solid rgba(42, 31, 56, 0.08);
-        }
-
-        .nav__mobile .btn {
-          margin-top: auto;
-          width: 100%;
-          font-size: 1rem;
-          padding: 0.85rem 1.4rem;
-        }
-
-        @media (min-width: 640px) {
-          .nav__inner {
-            gap: 1rem;
-          }
-          .nav__brand-name {
-            font-size: 1.45rem;
-          }
-        }
-
-        @media (min-width: 1024px) {
-          /*
-            Three tracks only: brand | links | CTA. .nav__toggle is display:none so it is not a grid
-            item — a fourth track (auto auto) left an empty column and gap after Rezervace (DevTools gap stripes).
-          */
-          .nav__inner {
-            grid-template-columns: auto 1fr auto;
-            gap: 1rem;
-          }
-          .nav__links {
-            display: block;
-          }
-          /* Must stay flex like .btn — display:block removed gap between label and arrow */
-          .nav__cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            height: 46px;
-            padding-inline: 1.4rem;
-
-   
-          }
-          .nav__toggle {
-            display: none;
-          }
-          .nav__mobile {
-            display: none;
-          }
-          .nav__inner.container-x {
-            padding-inline: 0;
-          }
-        }
-
-        /*
-          Narrow desktop: only logo + inline links.
-          - global.css .btn (inline-flex) beats .nav__cta display:none when global loads last;
-            use !important so CTA leaves the layout.
-          - Wide desktop uses three grid tracks so no empty fourth column when toggle is hidden.
-        */
-        @media (min-width: 1024px) and (max-width: 1229px) {
-          .nav__inner {
-            grid-template-columns: auto 1fr;
-            gap: 0.3rem;
-          }
-            
-          /* Desktop nav normally strips container-x inset (padding-inline: 0); restore equal left/right gutter here */
-          .nav__inner.container-x {
-            padding-inline: 1.2rem;
-          }
-          .nav__cta.btn {
-            display: none !important;
-          }
-          .nav__toggle {
-            display: none !important;
-          }
-          .nav__mobile {
-            display: none !important;
-          }
-        }
-
-        // @media (min-width: 1230px) {
-        //   .nav__inner.container-x {
-        //     padding-inline: 0.9rem;
-        //   }
-        }
-      `}</style>
     </header>
   );
 };
