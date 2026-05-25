@@ -376,9 +376,9 @@ const mapEmbed = (lat: number, lng: number) =>
     font-style: normal;
     margin: 0;
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1.6;
     min-height: 3rem;
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .location__parking {
@@ -396,7 +396,7 @@ const mapEmbed = (lat: number, lng: number) =>
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--color-ink-soft);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
     font-weight: 700;
     font-size: 0.875rem;
     text-transform: uppercase;
