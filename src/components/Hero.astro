@@ -189,6 +189,7 @@ import { site } from "../data/site";
   }
 
   .hero__copy {
+    container-type: inline-size;
     animation: fade-up 800ms 100ms ease both;
   }
 
@@ -205,10 +206,10 @@ import { site } from "../data/site";
 
   .hero__title {
     margin: 0 0 3rem;
-    font-family: "Pacifico", "Inter", sans-serif;
+    font-family: var(--font-hero);
     font-weight: 400;
-    font-size: 3rem;
-    line-height: 1.2;
+    font-size: clamp(3rem, 13cqi, 4.375rem);
+    line-height: var(--line-height-sm);
     letter-spacing: 0;
     color: #f5f5f5;
     text-shadow:
@@ -217,7 +218,7 @@ import { site } from "../data/site";
   }
 
   .hero__lead {
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     color: var(--color-ink);
     max-width: 38rem;
     margin: 0 auto 3rem;
@@ -298,13 +299,11 @@ import { site } from "../data/site";
 
   @media (min-width: 640px) and (max-width: 1023px) {
     .hero__title {
-      font-size: 4rem;
       margin: 2rem 0 3.5rem;
     }
 
     .hero__lead {
-      font-size: 1.25rem;
-      line-height: 1.6;
+      font-size: var(--text-xl);
       margin: 0 auto 3.5rem;
     }
 
@@ -337,10 +336,6 @@ import { site } from "../data/site";
       text-align: unset;
     }
 
-    .hero__title {
-      font-size: clamp(2.6rem, 6.5vw, 5rem);
-    }
-
     .hero__lead {
       margin: 0 0 3rem;
       padding-left: 0;
@@ -367,17 +362,8 @@ import { site } from "../data/site";
   /* Narrow desktop: two-column hero — heading reads huge vs logo; keep title smaller than full desktop clamp */
   @media (min-width: 1024px) and (max-width: 1155px) {
     .hero__title {
-      font-size: 3.5rem;
       margin: 0rem 0 3rem;
     }
-  }
-
-  /* Wide desktop (1156px+) — optional overrides; stacks after min-width 1024 rules */
-  @media (min-width: 1156px) {
-    .hero__title {
-      font-size: 4.375rem;
-    }
-    /* Add styles here */
   }
 
   .hero__scroll:hover {

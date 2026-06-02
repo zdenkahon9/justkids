@@ -108,7 +108,7 @@ import { site } from "../data/site";
   }
 
   .camps__header h2 {
-    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+    font-size: var(--text-clamp-h2);
     margin: 0 0 1.5rem;
   }
 
@@ -119,9 +119,8 @@ import { site } from "../data/site";
   .camps__subtitle {
     margin: 0;
     font-family: var(--font-body);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 400;
-    line-height: 1.6;
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
@@ -182,7 +181,7 @@ import { site } from "../data/site";
     color: var(--accent-color);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: var(--text-base);
     min-width: 0;
   }
 
@@ -197,8 +196,9 @@ import { site } from "../data/site";
   }
 
   .camp__body h3 {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
     margin: 0 0 0.4rem;
+    line-height: var(--line-height-xl);
   }
 
   .camp__place {
@@ -206,7 +206,7 @@ import { site } from "../data/site";
     align-items: center;
     gap: 0.4rem;
     color: var(--accent-color);
-    font-size: 0.9rem;
+    font-size: var(--text-base);
     font-weight: 600;
     margin: 0 0 0.5rem;
   }
@@ -214,8 +214,7 @@ import { site } from "../data/site";
   .camp__summary {
     margin: 0;
     color: var(--color-ink);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: var(--text-base);
   }
 
   .camp__cta {

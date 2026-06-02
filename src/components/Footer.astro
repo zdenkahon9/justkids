@@ -206,18 +206,18 @@ const year = new Date().getFullYear();
   }
 
   .footer__brand h2 {
-    font-size: 1.625rem;
+    font-size: var(--text-2-5xl);
     margin: 0;
-    line-height: 1;
+    line-height: var(--line-height-sm);
   }
 
   .footer__tagline {
-    font-family: "Caveat", cursive;
+    font-family: var(--font-brandmotto);
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     color: var(--color-blush-deep);
     margin-top: 2px;
-    line-height: 1;
+    line-height: var(--line-height-xs);
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
   }
 
@@ -225,7 +225,7 @@ const year = new Date().getFullYear();
     color: var(--color-ink);
     margin: 0 0 1.5rem;
     max-width: 28rem;
-    font-size: 1rem;
+    font-size: var(--text-base);
     text-align: justify;
   }
 
@@ -289,9 +289,10 @@ const year = new Date().getFullYear();
 
   .footer__col h3 {
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    line-height: var(--line-height-xl);
     color: var(--color-ink-soft);
     font-weight: 700;
     margin: 0 0 1.25rem;
@@ -308,7 +309,7 @@ const year = new Date().getFullYear();
   .footer__col a {
     color: var(--color-ink);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: 500;
     transition: color 220ms ease;
     display: inline-flex;
@@ -324,13 +325,13 @@ const year = new Date().getFullYear();
     font-weight: 700;
   }
   .footer__col a span {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .footer__instructor {
     color: var(--color-ink);
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-weight: 600;
   }
 
@@ -347,7 +348,7 @@ const year = new Date().getFullYear();
     text-align: center;
     align-items: center;
     gap: 1rem;
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--color-ink-soft);
   }
 
@@ -381,7 +382,7 @@ const year = new Date().getFullYear();
 
   @media (min-width: 640px) and (max-width: 1023px) {
     .footer__about {
-      font-size: 1rem;
+      font-size: var(--text-base);
       text-align: left;
       max-width: 21rem;
     }

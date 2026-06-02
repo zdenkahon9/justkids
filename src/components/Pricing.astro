@@ -107,7 +107,7 @@ import { site } from "../data/site";
   }
 
   .pricing__header h2 {
-    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+    font-size: var(--text-clamp-h2);
     margin: 0 0 1.5rem;
   }
 
@@ -118,9 +118,8 @@ import { site } from "../data/site";
   .pricing__subtitle {
     margin: 0;
     font-family: var(--font-body);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 400;
-    line-height: 1.6;
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
@@ -194,7 +193,7 @@ import { site } from "../data/site";
     transform: translateX(-50%);
     background: linear-gradient(135deg, #ff6fb3, var(--color-blush-vivid));
     color: white;
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
     font-weight: 700;
     padding: 0.45rem 1rem;
     border-radius: 9999px;
@@ -204,15 +203,16 @@ import { site } from "../data/site";
   }
 
   .tier h3 {
-    font-size: 1.4rem;
+    font-size: var(--text-2xl);
     margin: 0 0 0.5rem;
     font-family: var(--font-body);
     font-weight: 800;
+    line-height: var(--line-height-xl);
   }
 
   .tier__desc {
     color: var(--color-ink-soft);
-    font-size: 0.92rem;
+    font-size: var(--text-sm);
     margin: 0 0 1.5rem;
     min-height: 2.6rem;
   }
@@ -228,14 +228,13 @@ import { site } from "../data/site";
 
   .tier__amount {
     font-family: var(--font-display);
-    font-size: 3rem;
+    font-size: var(--text-2-5xl);
     font-weight: 700;
     color: var(--accent-color);
-    line-height: 1;
   }
 
   .tier__unit {
-    font-size: 0.95rem;
+    font-size: var(--text-base);
     color: var(--color-ink-soft);
     font-weight: 600;
   }
@@ -253,7 +252,7 @@ import { site } from "../data/site";
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    font-size: 0.95rem;
+    font-size: var(--text-base);
   }
 
   .tier__features svg {
@@ -274,7 +273,7 @@ import { site } from "../data/site";
     margin: 2.5rem auto 0;
     max-width: 44rem;
     color: var(--color-ink-muted);
-    font-size: 0.88rem;
+    font-size: var(--text-sm);
   }
 
   @media (min-width: 1024px) {

@@ -82,7 +82,7 @@ const accentMap: Record<string, string> = {
   }
 
   .reviews__header h2 {
-    font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+    font-size: var(--text-clamp-h2);
     margin: 0 0 1.5rem;
   }
 
@@ -93,9 +93,8 @@ const accentMap: Record<string, string> = {
   .reviews__subtitle {
     margin: 0;
     font-family: var(--font-body);
-    font-size: 1.125rem;
+    font-size: var(--text-lg);
     font-weight: 400;
-    line-height: 1.6;
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
@@ -146,9 +145,8 @@ const accentMap: Record<string, string> = {
     display: grid;
     place-items: center;
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: var(--text-2xl);
     font-weight: 700;
-    line-height: 0;
     padding-top: 8px;
     box-shadow: 0 8px 22px -8px
       color-mix(in srgb, var(--accent) 70%, transparent);
@@ -167,8 +165,7 @@ const accentMap: Record<string, string> = {
   .review__text {
     margin: 0;
     color: var(--color-ink);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: var(--text-base);
     font-style: italic;
     quotes: "„" "" "" "";
   }
@@ -199,18 +196,18 @@ const accentMap: Record<string, string> = {
     place-items: center;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: var(--text-lg);
   }
 
   .review__author strong {
     display: block;
     font-weight: 700;
     color: var(--color-ink);
-    line-height: 1.1;
+    line-height: var(--line-height-lg);
   }
 
   .review__author span {
-    font-size: 0.85rem;
+    font-size: var(--text-sm);
     color: var(--color-ink-soft);
   }
 </style>
