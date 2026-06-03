@@ -67,6 +67,9 @@
   /* Radius */
   --radius-full: 9999px;
   --radius-card: 1.5rem;
+  --radius-sm: 0.25rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
 
   /* Shadows */
   --shadow-soft: 0 8px 30px -12px rgba(123, 90, 160, 0.18);
@@ -218,7 +221,7 @@ h4 {
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: inherit;
+  border-radius: var(--radius-full);
   pointer-events: none;
   background: linear-gradient(
     135deg,
@@ -410,7 +413,6 @@ h4 {
 :focus-visible {
   outline: 3px solid var(--color-sky-deep);
   outline-offset: 2px;
-  border-radius: 4px;
 }
 
 /* Skip link */
@@ -421,7 +423,7 @@ h4 {
   background: var(--color-ink);
   color: white;
   padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-full);
   z-index: 100;
   font-weight: 700;
   text-decoration: none;

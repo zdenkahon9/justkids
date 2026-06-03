@@ -179,7 +179,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     position: relative;
     overflow: hidden;
     background: #fefefe;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
     display: flex;
     flex-direction: column;
@@ -323,7 +323,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
 
   .workshop__details {
     padding: 1rem 1.1rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-xl);
     background: var(--theme-light);
   }
 
@@ -344,7 +344,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     color: var(--color-ink);
   }
 
-  .workshop__more {
+  /* .workshop__more {
     margin: 0.35rem auto 0;
     padding: 0;
     border: none;
@@ -367,8 +367,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   .workshop__more:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 0.25rem;
-  }
+  } */
 
   @media (min-width: 768px) {
     .workshops__grid {

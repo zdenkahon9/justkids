@@ -30,8 +30,8 @@ const mapEmbed = (lat: number, lng: number) =>
               class={`location location--${l.accent} reveal`}
               style={`transition-delay: ${i * 100}ms`}
             >
-              <details class="location__details" open>
-                <summary class="location__summary">
+              <div class="location__details">
+                <div class="location__summary">
                   <div class="location__head">
                     <div class="location__icon" aria-hidden="true">
                       <svg
@@ -55,7 +55,7 @@ const mapEmbed = (lat: number, lng: number) =>
                       </address>
                     </div>
                   </div>
-                </summary>
+                </div>
 
                 <div class="location__panel">
                   <div class="location__expandable">
@@ -130,7 +130,7 @@ const mapEmbed = (lat: number, lng: number) =>
                     </a>
                   </div>
                 </div>
-              </details>
+              </div>
             </article>
           ))
         }
@@ -258,7 +258,7 @@ const mapEmbed = (lat: number, lng: number) =>
     align-items: center;
     gap: 0.35rem;
     padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
+    border-radius: var(--radius-xl);
     background: #fff;
     color: #1a73e8;
     font-family: var(--font-body);
@@ -298,29 +298,11 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   .location__summary {
-    list-style: none;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0.75rem;
     padding: 1.35rem 1.5rem 1.25rem;
-    cursor: default;
-    user-select: auto;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .location__summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .location__summary:focus {
-    outline: none;
-  }
-
-  .location__summary:focus-visible {
-    outline: 2px solid var(--color-lilac-deep);
-    outline-offset: 3px;
-    border-radius: 0.35rem;
   }
 
   .location__expandable {
@@ -407,7 +389,7 @@ const mapEmbed = (lat: number, lng: number) =>
     place-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 0.2rem;
+    border-radius: var(--radius-sm);
     background: var(--color-sky-deep);
     color: #fff;
     font-family: var(--font-body);
@@ -488,25 +470,3 @@ const mapEmbed = (lat: number, lng: number) =>
     }
   }
 </style>
-
-<script>
-  /** Panely lokací jsou vždy rozbalené; po zavření (např. klávesnicí) znovu otevřeme */
-  function initLocationDetailsPanel() {
-    const root = document.getElementById("lokace");
-    if (!root) return;
-
-    const detailsList =
-      root.querySelectorAll<HTMLDetailsElement>(".location__details");
-
-    detailsList.forEach((details) => {
-      details.open = true;
-      details.addEventListener("toggle", () => {
-        if (!details.open) {
-          details.open = true;
-        }
-      });
-    });
-  }
-
-  initLocationDetailsPanel();
-</script>
