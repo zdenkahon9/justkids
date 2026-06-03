@@ -48,7 +48,7 @@
 .navLogo {
   width: 52px;
   height: 52px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   object-fit: cover;
   transition:
     width 280ms ease,
@@ -117,7 +117,7 @@
   font-weight: 600;
   font-size: var(--text-base);
   text-decoration: none;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   transition:
     background-color 220ms ease,
     color 220ms ease;
@@ -132,7 +132,7 @@
   font-size: var(--text-base);
   line-height: var(--line-height-base);
   text-decoration: none;
-  border-radius: 9999px;
+  border-radius: var(--radius-full);
   transition:
     background-color 220ms ease,
     color 220ms ease;
