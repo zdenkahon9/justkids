@@ -27,5 +27,3 @@ export const site = {
     instagram: "https://www.instagram.com/justkids.cz/",
   },
 } as const;
-
-export type SiteConfig = typeof site;

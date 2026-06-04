@@ -38,6 +38,36 @@ import { site } from "../data/site";
 </section>
 
 <style>
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-14px) rotate(2deg);
+    }
+  }
+
+  @keyframes float-medium {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(-2deg);
+    }
+  }
+
+  @keyframes drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(8px, -8px);
+    }
+  }
+
   .cta-banner__inner {
     position: relative;
     background: linear-gradient(135deg, #fff9f4 0%, #ffe1ed 40%, #ece1f7 80%, #d6ecfa 100%);
