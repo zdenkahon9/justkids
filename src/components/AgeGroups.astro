@@ -161,7 +161,7 @@ const cardVariant = (_index: number) => "wave";
     letter-spacing: 0.08em;
     color: var(--color-ink);
     background: #fff;
-    padding: 0.35rem 0.75rem;
+    padding: 0.375rem 0.75rem;
     border-radius: var(--radius-full);
     border: 2px solid
       color-mix(in srgb, var(--accent) 55%, var(--color-ink) 12%);
@@ -181,7 +181,7 @@ const cardVariant = (_index: number) => "wave";
     letter-spacing: 0.06em;
     color: var(--color-ink-muted);
     background: var(--color-cream);
-    padding: 0.3rem 0.6rem;
+    padding: 0.375rem 0.75rem;
     border-radius: var(--radius-full);
   }
 
@@ -251,8 +251,8 @@ const cardVariant = (_index: number) => "wave";
     flex-shrink: 0;
   }
 
-  /* ========== LIVE: wave (data-variant="wave") ========== */
-  .age__card[data-variant="wave"] {
+  /* ========== wave header + card skin ========== */
+  .age__card {
     border-radius: var(--radius-card);
     padding: 2rem 1.75rem;
     padding-top: 4.5rem;
@@ -261,7 +261,7 @@ const cardVariant = (_index: number) => "wave";
     overflow: hidden;
   }
 
-  .age__card[data-variant="wave"]::before {
+  .age__card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -273,7 +273,7 @@ const cardVariant = (_index: number) => "wave";
     pointer-events: none;
   }
 
-  .age__card[data-variant="wave"] .age__icon {
+  .age__card .age__icon {
     position: relative;
     z-index: 1;
     width: 80px;
@@ -291,7 +291,7 @@ const cardVariant = (_index: number) => "wave";
     transition: transform 280ms ease;
   }
 
-  .age__card[data-variant="wave"] .age__icon-graphic {
+  .age__card .age__icon-graphic {
     width: 2.75rem;
     height: 2.75rem;
     filter: drop-shadow(
@@ -299,13 +299,13 @@ const cardVariant = (_index: number) => "wave";
     );
   }
 
-  .age__card[data-variant="wave"]:hover {
+  .age__card:hover {
     transform: translateY(-4px);
     box-shadow: 0 26px 55px -18px
       color-mix(in srgb, var(--accent) 45%, transparent);
   }
 
-  .age__card[data-variant="wave"]:hover .age__icon {
+  .age__card:hover .age__icon {
     transform: scale(1.05);
   }
 

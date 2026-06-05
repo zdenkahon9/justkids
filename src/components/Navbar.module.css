@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 50;
-  padding: 1.1rem 0;
+  padding: 1.125rem 0;
   transition:
     background-color 280ms ease,
     padding 280ms ease,
@@ -22,7 +22,7 @@
   background: rgba(255, 249, 244, 0.88);
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
-  padding: 0.55rem 0;
+  padding: 0.5rem 0;
   box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
 }
 
@@ -112,7 +112,7 @@
 
 .navLinks > ul > li > a {
   display: inline-block;
-  padding: 0.6rem 0.95rem;
+  padding: 0.625rem 1rem;
   color: var(--color-ink);
   font-weight: 600;
   font-size: var(--text-base);
@@ -125,7 +125,7 @@
 
 .navLinks > ul > li > button.dropdownTrigger {
   display: inline-block;
-  padding: 0.6rem 0.95rem;
+  padding: 0.625rem 1rem;
   margin: 0;
   color: var(--color-ink);
   font-weight: 600;
@@ -200,7 +200,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 100%;
-  padding-top: 1.4rem;
+  padding-top: 1.375rem;
   min-width: 100%;
   opacity: 0;
   visibility: hidden;
@@ -226,7 +226,7 @@
 .dropdownList {
   list-style: none;
   margin: 0;
-  padding: 0.7rem;
+  padding: 0.75rem;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -242,7 +242,7 @@
 
 .dropdownList a {
   display: block;
-  padding: 0.6rem 0.95rem;
+  padding: 0.625rem 1rem;
   color: var(--color-ink);
   font-weight: 600;
   font-size: var(--text-base);
@@ -371,7 +371,7 @@
 
 .navMobile a:not(:global(.btn)) {
   display: block;
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1rem;
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 600;
@@ -384,7 +384,7 @@
   margin-top: auto;
   width: 100%;
   font-size: var(--text-base);
-  padding: 0.85rem 1.4rem;
+  padding: 0.875rem 1.375rem;
 }
 
 @media (min-width: 640px) {
@@ -416,7 +416,7 @@
     align-items: center;
     justify-content: center;
     height: 46px;
-    padding-inline: 1.4rem;
+    padding-inline: 1.375rem;
   }
 
   .navToggle {
@@ -443,7 +443,7 @@
   }
 
   .navInner:global(.container-x) {
-    padding-inline: 1.2rem;
+    padding-inline: 1.25rem;
   }
 
   .navCta:global(.btn) {

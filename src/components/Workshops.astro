@@ -180,7 +180,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     overflow: hidden;
     background: #fefefe;
     border-radius: var(--radius-card);
-    padding: 2rem 1.75rem;
+    padding: var(--card-padding);
     display: flex;
     flex-direction: column;
     min-height: var(--workshop-card-height);
@@ -322,7 +322,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   }
 
   .workshop__details {
-    padding: 1rem 1.1rem;
+    padding: var(--space-4);
     border-radius: var(--radius-xl);
     background: var(--theme-light);
   }
@@ -331,7 +331,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     list-style-type: disc;
     list-style-position: outside;
     margin: 0;
-    padding-left: 1.25rem;
+    padding-left: var(--space-5);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;

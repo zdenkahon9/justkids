@@ -46,7 +46,7 @@
   --font-hero: "Pacifico", "Inter", sans-serif;
   --font-brandmotto: "Caveat", cursive;
 
-  /* Text sizes */
+  /* Text Font-Sizes */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -56,7 +56,7 @@
   --text-2-5xl: 1.625rem;
   --text-clamp-h2: clamp(2.5rem, 4.5vw, 3.5rem);
 
-  /*Line Height*/
+  /* Line Height */
   --line-height-xs: 1;
   --line-height-sm: 1.1;
   --line-height-base: 1.6;
@@ -71,6 +71,33 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
 
+  /* Space (padding, margin)*/
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-9: 2.5rem;
+  --space-10: 3rem;
+  --space-11: 3.5rem;
+  --space-12: 4rem;
+  --space-13: 0;
+
+  /* SYSTEM TOKENS (tohle je klíč) */
+  --section-padding-y: var(--space-12);
+
+  --card-padding-x: var(--space-7);
+  --card-padding-y: var(--space-8);
+
+  --card-padding: var(--card-padding-y) var(--card-padding-x);
+
+  --section-header-spacing: var(--space-10);
+
+  --stack-gap: var(--space-6);
+
   /* Shadows */
   --shadow-soft: 0 8px 30px -12px rgba(123, 90, 160, 0.18);
   --shadow-pop: 0 18px 40px -16px rgba(236, 47, 142, 0.45);
@@ -78,7 +105,7 @@
 
 /* ---------- Base ---------- */
 html {
-  /* Fixed .nav: vertical padding + logo row (see Navbar.tsx .nav / .nav.is-scrolled) */
+  /* Fixed .nav: vertical space + logo row (see Navbar.tsx .nav / .nav.is-scrolled) */
   --nav-height: calc(2.2rem + 48px);
   --nav-height-scrolled: calc(1.1rem + 40px);
   scroll-behavior: smooth;
@@ -139,7 +166,7 @@ h4 {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0.95rem 1.6rem;
+  padding: 1rem 1.625rem;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: var(--text-base);
@@ -227,7 +254,7 @@ h4 {
 }
 
 .btn-sm {
-  padding: 0.6rem 1.1rem;
+  padding: 0.625rem 1.125rem;
   font-size: var(--text-base);
 }
 
