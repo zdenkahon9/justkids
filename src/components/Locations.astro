@@ -11,12 +11,12 @@ const mapEmbed = (lat: number, lng: number) =>
   aria-labelledby="locations-title"
 >
   <div class="container-x">
-    <header class="locations__header reveal">
+    <header class="section-header reveal">
       <span class="eyebrow">Kde nás najdete</span>
       <h2 id="locations-title">
         Navštivte <span class="section-title-accent">nás</span>
       </h2>
-      <p class="locations__subtitle">
+      <p class="section-subtitle">
         Cvičíme ve dvou příjemných studiích na Berounsku – ve Zdicích a v
         Hořovicích.
       </p>
@@ -171,30 +171,11 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   #lokace {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
 
-  .locations__header {
-    text-align: center;
-    max-width: 44rem;
-    margin: 0 auto var(--section-header-spacing);
-  }
-
-  .locations__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .locations__header h2 .section-title-accent {
+  .locations .section-title-accent {
     color: var(--color-lilac-deep);
-  }
-
-  .locations__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   /* Divider matches .footer__col (mobile / tablet): light pink line */
@@ -434,10 +415,6 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   @media (min-width: 1024px) {
-    .locations__header h2 {
-      margin: 0 0 1rem;
-    }
-
     .location:hover {
       transform: translateY(-4px);
       box-shadow: 0 24px 56px -12px

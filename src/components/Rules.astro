@@ -4,12 +4,12 @@ import { rules } from "../data/rules";
 
 <section id="provozni-rad" class="section rules" aria-labelledby="rules-title">
   <div class="container-x">
-    <header class="rules__header reveal">
+    <header class="section-header reveal">
       <span class="eyebrow">Provozní řád</span>
       <h2 id="rules-title">
         Desatero <span class="section-title-accent">chování na lekci</span>
       </h2>
-      <p class="rules__subtitle">
+      <p class="section-subtitle">
         Pár jednoduchých pravidel, díky kterým je u nás všem dobře.
       </p>
     </header>
@@ -34,35 +34,10 @@ import { rules } from "../data/rules";
 
 <style>
   #provozni-rad {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
-  .rules__header {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-  }
-
-  .rules__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .rules__header h2 .section-title-accent {
+  .rules .section-title-accent {
     color: var(--color-sky-deep);
-  }
-
-  .rules__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
-  @media (min-width: 1024px) {
-    .rules__header h2 {
-      margin: 0 0 1rem;
-    }
   }
 
   .rules__grid {

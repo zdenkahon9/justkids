@@ -59,13 +59,13 @@ import { site } from "../data/site";
 
 <style>
   #o-mne {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
     position: relative;
     z-index: 1;
     background-color: var(--color-cream);
     /* Extra cream band above section — covers subpixel seam when zoom ≠ 100% */
     margin-top: -6px;
-    padding-top: calc(5.5rem + 6px);
+    padding-top: calc(var(--section-padding-y) + 6px);
   }
 
   #o-mne::before {
@@ -114,7 +114,7 @@ import { site } from "../data/site";
 
   .about__text h2 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
+    margin: 0 0 var(--section-title-gap);
   }
 
   .about__lead {
@@ -218,10 +218,6 @@ import { site } from "../data/site";
   }
 
   @media (min-width: 1024px) {
-    .about__text h2 {
-      margin: 0 0 1rem;
-    }
-
     .about__inner {
       grid-template-columns: 1fr 1.2fr;
       gap: 5rem;

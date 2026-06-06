@@ -33,12 +33,12 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   aria-labelledby="workshops-title"
 >
   <div class="container-x">
-    <header class="workshops__header reveal">
+    <header class="section-header reveal">
       <span class="eyebrow">Další akce</span>
       <h2 id="workshops-title">
         Workshopy <span class="section-title-accent">pro rodiče</span>
       </h2>
-      <p class="workshops__subtitle">
+      <p class="section-subtitle">
         Praktické workshopy pro rodiče miminek a malých dětí. Dopřejte svému
         miminku ten nejlepší start do života.
       </p>
@@ -132,30 +132,11 @@ const workshopIconById: Record<string, WorkshopIcon> = {
 
 <style>
   #workshopy {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
 
-  .workshops__header {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-  }
-
-  .workshops__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .workshops__header h2 .section-title-accent {
+  .workshops .section-title-accent {
     color: var(--color-blush-vivid);
-  }
-
-  .workshops__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   /* Do 767px: 25.75rem; od 768px 2× pevně 24rem (šířka jako při viewportu 920px) */
@@ -381,10 +362,6 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   }
 
   @media (min-width: 1180px) {
-    .workshops__header h2 {
-      margin: 0 0 1rem;
-    }
-
     .workshops__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }

@@ -84,17 +84,24 @@
   --space-10: 3rem;
   --space-11: 3.5rem;
   --space-12: 4rem;
-  --space-13: 0;
+  --space-13: 5.5rem;
+  --space-none: 0;
 
   /* SYSTEM TOKENS (tohle je klíč) */
-  --section-padding-y: var(--space-12);
+  --section-padding-y: var(--space-13);
+  --section-scroll-margin: calc(-1 * var(--section-padding-y));
+  --section-header-spacing: var(--space-10);
+  --section-header-max-width: 42rem;
+  --section-title-gap: var(--space-6);
+
+  --container-padding-x: var(--space-6);
+  --container-padding-x-lg: var(--space-12);
 
   --card-padding-x: var(--space-7);
   --card-padding-y: var(--space-8);
 
   --card-padding: var(--card-padding-y) var(--card-padding-x);
-
-  --section-header-spacing: var(--space-10);
+  --card-padding-top-wave: 4.5rem;
 
   --stack-gap: var(--space-6);
 
@@ -260,19 +267,39 @@ h4 {
 
 /* Section wrapper */
 .section {
-  padding: 5.5rem 0;
+  padding: var(--section-padding-y) 0;
+}
+
+/* Section intro block (eyebrow + h2 + subtitle) */
+.section-header {
+  text-align: center;
+  max-width: var(--section-header-max-width);
+  margin: 0 auto var(--section-header-spacing);
+}
+
+.section-header h2 {
+  font-size: var(--text-clamp-h2);
+  margin: 0 0 var(--section-title-gap);
+}
+
+.section-subtitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
 }
 
 .container-x {
   width: 100%;
   max-width: 78rem;
   margin-inline: auto;
-  padding-inline: 1.5rem;
+  padding-inline: var(--container-padding-x);
 }
 
 @media (min-width: 640px) {
   .container-x {
-    padding-inline: 4rem;
+    padding-inline: var(--container-padding-x-lg);
   }
 }
 
@@ -284,8 +311,7 @@ h4 {
   font-weight: 500;
   color: var(--color-blush-deep);
   line-height: var(--line-height-2xl);
-  margin-bottom: 1.5rem;
-  padding-top: 1.5rem;
+  margin-bottom: var(--section-title-gap);
 }
 
 /* Reveal on scroll (respects prefers-reduced-motion via JS) */

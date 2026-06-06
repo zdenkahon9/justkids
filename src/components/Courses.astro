@@ -8,12 +8,12 @@ import { courses } from "../data/courses";
   aria-labelledby="courses-title"
 >
   <div class="container-x">
-    <header class="courses__header reveal">
+    <header class="section-header reveal">
       <span class="eyebrow">Vzdělání</span>
       <h2 id="courses-title">
         Absolvované <span class="section-title-accent">kurzy</span>
       </h2>
-      <p class="courses__subtitle">
+      <p class="section-subtitle">
         Pravidelně se vzdělávám, abych vám i vašim dětem mohla nabídnout opravdu
         kvalitní lekce.
       </p>
@@ -52,7 +52,7 @@ import { courses } from "../data/courses";
 
 <style>
   #absolvovane-kurzy {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
   .courses {
     background: linear-gradient(
@@ -64,33 +64,8 @@ import { courses } from "../data/courses";
     );
   }
 
-  .courses__header {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-  }
-
-  .courses__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .courses__header h2 .section-title-accent {
+  .courses .section-title-accent {
     color: var(--color-sky-deep);
-  }
-
-  .courses__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
-  @media (min-width: 1024px) {
-    .courses__header h2 {
-      margin: 0 0 1rem;
-    }
   }
 
   .courses__list {

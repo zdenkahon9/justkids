@@ -5,12 +5,12 @@ import { site } from "../data/site";
 
 <section id="kempy" class="section camps" aria-labelledby="camps-title">
   <div class="container-x">
-    <header class="camps__header reveal">
+    <header class="section-header reveal">
       <span class="eyebrow">Pojďte s námi ven</span>
       <h2 id="camps-title">
         Kempy <span class="section-title-accent">&amp; výjezdy</span>
       </h2>
-      <p class="camps__subtitle">
+      <p class="section-subtitle">
         Společné víkendy a výlety, kde si rodiny užijí pohyb, přírodu a vzájemné
         poznání.
       </p>
@@ -89,7 +89,7 @@ import { site } from "../data/site";
 
 <style>
   #kempy {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
   .camps {
     background: linear-gradient(
@@ -101,33 +101,8 @@ import { site } from "../data/site";
     );
   }
 
-  .camps__header {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-  }
-
-  .camps__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .camps__header h2 .section-title-accent {
+  .camps .section-title-accent {
     color: var(--color-lilac-deep);
-  }
-
-  .camps__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
-  @media (min-width: 1024px) {
-    .camps__header h2 {
-      margin: 0 0 1rem;
-    }
   }
 
   .camps__list {

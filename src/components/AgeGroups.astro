@@ -30,13 +30,13 @@ const cardVariant = (_index: number) => "wave";
 ---
 
 <section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
-  <div class="container-x age__container">
-    <header class="age__header reveal">
+  <div class="container-x">
+    <header class="section-header reveal">
       <span class="eyebrow">Věkové kategorie</span>
       <h2 id="age-title">
         Pro každý věk <span class="section-title-accent">to pravé cvičení</span>
       </h2>
-      <p class="age__subtitle">
+      <p class="section-subtitle">
         Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka
         po hravé překážky pro batolata. Vše v klidu a v tempu, které dítěti
         vyhovuje.
@@ -100,40 +100,26 @@ const cardVariant = (_index: number) => "wave";
 
 <style>
   #vekove-skupiny {
-    scroll-margin-top: -5.5rem;
+    scroll-margin-top: var(--section-scroll-margin);
   }
 
-  .age__header {
-    text-align: center;
-    max-width: 42rem;
-    margin: 0 auto 3rem;
-  }
-
-  .age__header h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 1.5rem;
-  }
-
-  .age__header h2 .section-title-accent {
+  .age .section-title-accent {
     color: var(--color-blush-vivid);
   }
 
-  .age__subtitle {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 400;
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
+  /* Mobile: 1 karta; tablet: 2×; desktop: 4× — stejný model jako .workshops__grid */
   .age__grid {
+    --age-card-width: 25.75rem; /* 412px = viewport 460px − 2× padding container-x (1.5rem) */
     --age-card-height: 30rem; /* menší než workshopy (34.75rem) */
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: min(100%, var(--age-card-width));
     gap: 1.5rem;
+    justify-content: center;
   }
 
   .age__card {
@@ -254,8 +240,8 @@ const cardVariant = (_index: number) => "wave";
   /* ========== wave header + card skin ========== */
   .age__card {
     border-radius: var(--radius-card);
-    padding: 2rem 1.75rem;
-    padding-top: 4.5rem;
+    padding: var(--card-padding);
+    padding-top: var(--card-padding-top-wave);
     border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
     background: #fefefe;
     overflow: hidden;
@@ -309,30 +295,14 @@ const cardVariant = (_index: number) => "wave";
     transform: scale(1.05);
   }
 
-  /* Kontejner: šířka jako při viewportu 416px */
-  @media (min-width: 416px) and (max-width: 639px) {
-    #vekove-skupiny .age__container {
-      max-width: 416px;
-    }
-  }
-
-  /* Grid: tablet — 2 sloupce (2+2 karty) */
-  @media (min-width: 640px) and (max-width: 1179px) {
+  @media (min-width: 768px) and (max-width: 1179px) {
     .age__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  /* Kontejner: šířka jako při viewportu 843px (padding 4rem od 640px v global.css) */
-  @media (min-width: 843px) and (max-width: 1179px) {
-    #vekove-skupiny .age__container {
-      max-width: 843px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .age__header h2 {
-      margin: 0 0 1rem;
+      /* 843px − 2×4rem padding − 1.5rem gap → (715−24)/2 ≈ 345px */
+      --age-card-width: 21.625rem;
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--age-card-width));
+      justify-content: center;
     }
   }
 
