@@ -102,6 +102,13 @@
 
   --card-padding: var(--card-padding-y) var(--card-padding-x);
   --card-padding-top-wave: 4.5rem;
+  --card-border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  --card-icon-size: 4rem;
+  --card-icon-graphic-size: 1.75rem;
+  /* AgeGroups wave header — větší hero ikona uprostřed karty */
+  --card-icon-size-wave: 5rem;
+  --card-icon-graphic-size-wave: 2.75rem;
+  --card-icon-overlap-wave: 2.85rem;
 
   --stack-gap: var(--space-6);
 
@@ -350,4 +357,15 @@ h4 {
 
 .skip-link:focus {
   top: 1rem;
+}
+
+/* Ikona uvnitř icon ring kruhu (Workshops, Locations) */
+.card-icon-graphic {
+  display: block;
+  width: var(--card-icon-graphic-size);
+  height: var(--card-icon-graphic-size);
+  flex-shrink: 0;
+  filter: drop-shadow(
+    0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+  );
 }

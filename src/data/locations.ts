@@ -14,7 +14,7 @@ export type Location = {
 export const locations: Location[] = [
   {
     id: "zdice",
-    name: "Zdice",
+    name: "Fitcentrum Zdice",
     street: "Husova 964",
     city: "Zdice",
     zip: "267 51",

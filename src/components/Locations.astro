@@ -1,5 +1,6 @@
 ---
 import { locations } from "../data/locations";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const mapEmbed = (lat: number, lng: number) =>
   `https://www.google.com/maps?q=${lat},${lng}&z=16&hl=cs&output=embed`;
@@ -22,119 +23,115 @@ const mapEmbed = (lat: number, lng: number) =>
       </p>
     </header>
 
-    <div class="locations__layout">
-      <div class="locations__grid">
-        {
-          locations.map((l, i) => (
-            <article
-              class={`location location--${l.accent} reveal`}
-              style={`transition-delay: ${i * 100}ms`}
-            >
-              <div class="location__details">
-                <div class="location__summary">
-                  <div class="location__head">
-                    <div class="location__icon" aria-hidden="true">
-                      <svg
-                        class="location__pin"
-                        viewBox="0 0 24 24"
-                        width="30"
-                        height="30"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fill="var(--accent-color)"
-                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                        />
-                        <circle cx="12" cy="9" r="2.75" fill="#fff" />
-                      </svg>
-                    </div>
-                    <div class="location__head-text">
-                      <h3>{l.id === "zdice" ? "Fitcentrum Zdice" : l.name}</h3>
-                      <address class="location__address">
-                        {l.street}, {l.zip} {l.city}
-                      </address>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="location__panel">
-                  <div class="location__expandable">
-                    <div class="location__parking">
-                      <span class="location__parking-label">
-                        <span class="location__p-mark" aria-hidden="true">
-                          P
-                        </span>
-                        Parkování
-                      </span>
-                      <p>{l.parking}</p>
-                    </div>
-
-                    <a
-                      href={l.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="location__nav-link"
+    <div class="locations__grid">
+      {
+        locations.map((l, i) => (
+          <article
+            class="location reveal"
+            style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
+          >
+            <div class="location__details">
+              <div class="location__summary">
+                <div class="location__head">
+                  <div class="location__icon" aria-hidden="true">
+                    <svg
+                      class="card-icon-graphic"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
                     >
-                      Navigovat v Google Maps
-                      <svg
-                        class="location__extern-icon"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                        />
-                        <path
-                          fill="currentColor"
-                          d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                        />
-                      </svg>
-                    </a>
+                      <path
+                        fill="var(--accent)"
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                      />
+                      <circle cx="12" cy="9" r="2.75" fill="#fff" />
+                    </svg>
                   </div>
-
-                  <div class="location__map-shell">
-                    <iframe
-                      class="location__map-frame"
-                      src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
-                      title={`Mapa: ${l.name}`}
-                      loading="lazy"
-                      referrerpolicy="no-referrer-when-downgrade"
-                      allowfullscreen
-                    />
-                    <a
-                      href={l.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="location__map-overlay"
-                    >
-                      Otevřít v Mapách
-                      <svg
-                        class="location__extern-icon"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                        />
-                        <path
-                          fill="currentColor"
-                          d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                        />
-                      </svg>
-                    </a>
+                  <div class="location__head-text">
+                    <h3>{l.name}</h3>
+                    <address class="location__address">
+                      {l.street}, {l.zip} {l.city}
+                    </address>
                   </div>
                 </div>
               </div>
-            </article>
-          ))
-        }
-      </div>
+
+              <div class="location__panel">
+                <div class="location__expandable">
+                  <div class="location__parking">
+                    <span class="location__parking-label">
+                      <span class="location__p-mark" aria-hidden="true">
+                        P
+                      </span>
+                      Parkování
+                    </span>
+                    <p>{l.parking}</p>
+                  </div>
+
+                  <a
+                    href={l.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="location__nav-link"
+                  >
+                    Navigovat v Google Maps
+                    <svg
+                      class="location__extern-icon"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      height="16"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                      />
+                      <path
+                        fill="currentColor"
+                        d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="location__map-shell">
+              <iframe
+                class="location__map-frame"
+                src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
+                title={`Mapa: ${l.name}`}
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+              />
+              <a
+                href={l.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="location__map-overlay"
+              >
+                Otevřít v Mapách
+                <svg
+                  class="location__extern-icon"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                  />
+                  <path
+                    fill="currentColor"
+                    d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
@@ -146,7 +143,7 @@ const mapEmbed = (lat: number, lng: number) =>
   .locations__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--stack-gap);
     align-items: start;
     justify-items: center;
   }
@@ -181,7 +178,6 @@ const mapEmbed = (lat: number, lng: number) =>
   /* Divider matches .footer__col (mobile / tablet): light pink line */
   .location {
     --location-divider: 1px solid rgba(236, 47, 142, 0.16);
-    --accent-color: var(--color-blush-deep);
 
     position: relative;
     display: flex;
@@ -190,29 +186,20 @@ const mapEmbed = (lat: number, lng: number) =>
     min-height: 0;
     background: #fefefe;
     border-radius: var(--radius-card);
-    padding: var(--card-padding);
     overflow: hidden;
-    border: 1px solid
-      color-mix(in srgb, var(--color-lilac-deep) 20%, transparent);
+    border: var(--card-border);
     box-shadow: none;
     transition:
-      transform 280ms ease,
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease;
-  }
-
-  .location--blush {
-    --accent-color: var(--color-blush-vivid);
-  }
-  .location--sky {
-    --accent-color: var(--color-sky-deep);
-  }
-  .location--lilac {
-    --accent-color: var(--color-lilac-deep);
   }
 
   .location__map-shell {
     position: relative;
     flex-shrink: 0;
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
     margin-top: auto;
     height: clamp(10rem, 26vw, 13rem);
     background: color-mix(in srgb, var(--color-cream-100) 82%, transparent);
@@ -269,7 +256,9 @@ const mapEmbed = (lat: number, lng: number) =>
     width: 100%;
     min-height: 0;
     border: 0;
-    padding: 0;
+    padding: var(--card-padding);
+    padding-bottom: var(--space-6);
+    box-sizing: border-box;
   }
 
   .location__panel {
@@ -299,38 +288,40 @@ const mapEmbed = (lat: number, lng: number) =>
   .location__head {
     display: flex;
     align-items: flex-start;
-    gap: 0.85rem;
+    gap: 1.2rem;
+    width: 100%;
     margin-bottom: 0;
     padding-top: 0.5rem;
   }
 
   .location__icon {
-    width: 2.75rem;
-    height: 2.75rem;
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    width: var(--card-icon-size);
+    height: var(--card-icon-size);
+    border-radius: var(--radius-full);
+    background: #fff;
+    border: none;
     display: grid;
     place-items: center;
     align-self: start;
-  }
-
-  .location__pin {
-    display: block;
-    width: 1.85rem;
-    height: auto;
-    filter: drop-shadow(
-        0 3px 8px color-mix(in srgb, var(--accent-color) 45%, transparent)
-      )
-      drop-shadow(
-        0 10px 28px color-mix(in srgb, var(--accent-color) 38%, transparent)
-      );
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
   }
 
   .location__head-text {
+    flex: 1;
     min-width: 0;
   }
 
   .location__head-text h3 {
+    font-family: var(--font-display);
     font-size: var(--text-2xl);
+    font-weight: 600;
     margin: 0 0 0.35rem;
     line-height: var(--line-height-xl);
     color: var(--color-ink);
@@ -414,22 +405,28 @@ const mapEmbed = (lat: number, lng: number) =>
     }
   }
 
-  @media (min-width: 1024px) {
+  .location:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .location:hover .location__icon {
+    transform: scale(1.05);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
     .location:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 56px -12px
-        color-mix(in srgb, var(--color-lilac-deep) 56%, transparent);
+      transform: none;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .location:hover {
-        transform: none;
-      }
+    .location:hover .location__icon {
+      transform: none;
     }
   }
 
   /*
-   * Sekce #lokace: od viewportu 1180px dvě karty po 450px, gap zůstává 1.5rem z .locations__grid.
+   * Sekce #lokace: od viewportu 1180px dvě karty po 490px, gap zůstává var(--stack-gap).
    * Selektor s #lokace přebije pravidlo .locations__grid z @media (min-width: 768px).
    */
   @media (min-width: 1180px) {
@@ -437,7 +434,7 @@ const mapEmbed = (lat: number, lng: number) =>
       grid-template-columns: repeat(2, 490px);
       justify-content: center;
       width: fit-content;
-      max-width: calc(450px + 1.5rem + 490px);
+      max-width: calc(490px + var(--stack-gap) + 490px);
       margin-inline: auto;
     }
 

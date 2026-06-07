@@ -74,7 +74,7 @@ import { courses } from "../data/courses";
     margin: 0 auto;
     max-width: 52rem;
     display: grid;
-    gap: 1rem;
+    gap: var(--stack-gap);
   }
 
   .courses__item {
@@ -85,10 +85,10 @@ import { courses } from "../data/courses";
       "body body";
     gap: 1.25rem;
     align-items: center;
-    padding: 1.5rem 1.75rem;
+    padding: var(--card-padding);
     background: white;
     border-radius: var(--radius-card);
-    border: 1.5px solid var(--color-lilac-soft);
+    border: var(--card-border);
     transition:
       transform 220ms ease,
       border-color 220ms ease,

@@ -167,13 +167,12 @@ import { site } from "../data/site";
       );
   }
 
-  @keyframes float-slow {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
+  @keyframes fade-in {
+    from {
+      opacity: 0;
     }
-    50% {
-      transform: translateY(-22px) rotate(3deg);
+    to {
+      opacity: 1;
     }
   }
   .hero__inner {
@@ -248,21 +247,23 @@ import { site } from "../data/site";
   .hero__media {
     display: none;
     place-items: center;
-    animation: fade-up 800ms 250ms ease both;
+    animation: fade-in 800ms 250ms ease both;
   }
 
   .hero__logo-wrap {
     position: relative;
+    display: grid;
+    place-items: center;
     width: min(100%, 384px);
     aspect-ratio: 1;
   }
 
   .hero__logo {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 30px 60px rgba(236, 47, 142, 0.35));
-    animation: float-slow 8s ease-in-out infinite;
   }
 
   .hero__wave {
@@ -326,14 +327,16 @@ import { site } from "../data/site";
       bottom: 0;
     }
 
-    .hero__logo {
-      filter: drop-shadow(0 18px 36px rgba(236, 47, 142, 0.22));
-    }
-
     .hero__inner {
       grid-template-columns: 1.1fr 1fr;
       gap: 5rem;
       text-align: unset;
+      align-items: start;
+    }
+
+    .hero__logo {
+      filter: drop-shadow(0 18px 36px rgba(236, 47, 142, 0.22));
+      object-position: center 42%;
     }
 
     .hero__lead {

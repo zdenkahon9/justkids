@@ -1,29 +1,13 @@
 ---
 import Icon from "astro-iconify";
 import { workshops } from "../data/workshops";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
-type WorkshopIcon = "firstaid" | "brain" | "heart";
-
-/** Stejné akcenty jako karty ve věkových skupinách (index 0–2). */
-const workshopAccentVar = (index: number) => {
-  if (index === 0) return "var(--color-sky-deep)";
-  if (index === 1) return "var(--color-lilac-deep)";
-  if (index === 2) return "var(--color-blush-deep)";
-  return "var(--color-blush-deep)";
-};
-
-const workshopSoftVar = (index: number) => {
-  if (index === 0) return "var(--color-sky-soft)";
-  if (index === 1) return "var(--color-lilac-soft)";
-  if (index === 2) return "var(--color-blush-soft)";
-  return "var(--color-blush-soft)";
-};
-
-/** Ikona karty — prezentace v Astro, obsah karty je v `workshops.ts` */
-const workshopIconById: Record<string, WorkshopIcon> = {
-  "prvni-pomoc-u-deti": "firstaid",
-  "handling-a-psychomotoricky-vyvoj": "brain",
-  "psychomotoricky-vyvoj-prevence": "heart",
+/** Iconify názvy (sada:id) — mapování podle id z workshops.ts */
+const workshopIconById: Record<string, string> = {
+  "prvni-pomoc-u-deti": "streamline:medical-bag",
+  "handling-a-psychomotoricky-vyvoj": "streamline:health-care-2",
+  "psychomotoricky-vyvoj-prevence": "streamline:brain",
 };
 ---
 
@@ -46,13 +30,10 @@ const workshopIconById: Record<string, WorkshopIcon> = {
 
     <ul class="workshops__grid">
       {
-        workshops.map((w, i) => {
-          const icon = workshopIconById[w.id] ?? "heart";
-
-          return (
+        workshops.map((w, i) => (
             <li
               class="workshop reveal"
-              style={`--accent: ${workshopAccentVar(i)}; --theme-light: ${workshopSoftVar(i)}; transition-delay: ${i * 80}ms`}
+              style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
             >
               <svg
                 class="workshop__blob"
@@ -66,24 +47,12 @@ const workshopIconById: Record<string, WorkshopIcon> = {
               <div class="workshop__header">
                 <div class="workshop__lead">
                   <span class="workshop__icon" aria-hidden="true">
-                    {icon === "firstaid" && (
-                      <Icon
-                        name="streamline:medical-bag"
-                        class="workshop__icon-graphic"
-                      />
-                    )}
-                    {icon === "brain" && (
-                      <Icon
-                        name="streamline:health-care-2"
-                        class="workshop__icon-graphic"
-                      />
-                    )}
-                    {icon === "heart" && (
-                      <Icon
-                        name="streamline:brain"
-                        class="workshop__icon-graphic"
-                      />
-                    )}
+                    <Icon
+                      name={
+                        workshopIconById[w.id] ?? "streamline:health-care-2"
+                      }
+                      class="card-icon-graphic"
+                    />
                   </span>
                   <h3>{w.title}</h3>
                 </div>
@@ -123,8 +92,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
                 </svg>
               </button> */}
             </li>
-          );
-        })
+          ))
       }
     </ul>
   </div>
@@ -150,7 +118,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     max-width: 100%;
     display: grid;
     grid-template-columns: min(100%, var(--workshop-card-width));
-    gap: 1.5rem;
+    gap: var(--stack-gap);
     justify-content: center;
   }
 
@@ -165,8 +133,8 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     display: flex;
     flex-direction: column;
     min-height: var(--workshop-card-height);
-    box-shadow: 0 8px 28px -14px rgba(45, 55, 72, 0.22);
-    border: none;
+    box-shadow: none;
+    border: var(--card-border);
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease;
@@ -174,7 +142,8 @@ const workshopIconById: Record<string, WorkshopIcon> = {
 
   .workshop:hover {
     transform: translateY(-4px);
-    box-shadow: 0 14px 36px -16px rgba(45, 55, 72, 0.28);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
   }
 
   .workshop:hover .workshop__icon {
@@ -194,7 +163,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   }
 
   .workshop__blob path {
-    fill: var(--theme-light);
+    fill: var(--accent-soft);
   }
 
   .workshop__age,
@@ -236,13 +205,13 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     background: var(--accent);
   }
 
-  /* Stejný kruh jako .age__card[data-variant="wave"] .age__icon — barva přes --accent */
+  /* Stejný kruh jako .age__icon — barva přes --accent */
   .workshop__icon {
     flex-shrink: 0;
     position: relative;
     z-index: 1;
-    width: 4rem;
-    height: 4rem;
+    width: var(--card-icon-size);
+    height: var(--card-icon-size);
     border-radius: var(--radius-full);
     background: #fff;
     border: none;
@@ -254,15 +223,6 @@ const workshopIconById: Record<string, WorkshopIcon> = {
       0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
       0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
     transition: transform 280ms ease;
-  }
-
-  .workshop__icon-graphic {
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    filter: drop-shadow(
-      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
-    );
   }
 
   .workshop__lead h3 {
@@ -286,7 +246,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
     font-weight: 600;
     line-height: var(--line-height-2xl);
     text-align: center;
-    color: var(--color-blush-vivid);
+    color: var(--accent);
   }
 
   .workshop__age:empty {
@@ -305,7 +265,7 @@ const workshopIconById: Record<string, WorkshopIcon> = {
   .workshop__details {
     padding: var(--space-4);
     border-radius: var(--radius-xl);
-    background: var(--theme-light);
+    background: var(--accent-soft);
   }
 
   .workshop__highlights {

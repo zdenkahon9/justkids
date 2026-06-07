@@ -111,7 +111,7 @@ import { site } from "../data/site";
     margin: 0 auto;
     max-width: 60rem;
     display: grid;
-    gap: 1.25rem;
+    gap: var(--stack-gap);
   }
 
   .camp {
@@ -121,11 +121,10 @@ import { site } from "../data/site";
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: center;
-    padding-block: 1.5rem;
-    padding-inline: 1.5rem;
+    padding: var(--card-padding);
     background: white;
     border-radius: var(--radius-card);
-    border: 1.5px solid var(--color-lilac-soft);
+    border: var(--card-border);
     transition:
       transform 220ms ease,
       border-color 220ms ease,
@@ -213,7 +212,6 @@ import { site } from "../data/site";
     .camp {
       grid-template-columns: auto 1fr auto;
       gap: 1.5rem;
-      padding: 1.75rem 2rem;
     }
 
     .camp__date {

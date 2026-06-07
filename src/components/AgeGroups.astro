@@ -1,21 +1,7 @@
 ---
 import Icon from "astro-iconify";
 import { ageGroups } from "../data/ageGroups";
-
-const accentMap: Record<string, string> = {
-  blush: "var(--color-blush-mid)",
-  sky: "var(--color-sky-mid)",
-  lilac: "var(--color-lilac-mid)",
-  cream: "var(--color-cream-200)",
-};
-
-const cardAccentVar = (index: number, accent: keyof typeof accentMap) => {
-  if (index === 0) return "var(--color-sky-deep)";
-  if (index === 1) return "var(--color-lilac-deep)";
-  if (index === 2) return "var(--color-blush-deep)";
-  if (index === 3) return "var(--color-coral-deep)";
-  return accentMap[accent];
-};
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 /** Iconify názvy (sada:id) — mapování podle id z ageGroups.ts */
 const ageIconById: Record<string, string> = {
@@ -25,8 +11,6 @@ const ageIconById: Record<string, string> = {
   "2-3": "emojione:monkey-face",
 };
 
-/** Card skin: all rows use `wave`. `--accent`: 0 sky-deep, 1 lilac-deep, 2 blush-deep, 3 coral-deep, else from data. */
-const cardVariant = (_index: number) => "wave";
 ---
 
 <section id="vekove-skupiny" class="section age" aria-labelledby="age-title">
@@ -48,9 +32,7 @@ const cardVariant = (_index: number) => "wave";
         ageGroups.map((g, i) => (
           <li
             class="age__card reveal"
-            data-accent={g.accent}
-            data-variant={cardVariant(i)}
-            style={`--accent: ${cardAccentVar(i, g.accent)}; transition-delay: ${i * 80}ms;`}
+            style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)}; transition-delay: ${i * 80}ms;`}
           >
             {i === 0 ? (
               <span class="age__new" aria-label="Novinka">
@@ -65,7 +47,6 @@ const cardVariant = (_index: number) => "wave";
               />
             </div>
             <span class="age__range">{g.range}</span>
-            {/* <span>{g.title}</span> */}
             <div class="age__desc">
               <p>{g.description}</p>
             </div>
@@ -118,7 +99,7 @@ const cardVariant = (_index: number) => "wave";
     max-width: 100%;
     display: grid;
     grid-template-columns: min(100%, var(--age-card-width));
-    gap: 1.5rem;
+    gap: var(--stack-gap);
     justify-content: center;
   }
 
@@ -129,10 +110,29 @@ const cardVariant = (_index: number) => "wave";
     min-height: var(--age-card-height);
     display: flex;
     flex-direction: column;
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    padding-top: var(--card-padding-top-wave);
+    border: var(--card-border);
+    background: #fefefe;
+    box-shadow: none;
+    overflow: hidden;
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease,
       filter 280ms ease;
+  }
+
+  .age__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4%;
+    right: -4%;
+    height: 3.5rem;
+    background: var(--accent-soft);
+    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    pointer-events: none;
   }
 
   /** „Nově“ — první karta (3–6 měsíců); pill + border, horní levý roh */
@@ -172,19 +172,30 @@ const cardVariant = (_index: number) => "wave";
   }
 
   .age__icon {
-    width: 72px;
-    height: 72px;
-    background: color-mix(in srgb, var(--accent) 35%, white);
+    position: relative;
+    z-index: 1;
+    width: var(--card-icon-size-wave);
+    height: var(--card-icon-size-wave);
+    margin: calc(-1 * var(--card-icon-overlap-wave)) auto 1.25rem;
     border-radius: var(--radius-full);
+    background: #fff;
+    border: none;
     display: grid;
     place-items: center;
-    margin: 0 auto 1.25rem;
+    box-shadow:
+      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
+      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
+      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transition: transform 280ms ease;
   }
 
   .age__icon-graphic {
-    width: 2.375rem;
-    height: 2.375rem;
+    width: var(--card-icon-graphic-size-wave);
+    height: var(--card-icon-graphic-size-wave);
     flex-shrink: 0;
+    filter: drop-shadow(
+      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+    );
   }
 
   .age__range {
@@ -195,7 +206,7 @@ const cardVariant = (_index: number) => "wave";
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.375rem;
-    color: var(--color-blush-vivid);
+    color: var(--accent);
     line-height: var(--line-height-2xl);
     text-align: center;
   }
@@ -233,56 +244,8 @@ const cardVariant = (_index: number) => "wave";
   }
 
   .age__highlights svg {
-    color: var(--color-blush-vivid);
+    color: var(--accent);
     flex-shrink: 0;
-  }
-
-  /* ========== wave header + card skin ========== */
-  .age__card {
-    border-radius: var(--radius-card);
-    padding: var(--card-padding);
-    padding-top: var(--card-padding-top-wave);
-    border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
-    background: #fefefe;
-    overflow: hidden;
-  }
-
-  .age__card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -4%;
-    right: -4%;
-    height: 3.5rem;
-    background: color-mix(in srgb, var(--accent) 38%, white);
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
-    pointer-events: none;
-  }
-
-  .age__card .age__icon {
-    position: relative;
-    z-index: 1;
-    width: 80px;
-    height: 80px;
-    margin: -2.85rem auto 1.25rem;
-    border-radius: var(--radius-full);
-    background: #fff;
-    border: none;
-    display: grid;
-    place-items: center;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-    transition: transform 280ms ease;
-  }
-
-  .age__card .age__icon-graphic {
-    width: 2.75rem;
-    height: 2.75rem;
-    filter: drop-shadow(
-      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
-    );
   }
 
   .age__card:hover {
