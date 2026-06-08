@@ -4,9 +4,9 @@
 @theme {
   /* Soft pastel base */
   --color-cream: #fff9f4;
-  --color-cream-50: #fefcfa;
+  /* --color-cream-50: #fefcfa;
   --color-cream-100: #fdf6ef;
-  --color-cream-200: #f7ecdf;
+  --color-cream-200: #f7ecdf; */
 
   /* Pastel blues (from balloons) */
   --color-sky-soft: #d6ecfa;
@@ -103,6 +103,9 @@
   --card-padding: var(--card-padding-y) var(--card-padding-x);
   --card-padding-top-wave: 4.5rem;
   --card-border: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  /* Mobile-first card grid — 412px = viewport 460px − 2× container-x padding (1.5rem) */
+  --card-grid-width: 25.75rem;
+  --card-grid-width-md: 22rem; /* tablet 2-col: 920px − 2×4rem padding − gap */
   --card-icon-size: 4rem;
   --card-icon-graphic-size: 1.75rem;
   /* AgeGroups wave header — větší hero ikona uprostřed karty */

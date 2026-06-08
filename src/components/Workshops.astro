@@ -31,49 +31,47 @@ const workshopIconById: Record<string, string> = {
     <ul class="workshops__grid">
       {
         workshops.map((w, i) => (
-            <li
-              class="workshop reveal"
-              style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
+          <li
+            class="workshop reveal"
+            style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
+          >
+            <svg
+              class="workshop__blob"
+              viewBox="-32 0 132 100"
+              aria-hidden="true"
+              focusable="false"
             >
-              <svg
-                class="workshop__blob"
-                viewBox="-32 0 132 100"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M100 20 A20 20 0 0 0 80 0 H-32 L0 0 A100 100 0 0 1 100 90 L100 20 Z" />
-              </svg>
+              <path d="M100 20 A20 20 0 0 0 80 0 H-32 L0 0 A100 100 0 0 1 100 90 L100 20 Z" />
+            </svg>
 
-              <div class="workshop__header">
-                <div class="workshop__lead">
-                  <span class="workshop__icon" aria-hidden="true">
-                    <Icon
-                      name={
-                        workshopIconById[w.id] ?? "streamline:health-care-2"
-                      }
-                      class="card-icon-graphic"
-                    />
-                  </span>
-                  <h3>{w.title}</h3>
-                </div>
-                <span class="workshop__rule" aria-hidden="true" />
+            <div class="workshop__header">
+              <div class="workshop__lead">
+                <span class="workshop__icon" aria-hidden="true">
+                  <Icon
+                    name={workshopIconById[w.id] ?? "streamline:health-care-2"}
+                    class="card-icon-graphic"
+                  />
+                </span>
+                <h3>{w.title}</h3>
               </div>
+              <span class="workshop__rule" aria-hidden="true" />
+            </div>
 
-              <span class="workshop__age" aria-hidden={!w.ageRange}>
-                {w.ageRange}
-              </span>
+            <span class="workshop__age" aria-hidden={!w.ageRange}>
+              {w.ageRange}
+            </span>
 
-              <p class="workshop__summary">{w.summary}</p>
+            <p class="workshop__summary">{w.summary}</p>
 
-              <div class="workshop__details">
-                <ul class="workshop__highlights">
-                  {w.highlights.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+            <div class="workshop__details">
+              <ul class="workshop__highlights">
+                {w.highlights.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
 
-              {/* <button type="button" class="workshop__more">
+            {/* <button type="button" class="workshop__more">
                 Více informací
                 <svg
                   viewBox="0 0 24 24"
@@ -91,8 +89,8 @@ const workshopIconById: Record<string, string> = {
                   />
                 </svg>
               </button> */}
-            </li>
-          ))
+          </li>
+        ))
       }
     </ul>
   </div>
@@ -107,10 +105,9 @@ const workshopIconById: Record<string, string> = {
     color: var(--color-blush-vivid);
   }
 
-  /* Do 767px: 25.75rem; od 768px 2× pevně 24rem (šířka jako při viewportu 920px) */
+  /* Mobile-first: jednotný subgrid uvnitř karty; mění se jen počet sloupců */
   .workshops__grid {
-    --workshop-card-width: 25.75rem; /* 412px = viewport 460px − 2× padding container-x (1.5rem) */
-    --workshop-card-height: 34.75rem;
+    --workshop-card-width: var(--card-grid-width);
     list-style: none;
     padding: 0;
     margin: 0 auto;
@@ -118,6 +115,7 @@ const workshopIconById: Record<string, string> = {
     max-width: 100%;
     display: grid;
     grid-template-columns: min(100%, var(--workshop-card-width));
+    grid-auto-rows: auto auto auto auto;
     gap: var(--stack-gap);
     justify-content: center;
   }
@@ -130,9 +128,9 @@ const workshopIconById: Record<string, string> = {
     background: #fefefe;
     border-radius: var(--radius-card);
     padding: var(--card-padding);
-    display: flex;
-    flex-direction: column;
-    min-height: var(--workshop-card-height);
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
     box-shadow: none;
     border: var(--card-border);
     transition:
@@ -180,9 +178,11 @@ const workshopIconById: Record<string, string> = {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 0.5rem;
     width: 100%;
-    margin: 0 0 1.75rem 0;
+    margin: 0 0 0.5rem 0;
+    grid-row: 1;
+    align-self: start;
   }
 
   /* Stejná výška leadu; ikona + h3 vertikálně uprostřed na všech kartách */
@@ -239,14 +239,15 @@ const workshopIconById: Record<string, string> = {
   .workshop__age {
     display: block;
     width: 100%;
-    min-height: calc(1rem * 1.4);
-    margin: -0.75rem 0 1rem;
+    margin: -0.75rem 0 0;
     font-family: var(--font-display);
     font-size: 1.375rem;
     font-weight: 600;
     line-height: var(--line-height-2xl);
     text-align: center;
     color: var(--accent);
+    grid-row: 2;
+    align-self: start;
   }
 
   .workshop__age:empty {
@@ -254,18 +255,21 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshop__summary {
-    margin: 0 0 1.75rem 0;
+    margin: 0 0 0.75rem 0;
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-ink);
-    min-height: calc(3 * 1.6em);
+    grid-row: 3;
+    align-self: start;
   }
 
   .workshop__details {
     padding: var(--space-4);
     border-radius: var(--radius-xl);
     background: var(--accent-soft);
+    grid-row: 4;
+    align-self: start;
   }
 
   .workshop__highlights {
@@ -312,8 +316,7 @@ const workshopIconById: Record<string, string> = {
 
   @media (min-width: 768px) {
     .workshops__grid {
-      /* 920px − 2×4rem padding − 1.5rem gap → (792−24)/2 = 384px */
-      --workshop-card-width: 22rem;
+      --workshop-card-width: var(--card-grid-width-md);
       width: fit-content;
       max-width: 100%;
       grid-template-columns: repeat(2, var(--workshop-card-width));
@@ -324,6 +327,9 @@ const workshopIconById: Record<string, string> = {
   @media (min-width: 1180px) {
     .workshops__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .workshop__summary {
     }
   }
 </style>

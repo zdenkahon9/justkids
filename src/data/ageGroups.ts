@@ -14,7 +14,7 @@ export const ageGroups: AgeGroup[] = [
     range: "3-6 měsíců",
     title: "První dotek pohybu",
     description:
-      "Společně pracujeme na podpoře zdravého vývoje pohybem a hrou a posilujeme pouto mezi miminkem a maminkou.",
+      "Podpora zdravého vývoje pohybem a hrou a posilování pouta mezi miminkem a maminkou.",
     highlights: [
       "Zábavné říkanky",
       "Jemná masáž miminek",

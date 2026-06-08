@@ -16,7 +16,7 @@ const ACCENT_SOFT: Record<string, string> = {
   "lilac-deep": "var(--color-lilac-soft)",
   blush: "var(--color-blush-soft)",
   "blush-deep": "var(--color-blush-soft)",
-  cream: "var(--color-cream-200)",
+  cream: "var(--color-cream)",
 };
 
 export const cardAccentDeep = (accent: string) =>
