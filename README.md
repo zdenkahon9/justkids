@@ -38,7 +38,6 @@ justkids/
 │   │   ├── Navbar.tsx     # interaktivní (React) - sticky + mobile menu
 │   │   ├── Hero.astro
 │   │   ├── About.astro
-│   │   ├── Courses.astro
 │   │   ├── AgeGroups.astro
 │   │   ├── Locations.astro
 │   │   ├── Gallery.astro
@@ -51,8 +50,7 @@ justkids/
 │   │   ├── news.ts        # novinky (cards)
 │   │   ├── ageGroups.ts   # věkové skupiny
 │   │   ├── locations.ts   # 2 lokace + parkování
-│   │   ├── pricing.ts     # ceník
-│   │   └── courses.ts     # absolvované kurzy
+│   │   └── pricing.ts     # ceník
 │   ├── layouts/
 │   │   └── BaseLayout.astro  # SEO meta, OG, schema.org
 │   ├── pages/
@@ -129,10 +127,6 @@ V `src/data/locations.ts` můžeš upravit adresy nebo informace o parkování.
 ### 💰 Ceník
 
 V `src/data/pricing.ts`. Vlajka "Nejoblíbenější" se zobrazuje u tarifu, který má `highlight: true`.
-
-### 📚 Absolvované kurzy
-
-V `src/data/courses.ts`.
 
 ### 👶 Věkové skupiny
 

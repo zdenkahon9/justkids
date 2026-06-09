@@ -18,7 +18,7 @@ export const site = {
   contact: {
     email: "aneta.justychova@email.cz",
     phone: "+420 731 818 841",
-    instructorName: "Aneta Justychová",
+    instructorName: "Mgr. Aneta Justychová",
   },
 
   // Sociální sítě

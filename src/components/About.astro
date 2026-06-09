@@ -1,5 +1,5 @@
 ---
-import { site } from "../data/site";
+import Icon from "astro-iconify";
 ---
 
 <section id="o-mne" class="section about" aria-labelledby="about-title">
@@ -16,43 +16,35 @@ import { site } from "../data/site";
     </div>
 
     <div class="about__text reveal">
-      <h2 id="about-title">O mně</h2>
+      <header class="section-header">
+        <span class="eyebrow">O mně - medailonek</span>
+        <h2 id="about-title">Mgr. Aneta Justychová</h2>
+      </header>
 
-      <p class="about__lead">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. A illo
-        inventore, libero accusamus officia reiciendis cumque at modi harum
-        deserunt laborum ratione ad eum neque doloribus quaerat ex! Explicabo,
-        sunt!
-      </p>
+      <div class="about__divider">
+        <span aria-hidden="true">
+          <Icon name="twemoji:pink-heart" class="about__divider-icon" />
+        </span>
+      </div>
 
-      <ul class="about__values">
-        <li class="about__value-item-link">
-          <a
-            href="#absolvovane-kurzy"
-            class="about__value-link"
-            aria-label="Certifikovaná lektorka – přejít na sekci Absolvované kurzy"
-          >
-            <span class="about__value-icon" aria-hidden="true">🎓</span>
-            <div>
-              <span><strong>Certifikovaná lektorka</strong></span>
-            </div>
-          </a>
-        </li>
-        <!-- <li>
-          <span class="about__value-icon" aria-hidden="true"></span>
-          <div>
-            <strong></strong>
-            <span></span>
-          </div>
-        </li>
-        <li>
-          <span class="about__value-icon" aria-hidden="true"></span>
-          <div>
-            <strong></strong>
-            <span></span>
-          </div>
-        </li> -->
-      </ul>
+      <div class="about__content">
+        <p>
+          Jsem lektorka cvičení a plavání pro děti a svou práci vnímám jako
+          poslání, které propojuje pohyb, radost a blízkost mezi rodičem a
+          dítětem.
+        </p>
+
+        <p>
+          Děti provázím prvními krůčky v objevování vlastního těla i vodního
+          prostředí, vždy s důrazem na respekt, bezpečí a přirozený vývoj.
+        </p>
+
+        <p>
+          Zároveň jsem maminka dcery a syna, díky nimž do své práce přináším
+          nejen odborné znalosti, ale i každodenní zkušenosti, empatii a
+          pochopení pro potřeby dětí i jejich rodičů.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -112,109 +104,64 @@ import { site } from "../data/site";
     object-position: 50% 36%;
   }
 
-  .about__text h2 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--section-title-gap);
+  .about__text {
+    max-width: 42rem;
   }
 
-  .about__lead {
-    font-size: var(--text-lg);
-    color: var(--color-ink);
-    margin: 0 0 2rem;
+  .about__text .section-header {
+    margin-bottom: 0;
   }
 
-  .about__body {
-    color: var(--color-ink-soft);
-    margin: 0 0 2rem;
+  .about__text .section-header h2 {
+    font-size: 2.5rem;
   }
 
-  .about__body strong {
-    color: var(--color-ink);
-    font-weight: 700;
+  .about .section-title-accent {
+    color: var(--color-blush-vivid);
   }
 
-  .about__values {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 1rem;
+  .about__divider {
+    position: relative;
+    margin: 1.5rem 0 2rem;
+    height: 1px;
+    background: var(--color-blush-mid);
   }
 
-  .about__values li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: white;
-    border-radius: var(--radius-2xl);
-    border: 1.5px solid var(--color-lilac-soft);
-    transition:
-      transform 220ms ease,
-      border-color 220ms ease;
-  }
-
-  .about__values li.about__value-item-link {
-    padding: 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .about__value-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    padding: 1rem 1.25rem;
-    margin: 0;
-    border-radius: var(--radius-2xl);
-    border: 1.5px solid var(--color-lilac-soft);
-    background: white;
-    color: inherit;
-    cursor: pointer;
-    text-align: inherit;
-    text-decoration: none;
-    transition:
-      transform 220ms ease,
-      border-color 220ms ease;
-  }
-
-  .about__values li.about__value-item-link:hover .about__value-link {
-    transform: translateX(4px);
-    border-color: var(--color-blush-mid);
-  }
-
-  .about__value-link:focus-visible {
-    outline: 2px solid var(--color-blush-mid);
-    outline-offset: 2px;
-  }
-
-  .about__values li:not(.about__value-item-link):hover {
-    transform: translateX(4px);
-    border-color: var(--color-blush-mid);
-  }
-
-  .about__value-icon {
-    font-size: var(--text-2xl);
-    width: 44px;
-    height: 44px;
-    display: grid;
-    place-items: center;
+  .about__divider span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     background: var(--color-cream);
-    border-radius: var(--radius-full);
-    flex-shrink: 0;
+    padding: 0 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .about__values strong {
-    display: block;
-    font-weight: 700;
+  .about__divider-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .about__content {
+    --location-divider: 1px solid rgba(236, 47, 142, 0.16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-title-gap);
+  }
+
+  .about__content p {
+    margin: 0;
+    max-width: 36rem;
+    font-size: var(--text-base);
+    line-height: 1.8;
     color: var(--color-ink);
   }
 
-  .about__values span:not(.about__value-icon) {
-    font-size: var(--text-base);
-    color: var(--color-ink-soft);
+  .about__content p + p {
+    border-top: var(--location-divider);
+    padding-top: 1.25rem;
   }
 
   @media (min-width: 1024px) {
@@ -226,6 +173,16 @@ import { site } from "../data/site";
     .about__media {
       max-width: none;
       margin: 0;
+    }
+
+    .about__content p {
+      font-size: var(--text-lg);
+    }
+
+    .about__text .section-header {
+      text-align: left;
+      margin-left: 0;
+      margin-right: auto;
     }
   }
 </style>
