@@ -5,13 +5,16 @@ import Icon from "astro-iconify";
 <section id="o-mne" class="section about" aria-labelledby="about-title">
   <div class="container-x about__inner">
     <div class="about__media reveal">
-      <div class="about__portrait">
-        <img
-          src="/images/about-mom-baby-original.png"
-          alt="Maminka s miminkem"
-          loading="lazy"
-          decoding="async"
-        />
+      <div class="about__portrait-frame">
+        <span class="about__portrait-glow" aria-hidden="true"></span>
+        <div class="about__portrait">
+          <img
+            src="/images/about-mom-baby-original.png"
+            alt="Maminka s miminkem"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
       </div>
     </div>
 
@@ -82,19 +85,42 @@ import Icon from "astro-iconify";
 
   .about__media {
     position: relative;
-    max-width: 380px;
+    max-width: 300px;
     margin: 0 auto;
+  }
+
+  .about__portrait-frame {
+    position: relative;
+    width: min(100%, 280px);
+    margin: 0 auto;
+  }
+
+  .about__portrait-glow {
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: color-mix(
+      in srgb,
+      var(--color-blush-deep) 7%,
+      var(--color-cream-200) 93%
+    );
+    left: -15%;
+    top: 12%;
+    transform: scale(0.9);
+    transform-origin: center center;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .about__portrait {
     position: relative;
-    width: min(100%, 430px);
+    z-index: 1;
+    width: 100%;
     aspect-ratio: 1 / 1;
-    margin: 0 auto;
     border-radius: var(--radius-full);
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
-    border: 0.4rem solid transparent;
+    box-shadow: 0 12px 40px -16px rgba(123, 90, 160, 0.22);
   }
 
   .about__portrait img {
@@ -174,6 +200,10 @@ import Icon from "astro-iconify";
     .about__media {
       max-width: none;
       margin: 0;
+    }
+
+    .about__portrait-frame {
+      width: min(100%, 380px);
     }
 
     .about__content p {
