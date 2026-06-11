@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
-import AgeGroups from "../components/AgeGroups.astro";
+import AgeGroupsHome from "../components/AgeGroupsHome.astro";
 import Locations from "../components/Locations.astro";
 import Workshops from "../components/Workshops.astro";
 import Camps from "../components/Camps.astro";
@@ -15,7 +15,7 @@ import { site } from "../data/site";
 
 const navLinks = [
   { href: "#o-mne", label: "O mně" },
-  { href: "#vekove-skupiny", label: "Věkové kategorie" },
+  { href: "#vekove-kategorie", label: "Věkové kategorie" },
   { href: "#lokace", label: "Kde cvičíme" },
   { href: "#workshopy", label: "Workshopy" },
   { href: "#kempy", label: "Kempy" },
@@ -25,7 +25,7 @@ const navLinks = [
 
 const mobileNavLinks = [
   { href: "#o-mne", label: "O mně" },
-  { href: "#vekove-skupiny", label: "Věkové kategorie" },
+  { href: "#vekove-kategorie", label: "Věkové kategorie" },
   { href: "#lokace", label: "Kde cvičíme" },
   { href: "#workshopy", label: "Workshopy" },
   { href: "#kempy", label: "Kempy & výjezdy" },
@@ -48,7 +48,7 @@ const mobileNavLinks = [
   <main id="main">
     <Hero />
     <About />
-    <AgeGroups />
+    <AgeGroupsHome />
     <Locations />
     <Workshops />
     <Camps />

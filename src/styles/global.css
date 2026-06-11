@@ -227,9 +227,9 @@ h4 {
   pointer-events: none;
   background: linear-gradient(
     135deg,
-    #ff6fb3 0%,
-    #ff6fb3 2.5%,
-    var(--color-blush-deep) 50%,
+    var(--color-blush-deep) 0%,
+    var(--color-blush-deep) 2.5%,
+    var(--color-blush-vivid) 50%,
     var(--color-blush-vivid) 97.5%,
     var(--color-blush-vivid) 100%
   );
@@ -239,9 +239,9 @@ h4 {
   .btn-primary::before {
     background: linear-gradient(
       135deg in oklab,
-      #ff6fb3 0%,
-      #ff6fb3 2.5%,
-      var(--color-blush-deep) 50%,
+      var(--color-blush-deep) 0%,
+      var(--color-blush-deep) 2.5%,
+      var(--color-blush-vivid) 50%,
       var(--color-blush-vivid) 97.5%,
       var(--color-blush-vivid) 100%
     );

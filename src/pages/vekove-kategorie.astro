@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AgeGroupsPage from "../components/AgeGroupsPage.astro";
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.tsx";
+import { ageGroupsPageMeta } from "../data/ageGroupsPage";
+import { site } from "../data/site";
+
+const pageTitle = `${ageGroupsPageMeta.eyebrow} | ${site.name}`;
+const pageDescription = ageGroupsPageMeta.pageDescription;
+const canonical = `${site.url}/vekove-kategorie`;
+
+const navLinks = [
+  { href: "/#o-mne", label: "O mně" },
+  { href: "/vekove-kategorie", label: "Věkové kategorie" },
+  { href: "/#lokace", label: "Kde cvičíme" },
+  { href: "/#workshopy", label: "Workshopy" },
+  { href: "/#kempy", label: "Kempy" },
+  { href: "/#provozni-rad", label: "Provozní řád" },
+  { href: "/#kontakt", label: "Kontakt" },
+];
+
+const mobileNavLinks = [
+  { href: "/#o-mne", label: "O mně" },
+  { href: "/vekove-kategorie", label: "Věkové kategorie" },
+  { href: "/#lokace", label: "Kde cvičíme" },
+  { href: "/#workshopy", label: "Workshopy" },
+  { href: "/#kempy", label: "Kempy & výjezdy" },
+  { href: "/#recenze", label: "Recenze" },
+  { href: "/#provozni-rad", label: "Provozní řád" },
+  { href: "/#kontakt", label: "Kontakt" },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <Navbar
+    client:load
+    links={navLinks}
+    mobileLinks={mobileNavLinks}
+    reservationUrl={site.reservationUrl}
+    logoSrc="/images/logo.png"
+    brand={site.name}
+  />
+
+  <main id="main">
+    <AgeGroupsPage />
+  </main>
+
+  <Footer />
+</BaseLayout>

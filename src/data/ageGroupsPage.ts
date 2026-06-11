@@ -1,14 +1,37 @@
-export type AgeGroup = {
+export type AgeGroupPage = {
   id: string;
   range: string;
   title: string;
   description: string;
   highlights: string[];
+  /** Iconify název (sada:id) — ikona pro kartu na detailní stránce */
+  icon: string;
   accent: "blush" | "sky" | "lilac" | "cream";
   optional?: boolean;
 };
 
-export const ageGroups: AgeGroup[] = [
+export type AgeGroupsPageMeta = {
+  sectionId: string;
+  eyebrow: string;
+  title: string;
+  titleAccent: string;
+  subtitle: string;
+  pageDescription: string;
+};
+
+export const ageGroupsPageMeta: AgeGroupsPageMeta = {
+  sectionId: "vekove-skupiny",
+  eyebrow: "Věkové kategorie",
+  title: "Pro každý věk",
+  titleAccent: "to pravé cvičení",
+  subtitle:
+    "Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka po hravé překážky pro batolata. Vše v klidu a v tempu, které dítěti vyhovuje.",
+  pageDescription:
+    "Přehled věkových skupin JustKids – od miminek 3–6 měsíců po batolata 2–3 roky. Každá kategorie má vlastní náplň cvičení.",
+};
+
+/** Plná data pro samostatnou stránku s věkovými kategoriemi */
+export const ageGroupsPage: AgeGroupPage[] = [
   {
     id: "3-6",
     range: "3-6 měsíců",
@@ -20,6 +43,7 @@ export const ageGroups: AgeGroup[] = [
       "Jemná masáž miminek",
       "Hravé cviky pro radost",
     ],
+    icon: "fxemoji:cherryblossom",
     accent: "sky",
   },
   {
@@ -29,6 +53,7 @@ export const ageGroups: AgeGroup[] = [
     description:
       "Radost z objevování vlastního těla, první pokusy o pohyb a hravé chvíle, kdy se dítě učí s důvěrou vnímat svět kolem sebe.",
     highlights: ["Lezení a plazení", "Hrubá motorika", "Smyslové podněty"],
+    icon: "twemoji:hatching-chick",
     accent: "lilac",
   },
   {
@@ -38,6 +63,7 @@ export const ageGroups: AgeGroup[] = [
     description:
       "Období prvních krůčků, zkoušení, objevování a zdokonalování – podporujeme jistotu, rovnováhu i radost z každého nového pohybu.",
     highlights: ["Překážkové dráhy", "Rovnováha a koordinace", "Hudba a tanec"],
+    icon: "noto-v1:lion",
     accent: "blush",
   },
   {
@@ -51,6 +77,7 @@ export const ageGroups: AgeGroup[] = [
       "Prvky gymnastiky",
       "Koncentrace a poslouchání",
     ],
+    icon: "emojione:monkey-face",
     accent: "cream",
   },
 ];
