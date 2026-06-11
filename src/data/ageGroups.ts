@@ -12,9 +12,9 @@ export const ageGroups: AgeGroup[] = [
   {
     id: "3-6",
     range: "3-6 měsíců",
-    title: "První dotek pohybu",
+    title: "Baby",
     description:
-      "Podpora zdravého vývoje pohybem a hrou a posilování pouta mezi miminkem a maminkou.",
+      "První společné chvíle plné doteku, blízkosti a jemného pohybu, které podporují zdravý vývoj miminka i jistotu rodiče.",
     highlights: [
       "Zábavné říkanky",
       "Jemná masáž miminek",
@@ -25,27 +25,27 @@ export const ageGroups: AgeGroup[] = [
   {
     id: "6-12",
     range: "6-12 měsíců",
-    title: "Objevuju svět",
+    title: "Mini",
     description:
-      "Plazení, lezení, sed a první stavění. Hravé cviky, které podpoří přirozený vývoj a koordinaci.",
+      "Radost z objevování vlastního těla, první pokusy o pohyb a hravé chvíle, kdy se dítě učí s důvěrou vnímat svět kolem sebe.",
     highlights: ["Lezení a plazení", "Hrubá motorika", "Smyslové podněty"],
     accent: "lilac",
   },
   {
     id: "1-2",
     range: "1-2 roky",
-    title: "Malí průzkumníci",
+    title: "Move",
     description:
-      "Chůze, běh, první přeskoky a překážkové dráhy. Spousta her, balónků a společné radosti.",
+      "Období prvních krůčků, zkoušení, objevování a zdokonalování – podporujeme jistotu, rovnováhu i radost z každého nového pohybu.",
     highlights: ["Překážkové dráhy", "Rovnováha a koordinace", "Hudba a tanec"],
     accent: "blush",
   },
   {
     id: "2-3",
     range: "2-3 roky",
-    title: "Šikulové v pohybu",
+    title: "Active",
     description:
-      "Skupinové hry, jednoduché cviky podle pokynů a první gymnastické prvky. Stavíme zdravé pohybové návyky.",
+      "Společné hry plné smíchu, pohybu a nových dovedností, které posilují samostatnost i přirozenou dětskou energii.",
     highlights: [
       "Hry ve skupině",
       "Prvky gymnastiky",
