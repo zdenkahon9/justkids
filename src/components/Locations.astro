@@ -405,23 +405,25 @@ const mapEmbed = (lat: number, lng: number) =>
     }
   }
 
-  .location:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 26px 55px -18px
-      color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-
-  .location:hover .location__icon {
-    transform: scale(1.05);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
+  @media (hover: hover) and (pointer: fine) {
     .location:hover {
-      transform: none;
+      transform: translateY(-4px);
     }
 
     .location:hover .location__icon {
-      transform: none;
+      transform: scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @media (hover: hover) and (pointer: fine) {
+      .location:hover {
+        transform: none;
+      }
+
+      .location:hover .location__icon {
+        transform: none;
+      }
     }
   }
 
