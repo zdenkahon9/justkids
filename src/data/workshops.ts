@@ -30,7 +30,7 @@ export const workshops: Workshop[] = [
       "Popáleniny",
     ],
     forWhom: "Rodiče s miminky 0–6 měsíců",
-    accent: "sky-deep",
+    accent: "blush-deep",
     upcoming: "Termín na vyžádání",
   },
   {
@@ -61,7 +61,7 @@ export const workshops: Workshop[] = [
     ],
     forWhom: "Rodiče miminek 0–12 měsíců",
     ageRange: "6-12 měsíců",
-    accent: "blush-deep",
+    accent: "sky-deep",
     upcoming: "Termín na vyžádání",
   },
 ];

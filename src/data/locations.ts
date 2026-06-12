@@ -22,7 +22,7 @@ export const locations: Location[] = [
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Husova+964%2C+267+51+Zdice",
     mapCoords: { lat: 49.912799, lng: 13.97766 },
-    accent: "sky",
+    accent: "blush",
   },
   {
     id: "horovice",
@@ -34,6 +34,6 @@ export const locations: Location[] = [
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Yogasee+Anýžova+449%2F8+Hořovice",
     mapCoords: { lat: 49.835747, lng: 13.901443 },
-    accent: "blush",
+    accent: "sky",
   },
 ];

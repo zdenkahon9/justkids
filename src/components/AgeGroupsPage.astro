@@ -1,18 +1,70 @@
 ---
 import Icon from "astro-iconify";
-import { ageGroupsPage, ageGroupsPageMeta } from "../data/ageGroupsPage";
+import { ageGroupsHomeCards } from "../data/ageGroupsHome";
+import {
+  ageGroupsPageWithParents,
+  ageGroupsPageWithoutParents,
+  ageGroupsPageMeta,
+} from "../data/ageGroupsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = ageGroupsPageMeta;
+
+const agePageFilterDefault = "Všechny kategorie";
+const agePageFilterOptions = ageGroupsHomeCards.map((card) => ({
+  value: card.id === "s-rodici" ? "with-parents" : "without-parents",
+  label: card.title,
+  icon: card.icon,
+  accent: cardAccentDeep(card.accent),
+}));
+
+const agePageWithParentsSection = ageGroupsHomeCards.find(
+  (card) => card.id === "s-rodici",
+)!;
+
+const agePageWithoutParentsSection = ageGroupsHomeCards.find(
+  (card) => card.id === "bez-rodicu",
+)!;
+
+/** Accent karet — cvičení s rodiči */
+const agePageCardThemesWithParents = [
+  {
+    deep: cardAccentDeep("blush-deep"),
+    soft: cardAccentSoft("blush-deep"),
+  },
+  {
+    deep: cardAccentDeep("lilac-deep"),
+    soft: cardAccentSoft("lilac-deep"),
+  },
+  {
+    deep: cardAccentDeep("sky-deep"),
+    soft: cardAccentSoft("sky-deep"),
+  },
+  {
+    deep: cardAccentDeep("cream"),
+    soft: "color-mix(in srgb, var(--color-blush-deep) 7%, var(--color-cream-200) 93%)",
+  },
+] as const;
+
+/** Accent karet — cvičení bez rodičů (stejné pořadí jako s rodiči: blush → lilac → …) */
+const agePageCardThemesWithoutParents = [
+  {
+    deep: cardAccentDeep("blush-deep"),
+    soft: cardAccentSoft("blush-deep"),
+  },
+  {
+    deep: cardAccentDeep("lilac-deep"),
+    soft: cardAccentSoft("lilac-deep"),
+  },
+] as const;
 ---
 
-<section
-  id={meta.sectionId}
-  class="age-page"
-  aria-labelledby="age-page-title"
->
+<section id={meta.sectionId} class="age-page" aria-labelledby="age-page-title">
   <div class="age-page__intro">
-    <div class="age-page__intro-veil" aria-hidden="true"></div>
+    <div class="age-page__intro-nav-bg" aria-hidden="true">
+      <div class="age-page__intro-photo"></div>
+      <div class="age-page__intro-veil"></div>
+    </div>
     <div class="container-x age-page__intro-inner">
       <header class="section-header reveal">
         <span class="eyebrow">{meta.eyebrow}</span>
@@ -26,39 +78,178 @@ const meta = ageGroupsPageMeta;
   </div>
 
   <div class="container-x">
+    <div class="age-page__filter reveal">
+      <div class="age-page__filter-dropdown" data-active-value="all">
+        <button
+          type="button"
+          class="age-page__filter-trigger btn btn-ghost"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="age-page-filter-list"
+          id="age-page-filter-trigger"
+        >
+          <span class="age-page__filter-label-text">{agePageFilterDefault}</span
+          >
+          <svg
+            class="age-page__filter-chevron"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M2.5 4.25L6 7.75L9.5 4.25"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+        <div class="age-page__filter-surface">
+          <ul
+            id="age-page-filter-list"
+            class="age-page__filter-list"
+            role="listbox"
+            aria-labelledby="age-page-filter-trigger"
+          >
+            {
+              agePageFilterOptions.map((option) => (
+                <li role="presentation">
+                  <button
+                    type="button"
+                    class="age-page__filter-option"
+                    role="option"
+                    data-value={option.value}
+                    style={`--accent: ${option.accent};`}
+                  >
+                    <span
+                      class={`age-page__filter-option-icon age-page__filter-option-icon--${option.value}`}
+                      aria-hidden="true"
+                    >
+                      <Icon
+                        name={option.icon}
+                        class="age-page__filter-option-graphic"
+                      />
+                    </span>
+                    <span class="age-page__filter-option-label">
+                      {option.label}
+                    </span>
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3
+      class="age-page__group-heading reveal"
+      style={`--accent: ${cardAccentDeep(agePageWithParentsSection.accent)};`}
+    >
+      <span class="age-page__group-heading-icon" aria-hidden="true">
+        <Icon
+          name={agePageWithParentsSection.icon}
+          class="age-page__group-heading-graphic"
+        />
+      </span>
+      {agePageWithParentsSection.title}
+    </h3>
+
     <ul class="age-page__grid">
       {
-        ageGroupsPage.map((g, i) => (
-          <li
-            class="age-page__card reveal"
-            style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)}; transition-delay: ${i * 80}ms;`}
-          >
-            {i === 0 ? (
-              <span class="age-page__new" aria-label="Novinka">
-                Nově
-              </span>
-            ) : null}
-            {g.optional ? <span class="age-page__optional">Dle kurzu</span> : null}
-            <div class="age-page__top">
-              <div class="age-page__icon" aria-hidden="true">
-                <Icon
-                  name={g.icon}
-                  class="age-page__icon-graphic"
-                />
+        ageGroupsPageWithParents.map((g, i) => (
+          <li>
+            <article
+              class="age-page__card reveal"
+              style={`--accent: ${agePageCardThemesWithParents[i].deep}; --accent-soft: ${agePageCardThemesWithParents[i].soft}; transition-delay: ${i * 80}ms;`}
+            >
+              <svg
+                class="age-page__blob"
+                viewBox="-32 0 132 100"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M100 20 A20 20 0 0 0 80 0 H-32 L0 0 A100 100 0 0 1 100 90 L100 20 Z" />
+              </svg>
+              <div class="age-page__body">
+                <div class="age-page__content">
+                  <h3 class="age-page__heading">{g.title}</h3>
+                  <div class="age-page__age-block">
+                    <div class="age-page__age-row">
+                      <span class="age-page__age">{g.range}</span>
+                      <div class="age-page__illustration" aria-hidden="true">
+                        <span class="age-page__icon-ring">
+                          <Icon name={g.icon} class="age-page__icon-graphic" />
+                        </span>
+                      </div>
+                    </div>
+                    {g.groupsLabel ? (
+                      <p class="age-page__groups">{g.groupsLabel}</p>
+                    ) : null}
+                  </div>
+                  <span class="age-page__rule" aria-hidden="true" />
+                  <p class="age-page__summary">{g.description}</p>
+                </div>
               </div>
-              <h2 class="age-page__title">{g.title}</h2>
-              <span class="age-page__range">{g.range}</span>
-            </div>
-            <div class="age-page__desc">
-              <p>{g.description}</p>
-            </div>
-            <div class="age-page__details">
-              <ul class="age-page__highlights">
-                {g.highlights.map((h) => (
-                  <li>{h}</li>
-                ))}
-              </ul>
-            </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3
+      class="age-page__group-heading reveal"
+      style={`--accent: ${cardAccentDeep(agePageWithoutParentsSection.accent)};`}
+    >
+      <span class="age-page__group-heading-icon" aria-hidden="true">
+        <Icon
+          name={agePageWithoutParentsSection.icon}
+          class="age-page__group-heading-graphic"
+        />
+      </span>
+      {agePageWithoutParentsSection.title}
+    </h3>
+
+    <ul class="age-page__grid">
+      {
+        ageGroupsPageWithoutParents.map((g, i) => (
+          <li>
+            <article
+              class="age-page__card reveal"
+              style={`--accent: ${agePageCardThemesWithoutParents[i].deep}; --accent-soft: ${agePageCardThemesWithoutParents[i].soft}; transition-delay: ${i * 80}ms;`}
+            >
+              <svg
+                class="age-page__blob"
+                viewBox="-32 0 132 100"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M100 20 A20 20 0 0 0 80 0 H-32 L0 0 A100 100 0 0 1 100 90 L100 20 Z" />
+              </svg>
+              <div class="age-page__body">
+                <div class="age-page__content">
+                  <h3 class="age-page__heading">{g.title}</h3>
+                  <div class="age-page__age-block">
+                    <div class="age-page__age-row">
+                      <span class="age-page__age">{g.range}</span>
+                      <div class="age-page__illustration" aria-hidden="true">
+                        <span class="age-page__icon-ring">
+                          <Icon name={g.icon} class="age-page__icon-graphic" />
+                        </span>
+                      </div>
+                    </div>
+                    {g.groupsLabel ? (
+                      <p class="age-page__groups">{g.groupsLabel}</p>
+                    ) : null}
+                  </div>
+                  <span class="age-page__rule" aria-hidden="true" />
+                  <p class="age-page__summary">{g.description}</p>
+                </div>
+              </div>
+            </article>
           </li>
         ))
       }
@@ -72,40 +263,70 @@ const meta = ageGroupsPageMeta;
     background-color: var(--color-cream);
   }
 
-  /* Mini page-hero — pastel jen pod navbarom; text headeru na čisté cream */
+  /* Mini page-hero — pod navbarom rovnaká vrstva ako v hero (balonky + veil) */
   .age-page__intro {
     position: relative;
     background-color: var(--color-cream);
   }
 
-  .age-page__intro-veil {
+  .age-page__intro-nav-bg {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: var(--nav-height);
     z-index: 0;
+    overflow: hidden;
     pointer-events: none;
+  }
+
+  /*
+   * Hero photo/veil live on a ~100svh canvas; cover on a nav-height strip alone
+   * zooms to a different crop. Mirror hero dimensions, clip only the top strip.
+   */
+  .age-page__intro-photo {
+    position: absolute;
+    left: -3%;
+    right: -3%;
+    top: -3svh;
+    height: 106svh;
+    background-image: url("/images/hero-balloons.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px) saturate(1.05);
+    transform: scale(1.06);
+    transform-origin: center top;
+  }
+
+  .age-page__intro-veil {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100svh;
     background:
       radial-gradient(
-        80% 120% at 12% 0%,
-        rgba(212, 191, 245, 0.45) 0%,
+        48% 42% at 22% 32%,
+        rgba(212, 191, 245, 0.55) 0%,
         rgba(212, 191, 245, 0) 70%
       ),
       radial-gradient(
-        70% 110% at 88% 0%,
-        rgba(169, 212, 240, 0.4) 0%,
-        rgba(169, 212, 240, 0) 68%
+        40% 40% at 30% 55%,
+        rgba(252, 194, 214, 0.55) 0%,
+        rgba(252, 194, 214, 0) 70%
       ),
       radial-gradient(
-        60% 100% at 50% 100%,
-        rgba(252, 194, 214, 0.32) 0%,
-        rgba(252, 194, 214, 0) 65%
+        55% 55% at 82% 30%,
+        rgba(169, 212, 240, 0.4) 0%,
+        rgba(169, 212, 240, 0) 70%
       ),
       linear-gradient(
         180deg,
-        rgba(255, 249, 244, 0.4) 0%,
-        var(--color-cream) 100%
+        rgba(255, 249, 244, 0.2) 0%,
+        rgba(255, 249, 244, 0.05) 35%,
+        rgba(255, 249, 244, 0.55) 72%,
+        rgba(255, 249, 244, 0.95) 100%
       );
   }
 
@@ -128,224 +349,427 @@ const meta = ageGroupsPageMeta;
     color: var(--color-blush-vivid);
   }
 
-  /* Mobile-first: jeden sloupec, subgrid uvnitř karty pro zarovnání řádků */
+  .age-page__filter {
+    position: relative;
+    z-index: 10;
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto var(--space-8);
+  }
+
+  .age-page__filter-dropdown {
+    position: relative;
+  }
+
+  .age-page__filter-trigger.btn {
+    width: 100%;
+    justify-content: space-between;
+    font-weight: 600;
+    background: #fff;
+    border-color: rgba(42, 31, 56, 0.12);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .age-page__filter-trigger.btn-ghost:hover,
+  .age-page__filter-dropdown.is-open .age-page__filter-trigger.btn-ghost {
+    background: #fff;
+    border-color: var(--color-blush-mid);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .age-page__filter-label-text {
+    color: var(--color-blush-vivid);
+    transition: color 220ms ease;
+  }
+
+  .age-page__filter-chevron {
+    display: block;
+    flex-shrink: 0;
+    width: 0.875rem;
+    height: 0.875rem;
+    color: var(--color-blush-vivid);
+    transform: translateY(0.07em);
+    transition:
+      color 220ms ease,
+      transform 220ms ease;
+  }
+
+  .age-page__filter-dropdown.is-open .age-page__filter-chevron,
+  .age-page__filter-dropdown:focus-within .age-page__filter-chevron {
+    transform: rotate(180deg) translateY(-0.07em);
+  }
+
+  .age-page__filter-surface {
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.625rem);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease;
+  }
+
+  .age-page__filter-dropdown.is-open .age-page__filter-surface,
+  .age-page__filter-dropdown:focus-within .age-page__filter-surface {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .age-page__filter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.375rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: var(--radius-card);
+    background: #fff;
+    border: 1px solid
+      color-mix(in srgb, var(--color-blush-vivid) 10%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-blush-vivid) 8%, transparent),
+      0 12px 32px -16px
+        color-mix(in srgb, var(--color-blush-vivid) 34%, transparent);
+  }
+
+  .age-page__filter-list > li + li::before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin: 0 0.875rem;
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+  }
+
+  .age-page__filter-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin: 0;
+    padding: 1rem 1.375rem;
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: var(--text-base);
+    line-height: 1;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 220ms ease;
+  }
+
+  .age-page__filter-list > li:first-child .age-page__filter-option {
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+  }
+
+  .age-page__filter-list > li:last-child .age-page__filter-option {
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+  }
+
+  .age-page__filter-option:hover,
+  .age-page__filter-option:focus-visible {
+    background: color-mix(in srgb, var(--color-blush-soft) 35%, white);
+    outline: none;
+  }
+
+  .age-page__filter-option-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--accent);
+  }
+
+  .age-page__filter-option-graphic {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+  }
+
+  .age-page__filter-option-graphic :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Ikony sedí v viewBoxu výš — jemný posun pro optické zarovnání s textem */
+  .age-page__filter-option-icon--with-parents .age-page__filter-option-graphic {
+    transform: translateY(-0.125rem);
+  }
+
+  .age-page__filter-option-icon--without-parents
+    .age-page__filter-option-graphic {
+    transform: translateY(-0.125rem);
+  }
+
+  .age-page__filter-option-label {
+    flex: 1;
+    line-height: var(--line-height-lg);
+    transform: translateY(0.03125rem);
+  }
+
+  .age-page__group-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-2-5xl);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .age-page__grid + .age-page__group-heading {
+    margin-top: var(--space-10);
+  }
+
+  .age-page__group-heading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--accent);
+  }
+
+  .age-page__group-heading-graphic {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    transform: translateY(-0.125rem);
+  }
+
+  /* Mobile-first: stejný layout karet jako AgeGroupsHome */
   .age-page__grid {
-    --age-card-width: var(--card-grid-width);
     list-style: none;
     padding: 0;
     margin: 0 auto;
     width: fit-content;
     max-width: 100%;
     display: grid;
-    grid-template-columns: min(100%, var(--age-card-width));
-    grid-auto-rows: auto auto auto;
+    grid-template-columns: min(100%, var(--card-grid-width));
     gap: var(--stack-gap);
     justify-content: center;
   }
 
   .age-page__card {
     position: relative;
-    list-style: none;
+    display: block;
     box-sizing: border-box;
-    display: grid;
-    grid-row: span 3;
-    grid-template-rows: subgrid;
-    text-align: center;
     border-radius: var(--radius-card);
     padding: var(--card-padding);
-    padding-top: var(--card-padding-top-wave);
     border: var(--card-border);
     background: #fefefe;
     box-shadow: none;
     overflow: hidden;
-    transition:
-      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 280ms ease,
-      filter 280ms ease;
   }
 
-  .age-page__card::before {
-    content: "";
+  .age-page__blob {
     position: absolute;
+    z-index: 0;
     top: 0;
-    left: -4%;
-    right: -4%;
-    height: 3.5rem;
-    background: var(--accent-soft);
-    border-radius: 0 0 50% 50% / 0 0 100% 100%;
+    right: 0;
+    width: 9.9rem;
+    height: 7.5rem;
+    display: block;
     pointer-events: none;
   }
 
-  /** „Nově“ — první karta; pill + border, horní levý roh */
-  .age-page__new {
-    position: absolute;
-    top: 0.65rem;
-    left: 0.65rem;
-    z-index: 5;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-ink);
-    background: #fff;
-    padding: 0.375rem 0.75rem;
-    border-radius: var(--radius-full);
-    border: 2px solid
-      color-mix(in srgb, var(--accent) 55%, var(--color-ink) 12%);
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
-      0 4px 14px -6px color-mix(in srgb, var(--accent) 40%, transparent);
+  .age-page__blob path {
+    fill: var(--accent-soft);
   }
 
-  .age-page__optional {
-    position: absolute;
-    top: 0.65rem;
-    right: 0.65rem;
-    z-index: 4;
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-ink-muted);
-    background: var(--color-cream);
-    padding: 0.375rem 0.75rem;
-    border-radius: var(--radius-full);
-  }
-
-  .age-page__top {
-    display: flex;
-    flex-direction: column;
-    grid-row: 1;
-    align-self: start;
-  }
-
-  .age-page__icon {
+  .age-page__body {
     position: relative;
     z-index: 1;
-    width: var(--card-icon-size-wave);
-    height: var(--card-icon-size-wave);
-    margin: calc(-1 * var(--card-icon-overlap-wave)) auto 1.25rem;
-    border-radius: var(--radius-full);
-    background: #fff;
-    border: none;
+  }
+
+  .age-page__age-row {
+    --age-text-height: calc(1.375rem * var(--line-height-2xl));
+    position: relative;
+    padding-right: calc(5.5rem + var(--space-4));
+  }
+
+  .age-page__illustration {
+    position: absolute;
+    right: 0;
+    top: calc(0.5 * var(--age-text-height));
+    transform: translateY(-50%);
+  }
+
+  .age-page__icon-ring {
     display: grid;
     place-items: center;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-    transition: transform 280ms ease;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent);
   }
 
   .age-page__icon-graphic {
-    width: var(--card-icon-graphic-size-wave);
-    height: var(--card-icon-graphic-size-wave);
-    flex-shrink: 0;
-    filter: drop-shadow(
-      0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
-    );
+    width: 2.75rem;
+    height: 2.75rem;
   }
 
-  .age-page__range {
-    display: block;
-    width: fit-content;
-    max-width: 100%;
-    margin: 0 auto 1rem;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: var(--text-lg);
-    color: var(--color-ink);
-    line-height: var(--line-height-xl);
-    text-align: center;
-  }
-
-  .age-page__title {
-    margin: 0 auto 0.375rem;
+  .age-page__heading {
+    margin: 0 0 var(--space-5);
     font-family: var(--font-display);
+    font-size: var(--text-2xl);
     font-weight: 600;
-    font-size: 1.375rem;
-    color: var(--accent);
-    line-height: var(--line-height-2xl);
-    text-align: center;
-  }
-
-  .age-page__desc {
-    margin: 0 0 1.75rem;
-    font-size: var(--text-base);
-    grid-row: 2;
-    align-self: start;
-    text-align: center;
-  }
-
-  .age-page__card p {
+    line-height: var(--line-height-xl);
     color: var(--color-ink);
-    margin: 0;
-    font-size: var(--text-base);
   }
 
-  .age-page__details {
-    padding: var(--space-4);
-    border-radius: var(--radius-xl);
-    background: var(--accent-soft);
-    grid-row: 3;
-    align-self: start;
-    text-align: left;
-  }
-
-  .age-page__highlights {
-    list-style-type: disc;
-    list-style-position: outside;
-    margin: 0;
-    padding-left: var(--space-5);
+  .age-page__age-block {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-1);
+    margin-bottom: 0;
   }
 
-  .age-page__highlights > li {
+  .age-page__age-block:not(:has(.age-page__groups)) {
+    margin-bottom: var(--space-4);
+  }
+
+  /* Stejná rezerva jako groups řádek (rule zarovnání napříč kartami) */
+  .age-page__age-block:not(:has(.age-page__groups))::after {
+    content: "";
+    display: block;
+    height: calc(var(--text-base) * var(--line-height-xl));
+  }
+
+  .age-page__age {
+    display: block;
+    width: 100%;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: var(--line-height-2xl);
+    color: var(--accent);
+  }
+
+  .age-page__groups {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink-muted);
+  }
+
+  .age-page__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: 0 0 var(--space-5);
+    border: none;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+  }
+
+  .age-page__summary {
+    margin: 0;
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: 400;
+    line-height: var(--line-height-base);
     color: var(--color-ink);
-  }
-
-  .age-page__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 26px 55px -18px
-      color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-
-  .age-page__card:hover .age-page__icon {
-    transform: scale(1.05);
+    text-align: center;
   }
 
   @media (min-width: 768px) {
+    .age-page__filter,
+    .age-page__group-heading {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+    }
+
     .age-page__grid {
-      --age-card-width: var(--card-grid-width-md);
       width: fit-content;
       max-width: 100%;
-      grid-template-columns: repeat(2, var(--age-card-width));
+      grid-template-columns: repeat(2, var(--card-grid-width-md));
       justify-content: center;
     }
   }
 
   @media (min-width: 1180px) {
     .age-page__grid {
-      --age-card-width: var(--card-grid-width-md);
-      max-width: calc(2 * var(--age-card-width) + var(--stack-gap));
+      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
       margin-inline: auto;
-    }
-
-    .age-page__range {
-      margin-bottom: 1.25rem;
-    }
-
-    .age-page__desc {
-      margin-bottom: 1.25rem;
-    }
-
-    .age-page__highlights li {
-      font-size: var(--text-base);
     }
   }
 </style>
+
+<script>
+  const setupAgePageFilter = () => {
+    document
+      .querySelectorAll<HTMLElement>(".age-page__filter-dropdown")
+      .forEach((dropdown) => {
+        if (dropdown.dataset.filterReady === "true") return;
+        dropdown.dataset.filterReady = "true";
+
+        const trigger = dropdown.querySelector<HTMLButtonElement>(
+          ".age-page__filter-trigger",
+        );
+        const label = dropdown.querySelector<HTMLElement>(
+          ".age-page__filter-label-text",
+        );
+        const options = dropdown.querySelectorAll<HTMLButtonElement>(
+          ".age-page__filter-option",
+        );
+
+        if (!trigger || !label) return;
+
+        const close = () => {
+          dropdown.classList.remove("is-open");
+          trigger.setAttribute("aria-expanded", "false");
+        };
+
+        trigger.addEventListener("click", () => {
+          const open = !dropdown.classList.contains("is-open");
+          dropdown.classList.toggle("is-open", open);
+          trigger.setAttribute("aria-expanded", String(open));
+        });
+
+        options.forEach((option) => {
+          option.addEventListener("click", () => {
+            const optionLabel = option.querySelector<HTMLElement>(
+              ".age-page__filter-option-label",
+            );
+            label.textContent =
+              optionLabel?.textContent?.trim() ?? label.textContent;
+            dropdown.dataset.activeValue = option.dataset.value ?? "all";
+            close();
+          });
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!dropdown.contains(event.target as Node)) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") close();
+        });
+      });
+  };
+
+  setupAgePageFilter();
+  document.addEventListener("astro:page-load", setupAgePageFilter);
+</script>
