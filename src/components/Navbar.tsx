@@ -12,6 +12,9 @@ type NavbarProps = {
   reservationUrl: string;
   logoSrc: string;
   brand: string;
+  logoHref?: string;
+  /** Podstránky bez hero — plné pozadí a stín od začátku */
+  variant?: "default" | "solid";
 };
 
 /** Desktop submenu under „O mně“ — same section anchors as elsewhere on the site */
@@ -29,6 +32,8 @@ const Navbar = ({
   reservationUrl,
   logoSrc,
   brand,
+  logoHref = "#hero",
+  variant = "default",
 }: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
   const [scrolled, setScrolled] = useState(false);
@@ -145,16 +150,18 @@ const Navbar = ({
     [],
   );
 
+  const showSolidNav = variant === "solid" || scrolled;
+
   return (
     <header
-      className={`${styles.nav} ${scrolled ? styles.isScrolled : ""} ${open ? styles.isOpen : ""}`}
+      className={`${styles.nav} ${showSolidNav ? styles.isScrolled : ""} ${open ? styles.isOpen : ""}`}
       data-component="navbar"
     >
       <div className={`${styles.navInner} container-x`}>
         <a
-          href="#hero"
+          href={logoHref}
           className={styles.navBrand}
-          onClick={(e) => handleNav(e, "#hero")}
+          onClick={(e) => handleNav(e, logoHref)}
           aria-label={`${brand} - na začátek stránky`}
         >
           <img

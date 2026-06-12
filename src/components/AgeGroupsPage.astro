@@ -8,19 +8,24 @@ const meta = ageGroupsPageMeta;
 
 <section
   id={meta.sectionId}
-  class="section age-page"
+  class="age-page"
   aria-labelledby="age-page-title"
 >
-  <div class="container-x">
-    <header class="section-header reveal">
-      <span class="eyebrow">{meta.eyebrow}</span>
-      <h1 id="age-page-title">
-        {meta.title}{" "}
-        <span class="section-title-accent">{meta.titleAccent}</span>
-      </h1>
-      <p class="section-subtitle">{meta.subtitle}</p>
-    </header>
+  <div class="age-page__intro">
+    <div class="age-page__intro-veil" aria-hidden="true"></div>
+    <div class="container-x age-page__intro-inner">
+      <header class="section-header reveal">
+        <span class="eyebrow">{meta.eyebrow}</span>
+        <h1 id="age-page-title">
+          {meta.title}{" "}
+          <span class="section-title-accent">{meta.titleAccent}</span>
+        </h1>
+        <p class="section-subtitle">{meta.subtitle}</p>
+      </header>
+    </div>
+  </div>
 
+  <div class="container-x">
     <ul class="age-page__grid">
       {
         ageGroupsPage.map((g, i) => (
@@ -63,7 +68,60 @@ const meta = ageGroupsPageMeta;
 
 <style>
   .age-page {
-    scroll-margin-top: var(--section-scroll-margin);
+    scroll-margin-top: var(--nav-height);
+    background-color: var(--color-cream);
+  }
+
+  /* Mini page-hero — pastel jen pod navbarom; text headeru na čisté cream */
+  .age-page__intro {
+    position: relative;
+    background-color: var(--color-cream);
+  }
+
+  .age-page__intro-veil {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        80% 120% at 12% 0%,
+        rgba(212, 191, 245, 0.45) 0%,
+        rgba(212, 191, 245, 0) 70%
+      ),
+      radial-gradient(
+        70% 110% at 88% 0%,
+        rgba(169, 212, 240, 0.4) 0%,
+        rgba(169, 212, 240, 0) 68%
+      ),
+      radial-gradient(
+        60% 100% at 50% 100%,
+        rgba(252, 194, 214, 0.32) 0%,
+        rgba(252, 194, 214, 0) 65%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 249, 244, 0.4) 0%,
+        var(--color-cream) 100%
+      );
+  }
+
+  .age-page__intro-inner {
+    position: relative;
+    z-index: 1;
+    padding-top: calc(var(--nav-height) + var(--section-header-spacing));
+  }
+
+  .age-page__intro .section-header {
+    margin-bottom: var(--section-header-spacing);
+  }
+
+  .age-page .section-header h1 {
+    font-size: var(--text-clamp-h2);
+    margin: 0 0 var(--section-title-gap);
   }
 
   .age-page .section-title-accent {

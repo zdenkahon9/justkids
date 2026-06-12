@@ -27,10 +27,12 @@ const meta = ageGroupsHomeMeta;
     <ul class="age-home__grid">
       {
         ageGroupsHomeCards.map((card, i) => (
-          <li
-            class="age-home__card reveal"
-            style={`--accent: ${cardAccentDeep(card.accent)}; --accent-soft: ${cardAccentSoft(card.accent)}; transition-delay: ${i * 80}ms;`}
-          >
+          <li>
+            <a
+              class="age-home__card reveal"
+              href={meta.detailHref}
+              style={`--accent: ${cardAccentDeep(card.accent)}; --accent-soft: ${cardAccentSoft(card.accent)}; transition-delay: ${i * 80}ms;`}
+            >
             <svg
               class="age-home__blob"
               viewBox="-32 0 132 100"
@@ -66,6 +68,7 @@ const meta = ageGroupsHomeMeta;
                 <p class="age-home__summary">{card.summary}</p>
               </div>
             </div>
+            </a>
           </li>
         ))
       }
@@ -104,7 +107,7 @@ const meta = ageGroupsHomeMeta;
 
   .age-home__card {
     position: relative;
-    list-style: none;
+    display: block;
     box-sizing: border-box;
     border-radius: var(--radius-card);
     padding: var(--card-padding);
@@ -112,9 +115,17 @@ const meta = ageGroupsHomeMeta;
     background: #fefefe;
     box-shadow: none;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
     transition:
       transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 280ms ease;
+  }
+
+  .age-home__card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .age-home__blob {
