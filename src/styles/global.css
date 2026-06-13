@@ -94,6 +94,8 @@
   --section-header-spacing: var(--space-10);
   --section-header-max-width: 42rem;
   --section-title-gap: var(--space-6);
+  --eyebrow-title-gap: var(--space-6);
+  --h2-title-gap: var(--space-6);
 
   --container-padding-x: var(--space-6);
   --container-padding-x-lg: var(--space-12);
@@ -290,7 +292,7 @@ h4 {
 
 .section-header h2 {
   font-size: var(--text-clamp-h2);
-  margin: 0 0 var(--section-title-gap);
+  margin: 0 0 var(--h2-title-gap);
 }
 
 .section-subtitle {
@@ -339,7 +341,7 @@ h4 {
   font-weight: 500;
   color: var(--color-blush-deep);
   line-height: var(--line-height-2xl);
-  margin-bottom: var(--section-title-gap);
+  margin: 0 0 var(--eyebrow-title-gap);
 }
 
 /* Reveal on scroll (respects prefers-reduced-motion via JS) */

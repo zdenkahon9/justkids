@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AgeGroupsPage from "../components/AgeGroupsPage.astro";
+import Schedule from "../components/Schedule.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import { ageGroupsPageMeta } from "../data/ageGroupsPage";
@@ -45,6 +46,7 @@ const mobileNavLinks = [
 
   <main id="main">
     <AgeGroupsPage />
+    <Schedule />
   </main>
 
   <Footer />

@@ -1,0 +1,506 @@
+---
+import {
+  formatScheduleActivities,
+  scheduleAccentSoftVar,
+  scheduleLayout,
+  scheduleMeta,
+  scheduleLocations,
+} from "../data/schedule";
+import { cardAccentDeep } from "../utils/cardAccent";
+
+const meta = scheduleMeta;
+const defaultLocation = scheduleLocations[0];
+const cardAccent = cardAccentDeep(defaultLocation.accent);
+const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
+---
+
+<section
+  id={meta.sectionId}
+  class="section schedule"
+  aria-labelledby="schedule-title"
+>
+  <div class="container-x">
+    <header class="section-header reveal">
+      <h2 id="schedule-title">
+        {meta.title}{" "}
+        <span class="section-title-accent">{meta.titleAccent}</span>
+      </h2>
+    </header>
+
+    <div class="schedule__panel reveal">
+      <article
+        class="schedule__card"
+        style={`--accent: ${cardAccent}; --accent-soft: ${cardAccentSoftColor}; --schedule-axis-col: ${scheduleLayout.axisColumn}; --schedule-axis-width: ${scheduleLayout.axisWidth}; --schedule-dot-size: ${scheduleLayout.dotSize}; --schedule-row-height: ${scheduleLayout.rowHeight}; --schedule-time-col: ${scheduleLayout.timeColumn}; --schedule-axis-to-time-gap: ${scheduleLayout.axisToTimeGap}; --schedule-time-to-activity-gap: ${scheduleLayout.timeToActivityGap};`}
+      >
+        <nav
+          class="schedule__pill schedule__pill--split"
+          aria-label="Vybrat pobočku"
+        >
+          {
+            scheduleLocations.map((location, index) => (
+              <button
+                type="button"
+                class:list={[
+                  "schedule__pill-third",
+                  location.accentClass,
+                  { "is-active": index === 0 },
+                ]}
+                aria-selected={index === 0 ? "true" : "false"}
+                data-location={location.id}
+                data-accent={cardAccentDeep(location.accent)}
+                data-accent-soft={scheduleAccentSoftVar(location.accentSoft)}
+              >
+                {location.label}
+              </button>
+            ))
+          }
+        </nav>
+        <span class="age-page__rule" aria-hidden="true" />
+
+        <div class="schedule__body">
+          {
+            scheduleLocations.map((location, index) => (
+              <div
+                class="schedule__timetable"
+                data-location={location.id}
+                hidden={index !== 0}
+              >
+                {
+                  location.days.map((day, dayIndex) => (
+                    <div class="schedule__day-block">
+                      {day.label ? (
+                        <h3 class="schedule__day">{day.label}</h3>
+                      ) : null}
+                      <div class="schedule__timeline">
+                        <span class="schedule__axis-line" aria-hidden="true">
+                          <svg
+                            class="schedule__axis-line-graphic"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                          >
+                            <rect class="schedule__axis-line-fill" />
+                          </svg>
+                        </span>
+                        <ul class="schedule__slots">
+                          {day.slots.map((slot) => (
+                            <li class="schedule__slot">
+                              <span class="schedule__axis" aria-hidden="true">
+                                <svg
+                                  class="schedule__axis-dot"
+                                  viewBox="0 0 10 10"
+                                  aria-hidden="true"
+                                >
+                                  <circle
+                                    class="schedule__axis-dot-fill"
+                                    cx="5"
+                                    cy="5"
+                                    r="5"
+                                  />
+                                </svg>
+                              </span>
+                              <span class="schedule__time">{slot.time}</span>
+                              <span class="schedule__activity">
+                                {formatScheduleActivities(slot.activities)}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      {dayIndex < location.days.length - 1 ? (
+                        <hr class="schedule__day-divider" aria-hidden="true" />
+                      ) : null}
+                    </div>
+                  ))
+                }
+
+                <div class="schedule__venue">
+                  <span class="schedule__venue-icon" aria-hidden="true">
+                    <svg
+                      class="card-icon-graphic"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill="var(--accent)"
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                      />
+                      <circle cx="12" cy="9" r="2.75" fill="#fefefe" />
+                    </svg>
+                  </span>
+                  <div class="schedule__venue-text">
+                    <p class="schedule__venue-name">
+                      <a
+                        class="schedule__venue-link"
+                        href={location.venue.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Otevřít ${location.venue.city} v Google Maps`}
+                      >
+                        {location.venue.city}
+                      </a>
+                    </p>
+                    <p class="schedule__venue-address">
+                      {location.venue.address}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .schedule {
+    scroll-margin-top: var(--section-scroll-margin);
+    padding-bottom: 0;
+    background-color: var(--color-cream);
+  }
+
+  .schedule .section-title-accent {
+    color: var(--color-lilac-deep);
+  }
+
+  .schedule__panel {
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto var(--space-9);
+  }
+
+  .schedule__pill {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    background: transparent;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-base);
+    line-height: var(--line-height-base);
+    white-space: nowrap;
+    padding: 0;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+  }
+
+  .schedule__pill--split {
+    align-items: stretch;
+  }
+
+  .schedule__pill-third {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 0;
+    border: none;
+    background: transparent;
+    color: var(--color-ink);
+    font: inherit;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+
+  .schedule__pill-third.is-active {
+    font-weight: 600;
+  }
+
+  .schedule__pill-third--zdice.is-active,
+  .schedule__pill-third--horovice.is-active,
+  .schedule__pill-third--broumy.is-active {
+    background: var(--accent-soft);
+  }
+
+  .schedule__pill-third--zdice.is-active {
+    color: var(--color-blush-deep);
+  }
+
+  .schedule__pill-third--horovice.is-active {
+    color: var(--color-lilac-deep);
+  }
+
+  .schedule__pill-third--broumy.is-active {
+    color: var(--color-sky-deep);
+  }
+
+  .schedule__pill-third:not(.is-active):hover,
+  .schedule__pill-third:not(.is-active):focus-visible {
+    background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+    outline: none;
+  }
+
+  .schedule__card {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    border: var(--card-border);
+    background: #fefefe;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .schedule__card > .age-page__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-4) 0 var(--space-5);
+    border: none;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    transition: background 220ms ease;
+  }
+
+  .schedule__body {
+    position: relative;
+    z-index: 1;
+  }
+
+  .schedule__timetable[hidden] {
+    display: none;
+  }
+
+  .schedule__day {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--accent);
+  }
+
+  .schedule__day-block + .schedule__day-block .schedule__day {
+    margin-top: var(--space-1);
+  }
+
+  .schedule__timeline {
+    position: relative;
+  }
+
+  .schedule__axis-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--schedule-axis-col) / 2);
+    width: var(--schedule-axis-width);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .schedule__axis-line-graphic {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .schedule__axis-line-fill {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent-soft);
+    shape-rendering: crispEdges;
+    transition: fill 220ms ease;
+  }
+
+  .schedule__slots {
+    list-style: none;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .schedule__slot {
+    display: flex;
+    align-items: center;
+    min-height: var(--schedule-row-height);
+  }
+
+  .schedule__time,
+  .schedule__activity {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .schedule__time {
+    flex: 0 0 var(--schedule-time-col);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .schedule__axis {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 var(--schedule-axis-col);
+    align-self: stretch;
+    margin-right: var(--schedule-axis-to-time-gap);
+  }
+
+  .schedule__axis-dot {
+    display: block;
+    flex-shrink: 0;
+    width: var(--schedule-dot-size);
+    height: var(--schedule-dot-size);
+  }
+
+  .schedule__axis-dot-fill {
+    fill: var(--accent-soft);
+    transition: fill 220ms ease;
+  }
+
+  .schedule__activity {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: var(--schedule-time-to-activity-gap);
+    letter-spacing: 0.02em;
+  }
+
+  .schedule__day-divider {
+    border: none;
+    height: 1px;
+    margin: var(--space-5) 0;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .schedule__venue {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: var(--space-6);
+    padding: 1rem 1.625rem;
+    border-radius: 1rem;
+    background: var(--accent-soft);
+    transition: background 220ms ease;
+  }
+
+  .schedule__venue:has(.schedule__venue-link:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .schedule__venue-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-top: 0.125rem;
+    pointer-events: none;
+  }
+
+  .schedule__venue-text {
+    min-width: 0;
+    pointer-events: none;
+  }
+
+  .schedule__venue-name {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .schedule__venue-link {
+    position: static;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .schedule__venue-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    cursor: pointer;
+  }
+
+  .schedule__venue-link:focus-visible {
+    outline: none;
+  }
+
+  .schedule__venue-address {
+    margin: 0.125rem 0 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+    .schedule__panel {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+    }
+  }
+</style>
+
+<script>
+  const setupSchedulePill = () => {
+    const pill = document.querySelector<HTMLElement>(".schedule__pill--split");
+    if (!pill || pill.dataset.pillReady === "true") return;
+    pill.dataset.pillReady = "true";
+
+    const card = pill.closest<HTMLElement>(".schedule__card");
+    const timetables = card?.querySelectorAll<HTMLElement>(".schedule__timetable");
+    const buttons = pill.querySelectorAll<HTMLButtonElement>(".schedule__pill-third");
+
+    const setActive = (button: HTMLButtonElement) => {
+      buttons.forEach((item) => {
+        item.classList.remove("is-active");
+        item.setAttribute("aria-selected", "false");
+      });
+
+      button.classList.add("is-active");
+      button.setAttribute("aria-selected", "true");
+
+      const accent = button.dataset.accent;
+      const accentSoft = button.dataset.accentSoft;
+      if (card && accent) {
+        card.style.setProperty("--accent", accent);
+      }
+      if (card && accentSoft) {
+        card.style.setProperty("--accent-soft", accentSoft);
+      }
+
+      const locationId = button.dataset.location;
+      timetables?.forEach((panel) => {
+        panel.hidden = panel.dataset.location !== locationId;
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => setActive(button));
+    });
+  };
+
+  setupSchedulePill();
+  document.addEventListener("astro:page-load", setupSchedulePill);
+</script>

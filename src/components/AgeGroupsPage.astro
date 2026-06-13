@@ -6,18 +6,10 @@ import {
   ageGroupsPageWithoutParents,
   ageGroupsPageMeta,
 } from "../data/ageGroupsPage";
+import { scheduleMeta } from "../data/schedule";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = ageGroupsPageMeta;
-
-const agePageFilterDefault = "Všechny kategorie";
-const agePageFilterOptions = ageGroupsHomeCards.map((card) => ({
-  value: card.id === "s-rodici" ? "with-parents" : "without-parents",
-  hash: card.id,
-  label: card.title,
-  icon: card.icon,
-  accent: cardAccentDeep(card.accent),
-}));
 
 const agePageWithParentsSection = ageGroupsHomeCards.find(
   (card) => card.id === "s-rodici",
@@ -60,7 +52,11 @@ const agePageCardThemesWithoutParents = [
 ] as const;
 ---
 
-<section id={meta.sectionId} class="age-page" aria-labelledby="age-page-title">
+<section
+  id={meta.sectionId}
+  class="section age-page"
+  aria-labelledby="age-page-title"
+>
   <div class="age-page__intro">
     <div class="age-page__intro-nav-bg" aria-hidden="true">
       <div class="age-page__intro-photo"></div>
@@ -80,68 +76,34 @@ const agePageCardThemesWithoutParents = [
 
   <div class="container-x">
     <div class="age-page__filter reveal">
-      <div class="age-page__filter-dropdown" data-active-value="all">
-        <button
-          type="button"
-          class="age-page__filter-trigger btn btn-ghost"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-          aria-controls="age-page-filter-list"
-          id="age-page-filter-trigger"
+      <nav
+        class="age-page__pill age-page__pill--split"
+        aria-label="Přejít na kategorii"
+      >
+        <a
+          href={`#${agePageWithParentsSection.id}`}
+          class="age-page__pill-half age-page__pill-half--with-parents"
         >
-          <span class="age-page__filter-label-text">{agePageFilterDefault}</span
-          >
-          <svg
-            class="age-page__filter-chevron"
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M2.5 4.25L6 7.75L9.5 4.25"
-              stroke="currentColor"
-              stroke-width="1.75"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
-        </button>
-        <div class="age-page__filter-surface">
-          <ul
-            id="age-page-filter-list"
-            class="age-page__filter-list"
-            role="listbox"
-            aria-labelledby="age-page-filter-trigger"
-          >
-            {
-              agePageFilterOptions.map((option) => (
-                <li role="presentation">
-                  <a
-                    href={`#${option.hash}`}
-                    class="age-page__filter-option"
-                    data-value={option.value}
-                    style={`--accent: ${option.accent};`}
-                  >
-                    <span
-                      class={`age-page__filter-option-icon age-page__filter-option-icon--${option.value}`}
-                      aria-hidden="true"
-                    >
-                      <Icon
-                        name={option.icon}
-                        class="age-page__filter-option-graphic"
-                      />
-                    </span>
-                    <span class="age-page__filter-option-label">
-                      {option.label}
-                    </span>
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+          S rodiči
+        </a>
+        <a
+          href={`#${agePageWithoutParentsSection.id}`}
+          class="age-page__pill-half age-page__pill-half--without-parents"
+        >
+          Bez rodičů
+        </a>
+      </nav>
+
+      <div class="age-page__pill age-page__pill--schedule">
+        <a href={`#${scheduleMeta.sectionId}`} class="age-page__pill-schedule">
+          <span class="age-page__pill-schedule-icon" aria-hidden="true">
+            <Icon
+              name="lineicons:calendar-days"
+              class="age-page__pill-schedule-graphic"
+            />
+          </span>
+          Rozvrh lekcí
+        </a>
       </div>
     </div>
 
@@ -261,6 +223,9 @@ const agePageCardThemesWithoutParents = [
 
 <style>
   .age-page {
+    --age-page-anchor-offset: calc(var(--nav-height) + var(--space-10));
+    --age-page-anchor-offset-groups: calc(var(--nav-height) + var(--space-2));
+    padding-top: 0;
     scroll-margin-top: var(--nav-height);
     background-color: var(--color-cream);
   }
@@ -344,7 +309,7 @@ const agePageCardThemesWithoutParents = [
 
   .age-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--section-title-gap);
+    margin: 0 0 var(--h2-title-gap);
   }
 
   .age-page .section-title-accent {
@@ -355,183 +320,160 @@ const agePageCardThemesWithoutParents = [
     position: relative;
     z-index: 10;
     width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-8);
+    margin: 0 auto var(--space-9);
   }
 
-  .age-page__filter-dropdown {
-    position: relative;
-  }
-
-  .age-page__filter-trigger.btn {
-    width: 100%;
-    justify-content: space-between;
-    font-weight: 600;
-    background: #fff;
-    border-color: rgba(42, 31, 56, 0.12);
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .age-page__filter-trigger.btn-ghost:hover,
-  .age-page__filter-dropdown.is-open .age-page__filter-trigger.btn-ghost {
-    background: #fff;
-    border-color: var(--color-blush-mid);
-    box-shadow: none;
-    transform: none;
-  }
-
-  .age-page__filter-label-text {
-    color: var(--color-blush-vivid);
-    transition: color 220ms ease;
-  }
-
-  .age-page__filter-chevron {
-    display: block;
-    flex-shrink: 0;
-    width: 0.875rem;
-    height: 0.875rem;
-    color: var(--color-blush-vivid);
-    transform: translateY(0.07em);
-    transition:
-      color 220ms ease,
-      transform 220ms ease;
-  }
-
-  .age-page__filter-dropdown.is-open .age-page__filter-chevron,
-  .age-page__filter-dropdown:focus-within .age-page__filter-chevron {
-    transform: rotate(180deg) translateY(-0.07em);
-  }
-
-  .age-page__filter-surface {
-    position: absolute;
-    z-index: 20;
-    left: 0;
-    right: 0;
-    top: calc(100% + 0.625rem);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 180ms ease,
-      visibility 180ms ease;
-  }
-
-  .age-page__filter-dropdown.is-open .age-page__filter-surface,
-  .age-page__filter-dropdown:focus-within .age-page__filter-surface {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .age-page__filter-list {
-    list-style: none;
-    margin: 0;
-    padding: 0.375rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    border-radius: var(--radius-card);
-    background: #fff;
-    border: 1px solid
-      color-mix(in srgb, var(--color-blush-vivid) 10%, transparent);
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-blush-vivid) 8%, transparent),
-      0 12px 32px -16px
-        color-mix(in srgb, var(--color-blush-vivid) 34%, transparent);
-  }
-
-  .age-page__filter-list > li + li::before {
-    content: "";
-    display: block;
-    height: 1px;
-    margin: 0 0.875rem;
-    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
-  }
-
-  .age-page__filter-option {
+  /* Pill — společný základ pro obě pilulky (stejné parametry) */
+  .age-page__pill {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
     width: 100%;
-    margin: 0;
-    padding: 1rem 1.375rem;
-    appearance: none;
-    -webkit-appearance: none;
-    border: none;
-    border-radius: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
     background: transparent;
-    color: var(--color-ink);
-    font-family: inherit;
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: var(--text-base);
-    line-height: 1;
-    text-align: left;
+    line-height: var(--line-height-base);
+    white-space: nowrap;
+    padding: 1rem 1.625rem;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+  }
+
+  .age-page__pill--split {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .age-page__pill + .age-page__pill {
+    margin-top: var(--space-4);
+  }
+
+  /* První pilulka rozdělená na dvě poloviny */
+  .age-page__pill-half {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 1.625rem;
+    font-weight: 600;
+    text-align: center;
     text-decoration: none;
-    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
     transition: background-color 220ms ease;
   }
 
-  .age-page__filter-list > li:first-child .age-page__filter-option {
-    border-radius: var(--radius-card) var(--radius-card) 0 0;
+  .age-page__pill-half + .age-page__pill-half {
+    position: relative;
+    border-left: none;
   }
 
-  .age-page__filter-list > li:last-child .age-page__filter-option {
-    border-radius: 0 0 var(--radius-card) var(--radius-card);
+  .age-page__pill-half + .age-page__pill-half::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: calc(100% - 0.875rem);
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    pointer-events: none;
   }
 
-  .age-page__filter-option:hover,
-  .age-page__filter-option:focus-visible {
-    background: color-mix(in srgb, var(--color-blush-soft) 35%, white);
+  .age-page__pill-half--with-parents {
+    color: var(--color-blush-deep);
+    --accent-soft: var(--color-blush-soft);
+    --age-page-pill-scroll-offset: var(--age-page-anchor-offset-groups);
+  }
+
+  .age-page__pill-half--without-parents {
+    color: var(--color-sky-deep);
+    --accent-soft: var(--color-sky-soft);
+    --age-page-pill-scroll-offset: var(--age-page-anchor-offset-groups);
+  }
+
+  .age-page__pill-half:hover,
+  .age-page__pill-half:focus-visible,
+  .age-page__pill-half:active {
+    background: var(--accent-soft);
     outline: none;
   }
 
-  .age-page__filter-option-icon {
+  .age-page__pill--schedule {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  /* Druhá pilulka — Rozvrh lekcí */
+  .age-page__pill-schedule {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    gap: 0.6rem;
+    width: 100%;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 1.625rem;
+    color: var(--color-lilac-deep);
+    --accent-soft: var(--color-lilac-soft);
+    font: inherit;
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    text-align: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 220ms ease;
+  }
+
+  .age-page__pill-schedule:hover,
+  .age-page__pill-schedule:focus-visible,
+  .age-page__pill-schedule:active {
+    background: var(--accent-soft);
+    outline: none;
+  }
+
+  .age-page__pill-schedule-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    color: var(--accent);
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-lilac-deep);
   }
 
-  .age-page__filter-option-graphic {
+  .age-page__pill-schedule-graphic {
     display: block;
-    width: 1.75rem;
-    height: 1.75rem;
-    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
-  .age-page__filter-option-graphic :global(svg) {
+  .age-page__pill-schedule-graphic :global(svg) {
     display: block;
     width: 100%;
     height: 100%;
   }
 
-  /* Ikony sedí v viewBoxu výš — jemný posun pro optické zarovnání s textem */
-  .age-page__filter-option-icon--with-parents .age-page__filter-option-graphic {
-    transform: translateY(-0.125rem);
-  }
-
-  .age-page__filter-option-icon--without-parents
-    .age-page__filter-option-graphic {
-    transform: translateY(-0.125rem);
-  }
-
-  .age-page__filter-option-label {
-    flex: 1;
-    line-height: var(--line-height-lg);
-    transform: translateY(0.03125rem);
+  .age-page__filter + .age-page__group-heading,
+  .age-page__grid + .age-page__group-heading {
+    scroll-margin-top: var(--age-page-anchor-offset-groups);
   }
 
   .age-page__group-heading {
-    scroll-margin-top: calc(var(--nav-height) + var(--space-4));
+    scroll-margin-top: var(--age-page-anchor-offset);
     display: flex;
     align-items: center;
     gap: 0.625rem;
     width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-6);
+    margin: 0 auto var(--space-5);
     font-family: var(--font-display);
     font-size: var(--text-2-5xl);
     font-weight: 600;
@@ -726,58 +668,56 @@ const agePageCardThemesWithoutParents = [
 </style>
 
 <script>
-  const setupAgePageFilter = () => {
-    document
-      .querySelectorAll<HTMLElement>(".age-page__filter-dropdown")
-      .forEach((dropdown) => {
-        if (dropdown.dataset.filterReady === "true") return;
-        dropdown.dataset.filterReady = "true";
+  const readCssVarLength = (el: Element, varName: string) => {
+    const probe = document.createElement("div");
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    probe.style.pointerEvents = "none";
+    probe.style.height = `var(${varName})`;
+    el.appendChild(probe);
+    const px = probe.getBoundingClientRect().height;
+    probe.remove();
+    return px;
+  };
 
-        const trigger = dropdown.querySelector<HTMLButtonElement>(
-          ".age-page__filter-trigger",
-        );
-        const label = dropdown.querySelector<HTMLElement>(
-          ".age-page__filter-label-text",
-        );
-        const options = dropdown.querySelectorAll<HTMLAnchorElement>(
-          ".age-page__filter-option",
-        );
+  const setupAgePagePillScroll = () => {
+    const agePage = document.querySelector<HTMLElement>(".age-page");
+    if (!agePage || agePage.dataset.pillScrollReady === "true") return;
+    agePage.dataset.pillScrollReady = "true";
 
-        if (!trigger || !label) return;
+    agePage
+      .querySelectorAll<HTMLAnchorElement>(
+        '.age-page__pill-half[href^="#"], .age-page__pill-schedule[href^="#"]',
+      )
+      .forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const href = link.getAttribute("href");
+          if (!href?.startsWith("#")) return;
 
-        const close = () => {
-          dropdown.classList.remove("is-open");
-          trigger.setAttribute("aria-expanded", "false");
-        };
+          const target = document.querySelector(href);
+          if (!target) return;
 
-        trigger.addEventListener("click", () => {
-          const open = !dropdown.classList.contains("is-open");
-          dropdown.classList.toggle("is-open", open);
-          trigger.setAttribute("aria-expanded", String(open));
-        });
+          event.preventDefault();
 
-        options.forEach((option) => {
-          option.addEventListener("click", () => {
-            const optionLabel = option.querySelector<HTMLElement>(
-              ".age-page__filter-option-label",
-            );
-            label.textContent =
-              optionLabel?.textContent?.trim() ?? label.textContent;
-            dropdown.dataset.activeValue = option.dataset.value ?? "all";
-            close();
-          });
-        });
+          if (link.classList.contains("age-page__pill-schedule")) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", href);
+            return;
+          }
 
-        document.addEventListener("click", (event) => {
-          if (!dropdown.contains(event.target as Node)) close();
-        });
+          const offset = readCssVarLength(
+            link,
+            "--age-page-pill-scroll-offset",
+          );
+          const top =
+            target.getBoundingClientRect().top + window.scrollY - offset;
 
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") close();
+          window.scrollTo({ top, behavior: "smooth" });
+          history.replaceState(null, "", href);
         });
       });
   };
 
-  setupAgePageFilter();
-  document.addEventListener("astro:page-load", setupAgePageFilter);
+  setupAgePagePillScroll();
+  document.addEventListener("astro:page-load", setupAgePagePillScroll);
 </script>

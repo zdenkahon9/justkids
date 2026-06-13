@@ -16,7 +16,7 @@ export const site = {
 
   // Kontaktní údaje
   contact: {
-    email: "aneta.justychova@email.cz",
+    email: "info@justkids.cz",
     phone: "+420 731 818 841",
     instructorName: "Mgr. Aneta Justychová",
   },
