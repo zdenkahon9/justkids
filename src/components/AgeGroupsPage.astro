@@ -13,6 +13,7 @@ const meta = ageGroupsPageMeta;
 const agePageFilterDefault = "Všechny kategorie";
 const agePageFilterOptions = ageGroupsHomeCards.map((card) => ({
   value: card.id === "s-rodici" ? "with-parents" : "without-parents",
+  hash: card.id,
   label: card.title,
   icon: card.icon,
   accent: cardAccentDeep(card.accent),
@@ -117,10 +118,9 @@ const agePageCardThemesWithoutParents = [
             {
               agePageFilterOptions.map((option) => (
                 <li role="presentation">
-                  <button
-                    type="button"
+                  <a
+                    href={`#${option.hash}`}
                     class="age-page__filter-option"
-                    role="option"
                     data-value={option.value}
                     style={`--accent: ${option.accent};`}
                   >
@@ -136,7 +136,7 @@ const agePageCardThemesWithoutParents = [
                     <span class="age-page__filter-option-label">
                       {option.label}
                     </span>
-                  </button>
+                  </a>
                 </li>
               ))
             }
@@ -146,6 +146,7 @@ const agePageCardThemesWithoutParents = [
     </div>
 
     <h3
+      id={agePageWithParentsSection.id}
       class="age-page__group-heading reveal"
       style={`--accent: ${cardAccentDeep(agePageWithParentsSection.accent)};`}
     >
@@ -201,6 +202,7 @@ const agePageCardThemesWithoutParents = [
     </ul>
 
     <h3
+      id={agePageWithoutParentsSection.id}
       class="age-page__group-heading reveal"
       style={`--accent: ${cardAccentDeep(agePageWithoutParentsSection.accent)};`}
     >
@@ -465,6 +467,7 @@ const agePageCardThemesWithoutParents = [
     font-size: var(--text-base);
     line-height: 1;
     text-align: left;
+    text-decoration: none;
     cursor: pointer;
     transition: background-color 220ms ease;
   }
@@ -523,6 +526,7 @@ const agePageCardThemesWithoutParents = [
   }
 
   .age-page__group-heading {
+    scroll-margin-top: calc(var(--nav-height) + var(--space-4));
     display: flex;
     align-items: center;
     gap: 0.625rem;
@@ -602,16 +606,21 @@ const agePageCardThemesWithoutParents = [
   }
 
   .age-page__age-row {
-    --age-text-height: calc(1.375rem * var(--line-height-2xl));
+    --age-icon-nudge: -0.05rem;
     position: relative;
     padding-right: calc(5.5rem + var(--space-4));
   }
 
   .age-page__illustration {
     position: absolute;
+    top: 50%;
     right: 0;
-    top: calc(0.5 * var(--age-text-height));
-    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.5rem;
+    pointer-events: none;
+    transform: translateY(calc(-50% + var(--age-icon-nudge)));
   }
 
   .age-page__icon-ring {
@@ -692,7 +701,6 @@ const agePageCardThemesWithoutParents = [
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
-    text-align: center;
   }
 
   @media (min-width: 768px) {
@@ -731,7 +739,7 @@ const agePageCardThemesWithoutParents = [
         const label = dropdown.querySelector<HTMLElement>(
           ".age-page__filter-label-text",
         );
-        const options = dropdown.querySelectorAll<HTMLButtonElement>(
+        const options = dropdown.querySelectorAll<HTMLAnchorElement>(
           ".age-page__filter-option",
         );
 

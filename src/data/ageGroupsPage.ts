@@ -27,7 +27,7 @@ export const ageGroupsPageMeta: AgeGroupsPageMeta = {
   title: "Pro každý věk",
   titleAccent: "to pravé cvičení",
   subtitle:
-    "Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka po hravé překážky pro batolata. Vše v klidu a v tempu, které dítěti vyhovuje.",
+    "Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka po budování radost ze cvičení u školních dětí. Vše v klidu a v tempu, které dítěti vyhovuje.",
   pageDescription:
     "Přehled věkových skupin JustKids – od miminek 3–6 měsíců po batolata 2–3 roky. Každá kategorie má vlastní náplň cvičení.",
 };
@@ -96,7 +96,7 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     description:
       "Pohyb jako radost, jistota i zdravý základ do života – děti si budují vztah ke sportu hravou a přirozenou cestou.",
     highlights: [],
-    icon: "fluent-emoji-high-contrast:person-in-suit-levitating",
+    icon: "noto:seedling",
     accent: "sky",
   },
   {
@@ -106,7 +106,7 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     description:
       "Energie, pohyb a zábava v jednom. Děti si budují zdravý vztah k pohybu, získávají sebevědomí a především si užívají aktivní čas plný radosti a nových zážitků.",
     highlights: [],
-    icon: "mage:star",
+    icon: "fxemoji:rocket",
     accent: "lilac",
   },
 ];
