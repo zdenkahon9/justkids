@@ -55,6 +55,7 @@
   --text-2xl: 1.5rem;
   --text-2-5xl: 1.625rem;
   --text-clamp-h2: clamp(2.5rem, 4.5vw, 3.5rem);
+  --text-clamp-h2-mobile: clamp(2.25rem, 4.5vw, 3.5rem);
 
   /* Line Height */
   --line-height-xs: 1;
@@ -298,6 +299,23 @@ h4 {
   font-size: var(--text-lg);
   font-weight: 400;
   color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+}
+
+/* Mobil: kompaktnější section header (640px+ beze změny) */
+@media (max-width: 639px) {
+  .section-header {
+    --section-header-spacing: var(--space-9);
+    --section-title-gap: var(--space-5);
+    --text-clamp-h2: var(--text-clamp-h2-mobile);
+  }
+
+  .section-header .eyebrow {
+    font-size: var(--text-lg);
+  }
+
+  .section-header .section-subtitle {
+    font-size: var(--text-base);
+  }
 }
 
 .container-x {

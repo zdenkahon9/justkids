@@ -265,6 +265,13 @@ const meta = ageGroupsHomeMeta;
     width: 90%;
     max-width: var(--card-grid-width);
     padding: 1.125rem 1.375rem;
+    border-radius: var(--radius-full);
+    box-shadow: none;
+  }
+
+  .age-home__cta :global(.btn-primary:hover),
+  .age-home__cta :global(.btn-primary:active) {
+    box-shadow: var(--shadow-pop);
   }
 
   @media (min-width: 768px) {

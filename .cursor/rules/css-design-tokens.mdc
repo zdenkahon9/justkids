@@ -1,0 +1,36 @@
+---
+description: CSS velikosti a spacing — vždy design tokeny z global.css
+globs: "**/*.{css,astro,tsx}"
+alwaysApply: false
+---
+
+# Design tokeny pro velikosti
+
+Při úpravách CSS, Astro stylů a komponent:
+
+- Používej **výhradně existující CSS custom properties** z `:root` v `src/styles/global.css` (`--text-*`, `--space-*`, `--radius-*`, `--text-clamp-*`).
+- **Nepiš náhodné hodnoty** typu `1.1875rem`, `17px`, `13px` — pokud chybí token, přidej ho do `:root` s jasným názvem.
+- Velikosti v rem musí odpovídat **sudým pixelům** při base 16px (např. `1rem` = 16px, `1.125rem` = 18px, `2.25rem` = 36px).
+
+## Tokeny pro text
+
+| Token | px |
+|-------|-----|
+| `--text-base` | 16 |
+| `--text-lg` | 18 |
+| `--text-xl` | 20 |
+| `--text-clamp-h2` | desktop nadpisy sekcí |
+| `--text-clamp-h2-mobile` | mobilní nadpisy sekcí (≤639px) |
+
+## Příklad
+
+```css
+/* ❌ BAD */
+font-size: 1.0625rem;
+--text-clamp-h2: clamp(2.25rem, 4.5vw, 3.5rem); /* inline v media query bez tokenu */
+
+/* ✅ GOOD */
+font-size: var(--text-base);
+--text-clamp-h2: var(--text-clamp-h2-mobile);
+margin-bottom: var(--space-5);
+```
