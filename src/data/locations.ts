@@ -36,4 +36,16 @@ export const locations: Location[] = [
     mapCoords: { lat: 49.835747, lng: 13.901443 },
     accent: "sky",
   },
+  {
+    id: "broumy",
+    name: "Centrum Rosenbaum",
+    street: "Na Návsi 11",
+    city: "Broumy",
+    zip: "267 42",
+    parking: "Parkování je možné v blízkosti místa konání lekcí.",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=Centrum+Rosenbaum+Na+N%C3%A1vsi+11%2C+267+42+Broumy",
+    mapCoords: { lat: 49.956704, lng: 13.853668 },
+    accent: "lilac",
+  },
 ];
