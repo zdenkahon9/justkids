@@ -261,10 +261,9 @@ h4 {
 }
 
 .btn-ghost {
-  background: rgba(255, 255, 255, 0.7);
+  background: #fefefe;
   color: var(--color-ink);
   border-color: rgba(42, 31, 56, 0.12);
-  backdrop-filter: blur(8px);
 }
 
 .btn-ghost:hover {

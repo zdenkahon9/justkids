@@ -286,7 +286,7 @@
   height: 44px;
   border: 1.5px solid rgba(42, 31, 56, 0.15);
   border-radius: var(--radius-xl);
-  background: rgba(255, 255, 255, 0.7);
+  background: #fefefe;
   cursor: pointer;
   transition: background-color 220ms ease;
 }
