@@ -39,7 +39,7 @@ export const locations: Location[] = [
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Yogasee+Anýžova+449%2F8+Hořovice",
     mapCoords: { lat: 49.835747, lng: 13.901443 },
-    accent: "sky",
+    accent: "lilac",
   },
   {
     id: "broumy",
@@ -51,6 +51,6 @@ export const locations: Location[] = [
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Centrum+Rosenbaum+Na+N%C3%A1vsi+11%2C+267+42+Broumy",
     mapCoords: { lat: 49.956704, lng: 13.853668 },
-    accent: "lilac",
+    accent: "sky",
   },
 ];
