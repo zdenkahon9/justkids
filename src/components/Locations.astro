@@ -1,5 +1,5 @@
 ---
-import { locations } from "../data/locations";
+import { locations, locationsMeta } from "../data/locations";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const mapEmbed = (lat: number, lng: number) =>
@@ -17,153 +17,367 @@ const mapEmbed = (lat: number, lng: number) =>
       <h2 id="locations-title">
         Navštivte <span class="section-title-accent">nás</span>
       </h2>
-      <p class="section-subtitle">
-        Cvičíme ve dvou příjemných studiích na Berounsku – ve Zdicích a v
-        Hořovicích.
+      <p class="section-subtitle locations__subtitle">
+        {locationsMeta.subtitleLead}{" "}
+        <span class="locations__subtitle-cities">{locationsMeta.subtitleCities}</span>
       </p>
     </header>
 
-    <div class="locations__grid">
-      {
-        locations.map((l, i) => (
-          <article
-            class="location reveal"
-            style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
-          >
-            <div class="location__details">
-              <div class="location__summary">
-                <div class="location__head">
-                  <div class="location__icon" aria-hidden="true">
-                    <svg
-                      class="card-icon-graphic"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill="var(--accent)"
-                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                      />
-                      <circle cx="12" cy="9" r="2.75" fill="#fff" />
-                    </svg>
-                  </div>
-                  <div class="location__head-text">
-                    <h3>{l.name}</h3>
-                    <address class="location__address">
-                      {l.street}, {l.zip} {l.city}
-                    </address>
-                  </div>
-                </div>
-              </div>
-
-              <div class="location__panel">
-                <div class="location__expandable">
-                  <div class="location__parking">
-                    <span class="location__parking-label">
-                      <span class="location__p-mark" aria-hidden="true">
-                        P
-                      </span>
-                      Parkování
-                    </span>
-                    <p>{l.parking}</p>
-                  </div>
-
-                  <a
-                    href={l.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="location__nav-link"
-                  >
-                    Navigovat v Google Maps
-                    <svg
-                      class="location__extern-icon"
-                      viewBox="0 0 24 24"
-                      width="16"
-                      height="16"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="location__map-shell">
-              <iframe
-                class="location__map-frame"
-                src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
-                title={`Mapa: ${l.name}`}
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                allowfullscreen
-              />
-              <a
-                href={l.mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="location__map-overlay"
-              >
-                Otevřít v Mapách
-                <svg
-                  class="location__extern-icon"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  aria-hidden="true"
+    <div class="locations-tabs">
+      <div class="locations__panel reveal">
+        <article
+          class="locations__card"
+          style={`--accent: ${cardAccentDeep(locations[0].accent)}; --accent-soft: ${cardAccentSoft(locations[0].accent)}`}
+        >
+          <div class="locations-tabs__switcher" aria-label="Vybrat pobočku">
+            {
+              locations.map((l, i) => (
+                <details
+                  name="locations"
+                  class="locations-tabs__item"
+                  open={i === 0 ? true : undefined}
+                  data-accent={cardAccentDeep(l.accent)}
+                  data-accent-soft={cardAccentSoft(l.accent)}
+                  style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}`}
                 >
-                  <path
-                    fill="currentColor"
-                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                  />
-                </svg>
-              </a>
+                  <summary
+                    class="locations-tabs__tab"
+                    aria-controls={`location-panel-${i}`}
+                  >
+                    {l.city}
+                  </summary>
+                </details>
+              ))
+            }
+          </div>
+          <span class="age-page__rule" aria-hidden="true"></span>
+          <div class="locations__body">
+            <div class="locations-tabs__panels">
+              {
+                locations.map((l, i) => (
+                  <div
+                    class="locations-tabs__panel"
+                    id={`location-panel-${i}`}
+                    role="region"
+                    aria-label={l.city}
+                  >
+                    <article
+                      class="location reveal"
+                      style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
+                    >
+                      <div class="location__details">
+                        <div class="location__summary">
+                          <div class="location__head">
+                            <div class="location__head-text">
+                              <h3>{l.name}</h3>
+                              <address class="location__address">
+                                {l.street}, {l.zip} {l.city}
+                              </address>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="location__panel">
+                          <div class="location__expandable">
+                            <div class="location__parking">
+                              <span class="location__parking-label">
+                                <span
+                                  class="location__p-mark"
+                                  aria-hidden="true"
+                                >
+                                  P
+                                </span>
+                                Parkování
+                              </span>
+                              <p>{l.parking}</p>
+                            </div>
+
+                            <a
+                              href={l.mapUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="location__nav-link"
+                            >
+                              Navigovat v Google Maps
+                              <svg
+                                class="location__extern-icon"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                height="16"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  fill="currentColor"
+                                  d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                                />
+                                <path
+                                  fill="currentColor"
+                                  d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                                />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="location__map-shell">
+                        <iframe
+                          class="location__map-frame"
+                          src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
+                          title={`Mapa: ${l.name}`}
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                          allowfullscreen
+                        />
+                        <a
+                          href={l.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="location__map-overlay"
+                        >
+                          Otevřít v Mapách
+                          <svg
+                            class="location__extern-icon"
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                            />
+                            <path
+                              fill="currentColor"
+                              d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                            />
+                          </svg>
+                        </a>
+                      </div>
+                    </article>
+                  </div>
+                ))
+              }
             </div>
-          </article>
-        ))
-      }
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   /*
-   * Mobile-first: jedna řada, karty max 512px; od 768px dva pružné sloupce.
+   * Mobil (< 768px): stejná architektura jako Schedule — jedna karta, pill, divider, body.
+   * Od 768px desktop/tablet grid beze změny.
    */
-  .locations__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--stack-gap);
-    align-items: start;
-    justify-items: center;
-  }
-
   @media (max-width: 767px) {
-    .locations__grid > .location {
+    .locations__subtitle-cities {
+      display: block;
+    }
+
+    .locations-tabs {
+      width: min(100%, var(--card-grid-width));
+      margin-inline: auto;
+    }
+
+    .locations__panel {
       width: 100%;
-      max-width: 32rem; /* 512px */
+      margin: 0;
+    }
+
+    .locations__card {
+      position: relative;
+      display: block;
       box-sizing: border-box;
+      border-radius: var(--radius-card);
+      padding: var(--card-padding);
+      border: var(--card-border);
+      background: #fefefe;
+      box-shadow: none;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .locations__card > .age-page__rule {
+      display: block;
+      width: 100%;
+      height: 1px;
+      margin: var(--space-5) 0 var(--space-5);
+      border: none;
+      background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+      transition: background 220ms ease;
+    }
+
+    .locations-tabs__switcher {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+      border-radius: var(--radius-full);
+      border: 1.5px solid rgba(42, 31, 56, 0.12);
+      background: transparent;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: var(--text-base);
+      line-height: var(--line-height-base);
+      white-space: nowrap;
+      padding: 0;
+      min-height: calc(2rem + 1em * var(--line-height-base));
+    }
+
+    .locations-tabs__item {
+      display: block;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .locations-tabs__tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      min-height: calc(2rem + 1em * var(--line-height-base));
+      padding: 1rem 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: var(--text-base);
+      line-height: var(--line-height-base);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      list-style: none;
+      -webkit-tap-highlight-color: transparent;
+      transition:
+        background-color 220ms ease,
+        color 220ms ease;
+    }
+
+    .locations-tabs__tab::-webkit-details-marker {
+      display: none;
+    }
+
+    .locations-tabs__tab::marker {
+      content: "";
+    }
+
+    details[open] > .locations-tabs__tab {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    details:not([open]) > .locations-tabs__tab:hover,
+    details:not([open]) > .locations-tabs__tab:focus-visible {
+      background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+      outline: none;
+    }
+
+    .locations__body {
+      position: relative;
+      z-index: 1;
+    }
+
+    .locations-tabs__panels .locations-tabs__panel {
+      display: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .locations__card:has(
+        .locations-tabs__switcher .locations-tabs__item:nth-child(1)[open]
+      )
+      .locations-tabs__panels
+      .locations-tabs__panel:nth-child(1),
+    .locations__card:has(
+        .locations-tabs__switcher .locations-tabs__item:nth-child(2)[open]
+      )
+      .locations-tabs__panels
+      .locations-tabs__panel:nth-child(2),
+    .locations__card:has(
+        .locations-tabs__switcher .locations-tabs__item:nth-child(3)[open]
+      )
+      .locations-tabs__panels
+      .locations-tabs__panel:nth-child(3) {
+      display: block;
+    }
+
+    .locations__body .location {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+    }
+
+    .locations__body .location__details {
+      width: 100%;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .locations__body .location__head {
+      padding-top: 0;
+    }
+
+    .locations__body .location__map-shell {
+      width: calc(100% + 2 * var(--card-padding-x));
+      max-width: none;
+      margin-inline: calc(-1 * var(--card-padding-x));
+      margin-top: var(--space-5);
+      margin-bottom: calc(-1 * var(--card-padding-y));
+      height: 10rem;
+      max-height: 10rem;
     }
   }
 
   @media (min-width: 768px) {
-    .locations__grid {
+    .locations-tabs {
+      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--stack-gap);
+      max-width: none;
+      margin-inline: unset;
       justify-items: stretch;
+      align-items: start;
     }
 
-    .locations__grid > .location {
-      max-width: none;
+    .locations__panel {
+      display: contents;
+    }
+
+    .locations__card {
+      display: contents;
+    }
+
+    .locations-tabs__switcher,
+    .locations__card > .age-page__rule {
+      display: none;
+    }
+
+    .locations__body {
+      display: contents;
+    }
+
+    .locations-tabs__panels {
+      display: contents;
+    }
+
+    .locations-tabs__panels .locations-tabs__panel {
+      display: block !important;
     }
   }
 
@@ -175,9 +389,10 @@ const mapEmbed = (lat: number, lng: number) =>
     color: var(--color-lilac-deep);
   }
 
-  /* Divider matches .footer__col (mobile / tablet): light pink line */
+  /* První linka (age-page__rule) = accent; vnitřní oddělovače = jako schedule__day-divider */
   .location {
     --location-divider: 1px solid rgba(236, 47, 142, 0.16);
+    --location-content-divider: 1px solid rgba(42, 31, 56, 0.12);
 
     position: relative;
     display: flex;
@@ -286,35 +501,13 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   .location__head {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
     width: 100%;
     margin-bottom: 0;
     padding-top: 0.5rem;
   }
 
-  .location__icon {
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-    width: var(--card-icon-size);
-    height: var(--card-icon-size);
-    border-radius: var(--radius-full);
-    background: #fff;
-    border: none;
-    display: grid;
-    place-items: center;
-    align-self: start;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-    transition: transform 280ms ease;
-  }
-
   .location__head-text {
-    flex: 1;
+    width: 100%;
     min-width: 0;
   }
 
@@ -329,17 +522,16 @@ const mapEmbed = (lat: number, lng: number) =>
 
   .location__address {
     font-style: normal;
-    margin: 0;
+    margin: 0 0 var(--space-5);
     font-size: var(--text-base);
-    min-height: 3rem;
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .location__parking {
     padding: 0;
-    padding-top: 1.25rem;
-    margin-bottom: 1.25rem;
-    border-top: var(--location-divider);
+    padding-top: var(--space-5);
+    margin-bottom: var(--space-5);
+    border-top: var(--location-content-divider);
 
     & > p {
       min-height: 3rem;
@@ -355,7 +547,7 @@ const mapEmbed = (lat: number, lng: number) =>
     font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    margin-bottom: 1.25rem;
+    margin-bottom: var(--space-3);
   }
 
   .location__p-mark {
@@ -380,12 +572,11 @@ const mapEmbed = (lat: number, lng: number) =>
 
   #lokace .location__nav-link {
     margin-top: auto;
-    padding-top: 1.25rem;
-    border-top: var(--location-divider);
+    /* padding-top: var(--space-5); */
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    color: var(--color-blush-vivid);
+    color: var(--color-blush-deep);
     font-family: var(--font-body);
     font-weight: 700;
     font-size: var(--text-base);
@@ -412,8 +603,11 @@ const mapEmbed = (lat: number, lng: number) =>
         color-mix(in srgb, var(--accent) 45%, transparent);
     }
 
-    .location:hover .location__icon {
-      transform: scale(1.05);
+    @media (max-width: 767px) {
+      .locations__body .location:hover {
+        transform: none;
+        box-shadow: none;
+      }
     }
   }
 
@@ -422,19 +616,15 @@ const mapEmbed = (lat: number, lng: number) =>
       .location:hover {
         transform: none;
       }
-
-      .location:hover .location__icon {
-        transform: none;
-      }
     }
   }
 
   /*
-   * Sekce #lokace: od viewportu 1180px dvě karty po 490px, gap zůstává var(--stack-gap).
-   * Selektor s #lokace přebije pravidlo .locations__grid z @media (min-width: 768px).
+   * Sekce #lokace: od viewportu 1180px dvě karty po 420px, gap zůstává var(--stack-gap).
+   * Selektor s #lokace přebije pravidlo .locations-tabs z @media (min-width: 768px).
    */
   @media (min-width: 1180px) {
-    #lokace .locations__grid {
+    #lokace .locations-tabs {
       grid-template-columns: repeat(2, 420px);
       justify-content: center;
       width: fit-content;
@@ -442,7 +632,7 @@ const mapEmbed = (lat: number, lng: number) =>
       margin-inline: auto;
     }
 
-    #lokace .locations__grid > .location {
+    #lokace .locations-tabs__panels .locations-tabs__panel {
       width: 420px;
       max-width: 420px;
       min-width: 420px;
@@ -450,3 +640,43 @@ const mapEmbed = (lat: number, lng: number) =>
     }
   }
 </style>
+
+<script>
+  const setupLocationsTabs = () => {
+    const switcher = document.querySelector<HTMLElement>(
+      ".locations-tabs__switcher",
+    );
+    if (!switcher || switcher.dataset.tabsReady === "true") return;
+    switcher.dataset.tabsReady = "true";
+
+    const card = switcher.closest<HTMLElement>(".locations__card");
+    const items = switcher.querySelectorAll<HTMLDetailsElement>(
+      ".locations-tabs__item",
+    );
+
+    const syncAccent = (item: HTMLDetailsElement) => {
+      const accent = item.dataset.accent;
+      const accentSoft = item.dataset.accentSoft;
+      if (card && accent) {
+        card.style.setProperty("--accent", accent);
+      }
+      if (card && accentSoft) {
+        card.style.setProperty("--accent-soft", accentSoft);
+      }
+    };
+
+    items.forEach((item) => {
+      item.addEventListener("toggle", () => {
+        if (item.open) syncAccent(item);
+      });
+    });
+
+    const openItem = switcher.querySelector<HTMLDetailsElement>(
+      ".locations-tabs__item[open]",
+    );
+    if (openItem) syncAccent(openItem);
+  };
+
+  setupLocationsTabs();
+  document.addEventListener("astro:page-load", setupLocationsTabs);
+</script>

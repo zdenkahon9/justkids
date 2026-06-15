@@ -11,6 +11,11 @@ export type Location = {
   accent: "blush" | "sky" | "lilac";
 };
 
+export const locationsMeta = {
+  subtitleLead: "Cvičíme ve třech lokalitách na Berounsku –",
+  subtitleCities: "ve Zdicích, Hořovicích a Broumech.",
+} as const;
+
 export const locations: Location[] = [
   {
     id: "zdice",

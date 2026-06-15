@@ -55,7 +55,7 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
             ))
           }
         </nav>
-        <span class="age-page__rule" aria-hidden="true" />
+        <span class="age-page__rule" aria-hidden="true"></span>
 
         <div class="schedule__body">
           {
@@ -65,53 +65,51 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
                 data-location={location.id}
                 hidden={index !== 0}
               >
-                {
-                  location.days.map((day, dayIndex) => (
-                    <div class="schedule__day-block">
-                      {day.label ? (
-                        <h3 class="schedule__day">{day.label}</h3>
-                      ) : null}
-                      <div class="schedule__timeline">
-                        <span class="schedule__axis-line" aria-hidden="true">
-                          <svg
-                            class="schedule__axis-line-graphic"
-                            preserveAspectRatio="none"
-                            aria-hidden="true"
-                          >
-                            <rect class="schedule__axis-line-fill" />
-                          </svg>
-                        </span>
-                        <ul class="schedule__slots">
-                          {day.slots.map((slot) => (
-                            <li class="schedule__slot">
-                              <span class="schedule__axis" aria-hidden="true">
-                                <svg
-                                  class="schedule__axis-dot"
-                                  viewBox="0 0 10 10"
-                                  aria-hidden="true"
-                                >
-                                  <circle
-                                    class="schedule__axis-dot-fill"
-                                    cx="5"
-                                    cy="5"
-                                    r="5"
-                                  />
-                                </svg>
-                              </span>
-                              <span class="schedule__time">{slot.time}</span>
-                              <span class="schedule__activity">
-                                {formatScheduleActivities(slot.activities)}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      {dayIndex < location.days.length - 1 ? (
-                        <hr class="schedule__day-divider" aria-hidden="true" />
-                      ) : null}
+                {location.days.map((day, dayIndex) => (
+                  <div class="schedule__day-block">
+                    {day.label ? (
+                      <h3 class="schedule__day">{day.label}</h3>
+                    ) : null}
+                    <div class="schedule__timeline">
+                      <span class="schedule__axis-line" aria-hidden="true">
+                        <svg
+                          class="schedule__axis-line-graphic"
+                          preserveAspectRatio="none"
+                          aria-hidden="true"
+                        >
+                          <rect class="schedule__axis-line-fill" />
+                        </svg>
+                      </span>
+                      <ul class="schedule__slots">
+                        {day.slots.map((slot) => (
+                          <li class="schedule__slot">
+                            <span class="schedule__axis" aria-hidden="true">
+                              <svg
+                                class="schedule__axis-dot"
+                                viewBox="0 0 10 10"
+                                aria-hidden="true"
+                              >
+                                <circle
+                                  class="schedule__axis-dot-fill"
+                                  cx="5"
+                                  cy="5"
+                                  r="5"
+                                />
+                              </svg>
+                            </span>
+                            <span class="schedule__time">{slot.time}</span>
+                            <span class="schedule__activity">
+                              {formatScheduleActivities(slot.activities)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  ))
-                }
+                    {dayIndex < location.days.length - 1 ? (
+                      <hr class="schedule__day-divider" aria-hidden="true" />
+                    ) : null}
+                  </div>
+                ))}
 
                 <div class="schedule__venue">
                   <span class="schedule__venue-icon" aria-hidden="true">
@@ -258,7 +256,7 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-4) 0 var(--space-5);
+    margin: var(--space-5) 0 var(--space-5);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
     transition: background 220ms ease;
@@ -388,7 +386,7 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
     display: flex;
     align-items: flex-start;
     gap: 0.5rem;
-    margin-top: var(--space-6);
+    margin-top: var(--space-5);
     padding: 1rem 1.625rem;
     border-radius: 1rem;
     background: var(--accent-soft);
@@ -469,8 +467,12 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
     pill.dataset.pillReady = "true";
 
     const card = pill.closest<HTMLElement>(".schedule__card");
-    const timetables = card?.querySelectorAll<HTMLElement>(".schedule__timetable");
-    const buttons = pill.querySelectorAll<HTMLButtonElement>(".schedule__pill-third");
+    const timetables = card?.querySelectorAll<HTMLElement>(
+      ".schedule__timetable",
+    );
+    const buttons = pill.querySelectorAll<HTMLButtonElement>(
+      ".schedule__pill-third",
+    );
 
     const setActive = (button: HTMLButtonElement) => {
       buttons.forEach((item) => {
