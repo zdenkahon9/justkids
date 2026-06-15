@@ -111,6 +111,9 @@
   --card-grid-width-md: 22rem; /* tablet 2-col: 920px − 2×4rem padding − gap */
   --card-icon-size: 4rem;
   --card-icon-graphic-size: 1.75rem;
+  /* Ikony v pravém rohu karet (AgeGroupsHome, Rules) — původně 88px / 44px */
+  --card-icon-size-corner: 5rem; /* 80px */
+  --card-icon-graphic-size-corner: 2.625rem; /* 42px */
   /* AgeGroups wave header — větší hero ikona uprostřed karty */
   --card-icon-size-wave: 5rem;
   --card-icon-graphic-size-wave: 2.75rem;

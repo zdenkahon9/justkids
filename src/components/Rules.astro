@@ -1,5 +1,7 @@
 ---
+import Icon from "astro-iconify";
 import { rules } from "../data/rules";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 ---
 
 <section id="provozni-rad" class="section rules" aria-labelledby="rules-title">
@@ -16,14 +18,39 @@ import { rules } from "../data/rules";
 
     <ol class="rules__grid">
       {
-        rules.map((r, i) => (
-          <li class="rule reveal" style={`transition-delay: ${i * 50}ms`}>
-            <span class="rule__num" aria-hidden="true">
-              {r.id}
-            </span>
-            <div class="rule__body">
-              <h3>{r.title}</h3>
-              <p>{r.detail}</p>
+        rules.map((rule, i) => (
+          <li>
+            <div
+              class="rules__card reveal"
+              style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)}; transition-delay: ${i * 80}ms;`}
+            >
+              <svg
+                class="rules__blob"
+                viewBox="-32 0 132 100"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
+              </svg>
+              <div class="rules__body">
+                <div class="rules__content">
+                  <h3 class="rules__heading">
+                    {String(rule.id).padStart(2, "0")}
+                  </h3>
+                  <div class="rules__title-row">
+                    <span class="rules__title">{rule.title}</span>
+                    {rule.icon ? (
+                      <div class="rules__illustration" aria-hidden="true">
+                        <span class="rules__icon-ring">
+                          <Icon name={rule.icon} class="rules__icon-graphic" />
+                        </span>
+                      </div>
+                    ) : null}
+                  </div>
+                  <span class="rules__rule" aria-hidden="true" />
+                  <p class="rules__detail">{rule.detail}</p>
+                </div>
+              </div>
             </div>
           </li>
         ))
@@ -33,74 +60,152 @@ import { rules } from "../data/rules";
 </section>
 
 <style>
-  #provozni-rad {
+  .rules {
     scroll-margin-top: var(--section-scroll-margin);
   }
+
   .rules .section-title-accent {
     color: var(--color-sky-deep);
   }
 
+  /* Mobile-first: stejné tokeny šířky karty jako .age-home__grid */
   .rules__grid {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: min(100%, var(--card-grid-width));
     gap: var(--stack-gap);
-    counter-reset: rule;
+    justify-content: center;
   }
 
-  .rule {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
-    align-items: start;
-    padding: var(--card-padding);
-    background: white;
+  .rules__card {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
     border-radius: var(--radius-card);
+    padding: var(--card-padding);
     border: var(--card-border);
+    background: #fefefe;
+    box-shadow: none;
+    overflow: hidden;
     transition:
-      transform 220ms ease,
-      border-color 220ms ease,
-      box-shadow 220ms ease;
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 280ms ease;
   }
 
-  .rule:hover {
-    transform: translateY(-2px);
-    border-color: var(--color-blush-mid);
-    box-shadow: var(--shadow-soft);
+  .rules__blob {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    right: 0;
+    width: 9.9rem;
+    height: 7.5rem;
+    display: block;
+    pointer-events: none;
   }
 
-  .rule__num {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
-    background: linear-gradient(
-      135deg,
-      var(--color-blush-mid),
-      var(--color-lilac-mid)
-    );
-    color: white;
+  .rules__blob path {
+    fill: var(--accent-soft);
+  }
+
+  .rules__body {
+    z-index: 1;
+  }
+
+  .rules__heading {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .rules__title-row {
+    --title-text-height: calc(1.375rem * var(--line-height-2xl));
+    position: relative;
+    padding-right: calc(var(--card-icon-size-corner) + var(--space-4));
+  }
+
+  .rules__title {
+    display: block;
+    width: 100%;
+    margin: 0 0 var(--space-4);
+    white-space: pre-line;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: var(--line-height-2xl);
+    color: var(--accent);
+  }
+
+  .rules__illustration {
+    position: absolute;
+    right: 0;
+    top: calc(0.5 * var(--title-text-height));
+    transform: translateY(-50%);
+  }
+
+  .rules__icon-ring {
     display: grid;
     place-items: center;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-lg);
-    flex-shrink: 0;
-    box-shadow: 0 6px 16px -6px rgba(236, 47, 142, 0.4);
+    width: var(--card-icon-size-corner);
+    height: var(--card-icon-size-corner);
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: transform 280ms ease;
   }
 
-  .rule__body h3 {
-    font-size: var(--text-2xl);
-    margin: 0 0 0.25rem;
-    font-family: var(--font-body);
-    font-weight: 700;
-    line-height: var(--line-height-xl);
+  .rules__icon-graphic {
+    width: var(--card-icon-graphic-size-corner);
+    height: var(--card-icon-graphic-size-corner);
   }
 
-  .rule__body p {
+  .rules__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: 0 0 var(--space-5);
+    border: none;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+  }
+
+  .rules__detail {
     margin: 0;
-    color: var(--color-ink);
+    font-family: var(--font-body);
     font-size: var(--text-base);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .rules__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .rules__card:hover .rules__icon-ring {
+    transform: scale(1.05);
+  }
+
+  @media (min-width: 768px) {
+    .rules__grid {
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .rules__grid {
+      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
+      margin-inline: auto;
+    }
   }
 </style>

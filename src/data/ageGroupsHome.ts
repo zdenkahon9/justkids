@@ -49,7 +49,7 @@ export const ageGroupsHomeCards: AgeGroupHomeCard[] = [
     ageRange: "3 roky - 9 let",
     groups: ["Fit", "Pro"],
     summary: "Rozvoj samostatnosti, sebevědomí a radosti z pohybu.",
-    icon: "mage:star",
+    icon: "ph:star-light",
     accent: "sky-deep",
   },
 ];

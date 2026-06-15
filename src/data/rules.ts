@@ -2,6 +2,9 @@ export type Rule = {
   id: number;
   title: string;
   detail: string;
+  accent: "blush-deep" | "sky-deep";
+  /** Iconify název (sada:id) — ilustrace vpravo na kartě */
+  icon?: string;
 };
 
 /**
@@ -11,12 +14,16 @@ export type Rule = {
 export const rules: Rule[] = [
   {
     id: 1,
-    title: "Pití a plenku s sebou",
-    detail: "Vodu, plenku, podložku a ručník si přineste vlastní.",
+    title: "Pití a plenku\ns sebou",
+    detail: "Nezapomeňte prosím na pití a náhradní plenku pro své děťátko.",
+    accent: "blush-deep",
+    icon: "ph:backpack-light",
   },
   {
     id: 2,
-    title: "Odhláška 24 h předem",
-    detail: "Pokud nemůžete přijít, dejte mi prosím vědět den předem, ať lekci využije někdo další.",
+    title: "Odhlášení\n24h předem",
+    detail: "Pokud nemůžete přijít, dejte mi prosím vědět den předem.",
+    accent: "sky-deep",
+    icon: "ph:clock-counter-clockwise-light",
   },
 ];
