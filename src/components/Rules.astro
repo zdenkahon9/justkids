@@ -16,40 +16,27 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
       </p>
     </header>
 
-    <ol class="rules__grid">
+    <ol class="rules__list">
       {
         rules.map((rule, i) => (
-          <li>
+          <li
+            class="rules__item"
+            style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)};`}
+          >
             <div
-              class="rules__card reveal"
-              style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)}; transition-delay: ${i * 80}ms;`}
+              class="rules__content reveal"
+              style={`transition-delay: ${i * 80}ms;`}
             >
-              <svg
-                class="rules__blob"
-                viewBox="-32 0 132 100"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
-              </svg>
-              <div class="rules__body">
-                <div class="rules__content">
-                  <h3 class="rules__heading">
-                    {String(rule.id).padStart(2, "0")}
-                  </h3>
-                  <div class="rules__title-row">
-                    <span class="rules__title">{rule.title}</span>
-                    {rule.icon ? (
-                      <div class="rules__illustration" aria-hidden="true">
-                        <span class="rules__icon-ring">
-                          <Icon name={rule.icon} class="rules__icon-graphic" />
-                        </span>
-                      </div>
-                    ) : null}
-                  </div>
-                  <span class="rules__rule" aria-hidden="true" />
-                  <p class="rules__detail">{rule.detail}</p>
+              {rule.icon ? (
+                <div class="rules__illustration" aria-hidden="true">
+                  <span class="rules__icon-ring">
+                    <Icon name={rule.icon} class="rules__icon-graphic" />
+                  </span>
                 </div>
+              ) : null}
+              <div class="rules__text">
+                <h3 class="rules__title">{rule.title.replace(/\n/g, " ")}</h3>
+                <p class="rules__detail">{rule.detail}</p>
               </div>
             </div>
           </li>
@@ -68,55 +55,91 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     color: var(--color-sky-deep);
   }
 
-  /* Mobile-first: stejné tokeny šířky karty jako .age-home__grid */
-  .rules__grid {
+  @media (max-width: 639px) {
+    .rules .section-header {
+      --section-header-spacing: var(--space-8);
+    }
+  }
+
+  .rules__list {
+    --rules-icon-size: calc(var(--card-icon-size-corner) * 0.8);
+    --rules-line-blush: color-mix(
+      in srgb,
+      var(--color-blush-deep) 30%,
+      var(--color-ink) 8%
+    );
+    --rules-line-sky: color-mix(
+      in srgb,
+      var(--color-sky-deep) 30%,
+      var(--color-ink) 8%
+    );
+
     list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    width: fit-content;
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: min(100%, var(--card-grid-width));
-    gap: var(--stack-gap);
-    justify-content: center;
-  }
-
-  .rules__card {
     position: relative;
-    display: block;
-    box-sizing: border-box;
-    border-radius: var(--radius-card);
-    padding: var(--card-padding);
-    border: var(--card-border);
-    background: #fefefe;
-    box-shadow: none;
-    overflow: hidden;
-    transition:
-      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 280ms ease;
+    padding: var(--card-padding-y) 0 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: var(--card-grid-width);
+    display: flex;
+    flex-direction: column;
   }
 
-  .rules__blob {
+  .rules__item {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rules__item:not(:last-child) {
+    padding-bottom: var(--space-12);
+  }
+
+  .rules__item:not(:last-child)::after {
+    content: "";
     position: absolute;
-    z-index: 0;
-    top: 0;
-    right: 0;
-    width: 9.9rem;
-    height: 7.5rem;
-    display: block;
+    left: calc(var(--rules-icon-size) / 2);
+    top: var(--rules-icon-size);
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--rules-line-blush);
     pointer-events: none;
   }
 
-  .rules__blob path {
-    fill: var(--accent-soft);
+  .rules__item:last-child .rules__illustration::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: var(--rules-icon-size);
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-50%);
+    background: var(--rules-line-sky);
+    pointer-events: none;
   }
 
-  .rules__body {
-    z-index: 1;
+  .rules__content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    box-sizing: border-box;
   }
 
-  .rules__heading {
-    margin: 0 0 var(--space-5);
+  .rules__illustration {
+    position: relative;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+
+  .rules__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .rules__title {
+    margin: 0 0 var(--space-4);
+    min-width: 0;
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 600;
@@ -124,36 +147,11 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     color: var(--color-ink);
   }
 
-  .rules__title-row {
-    --title-text-height: calc(1.375rem * var(--line-height-2xl));
-    position: relative;
-    padding-right: calc(var(--card-icon-size-corner) + var(--space-4));
-  }
-
-  .rules__title {
-    display: block;
-    width: 100%;
-    margin: 0 0 var(--space-4);
-    white-space: pre-line;
-    font-family: var(--font-display);
-    font-size: 1.375rem;
-    font-weight: 600;
-    line-height: var(--line-height-2xl);
-    color: var(--accent);
-  }
-
-  .rules__illustration {
-    position: absolute;
-    right: 0;
-    top: calc(0.5 * var(--title-text-height));
-    transform: translateY(-50%);
-  }
-
   .rules__icon-ring {
     display: grid;
     place-items: center;
-    width: var(--card-icon-size-corner);
-    height: var(--card-icon-size-corner);
+    width: var(--rules-icon-size);
+    height: var(--rules-icon-size);
     border-radius: var(--radius-full);
     background: var(--accent-soft);
     color: var(--accent);
@@ -161,17 +159,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__icon-graphic {
-    width: var(--card-icon-graphic-size-corner);
-    height: var(--card-icon-graphic-size-corner);
-  }
-
-  .rules__rule {
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: 0 0 var(--space-5);
-    border: none;
-    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    width: calc(var(--card-icon-graphic-size-corner) * 0.8);
+    height: calc(var(--card-icon-graphic-size-corner) * 0.8);
   }
 
   .rules__detail {
@@ -181,31 +170,5 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
-  }
-
-  .rules__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 26px 55px -18px
-      color-mix(in srgb, var(--accent) 45%, transparent);
-  }
-
-  .rules__card:hover .rules__icon-ring {
-    transform: scale(1.05);
-  }
-
-  @media (min-width: 768px) {
-    .rules__grid {
-      width: fit-content;
-      max-width: 100%;
-      grid-template-columns: repeat(2, var(--card-grid-width-md));
-      justify-content: center;
-    }
-  }
-
-  @media (min-width: 1180px) {
-    .rules__grid {
-      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
-      margin-inline: auto;
-    }
   }
 </style>

@@ -17,13 +17,13 @@ export const rules: Rule[] = [
     title: "Pití a plenku\ns sebou",
     detail: "Nezapomeňte prosím na pití a náhradní plenku pro své děťátko.",
     accent: "blush-deep",
-    icon: "ph:backpack-light",
+    icon: "iconoir:clean-water",
   },
   {
     id: 2,
     title: "Odhlášení\n24h předem",
-    detail: "Pokud nemůžete přijít, dejte mi prosím vědět den předem.",
+    detail: "Pokud nemůžete přijít, dejte mi prosím vědět den předem, ať lekci využije někdo další.",
     accent: "sky-deep",
-    icon: "ph:clock-counter-clockwise-light",
+    icon: "ph:clock-counter-clockwise-fill",
   },
 ];
