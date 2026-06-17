@@ -1,0 +1,243 @@
+---
+import Icon from "astro-iconify";
+import { splitReviewText } from "../utils/splitReviewText";
+import type { Review } from "../data/reviews";
+
+interface Props {
+  review: Review;
+  index: number;
+  accent: string;
+  clamp?: boolean;
+  showMore?: boolean;
+  reveal?: boolean;
+}
+
+const {
+  review: r,
+  index: i,
+  accent,
+  clamp = false,
+  showMore = false,
+  reveal = true,
+} = Astro.props;
+---
+
+<li class="reviews__slide">
+  <article
+    class:list={["review", { reveal }]}
+    style={`--accent: ${accent}; transition-delay: ${i * 90}ms;`}
+  >
+    {
+      r.rating && (
+        <div class="review__stars" aria-label={`Hodnocení ${r.rating} z 5`}>
+          {Array.from({ length: 5 }, (_, k) => (
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              class={k < (r.rating ?? 0) ? "is-on" : ""}
+            >
+              <path
+                d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
+                fill="currentColor"
+              />
+            </svg>
+          ))}
+        </div>
+      )
+    }
+
+    <span class="review__quote" aria-hidden="true">
+      <Icon name="raphael:quote" class="review__quote-icon" />
+    </span>
+
+    <blockquote class:list={["review__text", { "review__text--clamp": clamp }]}>
+      {
+        splitReviewText(r.text).map((part) =>
+          part.emoji ? (
+            <span class="review__emoji">{part.value}</span>
+          ) : (
+            part.value
+          ),
+        )
+      }
+    </blockquote>
+
+    {
+      showMore && (
+        <footer class="review__footer">
+          <span class="review__rule" aria-hidden="true" />
+          <button type="button" class="review__more">
+            Celá recenze <span aria-hidden="true">→</span>
+          </button>
+        </footer>
+      )
+    }
+  </article>
+</li>
+
+<style>
+  .review {
+    box-sizing: border-box;
+    background: #fefefe;
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    border: var(--card-border);
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    transition:
+      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 280ms ease;
+  }
+
+  .review:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 55px -18px
+      color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
+  .review__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .review__stars svg {
+    width: 1em;
+    height: 1em;
+    color: rgba(42, 31, 56, 0.15);
+  }
+
+  .review__stars svg.is-on {
+    color: #f5b400;
+  }
+
+  .review__quote {
+    display: none;
+  }
+
+  .review__text {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--text-base);
+    font-style: italic;
+    white-space: pre-line;
+    quotes: "„" "" "" "";
+  }
+
+  .review__emoji {
+    font-style: normal;
+  }
+
+  .review__text::before {
+    content: open-quote;
+  }
+
+  .review__text::after {
+    content: close-quote;
+  }
+
+  .review__more {
+    display: none;
+  }
+
+  .review__footer {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    :global(.reviews__track) .review:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .review__quote {
+      --age-text-height: calc(1.375rem * var(--line-height-2xl));
+      position: relative;
+      display: block;
+      width: 100%;
+      margin: 0 0 var(--space-1);
+      padding-right: calc(var(--card-icon-size-corner) + var(--space-4));
+      color: var(--color-blush-vivid);
+    }
+
+    .review__quote-icon {
+      display: block;
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
+    .review__text {
+      white-space: normal;
+      quotes: none;
+    }
+
+    .review__text::before,
+    .review__text::after {
+      content: none;
+    }
+
+    .review__text--clamp {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      word-break: break-word;
+      margin: 0;
+    }
+
+    .review__footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: var(--space-5);
+      width: 100%;
+    }
+
+    .review__footer[hidden] {
+      display: none;
+    }
+
+    .review__rule {
+      display: block;
+      flex-shrink: 0;
+      width: 100%;
+      height: 1px;
+      margin: 0 0 var(--space-5);
+      border: none;
+      background: color-mix(in srgb, var(--color-blush-deep) 30%, var(--color-ink) 8%);
+    }
+
+    .review__more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      align-self: center;
+      margin-top: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-blush-deep);
+      cursor: pointer;
+    }
+
+    .review__more:focus-visible {
+      outline: 2px solid var(--color-blush-vivid);
+      outline-offset: 3px;
+      border-radius: var(--radius-full);
+    }
+  }
+</style>

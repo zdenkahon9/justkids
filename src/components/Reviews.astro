@@ -1,11 +1,18 @@
 ---
 import { reviews } from "../data/reviews";
+import { site } from "../data/site";
+import ReviewCard from "./ReviewCard.astro";
+
+const MOBILE_REVIEW_COUNT = 3;
+const MOBILE_SLIDE_COUNT = MOBILE_REVIEW_COUNT + 1;
 
 const accentMap: Record<string, string> = {
   blush: "var(--color-blush-mid)",
   sky: "var(--color-sky-mid)",
   lilac: "var(--color-lilac-mid)",
 };
+
+const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 ---
 
 <section id="recenze" class="section reviews" aria-labelledby="reviews-title">
@@ -20,169 +27,384 @@ const accentMap: Record<string, string> = {
       </p>
     </header>
 
-    <ul class="reviews__grid">
+    <div class="reviews__mobile" aria-roledescription="carousel">
+      <ul class="reviews__track" role="list">
+        {
+          mobileReviews.map((r, i) => (
+            <ReviewCard
+              review={r}
+              index={i}
+              accent={accentMap[r.accent]}
+              clamp
+              showMore
+              reveal={false}
+            />
+          ))
+        }
+        <li class="reviews__slide reviews__slide--cta">
+          <article class="review review--cta">
+            <p class="review--cta__text">
+              Chcete si přečíst víc recenzí od rodičů?
+            </p>
+            <a
+              class="btn btn-primary review--cta__btn"
+              href={site.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Všechny recenze na Facebooku
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        </li>
+      </ul>
+
+      <div class="reviews__dots" role="tablist" aria-label="Recenze">
+        {
+          Array.from({ length: MOBILE_SLIDE_COUNT }, (_, i) => (
+            <button
+              type="button"
+              class={`reviews__dot${i === 0 ? " is-active" : ""}`}
+              role="tab"
+              aria-label={
+                i < MOBILE_REVIEW_COUNT
+                  ? `Recenze ${i + 1}`
+                  : "Více recenzí na Facebooku"
+              }
+              aria-selected={i === 0 ? "true" : "false"}
+              data-index={i}
+            />
+          ))
+        }
+      </div>
+    </div>
+
+    <ul class="reviews__grid reviews__grid--desktop" role="list">
       {
         reviews.map((r, i) => (
-          <li
-            class="review reveal"
-            style={`--accent: ${accentMap[r.accent]}; transition-delay: ${i * 90}ms;`}
-          >
-            <div class="review__quote-mark" aria-hidden="true">
-              "
-            </div>
-
-            {r.rating && (
-              <div
-                class="review__stars"
-                aria-label={`Hodnocení ${r.rating} z 5`}
-              >
-                {Array.from({ length: 5 }, (_, k) => (
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="16"
-                    height="16"
-                    aria-hidden="true"
-                    class={k < (r.rating ?? 0) ? "is-on" : ""}
-                  >
-                    <path
-                      d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                ))}
-              </div>
-            )}
-
-            <blockquote class="review__text">{r.text}</blockquote>
-
-            <div class="review__author">
-              <span class="review__author-avatar" aria-hidden="true">
-                {r.author.charAt(0)}
-              </span>
-              <div>
-                <strong>{r.author}</strong>
-                <span>{r.childAge}</span>
-              </div>
-            </div>
-          </li>
+          <ReviewCard
+            review={r}
+            index={i}
+            accent={accentMap[r.accent]}
+          />
         ))
       }
     </ul>
   </div>
 </section>
 
+<script>
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  const initReviewsCarousel = () => {
+    const section = document.querySelector<HTMLElement>(".reviews");
+    if (!section || section.dataset.carouselReady === "true") return;
+    section.dataset.carouselReady = "true";
+
+    const track = section.querySelector<HTMLElement>(".reviews__track");
+    const slider = section.querySelector<HTMLElement>(".reviews__mobile");
+    const dots = slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
+    const cards = slider?.querySelectorAll<HTMLElement>(".review") ?? [];
+
+    const slides = track
+      ? [...track.querySelectorAll<HTMLElement>(".reviews__slide")]
+      : [];
+
+    if (!track) return;
+
+    const isActive = () =>
+      mobileQuery.matches && track.clientWidth > 0;
+
+    const getActiveIndex = () => {
+      if (slides.length === 0) return 0;
+
+      let activeIndex = 0;
+      let smallestOffset = Number.POSITIVE_INFINITY;
+
+      slides.forEach((slide, index) => {
+        const offset = Math.abs(slide.offsetLeft - track.scrollLeft);
+        if (offset < smallestOffset) {
+          smallestOffset = offset;
+          activeIndex = index;
+        }
+      });
+
+      return activeIndex;
+    };
+
+    const goToSlide = (index: number) => {
+      const slide = slides[index];
+      if (!slide) return;
+
+      track.scrollTo({
+        left: slide.offsetLeft,
+        behavior: "smooth",
+      });
+    };
+
+    const updateDots = () => {
+      if (!isActive()) return;
+
+      const index = getActiveIndex();
+
+      dots.forEach((dot, i) => {
+        const isOn = i === index;
+        dot.classList.toggle("is-active", isOn);
+        dot.setAttribute("aria-selected", isOn ? "true" : "false");
+      });
+    };
+
+    const resetToStart = () => {
+      if (!isActive()) return;
+      track.scrollLeft = 0;
+      updateDots();
+    };
+
+    const updateReadMoreButtons = () => {
+      cards.forEach((card) => {
+        const text = card.querySelector<HTMLElement>(".review__text");
+        const footer = card.querySelector<HTMLElement>(".review__footer");
+        const button = card.querySelector<HTMLButtonElement>(".review__more");
+        if (!text || !button) return;
+
+        const hideFooter = () => {
+          button.hidden = true;
+          if (footer) footer.hidden = true;
+        };
+
+        if (!isActive() || !text.classList.contains("review__text--clamp")) {
+          hideFooter();
+          return;
+        }
+
+        const shouldHide = text.scrollHeight <= text.clientHeight + 1;
+        button.hidden = shouldHide;
+        if (footer) footer.hidden = shouldHide;
+      });
+    };
+
+    const refreshCarousel = () => {
+      if (!isActive()) return;
+      const slide = slides[getActiveIndex()];
+      if (slide) track.scrollLeft = slide.offsetLeft;
+      updateDots();
+      updateReadMoreButtons();
+    };
+
+    track.addEventListener("scroll", updateDots, { passive: true });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => {
+        goToSlide(Number(dot.dataset.index));
+      });
+    });
+
+    slider?.querySelectorAll<HTMLButtonElement>(".review__more").forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".review");
+        const text = card?.querySelector<HTMLElement>(".review__text");
+        const footer = card?.querySelector<HTMLElement>(".review__footer");
+        text?.classList.remove("review__text--clamp");
+        button.hidden = true;
+        if (footer) footer.hidden = true;
+      });
+    });
+
+    const onViewportChange = () => {
+      if (mobileQuery.matches) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            resetToStart();
+            updateReadMoreButtons();
+          });
+        });
+        return;
+      }
+
+      updateReadMoreButtons();
+    };
+
+    mobileQuery.addEventListener("change", onViewportChange);
+    window.addEventListener("resize", onViewportChange);
+
+    const resizeObserver = new ResizeObserver(() => {
+      refreshCarousel();
+    });
+    resizeObserver.observe(track);
+
+    if (mobileQuery.matches) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resetToStart);
+      });
+    }
+  };
+
+  initReviewsCarousel();
+  document.addEventListener("astro:page-load", initReviewsCarousel);
+</script>
+
 <style>
   #recenze {
     scroll-margin-top: var(--section-scroll-margin);
   }
+
   .reviews .section-title-accent {
     color: var(--color-blush-vivid);
+  }
+
+  .reviews__mobile {
+    display: none;
+  }
+
+  .reviews__grid--desktop {
+    display: none;
   }
 
   .reviews__grid {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    width: fit-content;
+    max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: min(100%, var(--card-grid-width));
     gap: var(--stack-gap);
+    justify-content: center;
   }
 
-  .review {
-    position: relative;
-    background: white;
-    border-radius: var(--radius-card);
-    padding: var(--card-padding);
-    border: var(--card-border);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition:
-      transform 280ms ease,
-      box-shadow 280ms ease;
+  @media (max-width: 767px) {
+    .reviews__mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: var(--space-5);
+    }
+
+    .reviews__grid--desktop {
+      display: none !important;
+    }
+
+    .reviews__track {
+      display: flex;
+      width: 100%;
+      max-width: var(--card-grid-width);
+      margin: 0 auto;
+      padding: 0;
+      gap: 0;
+      list-style: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scroll-padding-inline: 0;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .reviews__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    :global(.reviews__track > .reviews__slide) {
+      flex: 0 0 100%;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    :global(.reviews__track > .reviews__slide:not(:last-child)) {
+      margin-right: var(--stack-gap);
+    }
+
+    .reviews__dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: var(--card-grid-width);
+      margin-inline: auto;
+      padding-inline: var(--space-2);
+    }
+
+    .reviews__dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      padding: 0;
+      border: none;
+      border-radius: var(--radius-full);
+      background: color-mix(in srgb, var(--color-ink) 18%, white);
+      cursor: pointer;
+      transition:
+        background 180ms ease,
+        transform 180ms ease;
+    }
+
+    .reviews__dot.is-active {
+      background: var(--color-blush-vivid);
+      transform: scale(1.15);
+    }
+
+    .reviews__dot:focus-visible {
+      outline: 2px solid var(--color-blush-vivid);
+      outline-offset: 2px;
+    }
+
+    .review--cta {
+      box-sizing: border-box;
+      background: #fefefe;
+      border-radius: var(--radius-card);
+      padding: var(--card-padding);
+      border: var(--card-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 14rem;
+      box-shadow: none;
+    }
+
+    .review--cta__text {
+      margin: 0 0 var(--space-5);
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
+      font-weight: 600;
+      line-height: var(--line-height-xl);
+      color: var(--color-ink);
+    }
+
+    .review--cta__btn {
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+    }
   }
 
-  .review:hover {
-    transform: translateY(-4px) rotate(0.4deg);
-    box-shadow: 0 20px 50px -16px
-      color-mix(in srgb, var(--accent) 60%, transparent);
+  @media (min-width: 768px) {
+    .reviews__mobile {
+      display: none !important;
+    }
+
+    .reviews__grid--desktop {
+      display: grid;
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      justify-content: center;
+    }
   }
 
-  .review__quote-mark {
-    position: absolute;
-    top: -0.5rem;
-    left: 1.25rem;
-    width: 48px;
-    height: 48px;
-    background: var(--accent);
-    color: white;
-    border-radius: var(--radius-full);
-    display: grid;
-    place-items: center;
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    padding-top: 8px;
-    box-shadow: 0 8px 22px -8px
-      color-mix(in srgb, var(--accent) 70%, transparent);
-  }
-
-  .review__stars {
-    display: inline-flex;
-    gap: 2px;
-    color: rgba(42, 31, 56, 0.15);
-  }
-
-  .review__stars svg.is-on {
-    color: #f5b400;
-  }
-
-  .review__text {
-    margin: 0;
-    color: var(--color-ink);
-    font-size: var(--text-base);
-    font-style: italic;
-    quotes: "„" "" "" "";
-  }
-
-  .review__text::before {
-    content: open-quote;
-  }
-  .review__text::after {
-    content: close-quote;
-  }
-
-  .review__author {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: auto;
-    padding-top: 0.5rem;
-    border-top: 1px dashed rgba(42, 31, 56, 0.12);
-  }
-
-  .review__author-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--accent) 35%, white);
-    color: color-mix(in srgb, var(--accent) 70%, var(--color-ink));
-    display: grid;
-    place-items: center;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-lg);
-  }
-
-  .review__author strong {
-    display: block;
-    font-weight: 700;
-    color: var(--color-ink);
-    line-height: var(--line-height-lg);
-  }
-
-  .review__author span {
-    font-size: var(--text-sm);
-    color: var(--color-ink-soft);
+  @media (min-width: 1180px) {
+    .reviews__grid--desktop {
+      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
+      margin-inline: auto;
+    }
   }
 </style>
