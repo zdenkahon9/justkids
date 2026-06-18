@@ -66,9 +66,9 @@ const {
       showMore && (
         <footer class="review__footer">
           <span class="review__rule" aria-hidden="true" />
-          <button type="button" class="review__more">
+          <a class="review__more" href="/recenze">
             Celá recenze <span aria-hidden="true">→</span>
-          </button>
+          </a>
         </footer>
       )
     }
@@ -231,7 +231,13 @@ const {
       font-size: 1rem;
       font-weight: 600;
       color: var(--color-blush-deep);
+      text-decoration: none;
       cursor: pointer;
+    }
+
+    .review__more:hover,
+    .review__more:focus-visible {
+      text-decoration: underline;
     }
 
     .review__more:focus-visible {

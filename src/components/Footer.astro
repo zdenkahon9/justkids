@@ -1,4 +1,7 @@
 ---
+import FacebookIcon from "./FacebookIcon.astro";
+import InstagramIcon from "./InstagramIcon.astro";
+import Icon from "astro-iconify";
 import { site } from "../data/site";
 import { locations } from "../data/locations";
 
@@ -30,81 +33,33 @@ const year = new Date().getFullYear();
         </div>
       </a>
       <p class="footer__about">
-        Hravé cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve
-        Zdicích.
+        Hravé cvičení pro miminka a děti od 3 měsíců do 9 let. Ve Zdicích,
+        Hořovicích a Broumech.
       </p>
 
-      <div class="footer__social">
-        <a
-          href={site.social.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          class="footer__social-link footer__social-link--facebook"
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <path
-              d="M 13 22 L 13 13 L 16 13 L 16.5 9.5 L 13 9.5 L 13 7.5 Q 13 6 14.5 6 L 16.5 6 L 16.5 2.5 Q 14 2 12.5 2 Q 9 2 9 6 L 9 9.5 L 6 9.5 L 6 13 L 9 13 L 9 22 Z"
-              fill="currentColor"></path>
-          </svg>
-        </a>
-        <a
-          href={site.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          class="footer__social-link footer__social-link--instagram"
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-            <defs>
-              <linearGradient
-                id="footer-ig-grad"
-                x1="0%"
-                y1="100%"
-                x2="100%"
-                y2="0%"
-              >
-                <stop offset="0%" stop-color="#f09433"></stop>
-                <stop offset="25%" stop-color="#e6683c"></stop>
-                <stop offset="50%" stop-color="#dc2743"></stop>
-                <stop offset="75%" stop-color="#cc2366"></stop>
-                <stop offset="100%" stop-color="#bc1888"></stop>
-              </linearGradient>
-            </defs>
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="5"
-              fill="none"
-              stroke="url(#footer-ig-grad)"
-              stroke-width="2"></rect>
-            <circle
-              cx="12"
-              cy="12"
-              r="4"
-              fill="none"
-              stroke="url(#footer-ig-grad)"
-              stroke-width="2"></circle>
-            <circle cx="17.5" cy="6.5" r="1.2" fill="url(#footer-ig-grad)"
-            ></circle>
-          </svg>
-        </a>
+      <div class="footer__social-wrap">
+        <p class="footer__social-label">Sledujte nás</p>
+        <div class="footer__social">
+          <a
+            href={site.social.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            class="footer__social-link footer__social-link--facebook"
+          >
+            <FacebookIcon width={32} height={32} />
+          </a>
+          <a
+            href={site.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            class="footer__social-link footer__social-link--instagram"
+          >
+            <InstagramIcon gradientId="footer-ig-grad" width={32} height={32} />
+          </a>
+        </div>
       </div>
-    </div>
-
-    <div class="footer__col">
-      <h3>Navigace</h3>
-      <ul>
-        {
-          navLinks.map((l) => (
-            <li>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))
-        }
-      </ul>
     </div>
 
     <div class="footer__col">
@@ -112,12 +67,18 @@ const year = new Date().getFullYear();
       <ul>
         <li class="footer__instructor">{site.contact.instructorName}</li>
 
-        <li>
+        <li class="footer__phone">
+          <Icon name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
           <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
             >{site.contact.phone}</a
           >
         </li>
-        <li>
+        <li class="footer__email">
+          <Icon
+            name="ph:envelope-simple"
+            class="footer__email-icon"
+            aria-hidden="true"
+          />
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </li>
       </ul>
@@ -130,9 +91,31 @@ const year = new Date().getFullYear();
           locations.map((l) => (
             <li>
               <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
-                <strong>{l.name}</strong>
-                <span>{l.street}</span>
+                <span class="footer__location-title">
+                  <strong>{l.name}</strong>
+                  <Icon
+                    name="wordpress:external"
+                    class="footer__location-external"
+                    aria-hidden="true"
+                  />
+                </span>
+                <span>
+                  {l.street}, {l.zip} {l.city}
+                </span>
               </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h3>Navigace</h3>
+      <ul>
+        {
+          navLinks.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
             </li>
           ))
         }
@@ -233,34 +216,47 @@ const year = new Date().getFullYear();
     border-top: 1px solid rgba(236, 47, 142, 0.16);
   }
 
+  .footer__social-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__social-label {
+    margin: 0 0 1rem;
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-ink-soft);
+    text-align: left;
+  }
+
   .footer__social {
     display: flex;
-    gap: 0.75rem;
+    justify-content: flex-start;
+    gap: 2rem;
   }
 
   .footer__social-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
     padding: 0;
-    background: white;
-    border-radius: var(--radius-full);
-    border: 1.5px solid var(--color-lilac-soft);
+    background: transparent;
+    border: none;
     color: var(--color-ink);
     text-decoration: none;
     flex-shrink: 0;
     transform-origin: center;
     transition:
       transform 220ms ease,
-      border-color 220ms ease,
       color 220ms ease,
-      background-color 220ms ease;
+      filter 220ms ease;
   }
 
-  .footer__social-link svg {
+  .footer__social-link :global(svg) {
     display: block;
+    width: var(--footer-social-icon-size);
+    height: var(--footer-social-icon-size);
   }
 
   /* Barvy značek (Facebook modrá, Instagram gradient je v SVG) */
@@ -268,13 +264,12 @@ const year = new Date().getFullYear();
     color: #1877f2;
   }
 
-  .footer__social-link--instagram svg {
+  .footer__social-link--instagram :global(svg) {
     transition: filter 220ms ease;
   }
 
   .footer__social-link:hover {
     transform: translateY(-3px) scale(1.12);
-    border-color: var(--color-blush-mid);
     color: var(--color-blush-vivid);
   }
 
@@ -282,7 +277,7 @@ const year = new Date().getFullYear();
     color: #166fe5;
   }
 
-  .footer__social-link--instagram:hover svg {
+  .footer__social-link--instagram:hover :global(svg) {
     filter: brightness(0.92);
   }
 
@@ -302,7 +297,7 @@ const year = new Date().getFullYear();
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 0.65rem;
+    gap: 0.75rem;
   }
 
   .footer__col a {
@@ -321,17 +316,52 @@ const year = new Date().getFullYear();
   }
 
   .footer__col a strong {
-    font-weight: 700;
+    font-weight: 600;
   }
-  .footer__col a span {
+
+  .footer__location-title {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .footer__location-external {
+    width: 1.125em;
+    height: 1.125em;
+    flex-shrink: 0;
+    color: currentColor;
+  }
+
+  .footer__location-external :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .footer__col a > span:not(.footer__location-title) {
     font-size: var(--text-sm);
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+    color: var(--color-ink-soft);
   }
 
   .footer__instructor {
     color: var(--color-ink);
     font-size: var(--text-base);
     font-weight: 600;
+  }
+
+  .footer__phone,
+  .footer__email {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .footer__phone-icon,
+  .footer__email-icon {
+    width: var(--text-lg);
+    height: var(--text-lg);
+    flex-shrink: 0;
+    color: var(--color-ink);
   }
 
   .footer__bottom {
@@ -362,6 +392,79 @@ const year = new Date().getFullYear();
     width: 1em;
     height: 1em;
     flex-shrink: 0;
+  }
+
+  @media (max-width: 639px) {
+    .footer__inner {
+      padding-block: 2.25rem 1.75rem;
+      gap: 1.75rem;
+    }
+
+    .footer__brand {
+      text-align: left;
+    }
+
+    .footer__brand-link {
+      justify-content: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer__brand-link img {
+      width: 56px;
+      height: 56px;
+    }
+
+    .footer__brand h2 {
+      font-size: 2rem;
+    }
+
+    .footer__tagline {
+      font-size: 1.1rem;
+    }
+
+    .footer__about {
+      max-width: 22rem;
+      margin: 0 0 1.5rem;
+      text-align: left;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .footer__social-wrap {
+      align-items: flex-start;
+    }
+
+    .footer__social-label {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .footer__social {
+      justify-content: flex-start;
+      gap: 1.5rem;
+    }
+
+    .footer__social-link :global(svg) {
+      width: var(--footer-social-icon-size);
+      height: var(--footer-social-icon-size);
+    }
+
+    .footer__col {
+      padding-top: 1.35rem;
+    }
+
+    .footer__col ul {
+      gap: 0.75rem;
+    }
+
+    .footer__phone,
+    .footer__email {
+      gap: 0.75rem;
+    }
   }
 
   @media (min-width: 640px) {
@@ -403,15 +506,15 @@ const year = new Date().getFullYear();
     }
 
     .footer__inner > .footer__col:nth-child(2) {
-      grid-area: navigace;
-    }
-
-    .footer__inner > .footer__col:nth-child(3) {
       grid-area: kontakt;
     }
 
-    .footer__inner > .footer__col:nth-child(4) {
+    .footer__inner > .footer__col:nth-child(3) {
       grid-area: lokace;
+    }
+
+    .footer__inner > .footer__col:nth-child(4) {
+      grid-area: navigace;
     }
   }
 

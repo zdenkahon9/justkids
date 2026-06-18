@@ -1,4 +1,5 @@
 ---
+import Icon from "astro-iconify";
 import {
   formatScheduleActivities,
   scheduleAccentSoftVar,
@@ -112,19 +113,11 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
                 ))}
 
                 <div class="schedule__venue">
-                  <span class="schedule__venue-icon" aria-hidden="true">
-                    <svg
-                      class="card-icon-graphic"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill="var(--accent)"
-                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                      />
-                      <circle cx="12" cy="9" r="2.75" fill="#fefefe" />
-                    </svg>
-                  </span>
+                  <Icon
+                    name="ph:map-pin"
+                    class="schedule__venue-icon"
+                    aria-hidden="true"
+                  />
                   <div class="schedule__venue-text">
                     <p class="schedule__venue-name">
                       <a
@@ -400,12 +393,11 @@ const cardAccentSoftColor = scheduleAccentSoftVar(defaultLocation.accentSoft);
 
   .schedule__venue-icon {
     flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    width: 1.75rem;
-    height: 1.75rem;
+    width: var(--card-icon-graphic-size);
+    height: var(--card-icon-graphic-size);
     margin-top: 0.125rem;
     pointer-events: none;
+    color: var(--color-blush-deep);
   }
 
   .schedule__venue-text {

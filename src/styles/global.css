@@ -118,6 +118,7 @@
   --card-icon-size-wave: 5rem;
   --card-icon-graphic-size-wave: 2.75rem;
   --card-icon-overlap-wave: 2.85rem;
+  --footer-social-icon-size: 2rem; /* 32px */
 
   --stack-gap: var(--space-6);
 
