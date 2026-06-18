@@ -1,6 +1,8 @@
 ---
+import Icon from "astro-iconify";
 import { reviews } from "../data/reviews";
 import ReviewCard from "./ReviewCard.astro";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const MOBILE_REVIEW_COUNT = 3;
 const MOBILE_SLIDE_COUNT = MOBILE_REVIEW_COUNT + 1;
@@ -41,11 +43,24 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
           ))
         }
         <li class="reviews__slide reviews__slide--cta">
-          <article class="review review--cta">
+          <article
+            class="review review--cta"
+            style={`--accent: ${cardAccentDeep("blush-deep")}; --accent-soft: ${cardAccentSoft("blush-deep")};`}
+          >
+            <span class="review--cta__top-rule" aria-hidden="true"></span>
+            <div class="review--cta__illustration" aria-hidden="true">
+              <span class="review--cta__icon-ring">
+                <Icon
+                  name="fluent:chat-multiple-20-regular"
+                  class="review--cta__icon-graphic"
+                />
+              </span>
+            </div>
             <p class="review--cta__text">
-              Chcete si přečíst víc recenzí od rodičů?
+              Přečtěte si další zkušenosti rodičů.
             </p>
-            <a class="btn btn-primary review--cta__btn" href="/recenze">
+            <span class="review--cta__rule" aria-hidden="true"></span>
+            <a class="review--cta__more" href="/recenze">
               Zobrazit všechny recenze
               <span aria-hidden="true">→</span>
             </a>
@@ -61,9 +76,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
               class={`reviews__dot${i === 0 ? " is-active" : ""}`}
               role="tab"
               aria-label={
-                i < MOBILE_REVIEW_COUNT
-                  ? `Recenze ${i + 1}`
-                  : "Všechny recenze"
+                i < MOBILE_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"
               }
               aria-selected={i === 0 ? "true" : "false"}
               data-index={i}
@@ -76,11 +89,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
     <ul class="reviews__grid reviews__grid--desktop" role="list">
       {
         reviews.map((r, i) => (
-          <ReviewCard
-            review={r}
-            index={i}
-            accent={accentMap[r.accent]}
-          />
+          <ReviewCard review={r} index={i} accent={accentMap[r.accent]} />
         ))
       }
     </ul>
@@ -104,7 +113,8 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     const track = section.querySelector<HTMLElement>(".reviews__track");
     const slider = section.querySelector<HTMLElement>(".reviews__mobile");
-    const dots = slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
+    const dots =
+      slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
     const cards = slider?.querySelectorAll<HTMLElement>(".review") ?? [];
 
     const slides = track
@@ -113,8 +123,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     if (!track) return;
 
-    const isActive = () =>
-      mobileQuery.matches && track.clientWidth > 0;
+    const isActive = () => mobileQuery.matches && track.clientWidth > 0;
 
     const getActiveIndex = () => {
       if (slides.length === 0) return 0;
@@ -370,6 +379,36 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
       box-shadow: none;
     }
 
+    .review--cta__top-rule {
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      margin: 0 auto var(--space-5);
+    }
+
+    .review--cta__illustration {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 var(--space-5);
+    }
+
+    .review--cta__icon-ring {
+      display: grid;
+      place-items: center;
+      width: var(--card-icon-size-corner);
+      height: var(--card-icon-size-corner);
+      border-radius: var(--radius-full);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .review--cta__icon-graphic {
+      width: var(--card-icon-graphic-size-corner);
+      height: var(--card-icon-graphic-size-corner);
+    }
+
     .review--cta__text {
       margin: 0 0 var(--space-5);
       font-family: var(--font-display);
@@ -379,10 +418,40 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
       color: var(--color-ink);
     }
 
-    .review--cta__btn {
+    .review--cta__rule {
+      display: block;
       width: 100%;
-      max-width: 100%;
-      justify-content: center;
+      height: 1px;
+      margin: 0 0 var(--space-5);
+      border: none;
+      background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    }
+
+    .review--cta__more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      align-self: center;
+      padding: 0;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .review--cta__more:hover,
+    .review--cta__more:focus-visible {
+      text-decoration: underline;
+    }
+
+    .review--cta__more:focus-visible {
+      outline: 2px solid var(--color-blush-vivid);
+      outline-offset: 3px;
+      border-radius: var(--radius-full);
     }
   }
 

@@ -2,7 +2,6 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
-import FacebookIcon from "../components/FacebookIcon.astro";
 import Icon from "astro-iconify";
 import { reviews } from "../data/reviews";
 import { site } from "../data/site";
@@ -59,22 +58,28 @@ const mobileNavLinks = [
         </div>
         <div class="container-x reviews-page__intro-inner">
           <header class="section-header reveal">
-            <h1 id="reviews-page-title">
-              Recenze <span class="section-title-accent">od rodičů</span>
-            </h1>
-            <p class="section-subtitle">
-              Přečtěte si, co o nás napsali rodiče na našem <a
-                href={site.social.facebookReviews}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="section-subtitle__fb-group"
-                aria-label="Recenze na Facebooku"
-              >
-                Facebooku<span class="section-subtitle__fb" aria-hidden="true">
-                  <FacebookIcon />
-                </span>
-              </a>
-            </p>
+            <div class="reviews-page__head">
+              <h1 id="reviews-page-title">
+                Recenze <span class="section-title-accent">od rodičů</span>
+              </h1>
+              <p class="section-subtitle">
+                Přečtěte si, co o nás napsali rodiče na našem{" "}
+                <a
+                  href={site.social.facebookReviews}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="reviews-page__fb"
+                  aria-label="Recenze na Facebooku"
+                >
+                  Facebooku
+                  <Icon
+                    name="wordpress:external"
+                    class="reviews-page__fb-icon"
+                    aria-hidden="true"
+                  />
+                </a>
+              </p>
+            </div>
           </header>
         </div>
       </div>
@@ -82,8 +87,6 @@ const mobileNavLinks = [
       <div class="container-x reviews-page__inner">
         <div class="about__divider reveal">
           <span aria-hidden="true">
-            <Icon name="twemoji:pink-heart" class="about__divider-icon" />
-            <Icon name="twemoji:pink-heart" class="about__divider-icon" />
             <Icon name="twemoji:pink-heart" class="about__divider-icon" />
           </span>
         </div>
@@ -124,14 +127,18 @@ const mobileNavLinks = [
                     ),
                   )}
                 </blockquote>
+
+                {r.childAge && (
+                  <span class="reviews-page__date">{r.childAge}</span>
+                )}
               </li>
             ))
           }
         </ol>
 
         <div class="reviews-page__footer reveal">
-          <a class="btn btn-ghost reviews-page__back-btn" href="/#recenze">
-            <span aria-hidden="true">←</span> Zpět na úvod
+          <a class="btn btn-ghost reviews-page__back-btn" href="/">
+            <span aria-hidden="true">←</span> Zpět na hlavní stránku
           </a>
         </div>
       </div>
@@ -145,6 +152,7 @@ const mobileNavLinks = [
   .reviews-page {
     --accent: var(--color-blush-deep);
     padding-top: 0;
+    padding-bottom: 0;
     scroll-margin-top: var(--nav-height);
     background-color: var(--color-cream);
   }
@@ -231,7 +239,7 @@ const mobileNavLinks = [
     color: var(--color-blush-vivid);
   }
 
-  .section-subtitle__fb-group {
+  .reviews-page__fb {
     display: inline-flex;
     align-items: center;
     gap: 0.2em;
@@ -240,30 +248,36 @@ const mobileNavLinks = [
     transition: color 180ms ease;
   }
 
-  .section-subtitle__fb-group:hover {
-    color: #1877f2;
+  .reviews-page__fb:hover {
+    color: var(--color-ink);
   }
 
-  .section-subtitle__fb {
-    display: inline-flex;
-    align-items: center;
+  .reviews-page__fb-icon {
+    width: 1.125em;
+    height: 1.125em;
     flex-shrink: 0;
-    color: #1877f2;
+    color: currentColor;
   }
 
-  .section-subtitle__fb :global(svg) {
-    width: 1.15em;
-    height: 1.15em;
+  .reviews-page__fb-icon :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 
   .reviews-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--h2-title-gap);
+    margin-bottom: 2rem;
+  }
+
+  /* Desktop: obal je průhledný; mobil viz @media níže (639px = section-header v global.css) */
+  .reviews-page__head {
+    display: contents;
   }
 
   .about__divider {
     position: relative;
-    margin: 1.5rem 0 3rem;
+    margin: 2rem 0 2rem;
     height: 1px;
     background: var(--color-blush-mid);
   }
@@ -277,12 +291,12 @@ const mobileNavLinks = [
     padding: 0 1rem;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    justify-content: center;
   }
 
   .about__divider-icon {
-    width: 1.35rem;
-    height: 1.35rem;
+    width: 1rem;
+    height: 1rem;
   }
 
   /* Editorial list — vertical rhythm + subtle dividers, no cards */
@@ -297,7 +311,7 @@ const mobileNavLinks = [
   }
 
   .reviews-page__item:first-child {
-    padding-top: 0;
+    padding-top: var(--space-6);
   }
 
   .reviews-page__item:last-child {
@@ -314,8 +328,7 @@ const mobileNavLinks = [
   .reviews-page__stars {
     display: inline-flex;
     align-items: center;
-    gap: 0.125rem;
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-4);
     font-size: var(--text-2xl);
     line-height: 1;
     color: var(--color-ink);
@@ -347,10 +360,42 @@ const mobileNavLinks = [
     font-style: normal;
   }
 
+  .reviews-page__date {
+    display: block;
+    margin-top: var(--space-6);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-ink-muted);
+  }
+
   .reviews-page__footer {
     display: flex;
     justify-content: center;
     margin-top: var(--space-10);
+  }
+
+  /* Mobilní section-header — stejný breakpoint jako global.css (639px) */
+  @media (max-width: 639px) {
+    .reviews-page__head {
+      display: inline-grid;
+      grid-template-columns: minmax(0, max-content);
+      justify-items: stretch;
+      max-width: 100%;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .reviews-page__head h1,
+    .reviews-page .section-subtitle {
+      grid-column: 1;
+    }
+
+    .reviews-page .section-subtitle {
+      width: 0;
+      min-width: 100%;
+      text-wrap: pretty;
+    }
   }
 
   @media (min-width: 768px) {

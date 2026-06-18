@@ -99,7 +99,6 @@ const {
   .review__stars {
     display: inline-flex;
     align-items: center;
-    gap: 0.125rem;
     margin: 0 0 var(--space-6);
     font-family: var(--font-display);
     font-size: var(--text-2xl);
@@ -215,7 +214,11 @@ const {
       height: 1px;
       margin: 0 0 var(--space-5);
       border: none;
-      background: color-mix(in srgb, var(--color-blush-deep) 30%, var(--color-ink) 8%);
+      background: color-mix(
+        in srgb,
+        var(--color-blush-deep) 30%,
+        var(--color-ink) 8%
+      );
     }
 
     .review__more {

@@ -303,7 +303,7 @@ h4 {
   font-family: var(--font-body);
   font-size: var(--text-lg);
   font-weight: 400;
-  color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+  color: var(--color-ink);
 }
 
 /* Mobil: kompaktnější section header (640px+ beze změny) */
