@@ -1,3 +1,24 @@
+export type WorkshopsHomeMeta = {
+  sectionId: string;
+  eyebrow: string;
+  title: string;
+  titleAccent: string;
+  subtitle: string;
+  detailHref: string;
+  ctaLabel: string;
+};
+
+export const workshopsHomeMeta: WorkshopsHomeMeta = {
+  sectionId: "workshopy",
+  eyebrow: "Další akce",
+  title: "Workshopy",
+  titleAccent: "pro rodiče",
+  subtitle:
+    "Praktické workshopy pro rodiče miminek a malých dětí. Dopřejte svému miminku ten nejlepší start do života.",
+  detailHref: "/workshopy",
+  ctaLabel: "Všechny workshopy",
+};
+
 export type Workshop = {
   id: string;
   title: string;

@@ -1,9 +1,11 @@
 ---
 import Icon from "astro-iconify";
-import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
+import { workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
+import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
-const meta = workshopsPageMeta;
+const meta = workshopsHomeMeta;
+const pageMeta = workshopsPageMeta;
 
 /** Iconify názvy (sada:id) — mapování podle id z WorkshopsHome.ts */
 const workshopIconById: Record<string, string> = {
@@ -14,9 +16,9 @@ const workshopIconById: Record<string, string> = {
 ---
 
 <section
-  id={meta.sectionId}
+  id={pageMeta.sectionId}
   class="section workshops-page"
-  aria-labelledby="workshops-page-title"
+  aria-labelledby="workshops-title"
 >
   <div class="workshops-page__intro">
     <div class="workshops-page__intro-nav-bg" aria-hidden="true">
@@ -26,19 +28,19 @@ const workshopIconById: Record<string, string> = {
     <div class="container-x workshops-page__intro-inner">
       <header class="section-header reveal">
         <span class="eyebrow">{meta.eyebrow}</span>
-        <h1 id="workshops-page-title">
+        <h2 id="workshops-title">
           {meta.title}{" "}
           <span class="section-title-accent">{meta.titleAccent}</span>
-        </h1>
+        </h2>
         <p class="section-subtitle">{meta.subtitle}</p>
       </header>
     </div>
   </div>
 
   <div class="container-x">
-    <ul class="workshops-page__grid">
+    <ul class="workshops__grid">
       {
-        workshopsPage.map((w, i) => (
+        workshops.map((w, i) => (
           <li
             class="workshop reveal"
             style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
@@ -60,7 +62,7 @@ const workshopIconById: Record<string, string> = {
                     class="card-icon-graphic"
                   />
                 </span>
-                <h2>{w.title}</h2>
+                <h3>{w.title}</h3>
               </div>
               <span class="workshop__rule" aria-hidden="true" />
             </div>
@@ -171,17 +173,12 @@ const workshopIconById: Record<string, string> = {
     margin-bottom: var(--section-header-spacing);
   }
 
-  .workshops-page .section-header h1 {
-    font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--h2-title-gap);
-  }
-
   .workshops-page .section-title-accent {
     color: var(--color-blush-vivid);
   }
 
   /* Mobile-first: jednotný subgrid uvnitř karty; mění se jen počet sloupců */
-  .workshops-page__grid {
+  .workshops__grid {
     --workshop-card-width: var(--card-grid-width);
     list-style: none;
     padding: 0;
@@ -196,6 +193,8 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshop {
+    --workshop-title: #2d3748;
+    --workshop-body: #4a5568;
     position: relative;
     overflow: hidden;
     background: #fefefe;
@@ -239,7 +238,8 @@ const workshopIconById: Record<string, string> = {
 
   .workshop__age,
   .workshop__summary,
-  .workshop__details {
+  .workshop__details,
+  .workshop__more {
     position: relative;
     z-index: 1;
   }
@@ -257,7 +257,7 @@ const workshopIconById: Record<string, string> = {
     align-self: start;
   }
 
-  /* Stejná výška leadu; ikona + nadpis vertikálně uprostřed na všech kartách */
+  /* Stejná výška leadu; ikona + h3 vertikálně uprostřed na všech kartách */
   .workshop__lead {
     display: flex;
     align-items: center;
@@ -297,7 +297,7 @@ const workshopIconById: Record<string, string> = {
     transition: transform 280ms ease;
   }
 
-  .workshop__lead h2 {
+  .workshop__lead h3 {
     flex: 1;
     min-width: 0;
     margin: 0;
@@ -375,7 +375,7 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 768px) {
-    .workshops-page__grid {
+    .workshops__grid {
       --workshop-card-width: var(--card-grid-width-md);
       width: fit-content;
       max-width: 100%;
@@ -385,7 +385,7 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 1180px) {
-    .workshops-page__grid {
+    .workshops__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
