@@ -126,27 +126,13 @@ const year = new Date().getFullYear();
   <div class="footer__bottom">
     <div class="container-x footer__bottom-inner">
       <span>© {year} {site.name}. Všechna práva vyhrazena.</span>
-      <span class="footer__made"
-        >Vyrobeno s láskou pro maminky a tatínky
-        <span class="footer__made-heart" aria-hidden="true">
-          <svg
-            class="footer__made-heart-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              fill="currentColor"
-              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            ></path>
-          </svg>
-        </span></span
-      >
     </div>
   </div>
 </footer>
 
 <style>
+  /* Base styles (mobile first) */
+
   .footer {
     scroll-margin-top: var(--nav-height);
     margin-top: 4rem;
@@ -168,17 +154,22 @@ const year = new Date().getFullYear();
   .footer__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
-    padding-block: 3rem 2rem;
+    gap: 1.75rem;
+    padding-block: 2.25rem 1.75rem;
+  }
+
+  .footer__brand {
+    text-align: left;
   }
 
   .footer__brand-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.85rem;
+    justify-content: flex-start;
+    gap: 0.75rem;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-4);
   }
 
   .footer__brand-link img {
@@ -188,7 +179,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__brand h2 {
-    font-size: var(--text-2-5xl);
+    font-size: 2rem;
     margin: 0;
     line-height: var(--line-height-sm);
   }
@@ -196,7 +187,7 @@ const year = new Date().getFullYear();
   .footer__tagline {
     font-family: var(--font-brandmotto);
     font-weight: 600;
-    font-size: var(--text-lg);
+    font-size: 1.1rem;
     color: var(--color-blush-deep);
     margin-top: 2px;
     line-height: var(--line-height-xs);
@@ -206,13 +197,14 @@ const year = new Date().getFullYear();
   .footer__about {
     color: var(--color-ink);
     margin: 0 0 1.5rem;
-    max-width: 28rem;
-    font-size: var(--text-base);
-    text-align: justify;
+    max-width: 22rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
   }
 
   .footer__col {
-    padding-top: 1.25rem;
+    padding-top: 1.35rem;
     border-top: 1px solid rgba(236, 47, 142, 0.16);
   }
 
@@ -223,17 +215,17 @@ const year = new Date().getFullYear();
   }
 
   .footer__social-label {
-    margin: 0 0 1rem;
-    font-size: var(--text-base);
-    font-weight: 500;
-    color: var(--color-ink-soft);
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-ink);
     text-align: left;
   }
 
   .footer__social {
     display: flex;
     justify-content: flex-start;
-    gap: 2rem;
+    gap: 1.5rem;
   }
 
   .footer__social-link {
@@ -299,6 +291,18 @@ const year = new Date().getFullYear();
     display: grid;
   }
 
+  .footer__col.footer__col--kontakt ul {
+    gap: 0.75rem;
+  }
+
+  .footer__col.footer__col--lokace ul {
+    gap: 1.5rem;
+  }
+
+  .footer__col.footer__col--navigace ul {
+    gap: 0.75rem;
+  }
+
   .footer__col a {
     color: var(--color-ink);
     text-decoration: none;
@@ -352,7 +356,7 @@ const year = new Date().getFullYear();
   .footer__email {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: 0.75rem;
   }
 
   .footer__phone-icon,
@@ -380,87 +384,7 @@ const year = new Date().getFullYear();
     color: var(--color-ink-soft);
   }
 
-  .footer__made-heart {
-    display: inline-flex;
-    vertical-align: -0.12em;
-    margin-left: 0.15em;
-    color: #fda2e6;
-  }
-
-  .footer__made-heart-icon {
-    width: 1em;
-    height: 1em;
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 639px) {
-    .footer__inner {
-      padding-block: 2.25rem 1.75rem;
-      gap: 1.75rem;
-    }
-
-    .footer__brand {
-      text-align: left;
-    }
-
-    .footer__brand-link {
-      justify-content: flex-start;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .footer__brand-link img {
-      width: 56px;
-      height: 56px;
-    }
-
-    .footer__brand h2 {
-      font-size: 2rem;
-    }
-
-    .footer__tagline {
-      font-size: 1.1rem;
-    }
-
-    .footer__about {
-      max-width: 22rem;
-      margin: 0 0 1.5rem;
-      text-align: left;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .footer__social-wrap {
-      align-items: flex-start;
-    }
-
-    .footer__social-label {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      text-align: left;
-      font-weight: 600;
-      color: var(--color-ink);
-    }
-
-    .footer__social {
-      justify-content: flex-start;
-      gap: 1.5rem;
-    }
-
-    .footer__social-link :global(svg) {
-      width: var(--footer-social-icon-size);
-      height: var(--footer-social-icon-size);
-    }
-
-    .footer__col {
-      padding-top: 1.35rem;
-    }
-
-    .footer__phone,
-    .footer__email {
-      gap: 0.75rem;
-    }
-  }
+  /* Media queries */
 
   @media (min-width: 640px) {
     #kontakt {
@@ -468,7 +392,35 @@ const year = new Date().getFullYear();
     }
 
     .footer__brand-link {
-      margin-bottom: 1rem;
+      gap: 0.85rem;
+    }
+
+    .footer__brand h2 {
+      font-size: var(--text-2-5xl);
+    }
+
+    .footer__tagline {
+      font-size: var(--text-lg);
+    }
+
+    .footer__social-label {
+      margin: 0 0 1rem;
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-ink-soft);
+    }
+
+    .footer__social {
+      gap: 2rem;
+    }
+
+    .footer__col {
+      padding-top: 1.25rem;
+    }
+
+    .footer__phone,
+    .footer__email {
+      gap: var(--space-2);
     }
 
     .footer__bottom-inner {
@@ -531,10 +483,6 @@ const year = new Date().getFullYear();
       grid-area: auto;
     }
 
-    .footer__brand-link {
-      margin-bottom: 1.5rem;
-    }
-
     .footer__about {
       max-width: 240px;
       text-align: left;
@@ -544,17 +492,5 @@ const year = new Date().getFullYear();
       padding-top: 0;
       border-top: none;
     }
-  }
-
-  .footer__col.footer__col--kontakt ul {
-    gap: 0.75rem;
-  }
-
-  .footer__col.footer__col--lokace ul {
-    gap: 1.5rem;
-  }
-
-  .footer__col.footer__col--navigace ul {
-    gap: 0.75rem;
   }
 </style>
