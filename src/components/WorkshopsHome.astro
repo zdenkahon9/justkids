@@ -1,8 +1,16 @@
 ---
-import { workshopsHomeMeta } from "../data/WorkshopsHome";
+import Icon from "astro-iconify";
+import { workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = workshopsHomeMeta;
+
+/** Iconify názvy (sada:id) — mapování podle id z WorkshopsHome.ts */
+const workshopIconById: Record<string, string> = {
+  "prvni-pomoc-u-deti": "fluent:briefcase-medical-24-regular",
+  "handling-a-psychomotoricky-vyvoj": "streamline-sharp:health-care-2",
+  "psychomotoricky-vyvoj-prevence": "ph:brain",
+};
 ---
 
 <section
@@ -22,39 +30,29 @@ const meta = workshopsHomeMeta;
 
     <ul class="workshops-home__grid">
       <li>
-        <div
-          class="workshops-home__card reveal"
-          style={`--accent: ${cardAccentDeep("blush-deep")}; --accent-soft: ${cardAccentSoft("blush-deep")};`}
-        >
-          <svg
-            class="workshops-home__blob"
-            viewBox="-32 0 132 100"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z"></path>
-          </svg>
+        <div class="workshops-home__card reveal">
           <div class="workshops-home__body">
             <h3 class="workshops-home__heading">Témata workshopů:</h3>
-            <div
-              class="workshops-home__content workshops-home__content--invisible"
-              aria-hidden="true"
-            >
-              <div class="workshops-home__age-row">
-                <span class="workshops-home__age">0–6 měsíců</span>
-                <div class="workshops-home__illustration">
-                  <span class="workshops-home__icon-ring"></span>
-                </div>
-              </div>
-              <p class="workshops-home__groups">
-                Specifika dětské první pomoci • Resuscitace • Dušení
-              </p>
-              <span class="workshops-home__rule"></span>
-              <p class="workshops-home__summary">
-                Jak reagovat v krizových situacích a poskytnout dítěti první
-                pomoc.
-              </p>
-            </div>
+            <ul class="workshops-home__topics">
+              {
+                workshops.map((w) => (
+                  <li
+                    class="workshops-home__topic"
+                    style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
+                  >
+                    <span class="workshops-home__topic-icon" aria-hidden="true">
+                      <Icon
+                        name={
+                          workshopIconById[w.id] ?? "streamline:health-care-2"
+                        }
+                        class="workshops-home__topic-icon-graphic"
+                      />
+                    </span>
+                    <span class="workshops-home__topic-label">{w.title}</span>
+                  </li>
+                ))
+              }
+            </ul>
           </div>
         </div>
       </li>
@@ -106,52 +104,8 @@ const meta = workshopsHomeMeta;
       box-shadow 280ms ease;
   }
 
-  .workshops-home__blob {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    right: 0;
-    width: 9.9rem;
-    height: 7.5rem;
-    display: block;
-    pointer-events: none;
-  }
-
-  .workshops-home__blob path {
-    fill: var(--accent-soft);
-  }
-
-  .workshops-home__body {
-    z-index: 1;
-  }
-
-  .workshops-home__content--invisible {
-    visibility: hidden;
-  }
-
-  .workshops-home__age-row {
-    --age-text-height: calc(1.375rem * var(--line-height-2xl));
-    position: relative;
-    padding-right: calc(var(--card-icon-size-corner) + var(--space-4));
-  }
-
-  .workshops-home__illustration {
-    position: absolute;
-    right: 0;
-    top: calc(0.5 * var(--age-text-height));
-    transform: translateY(-50%);
-  }
-
-  .workshops-home__icon-ring {
-    display: block;
-    width: var(--card-icon-size-corner);
-    height: var(--card-icon-size-corner);
-    border-radius: var(--radius-full);
-    background: var(--accent-soft);
-  }
-
   .workshops-home__heading {
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-9);
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 600;
@@ -159,41 +113,50 @@ const meta = workshopsHomeMeta;
     color: var(--color-ink);
   }
 
-  .workshops-home__age {
+  .workshops-home__topics {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .workshops-home__topic {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: 0;
+  }
+
+  .workshops-home__topic:last-child {
+    margin-bottom: 0;
+  }
+
+  .workshops-home__topic-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: var(--card-icon-size);
+    height: var(--card-icon-size);
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: transform 280ms ease;
+  }
+
+  .workshops-home__topic-icon-graphic {
+    width: var(--footer-social-icon-size);
+    height: var(--footer-social-icon-size);
+  }
+
+  .workshops-home__topic-label {
     display: block;
-    width: 100%;
-    margin: 0 0 var(--space-4);
+    flex: 1;
+    min-width: 0;
     font-family: var(--font-display);
     font-size: 1.375rem;
     font-weight: 600;
     line-height: var(--line-height-2xl);
-    color: var(--accent);
-  }
-
-  .workshops-home__groups {
-    margin: 0 0 var(--space-4);
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    font-weight: 600;
-    line-height: var(--line-height-xl);
-    color: var(--color-ink-muted);
-  }
-
-  .workshops-home__rule {
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: 0 0 var(--space-5);
-    border: none;
-    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
-  }
-
-  .workshops-home__summary {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    font-weight: 400;
-    line-height: var(--line-height-base);
     color: var(--color-ink);
   }
 

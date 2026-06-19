@@ -62,7 +62,7 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="footer__col">
+    <div class="footer__col footer__col--kontakt">
       <h3>Kontakt</h3>
       <ul>
         <li class="footer__instructor">{site.contact.instructorName}</li>
@@ -84,7 +84,7 @@ const year = new Date().getFullYear();
       </ul>
     </div>
 
-    <div class="footer__col">
+    <div class="footer__col footer__col--lokace">
       <h3>Lokace</h3>
       <ul>
         {
@@ -109,7 +109,7 @@ const year = new Date().getFullYear();
       </ul>
     </div>
 
-    <div class="footer__col">
+    <div class="footer__col footer__col--navigace">
       <h3>Navigace</h3>
       <ul>
         {
@@ -297,7 +297,6 @@ const year = new Date().getFullYear();
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 0.75rem;
   }
 
   .footer__col a {
@@ -457,10 +456,6 @@ const year = new Date().getFullYear();
       padding-top: 1.35rem;
     }
 
-    .footer__col ul {
-      gap: 0.75rem;
-    }
-
     .footer__phone,
     .footer__email {
       gap: 0.75rem;
@@ -505,15 +500,15 @@ const year = new Date().getFullYear();
       grid-area: brand;
     }
 
-    .footer__inner > .footer__col:nth-child(2) {
+    .footer__col--kontakt {
       grid-area: kontakt;
     }
 
-    .footer__inner > .footer__col:nth-child(3) {
+    .footer__col--lokace {
       grid-area: lokace;
     }
 
-    .footer__inner > .footer__col:nth-child(4) {
+    .footer__col--navigace {
       grid-area: navigace;
     }
   }
@@ -530,9 +525,9 @@ const year = new Date().getFullYear();
       grid-area: auto;
     }
 
-    .footer__inner > .footer__col:nth-child(2),
-    .footer__inner > .footer__col:nth-child(3),
-    .footer__inner > .footer__col:nth-child(4) {
+    .footer__col--kontakt,
+    .footer__col--lokace,
+    .footer__col--navigace {
       grid-area: auto;
     }
 
@@ -549,5 +544,17 @@ const year = new Date().getFullYear();
       padding-top: 0;
       border-top: none;
     }
+  }
+
+  .footer__col.footer__col--kontakt ul {
+    gap: 0.75rem;
+  }
+
+  .footer__col.footer__col--lokace ul {
+    gap: 1.5rem;
+  }
+
+  .footer__col.footer__col--navigace ul {
+    gap: 0.75rem;
   }
 </style>

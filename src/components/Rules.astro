@@ -62,7 +62,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__list {
-    --rules-icon-size: calc(var(--card-icon-size-corner) * 0.8);
+    --rules-icon-size: var(--card-icon-size-corner);
     --rules-line-blush: color-mix(
       in srgb,
       var(--color-blush-deep) 30%,
@@ -159,8 +159,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__icon-graphic {
-    width: calc(var(--card-icon-graphic-size-corner) * 0.8);
-    height: calc(var(--card-icon-graphic-size-corner) * 0.8);
+    width: var(--card-icon-graphic-size-corner);
+    height: var(--card-icon-graphic-size-corner);
   }
 
   .rules__detail {
