@@ -1,9 +1,11 @@
 ---
 import Icon from "astro-iconify";
-import { workshops } from "../data/workshops";
+import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
-/** Iconify názvy (sada:id) — mapování podle id z workshops.ts */
+const meta = workshopsPageMeta;
+
+/** Iconify názvy (sada:id) — mapování podle id z WorkshopsHome.ts */
 const workshopIconById: Record<string, string> = {
   "prvni-pomoc-u-deti": "streamline:medical-bag",
   "handling-a-psychomotoricky-vyvoj": "streamline:health-care-2",
@@ -12,25 +14,31 @@ const workshopIconById: Record<string, string> = {
 ---
 
 <section
-  id="workshopy"
-  class="section workshops"
-  aria-labelledby="workshops-title"
+  id={meta.sectionId}
+  class="section workshops-page"
+  aria-labelledby="workshops-page-title"
 >
-  <div class="container-x">
-    <header class="section-header reveal">
-      <span class="eyebrow">Další akce</span>
-      <h2 id="workshops-title">
-        Workshopy <span class="section-title-accent">pro rodiče</span>
-      </h2>
-      <p class="section-subtitle">
-        Praktické workshopy pro rodiče miminek a malých dětí. Dopřejte svému
-        miminku ten nejlepší start do života.
-      </p>
-    </header>
+  <div class="workshops-page__intro">
+    <div class="workshops-page__intro-nav-bg" aria-hidden="true">
+      <div class="workshops-page__intro-photo"></div>
+      <div class="workshops-page__intro-veil"></div>
+    </div>
+    <div class="container-x workshops-page__intro-inner">
+      <header class="section-header reveal">
+        <span class="eyebrow">{meta.eyebrow}</span>
+        <h1 id="workshops-page-title">
+          {meta.title}{" "}
+          <span class="section-title-accent">{meta.titleAccent}</span>
+        </h1>
+        <p class="section-subtitle">{meta.subtitle}</p>
+      </header>
+    </div>
+  </div>
 
-    <ul class="workshops__grid">
+  <div class="container-x">
+    <ul class="workshops-page__grid">
       {
-        workshops.map((w, i) => (
+        workshopsPage.map((w, i) => (
           <li
             class="workshop reveal"
             style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
@@ -52,7 +60,7 @@ const workshopIconById: Record<string, string> = {
                     class="card-icon-graphic"
                   />
                 </span>
-                <h3>{w.title}</h3>
+                <h2>{w.title}</h2>
               </div>
               <span class="workshop__rule" aria-hidden="true" />
             </div>
@@ -70,43 +78,110 @@ const workshopIconById: Record<string, string> = {
                 ))}
               </ul>
             </div>
-
-            {/* <button type="button" class="workshop__more">
-                Více informací
-                <svg
-                  viewBox="0 0 24 24"
-                  width="14"
-                  height="14"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6 9l6 6 6-6"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </button> */}
           </li>
         ))
       }
     </ul>
+
+    <div class="workshops-page__footer reveal">
+      <a class="btn btn-ghost workshops-page__back-btn" href="/">
+        <span aria-hidden="true">←</span> Zpět na hlavní stránku
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  #workshopy {
-    scroll-margin-top: var(--section-scroll-margin);
+  .workshops-page {
+    padding-top: 0;
+    scroll-margin-top: var(--nav-height);
+    background-color: var(--color-cream);
   }
 
-  .workshops .section-title-accent {
+  /* Mini page-hero — pod navbarom stejná vrstva jako na AgeGroupsPage */
+  .workshops-page__intro {
+    position: relative;
+    background-color: var(--color-cream);
+  }
+
+  .workshops-page__intro-nav-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .workshops-page__intro-photo {
+    position: absolute;
+    left: -3%;
+    right: -3%;
+    top: -3svh;
+    height: 106svh;
+    background-image: url("/images/hero-balloons.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(5px) saturate(1.05);
+    transform: scale(1.06);
+    transform-origin: center top;
+  }
+
+  .workshops-page__intro-veil {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100svh;
+    background:
+      radial-gradient(
+        48% 42% at 22% 32%,
+        rgba(212, 191, 245, 0.55) 0%,
+        rgba(212, 191, 245, 0) 70%
+      ),
+      radial-gradient(
+        40% 40% at 30% 55%,
+        rgba(252, 194, 214, 0.55) 0%,
+        rgba(252, 194, 214, 0) 70%
+      ),
+      radial-gradient(
+        55% 55% at 82% 30%,
+        rgba(169, 212, 240, 0.4) 0%,
+        rgba(169, 212, 240, 0) 70%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 249, 244, 0.2) 0%,
+        rgba(255, 249, 244, 0.05) 35%,
+        rgba(255, 249, 244, 0.55) 72%,
+        rgba(255, 249, 244, 0.95) 100%
+      );
+  }
+
+  .workshops-page__intro-inner {
+    position: relative;
+    z-index: 1;
+    padding-top: calc(var(--nav-height) + var(--section-header-spacing));
+  }
+
+  .workshops-page__intro .section-header {
+    margin-bottom: var(--section-header-spacing);
+  }
+
+  .workshops-page .section-header h1 {
+    font-size: var(--text-clamp-h2);
+    margin: 0 0 var(--h2-title-gap);
+  }
+
+  .workshops-page .section-title-accent {
     color: var(--color-blush-vivid);
   }
 
   /* Mobile-first: jednotný subgrid uvnitř karty; mění se jen počet sloupců */
-  .workshops__grid {
+  .workshops-page__grid {
     --workshop-card-width: var(--card-grid-width);
     list-style: none;
     padding: 0;
@@ -121,8 +196,6 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshop {
-    --workshop-title: #2d3748;
-    --workshop-body: #4a5568;
     position: relative;
     overflow: hidden;
     background: #fefefe;
@@ -166,8 +239,7 @@ const workshopIconById: Record<string, string> = {
 
   .workshop__age,
   .workshop__summary,
-  .workshop__details,
-  .workshop__more {
+  .workshop__details {
     position: relative;
     z-index: 1;
   }
@@ -185,7 +257,7 @@ const workshopIconById: Record<string, string> = {
     align-self: start;
   }
 
-  /* Stejná výška leadu; ikona + h3 vertikálně uprostřed na všech kartách */
+  /* Stejná výška leadu; ikona + nadpis vertikálně uprostřed na všech kartách */
   .workshop__lead {
     display: flex;
     align-items: center;
@@ -225,7 +297,7 @@ const workshopIconById: Record<string, string> = {
     transition: transform 280ms ease;
   }
 
-  .workshop__lead h3 {
+  .workshop__lead h2 {
     flex: 1;
     min-width: 0;
     margin: 0;
@@ -289,33 +361,21 @@ const workshopIconById: Record<string, string> = {
     color: var(--color-ink);
   }
 
-  /* .workshop__more {
-    margin: 0.35rem auto 0;
-    padding: 0;
-    border: none;
-    background: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--accent);
-    cursor: pointer;
-    transition: opacity 180ms ease;
+  .workshops-page__footer {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-10);
   }
 
-  .workshop__more:hover {
-    opacity: 0.82;
+  /* Mobilní section-header — stejný breakpoint jako global.css (639px) */
+  @media (max-width: 639px) {
+    .workshops-page .section-header {
+      text-align: center;
+    }
   }
-
-  .workshop__more:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-  } */
 
   @media (min-width: 768px) {
-    .workshops__grid {
+    .workshops-page__grid {
       --workshop-card-width: var(--card-grid-width-md);
       width: fit-content;
       max-width: 100%;
@@ -325,11 +385,8 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 1180px) {
-    .workshops__grid {
+    .workshops-page__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .workshop__summary {
     }
   }
 </style>

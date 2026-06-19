@@ -14,7 +14,7 @@ const meta = reviewsPageMeta;
       <div class="reviews-page__intro-veil"></div>
     </div>
     <div class="container-x reviews-page__intro-inner">
-      <header class="section-header reveal">
+      <header class="section-header">
         <div class="reviews-page__head">
           <h1 id="reviews-page-title">
             {meta.title}{" "}
@@ -43,7 +43,7 @@ const meta = reviewsPageMeta;
   </div>
 
   <div class="container-x reviews-page__inner">
-    <div class="about__divider reveal">
+    <div class="about__divider">
       <span aria-hidden="true">
         <Icon name="twemoji:pink-heart" class="about__divider-icon" />
       </span>
@@ -51,11 +51,8 @@ const meta = reviewsPageMeta;
 
     <ol class="reviews-page__list" role="list">
       {
-        reviews.map((r, i) => (
-          <li
-            class="reviews-page__item reveal"
-            style={`transition-delay: ${Math.min(i, 6) * 70}ms;`}
-          >
+        reviews.map((r) => (
+          <li class="reviews-page__item">
             {r.rating && (
               <div
                 class="reviews-page__stars"
@@ -94,7 +91,7 @@ const meta = reviewsPageMeta;
       }
     </ol>
 
-    <div class="reviews-page__footer reveal">
+    <div class="reviews-page__footer">
       <a class="btn btn-ghost reviews-page__back-btn" href="/">
         <span aria-hidden="true">←</span> Zpět na hlavní stránku
       </a>
