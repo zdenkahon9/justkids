@@ -20,7 +20,7 @@ type NavbarProps = {
 /** Desktop submenu under „O mně“ — same section anchors as elsewhere on the site */
 const ABOUT_DROPDOWN_LINKS: NavLink[] = [
   { href: "#o-mne", label: "Kdo jsem" },
-  { href: "#recenze", label: "Recenze" },
+  { href: "/recenze", label: "Recenze" },
 ];
 
 const isAboutNavItem = (l: NavLink) =>

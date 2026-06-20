@@ -96,6 +96,7 @@
   --section-title-gap: var(--space-6);
   --eyebrow-title-gap: var(--space-6);
   --h2-title-gap: var(--space-6);
+  --text-h3: var(--text-2xl);
 
   --container-padding-x: var(--space-6);
   --container-padding-x-lg: var(--space-12);
@@ -177,6 +178,10 @@ h4 {
   letter-spacing: -0.015em;
   color: var(--color-ink);
   line-height: var(--line-height-lg);
+}
+
+h3 {
+  font-size: var(--text-h3);
 }
 
 ::selection {
@@ -308,6 +313,10 @@ h4 {
 
 /* Mobil: kompaktnější section header (640px+ beze změny) */
 @media (max-width: 639px) {
+  :root {
+    --text-h3: var(--text-2-5xl);
+  }
+
   .section-header {
     --section-header-spacing: var(--space-9);
     --section-title-gap: var(--space-5);

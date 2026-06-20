@@ -64,7 +64,6 @@ const agePageCardThemesWithoutParents = [
     </div>
     <div class="container-x age-page__intro-inner">
       <header class="section-header reveal">
-        <span class="eyebrow">{meta.eyebrow}</span>
         <h1 id="age-page-title">
           {meta.title}{" "}
           <span class="section-title-accent">{meta.titleAccent}</span>
@@ -107,7 +106,7 @@ const agePageCardThemesWithoutParents = [
       </div>
     </div>
 
-    <h3
+    <h2
       id={agePageWithParentsSection.id}
       class="age-page__group-heading reveal"
       style={`--accent: ${cardAccentDeep(agePageWithParentsSection.accent)};`}
@@ -119,7 +118,7 @@ const agePageCardThemesWithoutParents = [
         />
       </span>
       {agePageWithParentsSection.title}
-    </h3>
+    </h2>
 
     <ul class="age-page__grid">
       {
@@ -163,7 +162,7 @@ const agePageCardThemesWithoutParents = [
       }
     </ul>
 
-    <h3
+    <h2
       id={agePageWithoutParentsSection.id}
       class="age-page__group-heading reveal"
       style={`--accent: ${cardAccentDeep(agePageWithoutParentsSection.accent)};`}
@@ -175,7 +174,7 @@ const agePageCardThemesWithoutParents = [
         />
       </span>
       {agePageWithoutParentsSection.title}
-    </h3>
+    </h2>
 
     <ul class="age-page__grid">
       {
@@ -309,11 +308,21 @@ const agePageCardThemesWithoutParents = [
 
   .age-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--h2-title-gap);
+    margin: 0 0 2rem;
   }
 
   .age-page .section-title-accent {
     color: var(--color-blush-vivid);
+  }
+
+  @media (max-width: 639px) {
+    .age-page {
+      --section-header-spacing: 3rem;
+    }
+
+    .age-page .section-header {
+      --section-header-spacing: 3rem;
+    }
   }
 
   .age-page__filter {
@@ -583,7 +592,7 @@ const agePageCardThemesWithoutParents = [
   .age-page__heading {
     margin: 0 0 var(--space-5);
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-h3);
     font-weight: 600;
     line-height: var(--line-height-xl);
     color: var(--color-ink);

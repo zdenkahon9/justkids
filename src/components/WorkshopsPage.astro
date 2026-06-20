@@ -2,6 +2,7 @@
 import Icon from "astro-iconify";
 import { workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
+import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = workshopsHomeMeta;
@@ -27,12 +28,11 @@ const workshopIconById: Record<string, string> = {
     </div>
     <div class="container-x workshops-page__intro-inner">
       <header class="section-header reveal">
-        <span class="eyebrow">{meta.eyebrow}</span>
-        <h2 id="workshops-title">
+        <h1 id="workshops-title">
           {meta.title}{" "}
           <span class="section-title-accent">{meta.titleAccent}</span>
-        </h2>
-        <p class="section-subtitle">{meta.subtitle}</p>
+        </h1>
+        <p class="section-subtitle">{pageMeta.subtitle}</p>
       </header>
     </div>
   </div>
@@ -45,40 +45,96 @@ const workshopIconById: Record<string, string> = {
             class="workshop reveal"
             style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
           >
-            <svg
-              class="workshop__blob"
-              viewBox="-32 0 132 100"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
-            </svg>
-
+            <span class="workshop__icon" aria-hidden="true">
+              <Icon
+                name={workshopIconById[w.id] ?? "streamline:health-care-2"}
+                class="workshop__icon-graphic"
+              />
+            </span>
             <div class="workshop__header">
               <div class="workshop__lead">
-                <span class="workshop__icon" aria-hidden="true">
-                  <Icon
-                    name={workshopIconById[w.id] ?? "streamline:health-care-2"}
-                    class="card-icon-graphic"
-                  />
-                </span>
                 <h3>{w.title}</h3>
               </div>
-              <span class="workshop__rule" aria-hidden="true" />
+              {w.ageRange ? (
+                <span class="workshop__age">{w.ageRange}</span>
+              ) : null}
             </div>
+            <span class="workshops-page__rule" aria-hidden="true" />
 
-            <span class="workshop__age" aria-hidden={!w.ageRange}>
-              {w.ageRange}
-            </span>
-
-            <p class="workshop__summary">{w.summary}</p>
+            {/* summary → WorkshopsHome (data v WorkshopsHome.ts), zatím bez renderu */}
+            {/* <p class="workshop__summary">{w.summary}</p> */}
 
             <div class="workshop__details">
+              <p class="workshop__highlights-label">Co vás čeká</p>
               <ul class="workshop__highlights">
                 {w.highlights.map((item) => (
-                  <li>{item}</li>
+                  <li>
+                    <Icon
+                      name="ph:check-circle-fill"
+                      class="workshop__highlight-icon"
+                      aria-hidden="true"
+                    />
+                    <span>{item}</span>
+                  </li>
                 ))}
               </ul>
+              <hr class="workshops-page__divider" aria-hidden="true" />
+              {w.price ? (
+                <>
+                  <div class="workshop__price">
+                    <p class="workshop__price-label">{pageMeta.priceLabel}</p>
+                    <p class="workshop__price-value">{w.price}</p>
+                  </div>
+                  <hr class="workshops-page__divider" aria-hidden="true" />
+                </>
+              ) : null}
+              {w.dates?.length ? (
+                <>
+                  <p class="workshop__terms-label">{pageMeta.termsLabel}</p>
+                  <ul class="workshop__dates">
+                    {w.dates.map((date) => (
+                      <li>
+                        <a
+                          class="workshop__date-card"
+                          href={date.href ?? site.reservationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
+                        >
+                          <div
+                            class="workshop__date-card-date"
+                            aria-hidden="true"
+                          >
+                            <span class="workshop__date-day">{date.day}</span>
+                            <span class="workshop__date-month">
+                              {date.month}
+                            </span>
+                          </div>
+                          <div class="workshop__date-card-body">
+                            <p class="workshop__date-venue">{date.venueName}</p>
+                            <p class="workshop__date-time">{date.time}</p>
+                            <p class="workshop__date-spots">
+                              {pageMeta.spotsLabel}
+                            </p>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <hr class="workshops-page__divider" aria-hidden="true" />
+                  <div class="workshops-page__cta">
+                    <a
+                      class="btn btn-primary"
+                      href={site.reservationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {pageMeta.signupLabel}
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                </>
+              ) : null}
             </div>
           </li>
         ))
@@ -173,22 +229,42 @@ const workshopIconById: Record<string, string> = {
     margin-bottom: var(--section-header-spacing);
   }
 
-  .workshops-page .section-title-accent {
-    color: var(--color-blush-vivid);
+  .workshops-page .section-header h1 {
+    font-size: var(--text-clamp-h2);
+    margin: 0 0 var(--h2-title-gap);
   }
 
-  /* Mobile-first: jednotný subgrid uvnitř karty; mění se jen počet sloupců */
+  .workshops-page .section-title-accent {
+    color: var(--color-sky-deep);
+  }
+
+  @media (max-width: 639px) {
+    .workshops-page {
+      --section-header-spacing: 3rem;
+      padding-bottom: 0;
+    }
+
+    .workshops-page .section-header {
+      --section-header-spacing: 3rem;
+    }
+  }
+
+  /* Mobile-first: responzivní mřížka karet */
   .workshops__grid {
     --workshop-card-width: var(--card-grid-width);
+    --workshop-icon-size: calc(var(--card-icon-size-corner) - var(--space-1));
+    --workshop-icon-graphic-size: calc(
+      var(--footer-social-icon-size) + var(--space-1)
+    );
+    --workshop-icon-overlap: calc(var(--workshop-icon-size) / 2);
     list-style: none;
-    padding: 0;
+    padding: var(--workshop-icon-overlap) 0 0;
     margin: 0 auto;
     width: fit-content;
     max-width: 100%;
     display: grid;
     grid-template-columns: min(100%, var(--workshop-card-width));
-    grid-auto-rows: auto auto auto auto;
-    gap: var(--stack-gap);
+    gap: calc(var(--stack-gap) + var(--workshop-icon-overlap));
     justify-content: center;
   }
 
@@ -196,13 +272,11 @@ const workshopIconById: Record<string, string> = {
     --workshop-title: #2d3748;
     --workshop-body: #4a5568;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     background: #fefefe;
     border-radius: var(--radius-card);
-    padding: var(--card-padding);
-    display: grid;
-    grid-row: span 4;
-    grid-template-rows: subgrid;
+    padding: calc(var(--card-padding-y) + var(--workshop-icon-overlap))
+      var(--card-padding-x) var(--card-padding-y);
     box-shadow: none;
     border: var(--card-border);
     transition:
@@ -217,29 +291,20 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshop:hover .workshop__icon {
-    transform: scale(1.05);
-  }
-
-  /* Blob vpravo nahoře — roh zaobluje overflow + border-radius karty */
-  .workshop__blob {
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    right: 0;
-    width: 9.9rem;
-    height: 7.5rem;
-    display: block;
-    pointer-events: none;
-  }
-
-  .workshop__blob path {
-    fill: var(--accent-soft);
+    transform: translate(-50%, -50%) scale(1.05);
   }
 
   .workshop__age,
-  .workshop__summary,
+  /* .workshop__summary, */
   .workshop__details,
-  .workshop__more {
+  .workshop__highlights-label,
+  .workshop__terms-label,
+  .workshop__dates,
+  .workshop__price,
+  .workshops-page__divider,
+  .workshops-page__cta,
+  .workshop__more,
+  .workshops-page__rule {
     position: relative;
     z-index: 1;
   }
@@ -249,116 +314,249 @@ const workshopIconById: Record<string, string> = {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: center;
     width: 100%;
-    margin: 0 0 0.5rem 0;
-    grid-row: 1;
-    align-self: start;
+    margin: 0;
   }
 
-  /* Stejná výška leadu; ikona + h3 vertikálně uprostřed na všech kartách */
+  /* Nadpis pod překryvnou ikonou */
   .workshop__lead {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
     width: 100%;
-    height: 5.875rem;
-    min-height: 5.875rem;
+    margin: 0 0 var(--space-3);
     box-sizing: border-box;
   }
 
-  /* Krátký pruh pod ikonou i nadpisem — barva karty přes --accent */
-  .workshop__rule {
-    display: block;
-    width: 2.75rem;
-    height: 2px;
-    border-radius: var(--radius-full);
-    background: var(--accent);
-  }
-
-  /* Stejný kruh jako age-home / age-page ikona — barva přes --accent */
+  /* Ikona napůl nad kartou, napůl uvnitř */
   .workshop__icon {
-    flex-shrink: 0;
-    position: relative;
-    z-index: 1;
-    width: var(--card-icon-size);
-    height: var(--card-icon-size);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--workshop-icon-size);
+    height: var(--workshop-icon-size);
     border-radius: var(--radius-full);
-    background: #fff;
-    border: none;
+    background: var(--accent-soft);
     color: var(--accent);
-    display: grid;
-    place-items: center;
-    box-shadow:
-      inset 0 0 0 3px color-mix(in srgb, var(--accent) 60%, white),
-      0 0 0 6px color-mix(in srgb, var(--accent) 12%, white),
-      0 14px 32px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+    transform: translate(-50%, -50%);
     transition: transform 280ms ease;
   }
 
+  .workshop__icon-graphic {
+    width: var(--workshop-icon-graphic-size);
+    height: var(--workshop-icon-graphic-size);
+  }
+
   .workshop__lead h3 {
-    flex: 1;
-    min-width: 0;
     margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-h3);
     font-weight: 600;
     line-height: var(--line-height-xl);
+    text-align: center;
     color: var(--color-ink);
+  }
+
+  .workshops-page__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-7) 0 var(--space-7);
+    border: none;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    transition: background 220ms ease;
   }
 
   .workshop__age {
-    display: block;
-    width: 100%;
-    margin: -0.75rem 0 0;
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
     font-family: var(--font-display);
-    font-size: 1.375rem;
+    font-size: var(--text-lg);
     font-weight: 600;
-    line-height: var(--line-height-2xl);
-    text-align: center;
+    line-height: var(--line-height-lg);
     color: var(--accent);
-    grid-row: 2;
-    align-self: start;
   }
 
-  .workshop__age:empty {
-    visibility: hidden;
-  }
-
-  .workshop__summary {
-    margin: 0 0 0.75rem 0;
+  /* .workshop__summary {
+    margin: 0 0 var(--space-6);
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: 400;
     color: var(--color-ink);
-    grid-row: 3;
-    align-self: start;
-  }
+  } */
 
   .workshop__details {
-    padding: var(--space-4);
+    padding-inline: 0;
     border-radius: var(--radius-xl);
-    background: var(--accent-soft);
-    grid-row: 4;
-    align-self: start;
+  }
+
+  .workshop__highlights-label,
+  .workshop__terms-label {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    color: var(--accent);
+  }
+
+  .workshop__price-label {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    color: var(--accent);
   }
 
   .workshop__highlights {
-    list-style-type: disc;
-    list-style-position: outside;
+    list-style: none;
     margin: 0;
-    padding-left: var(--space-5);
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-4);
   }
 
   .workshop__highlights > li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: 400;
+    line-height: var(--line-height-base);
     color: var(--color-ink);
+  }
+
+  .workshops-page__divider {
+    border: none;
+    height: 1px;
+    margin: var(--space-7) 0 var(--space-7);
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .workshop__price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .workshop__price-value {
+    margin: 0;
+    flex-shrink: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--line-height-lg);
+    text-align: right;
+    color: var(--color-ink);
+  }
+
+  .workshop__highlight-icon {
+    flex-shrink: 0;
+    width: var(--text-xl);
+    height: var(--text-xl);
+    color: var(--accent);
+  }
+
+  .workshop__dates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .workshop__date-card {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: 0;
+    border-radius: var(--radius-card);
+    border: var(--card-border);
+    background: #fefefe;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .workshop__date-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px -14px
+      color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  .workshop__date-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .workshop__date-card-date {
+    flex: 0 0 4.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.125rem;
+    padding: var(--space-4) var(--space-3);
+    background: var(--accent-soft);
+    color: var(--accent);
+    text-align: center;
+  }
+
+  .workshop__date-month {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+  }
+
+  .workshop__date-day {
+    font-family: var(--font-body);
+    font-size: var(--text-2-5xl);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .workshop__date-card-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem;
+    padding: var(--space-4) var(--space-5);
+  }
+
+  .workshop__date-time,
+  .workshop__date-venue {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .workshop__date-spots {
+    margin: var(--space-1) 0 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .workshops-page__footer {
@@ -367,11 +565,30 @@ const workshopIconById: Record<string, string> = {
     margin-top: var(--space-10);
   }
 
-  /* Mobilní section-header — stejný breakpoint jako global.css (639px) */
-  @media (max-width: 639px) {
-    .workshops-page .section-header {
-      text-align: center;
-    }
+  .workshops-page__cta {
+    display: flex;
+    justify-content: center;
+  }
+
+  .workshops-page__cta :global(.btn) {
+    width: 100%;
+    padding: 1.125rem 1.375rem;
+    border-radius: var(--radius-full);
+    box-shadow: none;
+  }
+
+  .workshop .workshops-page__cta :global(.btn-primary) {
+    border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+
+  .workshop .workshops-page__cta :global(.btn-primary::before) {
+    background: var(--accent);
+  }
+
+  .workshop .workshops-page__cta :global(.btn-primary:hover),
+  .workshop .workshops-page__cta :global(.btn-primary:active) {
+    box-shadow: 0 22px 50px -16px
+      color-mix(in srgb, var(--accent) 60%, transparent);
   }
 
   @media (min-width: 768px) {

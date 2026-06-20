@@ -4,6 +4,7 @@ export type WorkshopsHomeMeta = {
   title: string;
   titleAccent: string;
   subtitle: string;
+  subtitleLine2: string;
   detailHref: string;
   ctaLabel: string;
 };
@@ -14,31 +15,121 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   title: "Workshopy",
   titleAccent: "pro rodiče",
   subtitle:
-    "Praktické workshopy pro rodiče miminek a malých dětí. Dopřejte svému miminku ten nejlepší start do života.",
+    "Praktické workhopy pro rodiče zaměřené na první pomoc u dětí, handling miminek a psychomotorický vývoj.",
   detailHref: "/workshopy",
   ctaLabel: "Všechny workshopy",
+};
+
+export type WorkshopDateSlot = {
+  id: string;
+  /** Den v měsíci v `.workshop__date-day` */
+  day: string;
+  /** Zkratka měsíce v `.workshop__date-month` */
+  month: string;
+  time: string;
+  venueName: string;
+  href?: string;
 };
 
 export type Workshop = {
   id: string;
   title: string;
-  /** Text v `.workshop__summary` */
+  /** Text pro `.workshop__summary` — render v WorkshopsHome (zatím vypnuto) */
   summary: string;
   /** Odrážky v `.workshop__details` — jedna položka = jedno `<li>` */
   highlights: string[];
   /** When omitted, the card hides the duration pill */
   duration?: string;
-  /** Věkový rozsah mezi `.workshop__header` a `.workshop__summary` */
+  /** Věkový rozsah v `.workshop__header` (WorkshopsPage) */
   ageRange?: string;
   forWhom: string;
+  /** Krátký popis pod názvem v `.workshops-home__topic-summary` */
+  homeSummary?: string;
+  /** Cena v `.workshop__price-value` na WorkshopsPage */
+  price?: string;
+  /** Termíny v `.workshop__dates` na WorkshopsPage */
+  dates?: WorkshopDateSlot[];
   accent: "blush" | "blush-deep" | "sky" | "sky-deep" | "lilac" | "lilac-deep";
   upcoming?: string;
 };
+
+const prvniPomocDates: WorkshopDateSlot[] = [
+  {
+    id: "prvni-pomoc-rosenbaum",
+    day: "4",
+    month: "KVĚ",
+    time: "od 18:15",
+    venueName: "Centrum Rosenbaum",
+  },
+  {
+    id: "prvni-pomoc-zdice",
+    day: "7",
+    month: "KVĚ",
+    time: "od 16:00",
+    venueName: "Fitcentrum Zdice",
+  },
+  {
+    id: "prvni-pomoc-horovice",
+    day: "16",
+    month: "KVĚ",
+    time: "od 9:00",
+    venueName: "Yogasee Hořovice",
+  },
+];
+
+const handlingDates: WorkshopDateSlot[] = [
+  {
+    id: "handling-rosenbaum",
+    day: "12",
+    month: "KVĚ",
+    time: "od 20:00",
+    venueName: "Centrum Rosenbaum",
+  },
+  {
+    id: "handling-zdice",
+    day: "15",
+    month: "KVĚ",
+    time: "od 17:00",
+    venueName: "Fitcentrum Zdice",
+  },
+  {
+    id: "handling-horovice",
+    day: "16",
+    month: "KVĚ",
+    time: "od 11:00",
+    venueName: "Yogasee Hořovice",
+  },
+];
+
+const prevenceDates: WorkshopDateSlot[] = [
+  {
+    id: "prevence-rosenbaum",
+    day: "25",
+    month: "KVĚ",
+    time: "od 18:15",
+    venueName: "Centrum Rosenbaum",
+  },
+  {
+    id: "prevence-zdice",
+    day: "21",
+    month: "KVĚ",
+    time: "od 16:00",
+    venueName: "Fitcentrum Zdice",
+  },
+  {
+    id: "prevence-horovice",
+    day: "16",
+    month: "KVĚ",
+    time: "od 13:00",
+    venueName: "Yogasee Hořovice",
+  },
+];
 
 export const workshops: Workshop[] = [
   {
     id: "prvni-pomoc-u-deti",
     title: "První pomoc u dětí",
+    homeSummary: "Specifika dětské první pomoci a krizové situace.",
     summary:
       "Jak reagovat v krizových situacích a poskytnout dítěti první pomoc.",
     highlights: [
@@ -51,6 +142,9 @@ export const workshops: Workshop[] = [
       "Popáleniny",
     ],
     forWhom: "Rodiče s miminky 0–6 měsíců",
+    ageRange: "pro všechny rodiče",
+    price: "200,-",
+    dates: prvniPomocDates,
     accent: "blush-deep",
     upcoming: "Termín na vyžádání",
   },
@@ -68,6 +162,8 @@ export const workshops: Workshop[] = [
     ],
     forWhom: "Miminka 0–6 měsíců",
     ageRange: "0-6 měsíců",
+    price: "200,-",
+    dates: handlingDates,
     accent: "lilac-deep",
     upcoming: "Termín na vyžádání",
   },
@@ -77,11 +173,18 @@ export const workshops: Workshop[] = [
     summary:
       "Jak předcházet obtížím ve vývoji a podpořit přirozený rozvoj pohybu a vnímání.",
     highlights: [
-      "Vývojové milníky a podpora doma",
-      "Praktické ukázky a doporučení",
+      "Vývoj krok za krokem",
+      "Podpora přirozeného vývoje",
+      "Vhodné / nevhodné pomůcky",
+      "Prevence špatného držení těla",
+      "Botičky - kdy a jaké",
+      "Valgozita, w-sed, zkřížené syndromy",
+      "Kdy vyhledat odborníka",
     ],
     forWhom: "Rodiče miminek 0–12 měsíců",
     ageRange: "6-12 měsíců",
+    price: "200,-",
+    dates: prevenceDates,
     accent: "sky-deep",
     upcoming: "Termín na vyžádání",
   },
