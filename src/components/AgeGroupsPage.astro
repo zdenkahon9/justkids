@@ -64,11 +64,13 @@ const agePageCardThemesWithoutParents = [
     </div>
     <div class="container-x age-page__intro-inner">
       <header class="section-header reveal">
-        <h1 id="age-page-title">
-          {meta.title}{" "}
-          <span class="section-title-accent">{meta.titleAccent}</span>
-        </h1>
-        <p class="section-subtitle">{meta.subtitle}</p>
+        <div class="age-page__head">
+          <h1 id="age-page-title">
+            {meta.title}{" "}
+            <span class="section-title-accent">{meta.titleAccent}</span>
+          </h1>
+          <p class="section-subtitle">{meta.subtitle}</p>
+        </div>
       </header>
     </div>
   </div>
@@ -108,7 +110,7 @@ const agePageCardThemesWithoutParents = [
 
     <h2
       id={agePageWithParentsSection.id}
-      class="age-page__group-heading reveal"
+      class="age-page__group-heading"
       style={`--accent: ${cardAccentDeep(agePageWithParentsSection.accent)};`}
     >
       <span class="age-page__group-heading-icon" aria-hidden="true">
@@ -125,8 +127,8 @@ const agePageCardThemesWithoutParents = [
         ageGroupsPageWithParents.map((g, i) => (
           <li>
             <article
-              class="age-page__card reveal"
-              style={`--accent: ${agePageCardThemesWithParents[i].deep}; --accent-soft: ${agePageCardThemesWithParents[i].soft}; transition-delay: ${i * 80}ms;`}
+              class="age-page__card"
+              style={`--accent: ${agePageCardThemesWithParents[i].deep}; --accent-soft: ${agePageCardThemesWithParents[i].soft};`}
             >
               <svg
                 class="age-page__blob"
@@ -164,7 +166,7 @@ const agePageCardThemesWithoutParents = [
 
     <h2
       id={agePageWithoutParentsSection.id}
-      class="age-page__group-heading reveal"
+      class="age-page__group-heading"
       style={`--accent: ${cardAccentDeep(agePageWithoutParentsSection.accent)};`}
     >
       <span class="age-page__group-heading-icon" aria-hidden="true">
@@ -181,8 +183,8 @@ const agePageCardThemesWithoutParents = [
         ageGroupsPageWithoutParents.map((g, i) => (
           <li>
             <article
-              class="age-page__card reveal"
-              style={`--accent: ${agePageCardThemesWithoutParents[i].deep}; --accent-soft: ${agePageCardThemesWithoutParents[i].soft}; transition-delay: ${i * 80}ms;`}
+              class="age-page__card"
+              style={`--accent: ${agePageCardThemesWithoutParents[i].deep}; --accent-soft: ${agePageCardThemesWithoutParents[i].soft};`}
             >
               <svg
                 class="age-page__blob"
@@ -224,6 +226,7 @@ const agePageCardThemesWithoutParents = [
   .age-page {
     --age-page-anchor-offset: calc(var(--nav-height) + var(--space-10));
     --age-page-anchor-offset-groups: calc(var(--nav-height) + var(--space-2));
+    --section-header-spacing: 3rem;
     padding-top: 0;
     scroll-margin-top: var(--nav-height);
     background-color: var(--color-cream);
@@ -303,6 +306,7 @@ const agePageCardThemesWithoutParents = [
   }
 
   .age-page__intro .section-header {
+    --section-header-spacing: 3rem;
     margin-bottom: var(--section-header-spacing);
   }
 
@@ -311,17 +315,45 @@ const agePageCardThemesWithoutParents = [
     margin: 0 0 2rem;
   }
 
+  /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
+  .age-page__head {
+    display: inline-grid;
+    grid-template-columns: minmax(0, max-content);
+    justify-items: stretch;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .age-page__head h1,
+  .age-page .section-subtitle {
+    grid-column: 1;
+  }
+
+  .age-page .section-subtitle {
+    width: 0;
+    min-width: 100%;
+    text-wrap: pretty;
+  }
+
   .age-page .section-title-accent {
     color: var(--color-blush-vivid);
   }
 
-  @media (max-width: 639px) {
-    .age-page {
-      --section-header-spacing: 3rem;
+  @media (min-width: 640px) {
+    .age-page__head {
+      display: contents;
     }
 
-    .age-page .section-header {
-      --section-header-spacing: 3rem;
+    .age-page__head h1,
+    .age-page .section-subtitle {
+      grid-column: auto;
+    }
+
+    .age-page .section-subtitle {
+      width: auto;
+      min-width: 0;
+      text-wrap: wrap;
     }
   }
 
@@ -329,7 +361,7 @@ const agePageCardThemesWithoutParents = [
     position: relative;
     z-index: 10;
     width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-9);
+    margin: 0 auto var(--space-12);
   }
 
   /* Pill — společný základ pro obě pilulky (stejné parametry) */

@@ -36,7 +36,15 @@ const Navbar = ({
   variant = "default",
 }: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() => {
+    if (typeof window === "undefined") return variant === "solid";
+
+    return (
+      variant === "solid" ||
+      window.scrollY > 60 ||
+      document.documentElement.dataset.workshopsHomeArrival === "true"
+    );
+  });
   const [open, setOpen] = useState(false);
   const [lockAboutDropdown, setLockAboutDropdown] = useState(false);
   const openRef = useRef(open);

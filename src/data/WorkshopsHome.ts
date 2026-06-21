@@ -4,7 +4,14 @@ export type WorkshopsHomeMeta = {
   title: string;
   titleAccent: string;
   subtitle: string;
-  subtitleLine2: string;
+  /** Text v `.workshops-home__note` před zvýrazněním */
+  cardNoteLead: string;
+  /** Zvýrazněná část (růžová) v `.workshops-home__note` */
+  cardNoteHighlight: string;
+  /** Text v `.workshops-home__note` po zvýraznění */
+  cardNoteTail: string;
+  /** Text v `.workshops-home__info` pod seznamem workshopů */
+  cardInfoText: string;
   detailHref: string;
   ctaLabel: string;
 };
@@ -16,6 +23,10 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   titleAccent: "pro rodiče",
   subtitle:
     "Praktické workhopy pro rodiče zaměřené na první pomoc u dětí, handling miminek a psychomotorický vývoj.",
+  cardNoteLead: "Dopřejte svému miminku ten",
+  cardNoteHighlight: "nejlepší start",
+  cardNoteTail: "do života.",
+  cardInfoText: "Aktuální termíny a místa konání najdete v detailu.",
   detailHref: "/workshopy",
   ctaLabel: "Všechny workshopy",
 };
@@ -151,6 +162,7 @@ export const workshops: Workshop[] = [
   {
     id: "handling-a-psychomotoricky-vyvoj",
     title: "Handling a psychomotorický vývoj",
+    homeSummary: "Vývoj dítěte a správné zacházení.",
     summary: "Porozumění pohybovému vývoji dítěte a správnému zacházení.",
     highlights: [
       "Správná manipulace",
@@ -170,6 +182,7 @@ export const workshops: Workshop[] = [
   {
     id: "psychomotoricky-vyvoj-prevence",
     title: "Psychomotorický vývoj & prevence",
+    homeSummary: "Vývoj dítěte krok za krokem a prevence obtíží.",
     summary:
       "Jak předcházet obtížím ve vývoji a podpořit přirozený rozvoj pohybu a vnímání.",
     highlights: [

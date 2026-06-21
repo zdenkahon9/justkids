@@ -5,6 +5,8 @@ import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
+const workshopsPageGridId = "workshops-page-grid";
+
 const meta = workshopsHomeMeta;
 const pageMeta = workshopsPageMeta;
 
@@ -28,22 +30,83 @@ const workshopIconById: Record<string, string> = {
     </div>
     <div class="container-x workshops-page__intro-inner">
       <header class="section-header reveal">
-        <h1 id="workshops-title">
-          {meta.title}{" "}
-          <span class="section-title-accent">{meta.titleAccent}</span>
-        </h1>
-        <p class="section-subtitle">{pageMeta.subtitle}</p>
+        <div class="workshops-page__head">
+          <h1 id="workshops-title">
+            {meta.title}{" "}
+            <span class="section-title-accent">{meta.titleAccent}</span>
+          </h1>
+          <p class="section-subtitle">{pageMeta.subtitle}</p>
+        </div>
       </header>
     </div>
   </div>
 
   <div class="container-x">
+    <div class="workshops-page__filter reveal">
+      <div class="workshops-page__nav">
+        <div class="workshops-page__nav-scroll" data-workshops-nav-scroll>
+          <nav
+            class="workshops-page__nav-track"
+            aria-label="Přejít na workshop"
+          >
+            {
+              workshops.map((w) => (
+                <div
+                  class="workshops-page__pill workshops-page__pill--nav"
+                  style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
+                >
+                  <a href={`#${w.id}`} class="workshops-page__pill-link">
+                    {w.title}
+                  </a>
+                </div>
+              ))
+            }
+          </nav>
+        </div>
+        <div class="workshops-page__nav-scrollbar" aria-hidden="true">
+          <span
+            class="workshops-page__nav-scrollbar-thumb"
+            data-workshops-nav-thumb></span>
+        </div>
+      </div>
+
+      <div class="workshops-page__pill workshops-page__pill--all-dates">
+        <a
+          href={`#${workshopsPageGridId}`}
+          class="workshops-page__pill-all-dates"
+        >
+          <span class="workshops-page__pill-all-dates-icon" aria-hidden="true">
+            <Icon
+              name="lineicons:calendar-days"
+              class="workshops-page__pill-all-dates-graphic"
+            />
+          </span>
+          {pageMeta.showAllDatesLabel}
+        </a>
+      </div>
+    </div>
+
+    <h2
+      id={workshopsPageGridId}
+      class="workshops-page__group-heading"
+      style="--accent: var(--color-lilac-deep);"
+    >
+      <span class="workshops-page__group-heading-icon" aria-hidden="true">
+        <Icon
+          name="lineicons:calendar-days"
+          class="workshops-page__group-heading-graphic"
+        />
+      </span>
+      {pageMeta.allDatesHeading}
+    </h2>
+
     <ul class="workshops__grid">
       {
-        workshops.map((w, i) => (
+        workshops.map((w) => (
           <li
-            class="workshop reveal"
-            style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}; transition-delay: ${i * 80}ms`}
+            id={w.id}
+            class="workshop"
+            style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}`}
           >
             <span class="workshop__icon" aria-hidden="true">
               <Icon
@@ -151,7 +214,12 @@ const workshopIconById: Record<string, string> = {
 
 <style>
   .workshops-page {
+    --workshops-page-anchor-offset: calc(
+      var(--nav-height) + var(--space-9) - var(--space-1)
+    );
+    --section-header-spacing: 3rem;
     padding-top: 0;
+    padding-bottom: 0;
     scroll-margin-top: var(--nav-height);
     background-color: var(--color-cream);
   }
@@ -226,27 +294,280 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshops-page__intro .section-header {
+    --section-header-spacing: 3rem;
     margin-bottom: var(--section-header-spacing);
   }
 
   .workshops-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 var(--h2-title-gap);
+    margin: 0 0 2rem;
+  }
+
+  /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
+  .workshops-page__head {
+    display: inline-grid;
+    grid-template-columns: minmax(0, max-content);
+    justify-items: stretch;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .workshops-page__head h1,
+  .workshops-page .section-subtitle {
+    grid-column: 1;
+  }
+
+  .workshops-page .section-subtitle {
+    width: 0;
+    min-width: 100%;
+    text-wrap: pretty;
   }
 
   .workshops-page .section-title-accent {
     color: var(--color-sky-deep);
   }
 
-  @media (max-width: 639px) {
+  @media (min-width: 640px) {
     .workshops-page {
-      --section-header-spacing: 3rem;
-      padding-bottom: 0;
+      padding-bottom: var(--section-padding-y);
     }
 
-    .workshops-page .section-header {
-      --section-header-spacing: 3rem;
+    .workshops-page__head {
+      display: contents;
     }
+
+    .workshops-page__head h1,
+    .workshops-page .section-subtitle {
+      grid-column: auto;
+    }
+
+    .workshops-page .section-subtitle {
+      width: auto;
+      min-width: 0;
+      text-wrap: wrap;
+    }
+  }
+
+  .workshops-page__filter {
+    position: relative;
+    z-index: 10;
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto var(--space-12);
+  }
+
+  .workshops-page__nav {
+    margin-bottom: 0;
+  }
+
+  .workshops-page__nav-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .workshops-page__nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workshops-page__nav-track {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-3);
+    width: max-content;
+    min-width: 100%;
+    padding-bottom: var(--space-1);
+  }
+
+  /* Pill — stejný vizuál jako .age-page__pill na AgeGroupsPage */
+  .workshops-page__pill {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    background: #fefefe;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-base);
+    line-height: var(--line-height-base);
+    white-space: nowrap;
+    padding: 1rem 1.625rem;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+  }
+
+  .workshops-page__nav + .workshops-page__pill {
+    margin-top: var(--space-4);
+  }
+
+  .workshops-page__pill--nav {
+    width: auto;
+    flex: 0 0 auto;
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .workshops-page__pill-link {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 1.625rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    --workshops-page-scroll-offset: var(--workshops-page-anchor-offset);
+    transition: background-color 220ms ease;
+  }
+
+  .workshops-page__pill-link:hover,
+  .workshops-page__pill-link:focus-visible,
+  .workshops-page__pill-link:active {
+    background: var(--accent-soft);
+    outline: none;
+  }
+
+  .workshops-page__nav-scrollbar {
+    position: relative;
+    height: 0.25rem;
+    margin-top: var(--space-3);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    overflow: hidden;
+  }
+
+  .workshops-page__nav-scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    min-width: 2.5rem;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--color-ink) 28%, transparent);
+    transform: translateX(0);
+    transition: transform 80ms linear;
+    will-change: transform, width;
+  }
+
+  .workshops-page__nav-scrollbar.is-hidden
+    .workshops-page__nav-scrollbar-thumb {
+    width: 100% !important;
+    transform: translateX(0) !important;
+    opacity: 0.35;
+  }
+
+  .workshops-page__pill--all-dates {
+    padding: 0;
+    align-items: stretch;
+    background: transparent;
+  }
+
+  .workshops-page__pill-all-dates {
+    flex: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    gap: 0.6rem;
+    width: 100%;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 1.625rem;
+    background: #fefefe;
+    color: var(--color-ink);
+    --workshops-page-scroll-offset: var(--workshops-page-anchor-offset);
+    font: inherit;
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    text-align: center;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease;
+  }
+
+  .workshops-page__pill-all-dates:hover,
+  .workshops-page__pill-all-dates:focus-visible,
+  .workshops-page__pill-all-dates:active {
+    background: var(--color-lilac-deep);
+    color: #fefefe;
+    outline: none;
+  }
+
+  .workshops-page__pill-all-dates-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--color-lilac-deep);
+    transition: color 220ms ease;
+  }
+
+  .workshops-page__pill-all-dates:hover .workshops-page__pill-all-dates-icon,
+  .workshops-page__pill-all-dates:focus-visible
+    .workshops-page__pill-all-dates-icon,
+  .workshops-page__pill-all-dates:active .workshops-page__pill-all-dates-icon {
+    color: #fefefe;
+  }
+
+  .workshops-page__pill-all-dates-graphic {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .workshops-page__pill-all-dates-graphic :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #workshops-page-grid {
+    scroll-margin-top: var(--workshops-page-anchor-offset);
+  }
+
+  /* Nadpis nad mřížkou — stejný vizuál jako .age-page__group-heading */
+  .workshops-page__group-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-2-5xl);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .workshops-page__group-heading-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    color: var(--accent);
+  }
+
+  .workshops-page__group-heading-graphic {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    transform: translateY(-0.125rem);
   }
 
   /* Mobile-first: responzivní mřížka karet */
@@ -271,6 +592,7 @@ const workshopIconById: Record<string, string> = {
   .workshop {
     --workshop-title: #2d3748;
     --workshop-body: #4a5568;
+    scroll-margin-top: var(--workshops-page-anchor-offset);
     position: relative;
     overflow: visible;
     background: #fefefe;
@@ -592,6 +914,11 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 768px) {
+    .workshops-page__filter,
+    .workshops-page__group-heading {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+    }
+
     .workshops__grid {
       --workshop-card-width: var(--card-grid-width-md);
       width: fit-content;
@@ -607,3 +934,91 @@ const workshopIconById: Record<string, string> = {
     }
   }
 </style>
+
+<script>
+  const readCssVarLength = (el: Element, varName: string) => {
+    const probe = document.createElement("div");
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    probe.style.pointerEvents = "none";
+    probe.style.height = `var(${varName})`;
+    el.appendChild(probe);
+    const px = probe.getBoundingClientRect().height;
+    probe.remove();
+    return px;
+  };
+
+  const setupWorkshopsPageNav = () => {
+    const page = document.querySelector<HTMLElement>(".workshops-page");
+    if (!page || page.dataset.navReady === "true") return;
+    page.dataset.navReady = "true";
+
+    const scrollEl = page.querySelector<HTMLElement>(
+      "[data-workshops-nav-scroll]",
+    );
+    const thumbEl = page.querySelector<HTMLElement>(
+      "[data-workshops-nav-thumb]",
+    );
+    const scrollbarEl = thumbEl?.closest<HTMLElement>(
+      ".workshops-page__nav-scrollbar",
+    );
+
+    const updateNavScrollbar = () => {
+      if (!scrollEl || !thumbEl || !scrollbarEl) return;
+
+      const { scrollWidth, clientWidth, scrollLeft } = scrollEl;
+      const trackWidth = scrollbarEl.clientWidth;
+      const overflow = scrollWidth - clientWidth;
+
+      if (overflow <= 1) {
+        scrollbarEl.classList.add("is-hidden");
+        thumbEl.style.width = "100%";
+        thumbEl.style.transform = "translateX(0)";
+        return;
+      }
+
+      scrollbarEl.classList.remove("is-hidden");
+      const thumbWidth = Math.max((clientWidth / scrollWidth) * trackWidth, 40);
+      const maxThumbTravel = trackWidth - thumbWidth;
+      const thumbOffset = (scrollLeft / overflow) * maxThumbTravel;
+
+      thumbEl.style.width = `${thumbWidth}px`;
+      thumbEl.style.transform = `translateX(${thumbOffset}px)`;
+    };
+
+    scrollEl?.addEventListener("scroll", updateNavScrollbar, {
+      passive: true,
+    });
+    window.addEventListener("resize", updateNavScrollbar, { passive: true });
+    updateNavScrollbar();
+
+    page
+      .querySelectorAll<HTMLAnchorElement>(
+        '.workshops-page__pill-link[href^="#"], .workshops-page__pill-all-dates[href^="#"]',
+      )
+      .forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const href = link.getAttribute("href");
+          if (!href?.startsWith("#")) return;
+
+          const target = document.querySelector(href);
+          if (!target) return;
+
+          event.preventDefault();
+
+          const offset = readCssVarLength(
+            link,
+            "--workshops-page-scroll-offset",
+          );
+          const top =
+            target.getBoundingClientRect().top + window.scrollY - offset;
+
+          window.scrollTo({ top, behavior: "smooth" });
+          history.replaceState(null, "", href);
+        });
+      });
+  };
+
+  setupWorkshopsPageNav();
+  document.addEventListener("astro:page-load", setupWorkshopsPageNav);
+</script>

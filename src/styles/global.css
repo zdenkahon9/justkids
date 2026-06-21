@@ -8,6 +8,10 @@
   --color-cream-100: #fdf6ef;
   --color-cream-200: #f7ecdf;
 
+  /* Pastel apricot / peach */
+  --color-apricot-soft: #fff0e6;
+  --color-apricot-mid: #ffe9d6;
+
   /* Pastel blues (from balloons) */
   --color-sky-soft: #d6ecfa;
   --color-sky-mid: #a9d4f0;
@@ -403,4 +407,26 @@ h3 {
   filter: drop-shadow(
     0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
   );
+}
+
+/* Příjezd ze šipek WorkshopsHome — navbar hned ve scrolled stavu, bez poskoku */
+html[data-workshops-home-arrival] [data-component="navbar"] {
+  background: rgba(255, 249, 244, 0.88);
+  backdrop-filter: saturate(150%) blur(14px);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
+  padding: 0.5rem 0;
+  box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
+  transition: none;
+}
+
+html[data-workshops-home-arrival] [data-component="navbar"] img {
+  width: 40px;
+  height: 40px;
+  transition: none;
+}
+
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandName"],
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandSub"] {
+  text-shadow: none;
+  transition: none;
 }

@@ -26,13 +26,4 @@ export const camps: Camp[] = [
       "Tři dny zaměřené na pohyb, dech a sdílení. Vhodné i pro maminky s mladšími miminky v šátku.",
     accent: "sky",
   },
-  {
-    id: "jarni-vylet",
-    title: "Jarní výlet do přírody",
-    date: "Jaro 2027",
-    place: "CHKO Český kras",
-    summary:
-      "Jednodenní rodinný výlet s krátkým cvičením, piknikem a hrami. Pro celé rodiny i prarodiče.",
-    accent: "lilac",
-  },
 ];

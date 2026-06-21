@@ -38,6 +38,16 @@ const mobileNavLinks = [
   description={pageDescription}
   canonical={canonical}
 >
+  <script
+    is:inline
+    define:vars={{ scrollKey: "workshops-home-scroll" }}
+  >
+    if (sessionStorage.getItem(scrollKey)) {
+      document.documentElement.dataset.workshopsHomeArrival = "true";
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    }
+  </script>
+
   <Navbar
     client:load
     links={navLinks}
@@ -51,6 +61,49 @@ const mobileNavLinks = [
   <main id="main">
     <WorkshopsPage />
   </main>
+
+  <script
+    is:inline
+    define:vars={{
+      scrollKey: "workshops-home-scroll",
+      arrivalAttr: "workshopsHomeArrival",
+    }}
+  >
+    (function () {
+      var targetId = sessionStorage.getItem(scrollKey);
+      if (!targetId) return;
+
+      sessionStorage.removeItem(scrollKey);
+
+      var page = document.querySelector(".workshops-page");
+      var target = document.getElementById(targetId);
+      if (!page || !target) {
+        delete document.documentElement.dataset[arrivalAttr];
+        return;
+      }
+
+      var offsetEl = page.querySelector(".workshops-page__pill-link") || page;
+      var probe = document.createElement("div");
+      probe.style.position = "absolute";
+      probe.style.visibility = "hidden";
+      probe.style.pointerEvents = "none";
+      probe.style.height =
+        "calc(var(--workshops-page-scroll-offset) + var(--space-6))";
+      offsetEl.appendChild(probe);
+      var offset = probe.getBoundingClientRect().height;
+      probe.remove();
+
+      var top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo(0, top);
+      history.replaceState(null, "", "#" + targetId);
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          delete document.documentElement.dataset[arrivalAttr];
+        });
+      });
+    })();
+  </script>
 
   <Footer />
 </BaseLayout>

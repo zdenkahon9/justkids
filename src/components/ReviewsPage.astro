@@ -102,6 +102,7 @@ const meta = reviewsPageMeta;
 <style>
   .reviews-page {
     --accent: var(--color-blush-deep);
+    --section-header-spacing: 3rem;
     padding-top: 0;
     padding-bottom: 0;
     scroll-margin-top: var(--nav-height);
@@ -178,6 +179,7 @@ const meta = reviewsPageMeta;
   }
 
   .reviews-page__intro .section-header {
+    --section-header-spacing: 3rem;
     margin-bottom: var(--section-header-spacing);
   }
 
@@ -188,16 +190,6 @@ const meta = reviewsPageMeta;
 
   .reviews-page .section-title-accent {
     color: var(--color-blush-vivid);
-  }
-
-  @media (max-width: 639px) {
-    .reviews-page {
-      --section-header-spacing: 3rem;
-    }
-
-    .reviews-page .section-header {
-      --section-header-spacing: 3rem;
-    }
   }
 
   .reviews-page__fb {
@@ -231,9 +223,42 @@ const meta = reviewsPageMeta;
     margin-bottom: 2rem;
   }
 
-  /* Desktop: obal je průhledný; mobil viz @media níže (639px = section-header v global.css) */
+  /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
   .reviews-page__head {
-    display: contents;
+    display: inline-grid;
+    grid-template-columns: minmax(0, max-content);
+    justify-items: stretch;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .reviews-page__head h1,
+  .reviews-page .section-subtitle {
+    grid-column: 1;
+  }
+
+  .reviews-page .section-subtitle {
+    width: 0;
+    min-width: 100%;
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 640px) {
+    .reviews-page__head {
+      display: contents;
+    }
+
+    .reviews-page__head h1,
+    .reviews-page .section-subtitle {
+      grid-column: auto;
+    }
+
+    .reviews-page .section-subtitle {
+      width: auto;
+      min-width: 0;
+      text-wrap: wrap;
+    }
   }
 
   .about__divider {
@@ -334,29 +359,6 @@ const meta = reviewsPageMeta;
     display: flex;
     justify-content: center;
     margin-top: var(--space-10);
-  }
-
-  /* Mobilní section-header — stejný breakpoint jako global.css (639px) */
-  @media (max-width: 639px) {
-    .reviews-page__head {
-      display: inline-grid;
-      grid-template-columns: minmax(0, max-content);
-      justify-items: stretch;
-      max-width: 100%;
-      margin-inline: auto;
-      text-align: center;
-    }
-
-    .reviews-page__head h1,
-    .reviews-page .section-subtitle {
-      grid-column: 1;
-    }
-
-    .reviews-page .section-subtitle {
-      width: 0;
-      min-width: 100%;
-      text-wrap: pretty;
-    }
   }
 
   @media (min-width: 768px) {
