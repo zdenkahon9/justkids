@@ -1,15 +1,56 @@
 ---
 import Icon from "astro-iconify";
-import { workshops, workshopIconById } from "../data/WorkshopsHome";
+import { workshops } from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const pageMeta = workshopsPageMeta;
 
-const allDatesCardThemes = workshops.map((w) => ({
-  deep: cardAccentDeep(w.accent),
-  soft: cardAccentSoft(w.accent),
-}));
+const monthOrder: Record<string, number> = {
+  LED: 1,
+  UNO: 2,
+  BRE: 3,
+  DUB: 4,
+  KVE: 5,
+  KVĚ: 5,
+  CER: 6,
+  ČER: 6,
+  CVC: 7,
+  SRP: 8,
+  ZAR: 9,
+  ZÁŘ: 9,
+  RIJ: 10,
+  ŘIJ: 10,
+  LIS: 11,
+  PRO: 12,
+};
+
+const parseTime = (time: string) => {
+  const match = time.match(/(\d{1,2}):(\d{2})/);
+  if (!match) return 0;
+  return Number.parseInt(match[1], 10) * 60 + Number.parseInt(match[2], 10);
+};
+
+const allDateSlots = workshops
+  .flatMap((workshop) =>
+    (workshop.dates ?? []).map((date) => ({
+      ...date,
+      workshopTitle: workshop.title,
+      accentDeep: cardAccentDeep(workshop.accent),
+      accentSoft: cardAccentSoft(workshop.accent),
+    })),
+  )
+  .sort((a, b) => {
+    const monthA = monthOrder[a.month.toUpperCase()] ?? 99;
+    const monthB = monthOrder[b.month.toUpperCase()] ?? 99;
+    if (monthA !== monthB) return monthA - monthB;
+
+    const dayA = Number.parseInt(a.day, 10);
+    const dayB = Number.parseInt(b.day, 10);
+    if (dayA !== dayB) return dayA - dayB;
+
+    return parseTime(a.time) - parseTime(b.time);
+  });
 ---
 
 <section
@@ -26,76 +67,63 @@ const allDatesCardThemes = workshops.map((w) => ({
     </header>
 
     <ul class="workshops-page__dates-grid reveal">
-      {
-        workshops.map((workshop, index) => (
-          <li>
-            <article
-              class="workshops-page__date-card"
-              style={`--accent: ${allDatesCardThemes[index].deep}; --accent-soft: ${allDatesCardThemes[index].soft};`}
-              aria-label={workshop.title}
-            >
-              <div class="workshops-page__date-body">
-                <div class="workshops-page__date-workshop">
-                  <span
-                    class="workshops-page__date-workshop-icon"
-                    aria-hidden="true"
-                  >
-                    <Icon
-                      name={
-                        workshopIconById[workshop.id] ??
-                        "streamline:health-care-2"
-                      }
-                      class="workshops-page__date-workshop-icon-graphic"
-                    />
-                  </span>
-                  <h3 class="workshops-page__date-workshop-label">
-                    {workshop.title}
-                  </h3>
-                </div>
-                <span
-                  class="workshops-page__date-workshop-rule"
-                  aria-hidden="true"
-                />
-                {workshop.dates?.length ? (
-                  <ul class="workshops-page__date-slots">
-                    {workshop.dates.map((date, dateIndex) => (
-                      <li class="workshops-page__date-slot">
-                        {dateIndex > 0 ? (
-                          <span
-                            class="workshops-page__date-slot-rule"
-                            aria-hidden="true"
-                          />
-                        ) : null}
-                        <div class="workshops-page__date-slot-row">
-                          <div
-                            class="workshops-page__date-slot-date"
-                            aria-hidden="true"
-                          >
-                            <span class="workshops-page__date-slot-day">
-                              {date.day}
-                            </span>
-                            <span class="workshops-page__date-slot-month">
-                              {date.month}
-                            </span>
-                          </div>
-                          <div class="workshops-page__date-slot-body">
-                            <p class="workshops-page__date-slot-venue">
-                              {date.venueName}
-                            </p>
-                            <p class="workshops-page__date-slot-time">
-                              {date.time}
-                            </p>
-                          </div>
+      <li>
+        <article class="workshops-page__date-card">
+          <div class="workshops-page__date-body">
+            {
+              allDateSlots.length ? (
+                <ul class="workshops-page__date-slots">
+                  {allDateSlots.map((date, dateIndex) => (
+                    <li class="workshops-page__date-slot">
+                      {dateIndex > 0 ? (
+                        <span
+                          class="workshops-page__date-slot-rule"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      <div class="workshops-page__date-slot-row">
+                        <div
+                          class="workshops-page__date-slot-date"
+                          style={`--accent: ${date.accentDeep}; --accent-soft: ${date.accentSoft};`}
+                          aria-hidden="true"
+                        >
+                          <span class="workshops-page__date-slot-day">
+                            {date.day}
+                          </span>
+                          <span class="workshops-page__date-slot-month">
+                            {date.month}
+                          </span>
                         </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            </article>
-          </li>
-        ))
-      }
+                        <div class="workshops-page__date-slot-body">
+                          <p class="workshops-page__date-slot-venue">
+                            {date.workshopTitle}
+                          </p>
+                          <p class="workshops-page__date-slot-place">
+                            <Icon
+                              name="ph:map-pin"
+                              class="schedule__venue-icon"
+                              aria-hidden="true"
+                            />
+                            {date.venueName}
+                          </p>
+                          <p class="workshops-page__date-slot-time">
+                            <Icon
+                              name="ph:clock"
+                              class="schedule__venue-icon"
+                              aria-hidden="true"
+                            />
+                            {date.time}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : null
+            }
+          </div>
+        </article>
+      </li>
     </ul>
   </div>
 </section>
@@ -187,7 +215,7 @@ const allDatesCardThemes = workshops.map((w) => ({
     display: block;
     width: 100%;
     height: 1px;
-    margin: 0;
+    margin: var(--space-1) 0 var(--space-1);
     border: none;
     background: rgba(42, 31, 56, 0.12);
   }
@@ -196,6 +224,11 @@ const allDatesCardThemes = workshops.map((w) => ({
     display: flex;
     align-items: center;
     gap: var(--space-5);
+    box-sizing: border-box;
+    height: calc(
+      4 * var(--text-base) * var(--line-height-base) + 0.25rem + 2 *
+        var(--space-2)
+    );
     padding: var(--space-2) 0;
   }
 
@@ -205,13 +238,14 @@ const allDatesCardThemes = workshops.map((w) => ({
 
   .workshops-page__date-slot-date {
     flex-shrink: 0;
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.125rem;
-    width: 3.75rem;
-    height: 3.75rem;
+    width: 4rem;
+    min-height: 4rem;
     border-radius: var(--radius-pill);
     background: var(--accent-soft);
     color: var(--accent);
@@ -237,7 +271,7 @@ const allDatesCardThemes = workshops.map((w) => ({
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.125rem;
+    gap: 0.375rem;
   }
 
   .workshops-page__date-slot-venue {
@@ -249,10 +283,33 @@ const allDatesCardThemes = workshops.map((w) => ({
     color: var(--color-ink);
   }
 
-  .workshops-page__date-slot-time {
+  .workshops-page__date-slot-place {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin: 0;
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .schedule__venue-icon {
+    flex-shrink: 0;
+    width: var(--text-base);
+    height: var(--text-base);
+    pointer-events: none;
+    color: var(--color-ink-soft);
+  }
+
+  .workshops-page__date-slot-time {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
