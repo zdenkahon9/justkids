@@ -8,11 +8,10 @@ import { site } from "../data/site";
     <header class="section-header reveal">
       <span class="eyebrow">Pojďte s námi ven</span>
       <h2 id="camps-title">
-        Kempy <span class="section-title-accent">&amp; výjezdy</span>
+        Kempy pro rodiče <span class="section-title-accent">s dětmi</span>
       </h2>
       <p class="section-subtitle">
-        Společné víkendy a výlety, kde si rodiny užijí pohyb, přírodu a vzájemné
-        poznání.
+        Společně strávený čas plný pohybu, tvoření a zábavy pro děti i rodiče.
       </p>
     </header>
 
@@ -23,35 +22,6 @@ import { site } from "../data/site";
             class={`camp camp--${c.accent} reveal`}
             style={`transition-delay: ${i * 100}ms`}
           >
-            <div class="camp__date">
-              <span class="camp__date-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  <rect
-                    x="3"
-                    y="5"
-                    width="18"
-                    height="16"
-                    rx="3"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <path
-                    d="M 3 9 L 21 9"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  />
-                  <path
-                    d="M 8 3 L 8 7 M 16 3 L 16 7"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </span>
-              <span>{c.date}</span>
-            </div>
-
             <div class="camp__body">
               <h3>{c.title}</h3>
               <p class="camp__place">
@@ -148,27 +118,6 @@ import { site } from "../data/site";
       color-mix(in srgb, var(--accent-color) 40%, transparent);
   }
 
-  .camp__date {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent-color);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: var(--text-base);
-    min-width: 0;
-  }
-
-  .camp__date-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--accent-color) 18%, white);
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-  }
-
   .camp__body h3 {
     font-size: var(--text-h3);
     margin: 0 0 0.4rem;
@@ -210,12 +159,8 @@ import { site } from "../data/site";
 
   @media (min-width: 1024px) {
     .camp {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: 1fr auto;
       gap: 1.5rem;
-    }
-
-    .camp__date {
-      min-width: 140px;
     }
 
     .camp__cta {
