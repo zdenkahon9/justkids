@@ -17,8 +17,12 @@ export type WorkshopsPageMeta = {
   signupLabel: string;
   /** Text pilulky „Zobrazit všechny termíny“ nad mřížkou */
   showAllDatesLabel: string;
-  /** Nadpis nad mřížkou všech termínů v `.workshops-page__group-heading` */
-  allDatesHeading: string;
+  /** Id sekce všech termínů pod mřížkou workshopů */
+  allDatesSectionId: string;
+  /** Nadpis sekce všech termínů — první část před `.section-title-accent` */
+  allDatesTitle: string;
+  /** Zvýrazněná část nadpisu v `.section-title-accent` */
+  allDatesTitleAccent: string;
 };
 
 export const workshopsPageMeta: WorkshopsPageMeta = {
@@ -31,7 +35,9 @@ export const workshopsPageMeta: WorkshopsPageMeta = {
   spotsLabel: "Volná místa:",
   signupLabel: "Přihlásit se na workshop",
   showAllDatesLabel: "Zobrazit všechny termíny",
-  allDatesHeading: "Všechny termíny",
+  allDatesSectionId: "vsechny-terminy",
+  allDatesTitle: "Všechny",
+  allDatesTitleAccent: "termíny",
 };
 
 /** Karty na detailní stránce — sdílí stejná data jako homepage */

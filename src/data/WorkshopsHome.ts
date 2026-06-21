@@ -136,6 +136,13 @@ const prevenceDates: WorkshopDateSlot[] = [
   },
 ];
 
+/** Iconify názvy (sada:id) — mapování podle id workshopu */
+export const workshopIconById: Record<string, string> = {
+  "prvni-pomoc-u-deti": "fluent:briefcase-medical-24-regular",
+  "handling-a-psychomotoricky-vyvoj": "streamline-sharp:health-care-2",
+  "psychomotoricky-vyvoj-prevence": "ph:brain",
+};
+
 export const workshops: Workshop[] = [
   {
     id: "prvni-pomoc-u-deti",

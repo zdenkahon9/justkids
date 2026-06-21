@@ -285,7 +285,7 @@
   width: 44px;
   height: 44px;
   border: 1.5px solid rgba(42, 31, 56, 0.15);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-pill);
   background: #fefefe;
   cursor: pointer;
   transition: background-color 220ms ease;

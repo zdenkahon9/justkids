@@ -1,6 +1,10 @@
 ---
 import Icon from "astro-iconify";
-import { workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
+import {
+  workshops,
+  workshopsHomeMeta,
+  workshopIconById,
+} from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -9,13 +13,6 @@ const workshopsPageGridId = "workshops-page-grid";
 
 const meta = workshopsHomeMeta;
 const pageMeta = workshopsPageMeta;
-
-/** Iconify názvy (sada:id) — mapování podle id z WorkshopsHome.ts */
-const workshopIconById: Record<string, string> = {
-  "prvni-pomoc-u-deti": "fluent:briefcase-medical-24-regular",
-  "handling-a-psychomotoricky-vyvoj": "streamline-sharp:health-care-2",
-  "psychomotoricky-vyvoj-prevence": "ph:brain",
-};
 ---
 
 <section
@@ -72,7 +69,7 @@ const workshopIconById: Record<string, string> = {
 
       <div class="workshops-page__pill workshops-page__pill--all-dates">
         <a
-          href={`#${workshopsPageGridId}`}
+          href={`#${pageMeta.allDatesSectionId}`}
           class="workshops-page__pill-all-dates"
         >
           <span class="workshops-page__pill-all-dates-icon" aria-hidden="true">
@@ -86,21 +83,7 @@ const workshopIconById: Record<string, string> = {
       </div>
     </div>
 
-    <h2
-      id={workshopsPageGridId}
-      class="workshops-page__group-heading"
-      style="--accent: var(--color-lilac-deep);"
-    >
-      <span class="workshops-page__group-heading-icon" aria-hidden="true">
-        <Icon
-          name="lineicons:calendar-days"
-          class="workshops-page__group-heading-graphic"
-        />
-      </span>
-      {pageMeta.allDatesHeading}
-    </h2>
-
-    <ul class="workshops__grid">
+    <ul id={workshopsPageGridId} class="workshops__grid">
       {
         workshops.map((w) => (
           <li
@@ -203,12 +186,6 @@ const workshopIconById: Record<string, string> = {
         ))
       }
     </ul>
-
-    <div class="workshops-page__footer reveal">
-      <a class="btn btn-ghost workshops-page__back-btn" href="/">
-        <span aria-hidden="true">←</span> Zpět na hlavní stránku
-      </a>
-    </div>
   </div>
 </section>
 
@@ -219,7 +196,6 @@ const workshopIconById: Record<string, string> = {
     );
     --section-header-spacing: 3rem;
     padding-top: 0;
-    padding-bottom: 0;
     scroll-margin-top: var(--nav-height);
     background-color: var(--color-cream);
   }
@@ -329,10 +305,6 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 640px) {
-    .workshops-page {
-      padding-bottom: var(--section-padding-y);
-    }
-
     .workshops-page__head {
       display: contents;
     }
@@ -389,7 +361,7 @@ const workshopIconById: Record<string, string> = {
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
     border: 1.5px solid rgba(42, 31, 56, 0.12);
     background: #fefefe;
     font-family: var(--font-body);
@@ -539,37 +511,6 @@ const workshopIconById: Record<string, string> = {
     scroll-margin-top: var(--workshops-page-anchor-offset);
   }
 
-  /* Nadpis nad mřížkou — stejný vizuál jako .age-page__group-heading */
-  .workshops-page__group-heading {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-5);
-    font-family: var(--font-display);
-    font-size: var(--text-2-5xl);
-    font-weight: 600;
-    line-height: var(--line-height-xl);
-    color: var(--color-ink);
-  }
-
-  .workshops-page__group-heading-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    color: var(--accent);
-  }
-
-  .workshops-page__group-heading-graphic {
-    display: block;
-    width: 1.75rem;
-    height: 1.75rem;
-    transform: translateY(-0.125rem);
-  }
-
   /* Mobile-first: responzivní mřížka karet */
   .workshops__grid {
     --workshop-card-width: var(--card-grid-width);
@@ -713,7 +654,7 @@ const workshopIconById: Record<string, string> = {
 
   .workshop__details {
     padding-inline: 0;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-pill);
   }
 
   .workshop__highlights-label,
@@ -795,7 +736,7 @@ const workshopIconById: Record<string, string> = {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
   .workshop__date-card {
@@ -803,7 +744,7 @@ const workshopIconById: Record<string, string> = {
     align-items: stretch;
     width: 100%;
     min-height: 0;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-pill);
     border: var(--card-border);
     background: #fefefe;
     text-decoration: none;
@@ -826,7 +767,7 @@ const workshopIconById: Record<string, string> = {
   }
 
   .workshop__date-card-date {
-    flex: 0 0 4.75rem;
+    flex: 0 0 4.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -847,7 +788,7 @@ const workshopIconById: Record<string, string> = {
 
   .workshop__date-day {
     font-family: var(--font-body);
-    font-size: var(--text-2-5xl);
+    font-size: var(--text-lg);
     font-weight: 700;
     line-height: 1;
   }
@@ -859,7 +800,7 @@ const workshopIconById: Record<string, string> = {
     flex-direction: column;
     justify-content: center;
     gap: 0.125rem;
-    padding: var(--space-4) var(--space-5);
+    padding: var(--space-3) var(--space-4);
   }
 
   .workshop__date-time,
@@ -879,12 +820,6 @@ const workshopIconById: Record<string, string> = {
     font-weight: 400;
     line-height: var(--line-height-base);
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-  }
-
-  .workshops-page__footer {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-10);
   }
 
   .workshops-page__cta {
@@ -914,8 +849,7 @@ const workshopIconById: Record<string, string> = {
   }
 
   @media (min-width: 768px) {
-    .workshops-page__filter,
-    .workshops-page__group-heading {
+    .workshops-page__filter {
       width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
     }
 
@@ -1005,6 +939,12 @@ const workshopIconById: Record<string, string> = {
           if (!target) return;
 
           event.preventDefault();
+
+          if (link.classList.contains("workshops-page__pill-all-dates")) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            history.replaceState(null, "", href);
+            return;
+          }
 
           const offset = readCssVarLength(
             link,

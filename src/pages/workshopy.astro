@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import WorkshopsPage from "../components/WorkshopsPage.astro";
+import WorkshopsAllDates from "../components/WorkshopsAllDates.astro";
 import { workshopsHomeMeta } from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { site } from "../data/site";
@@ -60,6 +61,7 @@ const mobileNavLinks = [
 
   <main id="main">
     <WorkshopsPage />
+    <WorkshopsAllDates />
   </main>
 
   <script

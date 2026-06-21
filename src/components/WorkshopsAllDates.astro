@@ -1,0 +1,276 @@
+---
+import Icon from "astro-iconify";
+import { workshops, workshopIconById } from "../data/WorkshopsHome";
+import { workshopsPageMeta } from "../data/WorkshopsPage";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+
+const pageMeta = workshopsPageMeta;
+
+const allDatesCardThemes = workshops.map((w) => ({
+  deep: cardAccentDeep(w.accent),
+  soft: cardAccentSoft(w.accent),
+}));
+---
+
+<section
+  id={pageMeta.allDatesSectionId}
+  class="section workshops-page__all-dates"
+  aria-labelledby="workshops-all-dates-title"
+>
+  <div class="container-x">
+    <header class="section-header reveal">
+      <h2 id="workshops-all-dates-title">
+        {pageMeta.allDatesTitle}{" "}
+        <span class="section-title-accent">{pageMeta.allDatesTitleAccent}</span>
+      </h2>
+    </header>
+
+    <ul class="workshops-page__dates-grid reveal">
+      {
+        workshops.map((workshop, index) => (
+          <li>
+            <article
+              class="workshops-page__date-card"
+              style={`--accent: ${allDatesCardThemes[index].deep}; --accent-soft: ${allDatesCardThemes[index].soft};`}
+              aria-label={workshop.title}
+            >
+              <div class="workshops-page__date-body">
+                <div class="workshops-page__date-workshop">
+                  <span
+                    class="workshops-page__date-workshop-icon"
+                    aria-hidden="true"
+                  >
+                    <Icon
+                      name={
+                        workshopIconById[workshop.id] ??
+                        "streamline:health-care-2"
+                      }
+                      class="workshops-page__date-workshop-icon-graphic"
+                    />
+                  </span>
+                  <h3 class="workshops-page__date-workshop-label">
+                    {workshop.title}
+                  </h3>
+                </div>
+                <span
+                  class="workshops-page__date-workshop-rule"
+                  aria-hidden="true"
+                />
+                {workshop.dates?.length ? (
+                  <ul class="workshops-page__date-slots">
+                    {workshop.dates.map((date, dateIndex) => (
+                      <li class="workshops-page__date-slot">
+                        {dateIndex > 0 ? (
+                          <span
+                            class="workshops-page__date-slot-rule"
+                            aria-hidden="true"
+                          />
+                        ) : null}
+                        <div class="workshops-page__date-slot-row">
+                          <div
+                            class="workshops-page__date-slot-date"
+                            aria-hidden="true"
+                          >
+                            <span class="workshops-page__date-slot-day">
+                              {date.day}
+                            </span>
+                            <span class="workshops-page__date-slot-month">
+                              {date.month}
+                            </span>
+                          </div>
+                          <div class="workshops-page__date-slot-body">
+                            <p class="workshops-page__date-slot-venue">
+                              {date.venueName}
+                            </p>
+                            <p class="workshops-page__date-slot-time">
+                              {date.time}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .workshops-page__all-dates {
+    scroll-margin-top: var(--section-scroll-margin);
+    padding-bottom: 0;
+    background-color: var(--color-cream);
+  }
+
+  .workshops-page__all-dates .section-title-accent {
+    color: var(--color-lilac-deep);
+  }
+
+  .workshops-page__dates-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto var(--space-9);
+    width: fit-content;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: min(100%, var(--card-grid-width));
+    gap: var(--stack-gap);
+    justify-content: center;
+  }
+
+  .workshops-page__date-card {
+    --workshops-page-date-card-radius: var(--radius-card);
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    border-radius: var(--workshops-page-date-card-radius);
+    padding: var(--card-padding);
+    border: var(--card-border);
+    background: #fefefe;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .workshops-page__date-workshop {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .workshops-page__date-workshop-rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-5) 0 var(--space-2);
+    border: none;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .workshops-page__date-workshop-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .workshops-page__date-workshop-icon-graphic {
+    width: 1.625rem;
+    height: 1.625rem;
+  }
+
+  .workshops-page__date-workshop-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: var(--line-height-2xl);
+    color: var(--color-ink);
+  }
+
+  .workshops-page__date-slots {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .workshops-page__date-slot-rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: 0;
+    border: none;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .workshops-page__date-slot-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-2) 0;
+  }
+
+  .workshops-page__date-slot:last-child .workshops-page__date-slot-row {
+    padding-bottom: 0;
+  }
+
+  .workshops-page__date-slot-date {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.125rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    color: var(--accent);
+    text-align: center;
+  }
+
+  .workshops-page__date-slot-day {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .workshops-page__date-slot-month {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: var(--line-height-base);
+  }
+
+  .workshops-page__date-slot-body {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .workshops-page__date-slot-venue {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .workshops-page__date-slot-time {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 768px) {
+    .workshops-page__dates-grid {
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      justify-content: center;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .workshops-page__dates-grid {
+      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
+      margin-inline: auto;
+    }
+  }
+</style>

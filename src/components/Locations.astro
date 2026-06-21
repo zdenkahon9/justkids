@@ -19,7 +19,9 @@ const mapEmbed = (lat: number, lng: number) =>
       </h2>
       <p class="section-subtitle locations__subtitle">
         {locationsMeta.subtitleLead}{" "}
-        <span class="locations__subtitle-cities">{locationsMeta.subtitleCities}</span>
+        <span class="locations__subtitle-cities"
+          >{locationsMeta.subtitleCities}</span
+        >
       </p>
     </header>
 
@@ -216,7 +218,7 @@ const mapEmbed = (lat: number, lng: number) =>
       width: 100%;
       box-sizing: border-box;
       overflow: hidden;
-      border-radius: var(--radius-full);
+      border-radius: var(--radius-pill);
       border: 1.5px solid rgba(42, 31, 56, 0.12);
       background: transparent;
       font-family: var(--font-body);
@@ -442,7 +444,7 @@ const mapEmbed = (lat: number, lng: number) =>
     align-items: center;
     gap: 0.35rem;
     padding: 0.5rem 0.75rem;
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-pill);
     background: #fff;
     color: #1a73e8;
     font-family: var(--font-body);
