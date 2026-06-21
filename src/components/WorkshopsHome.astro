@@ -317,14 +317,18 @@ const meta = workshopsHomeMeta;
   .workshops-home__cta :global(.btn) {
     width: 90%;
     max-width: var(--card-grid-width);
-    padding: 1.125rem 1.375rem;
-    border-radius: var(--radius-full);
     box-shadow: none;
   }
 
-  .workshops-home__cta :global(.btn-primary:hover),
+  @media (hover: hover) and (pointer: fine) {
+    .workshops-home__cta :global(.btn-primary:hover) {
+      box-shadow: var(--shadow-pop);
+    }
+  }
+
   .workshops-home__cta :global(.btn-primary:active) {
     box-shadow: var(--shadow-pop);
+    transform: translate3d(0, 0, 0) scale(0.98);
   }
 
   @media (min-width: 768px) {

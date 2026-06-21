@@ -1,4 +1,5 @@
 ---
+import Icon from "astro-iconify";
 import { locations, locationsMeta } from "../data/locations";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
@@ -87,7 +88,10 @@ const mapEmbed = (lat: number, lng: number) =>
                                   class="location__p-mark"
                                   aria-hidden="true"
                                 >
-                                  P
+                                  <Icon
+                                    name="streamline:parking-sign-solid"
+                                    aria-hidden="true"
+                                  />
                                 </span>
                                 Parkování
                               </span>
@@ -170,187 +174,211 @@ const mapEmbed = (lat: number, lng: number) =>
 
 <style>
   /*
-   * Mobil (< 768px): stejná architektura jako Schedule — jedna karta, pill, divider, body.
-   * Od 768px desktop/tablet grid beze změny.
+   * Mobile-first: stejná architektura jako Schedule — jedna karta, pill, divider, body.
+   * Od 768px tablet/desktop grid karet vedle sebe.
    */
-  @media (max-width: 767px) {
-    .locations__subtitle-cities {
-      display: block;
-    }
+  #lokace {
+    scroll-margin-top: var(--section-scroll-margin);
+  }
 
-    .locations-tabs {
-      width: min(100%, var(--card-grid-width));
-      margin-inline: auto;
-    }
+  .locations .section-title-accent {
+    color: var(--color-lilac-deep);
+  }
 
-    .locations__panel {
-      width: 100%;
-      margin: 0;
-    }
+  .locations__subtitle-cities {
+    display: block;
+  }
 
-    .locations__card {
-      position: relative;
-      display: block;
-      box-sizing: border-box;
-      border-radius: var(--radius-card);
-      padding: var(--card-padding);
-      border: var(--card-border);
-      background: #fefefe;
-      box-shadow: none;
-      overflow: hidden;
-      width: 100%;
-    }
+  .locations-tabs {
+    width: min(100%, var(--card-grid-width));
+    margin-inline: auto;
+  }
 
-    .locations__rule {
-      display: block;
-      width: 100%;
-      height: 1px;
-      margin: var(--space-5) 0 var(--space-5);
-      border: none;
-      background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
-      transition: background 220ms ease;
-    }
+  .locations__panel {
+    width: 100%;
+    margin: 0;
+  }
 
-    .locations-tabs__switcher {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      width: 100%;
-      box-sizing: border-box;
-      overflow: hidden;
-      border-radius: var(--radius-pill);
-      border: 1.5px solid rgba(42, 31, 56, 0.12);
-      background: transparent;
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: var(--text-base);
-      line-height: var(--line-height-base);
-      white-space: nowrap;
-      padding: 0;
-      min-height: calc(2rem + 1em * var(--line-height-base));
-    }
+  .locations__card {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    border: var(--card-border);
+    background: #fefefe;
+    box-shadow: none;
+    overflow: hidden;
+    width: 100%;
+  }
 
-    .locations-tabs__item {
-      display: block;
-      flex: 1;
-      min-width: 0;
-    }
+  .locations__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-5) 0 var(--space-5);
+    border: none;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    transition: background 220ms ease;
+  }
 
-    .locations-tabs__tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-width: 0;
-      box-sizing: border-box;
-      min-height: calc(2rem + 1em * var(--line-height-base));
-      padding: 1rem 0;
-      border: none;
-      border-radius: 0;
-      background: transparent;
-      color: var(--color-ink);
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: var(--text-base);
-      line-height: var(--line-height-base);
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
-      list-style: none;
-      -webkit-tap-highlight-color: transparent;
-      transition:
-        background-color 220ms ease,
-        color 220ms ease;
-    }
+  .locations-tabs__switcher {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    background: transparent;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-base);
+    line-height: var(--line-height-base);
+    white-space: nowrap;
+    padding: 0;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+  }
 
-    .locations-tabs__tab::-webkit-details-marker {
-      display: none;
-    }
+  .locations-tabs__item {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
 
-    .locations-tabs__tab::marker {
-      content: "";
-    }
+  .locations-tabs__tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 1rem 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-base);
+    line-height: var(--line-height-base);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease;
+  }
 
-    details[open] > .locations-tabs__tab {
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 600;
-    }
+  .locations-tabs__tab::-webkit-details-marker {
+    display: none;
+  }
 
-    details:not([open]) > .locations-tabs__tab:hover,
-    details:not([open]) > .locations-tabs__tab:focus-visible {
-      background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
-      outline: none;
-    }
+  .locations-tabs__tab::marker {
+    content: "";
+  }
 
-    .locations__body {
-      position: relative;
-      z-index: 1;
-    }
+  details[open] > .locations-tabs__tab {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
 
-    .locations-tabs__panels .locations-tabs__panel {
-      display: none;
-      width: 100%;
-      box-sizing: border-box;
-    }
+  details:not([open]) > .locations-tabs__tab:hover,
+  details:not([open]) > .locations-tabs__tab:focus-visible {
+    background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+    outline: none;
+  }
 
-    .locations__card:has(
-        .locations-tabs__switcher .locations-tabs__item:nth-child(1)[open]
-      )
-      .locations-tabs__panels
-      .locations-tabs__panel:nth-child(1),
-    .locations__card:has(
-        .locations-tabs__switcher .locations-tabs__item:nth-child(2)[open]
-      )
-      .locations-tabs__panels
-      .locations-tabs__panel:nth-child(2),
-    .locations__card:has(
-        .locations-tabs__switcher .locations-tabs__item:nth-child(3)[open]
-      )
-      .locations-tabs__panels
-      .locations-tabs__panel:nth-child(3) {
-      display: block;
-    }
+  .locations__body {
+    position: relative;
+    z-index: 1;
+  }
 
-    .locations__body .location {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      border: none;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      overflow: visible;
-    }
+  .locations-tabs__panels .locations-tabs__panel {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-    .locations__body .location__details {
-      width: 100%;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__item:nth-child(1)[open]
+    )
+    .locations-tabs__panels
+    .locations-tabs__panel:nth-child(1),
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__item:nth-child(2)[open]
+    )
+    .locations-tabs__panels
+    .locations-tabs__panel:nth-child(2),
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__item:nth-child(3)[open]
+    )
+    .locations-tabs__panels
+    .locations-tabs__panel:nth-child(3) {
+    display: block;
+  }
 
-    .locations__body .location__head {
-      padding-top: 0;
-    }
+  /* První linka (locations__rule) = accent; vnitřní oddělovače = jako schedule__day-divider */
+  .location {
+    --location-divider: 1px solid rgba(236, 47, 142, 0.16);
+    --location-content-divider: 1px solid rgba(42, 31, 56, 0.12);
 
-    .locations__body .location__map-shell {
-      width: calc(100% + 2 * var(--card-padding-x));
-      max-width: none;
-      margin-inline: calc(-1 * var(--card-padding-x));
-      margin-top: var(--space-5);
-      margin-bottom: calc(-1 * var(--card-padding-y));
-      height: 10rem;
-      max-height: 10rem;
-    }
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 0;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  .locations__body .location {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .locations__body .location__details {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .locations__body .location__head {
+    padding-top: 0;
+  }
+
+  .locations__body .location__map-shell {
+    width: calc(100% + 2 * var(--card-padding-x));
+    max-width: none;
+    margin-inline: calc(-1 * var(--card-padding-x));
+    margin-top: var(--space-5);
+    margin-bottom: calc(-1 * var(--card-padding-y));
+    height: 10rem;
+    max-height: 10rem;
   }
 
   @media (min-width: 768px) {
+    .locations__subtitle-cities {
+      display: inline;
+    }
+
     .locations-tabs {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--stack-gap);
+      width: 100%;
       max-width: none;
       margin-inline: unset;
       justify-items: stretch;
@@ -381,44 +409,50 @@ const mapEmbed = (lat: number, lng: number) =>
     .locations-tabs__panels .locations-tabs__panel {
       display: block !important;
     }
+
+    .location {
+      background: #fefefe;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: var(--card-border);
+      transition:
+        transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 280ms ease;
+    }
+
+    .locations__body .location {
+      border: var(--card-border);
+      border-radius: var(--radius-card);
+      background: #fefefe;
+      overflow: hidden;
+    }
+
+    .locations__body .location__details {
+      padding: var(--card-padding);
+      padding-bottom: var(--space-6);
+    }
+
+    .locations__body .location__head {
+      padding-top: 0.5rem;
+    }
+
+    .locations__body .location__map-shell,
+    .location__map-shell {
+      width: 100%;
+      max-width: 100%;
+      margin-inline: unset;
+      margin-top: auto;
+      margin-bottom: 0;
+      height: clamp(10rem, 26vw, 13rem);
+      max-height: none;
+    }
   }
 
-  #lokace {
-    scroll-margin-top: var(--section-scroll-margin);
-  }
-
-  .locations .section-title-accent {
-    color: var(--color-lilac-deep);
-  }
-
-  /* První linka (locations__rule) = accent; vnitřní oddělovače = jako schedule__day-divider */
-  .location {
-    --location-divider: 1px solid rgba(236, 47, 142, 0.16);
-    --location-content-divider: 1px solid rgba(42, 31, 56, 0.12);
-
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-height: 0;
-    background: #fefefe;
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    border: var(--card-border);
-    box-shadow: none;
-    transition:
-      transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 280ms ease;
-  }
 
   .location__map-shell {
     position: relative;
     flex-shrink: 0;
     align-self: stretch;
-    width: 100%;
-    max-width: 100%;
-    margin-top: auto;
-    height: clamp(10rem, 26vw, 13rem);
     background: color-mix(in srgb, var(--color-cream-100) 82%, transparent);
     border-top: var(--location-divider);
     box-shadow:
@@ -553,17 +587,16 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   .location__p-mark {
-    display: inline-grid;
-    place-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-sky-deep);
+  }
+
+  .location__p-mark :global(svg) {
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: var(--radius-sm);
-    background: var(--color-sky-deep);
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    font-weight: 800;
-    line-height: var(--line-height-xs);
   }
 
   .location__parking p {
@@ -599,23 +632,34 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .location:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 26px 55px -18px
-        color-mix(in srgb, var(--accent) 45%, transparent);
-    }
-
-    @media (max-width: 767px) {
-      .locations__body .location:hover {
-        transform: none;
-        box-shadow: none;
+    @media (min-width: 768px) {
+      .location:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 26px 55px -18px
+          color-mix(in srgb, var(--accent) 45%, transparent);
       }
+    }
+  }
+
+  @media (min-width: 768px) {
+    .location:active {
+      transform: translateY(-2px) scale(0.99);
+      box-shadow: 0 18px 40px -18px
+        color-mix(in srgb, var(--accent) 35%, transparent);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     @media (hover: hover) and (pointer: fine) {
-      .location:hover {
+      @media (min-width: 768px) {
+        .location:hover {
+          transform: none;
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      .location:active {
         transform: none;
       }
     }

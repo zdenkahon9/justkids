@@ -55,9 +55,14 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     color: var(--color-sky-deep);
   }
 
-  @media (max-width: 639px) {
+  /* Mobile-first: kompaktnější header; od 640px globální spacing */
+  .rules .section-header {
+    --section-header-spacing: var(--space-8);
+  }
+
+  @media (min-width: 640px) {
     .rules .section-header {
-      --section-header-spacing: var(--space-8);
+      --section-header-spacing: var(--space-10);
     }
   }
 

@@ -353,6 +353,8 @@
 
 .navMobile ul li:last-child {
   padding-top: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .navMobile li {
@@ -382,9 +384,17 @@
 
 .navMobile :global(.btn) {
   margin-top: auto;
-  width: 100%;
+  width: 90%;
+  max-width: var(--card-grid-width);
   font-size: var(--text-base);
   padding: 0.875rem 1.375rem;
+}
+
+@media (min-width: 768px) {
+  .navMobile :global(.btn) {
+    width: auto;
+    max-width: none;
+  }
 }
 
 @media (min-width: 640px) {

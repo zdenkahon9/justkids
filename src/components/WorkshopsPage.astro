@@ -451,7 +451,7 @@ const pageMeta = workshopsPageMeta;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    gap: 0.6rem;
+    gap: 0.5rem;
     width: 100%;
     min-height: calc(2rem + 1em * var(--line-height-base));
     padding: 1rem 1.625rem;
@@ -547,14 +547,16 @@ const pageMeta = workshopsPageMeta;
       box-shadow 280ms ease;
   }
 
-  .workshop:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 26px 55px -18px
-      color-mix(in srgb, var(--accent) 45%, transparent);
-  }
+  @media (hover: hover) and (pointer: fine) {
+    .workshop:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 55px -18px
+        color-mix(in srgb, var(--accent) 45%, transparent);
+    }
 
-  .workshop:hover .workshop__icon {
-    transform: translate(-50%, -50%) scale(1.05);
+    .workshop:hover .workshop__icon {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
   }
 
   .workshop__age,
@@ -725,8 +727,8 @@ const pageMeta = workshopsPageMeta;
 
   .workshop__highlight-icon {
     flex-shrink: 0;
-    width: var(--text-xl);
-    height: var(--text-xl);
+    width: var(--text-2xl);
+    height: var(--text-2xl);
     color: var(--accent);
   }
 
@@ -755,10 +757,18 @@ const pageMeta = workshopsPageMeta;
       box-shadow 220ms ease;
   }
 
-  .workshop__date-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 36px -14px
-      color-mix(in srgb, var(--accent) 40%, transparent);
+  @media (hover: hover) and (pointer: fine) {
+    .workshop__date-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -14px
+        color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+  }
+
+  .workshop__date-card:active {
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 12px 28px -14px
+      color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
   .workshop__date-card:focus-visible {
@@ -825,13 +835,22 @@ const pageMeta = workshopsPageMeta;
   .workshops-page__cta {
     display: flex;
     justify-content: center;
+    width: 100%;
   }
 
   .workshops-page__cta :global(.btn) {
-    width: 100%;
-    padding: 1.125rem 1.375rem;
-    border-radius: var(--radius-full);
+    width: 90%;
+    max-width: var(--card-grid-width);
+    min-width: max-content;
     box-shadow: none;
+  }
+
+  @media (min-width: 768px) {
+    .workshops-page__cta :global(.btn) {
+      width: auto;
+      max-width: none;
+      min-width: 0;
+    }
   }
 
   .workshop .workshops-page__cta :global(.btn-primary) {
@@ -842,10 +861,17 @@ const pageMeta = workshopsPageMeta;
     background: var(--accent);
   }
 
-  .workshop .workshops-page__cta :global(.btn-primary:hover),
+  @media (hover: hover) and (pointer: fine) {
+    .workshop .workshops-page__cta :global(.btn-primary:hover) {
+      box-shadow: 0 22px 50px -16px
+        color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+  }
+
   .workshop .workshops-page__cta :global(.btn-primary:active) {
     box-shadow: 0 22px 50px -16px
       color-mix(in srgb, var(--accent) 60%, transparent);
+    transform: translate3d(0, 0, 0) scale(0.98);
   }
 
   @media (min-width: 768px) {

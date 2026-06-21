@@ -1,6 +1,8 @@
 ---
-import { camps } from "../data/camps";
+import Icon from "astro-iconify";
+import { campFeatureIcons, camps, campsMeta } from "../data/camps";
 import { site } from "../data/site";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 ---
 
 <section id="kempy" class="section camps" aria-labelledby="camps-title">
@@ -20,36 +22,104 @@ import { site } from "../data/site";
         camps.map((c, i) => (
           <li
             class={`camp camp--${c.accent} reveal`}
-            style={`transition-delay: ${i * 100}ms`}
+            style={`--accent: ${cardAccentDeep(c.accent)}; --accent-soft: ${cardAccentSoft(c.accent)}; transition-delay: ${i * 100}ms`}
           >
             <div class="camp__body">
-              <h3>{c.title}</h3>
-              <p class="camp__place">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
+              <p class="camp__location-badge">
+                <Icon
+                  name="ph:map-pin"
+                  class="camp__location-icon"
                   aria-hidden="true"
-                >
-                  <path
-                    d="M 12 22 C 12 22 4 14 4 9 C 4 4.5 7.5 1 12 1 C 16.5 1 20 4.5 20 9 C 20 14 12 22 12 22 Z M 12 12 C 13.6 12 15 10.6 15 9 C 15 7.4 13.6 6 12 6 C 10.4 6 9 7.4 9 9 C 9 10.6 10.4 12 12 12 Z"
-                    fill="currentColor"
-                  />
-                </svg>
-                {c.place}
+                />
+                {c.city}
               </p>
-              <p class="camp__summary">{c.summary}</p>
+              <h3>{c.title}</h3>
+              <div class="camp__icons" aria-hidden="true">
+                {campFeatureIcons.map((item) => (
+                  <span
+                    class="camp__icon-ring"
+                    style={`--accent: ${item.accentDeep}; --accent-soft: ${item.accentSoft};`}
+                  >
+                    <Icon
+                      name={item.icon}
+                      class="camp__icon-graphic card-icon-graphic"
+                    />
+                  </span>
+                ))}
+              </div>
+              <span class="camp__rule" aria-hidden="true" />
+              <div class="camp__daily">
+                <p class="camp__daily-badge">{campsMeta.dailyLabel}</p>
+                <ul class="camp__daily-list" aria-label={campsMeta.dailyLabel}>
+                  {campsMeta.dailyProgram.map((item) => (
+                    <li class="camp__daily-item">{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <span class="camp__rule" aria-hidden="true" />
+              <div class="camp__meta">
+                <p class="camp__meta-row">
+                  <Icon
+                    name="lineicons:calendar-days"
+                    class="camp__meta-icon"
+                    aria-hidden="true"
+                  />
+                  {c.dateRange}
+                </p>
+                <p class="camp__meta-row">
+                  <Icon
+                    name="ph:clock"
+                    class="camp__meta-icon"
+                    aria-hidden="true"
+                  />
+                  {c.time}
+                </p>
+                <p class="camp__meta-row camp__meta-row--venue">
+                  <Icon
+                    name="fluent:home-heart-24-regular"
+                    class="camp__meta-icon"
+                    aria-hidden="true"
+                  />
+                  <span class="camp__meta-venue">
+                    <span>{c.venue.name}</span>
+                    {c.venue.address ? (
+                      <span class="camp__meta-venue-address">
+                        {c.venue.address}
+                      </span>
+                    ) : null}
+                  </span>
+                </p>
+                <p class="camp__meta-row camp__meta-row--audience">
+                  <Icon
+                    name="fluent:people-24-regular"
+                    class="camp__meta-icon"
+                    aria-hidden="true"
+                  />
+                  <span class="camp__meta-audience">
+                    <span>{c.audience.primary}</span>
+                    <span>{c.audience.secondary}</span>
+                  </span>
+                </p>
+              </div>
             </div>
 
-            <a
-              href={site.reservationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="camp__cta"
-            >
-              Více info
-              <span aria-hidden="true">→</span>
-            </a>
+            <div class="camp__footer">
+              <p class="camp__price">
+                <span class="camp__price-label">{campsMeta.priceLabel}</span>
+                <span class="camp__price-value">{c.price}</span>
+              </p>
+              <div class="camp__cta">
+                <a
+                  href={site.reservationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn btn-primary"
+                >
+                  {campsMeta.signupLabel}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
           </li>
         ))
       }
@@ -62,6 +132,8 @@ import { site } from "../data/site";
     scroll-margin-top: var(--section-scroll-margin);
   }
   .camps {
+    --card-icon-size: 4.375rem;
+    --card-icon-graphic-size: 2rem;
     background: linear-gradient(
       180deg,
       transparent 0%,
@@ -75,23 +147,32 @@ import { site } from "../data/site";
     color: var(--color-lilac-deep);
   }
 
+  @media (max-width: 1023px) {
+    #camps-title .section-title-accent {
+      display: block;
+    }
+  }
+
   .camps__list {
     list-style: none;
     padding: 0;
     margin: 0 auto;
-    max-width: 60rem;
+    width: 100%;
+    max-width: var(--card-grid-width);
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--stack-gap);
+    justify-content: center;
   }
 
   .camp {
     --accent-color: var(--color-blush-vivid);
 
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: center;
-    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    overflow: visible;
     background: white;
     border-radius: var(--radius-card);
     border: var(--card-border);
@@ -111,60 +192,258 @@ import { site } from "../data/site";
     --accent-color: var(--color-lilac-deep);
   }
 
-  .camp:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--accent-color) 40%, white);
-    box-shadow: 0 18px 40px -18px
-      color-mix(in srgb, var(--accent-color) 40%, transparent);
+  @media (hover: hover) and (pointer: fine) {
+    .camp:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--accent-color) 40%, white);
+      box-shadow: 0 18px 40px -18px
+        color-mix(in srgb, var(--accent-color) 40%, transparent);
+    }
+  }
+
+  .camp__body {
+    padding: var(--card-padding);
+    text-align: center;
   }
 
   .camp__body h3 {
     font-size: var(--text-h3);
-    margin: 0 0 0.4rem;
+    margin: 0 0 var(--space-5);
     line-height: var(--line-height-xl);
   }
 
-  .camp__place {
+  .camp__location-badge {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
     color: var(--accent-color);
-    font-size: var(--text-base);
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
     font-weight: 600;
-    margin: 0 0 0.5rem;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-sm);
   }
 
-  .camp__summary {
+  .camp__location-icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .camp__icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+  }
+
+  .camp__icon-ring {
+    display: grid;
+    place-items: center;
+    width: var(--card-icon-size);
+    height: var(--card-icon-size);
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .camp__icon-graphic {
+    width: var(--card-icon-graphic-size);
+    height: var(--card-icon-graphic-size);
+  }
+
+  .camp__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-5) 0 var(--space-7);
+    border: none;
+    background: color-mix(
+      in srgb,
+      var(--accent-color) 30%,
+      var(--color-ink) 8%
+    );
+    transition: background 220ms ease;
+  }
+
+  .camp__daily + .camp__rule {
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .camp__daily {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    text-align: center;
+  }
+
+  .camp__daily-badge {
+    display: inline-block;
     margin: 0;
-    color: var(--color-ink);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    background: var(--accent-soft);
+    color: var(--accent-color);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: var(--line-height-sm);
+    text-transform: uppercase;
+  }
+
+  .camp__daily-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .camp__daily-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-body);
     font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .camp__daily-item + .camp__daily-item::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: var(--radius-full);
+    background: var(--accent-color);
+  }
+
+  .camp__meta {
+    text-align: left;
+  }
+
+  .camp__meta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: var(--color-ink);
+  }
+
+  .camp__meta-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .camp__meta-row--audience,
+  .camp__meta-row--venue {
+    align-items: center;
+  }
+
+  .camp__meta-audience,
+  .camp__meta-venue {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .camp__meta-venue-address {
+    color: var(--color-ink-soft);
+    font-size: var(--text-sm);
+  }
+
+  .camp__meta-icon {
+    flex-shrink: 0;
+    width: 1.625rem;
+    height: 1.625rem;
+    color: var(--accent-color);
+  }
+
+  .camp__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: auto;
+    padding: var(--space-6) var(--card-padding);
+    background: var(--accent-soft);
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+    text-align: center;
   }
 
   .camp__cta {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .camp__price {
     display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    color: var(--accent-color);
+    align-items: baseline;
+    gap: var(--space-3);
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
     font-weight: 700;
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    white-space: nowrap;
-    transition: border-color 220ms ease;
-    justify-self: start;
+    line-height: var(--line-height-lg);
+    color: var(--accent-color);
   }
 
-  .camp__cta:hover {
-    border-bottom-color: var(--accent-color);
+  .camp__cta :global(.btn) {
+    width: 90%;
+    max-width: var(--card-grid-width);
+    min-width: max-content;
+    box-shadow: none;
   }
 
-  @media (min-width: 1024px) {
-    .camp {
-      grid-template-columns: 1fr auto;
-      gap: 1.5rem;
+  @media (min-width: 768px) {
+    .camp__cta :global(.btn) {
+      width: auto;
+      max-width: none;
+      min-width: 0;
     }
+  }
 
-    .camp__cta {
-      justify-self: auto;
+  .camp .camp__cta :global(.btn-primary) {
+    border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+
+  .camp .camp__cta :global(.btn-primary::before) {
+    background: var(--accent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .camp .camp__cta :global(.btn-primary:hover) {
+      box-shadow: 0 22px 50px -16px
+        color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+  }
+
+  .camp .camp__cta :global(.btn-primary:active) {
+    box-shadow: 0 22px 50px -16px
+      color-mix(in srgb, var(--accent) 60%, transparent);
+    transform: translate3d(0, 0, 0) scale(0.98);
+  }
+
+  @media (min-width: 768px) {
+    .camps__list {
+      width: fit-content;
+      max-width: 100%;
+      grid-template-columns: repeat(2, var(--card-grid-width-md));
     }
   }
 </style>
