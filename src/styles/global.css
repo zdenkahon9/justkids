@@ -58,6 +58,7 @@
   --text-xl: 1.25rem;
   --text-2xl: 1.5rem;
   --text-2-5xl: 1.625rem;
+  --text-3xl: 1.75rem;
   --text-clamp-h2: clamp(2.5rem, 4.5vw, 3.5rem);
   --text-clamp-h2-mobile: clamp(2.25rem, 4.5vw, 3.5rem);
 
@@ -299,7 +300,13 @@ h3 {
 
 .btn-sm {
   padding: 0.625rem 1.125rem;
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
+}
+
+@media (min-width: 1024px) {
+  .btn {
+    font-size: var(--text-lg);
+  }
 }
 
 /* Section wrapper */
@@ -437,8 +444,12 @@ html[data-workshops-home-arrival] [data-component="navbar"] img {
   transition: none;
 }
 
-html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandName"],
-html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandSub"] {
+html[data-workshops-home-arrival]
+  [data-component="navbar"]
+  [class*="brandName"],
+html[data-workshops-home-arrival]
+  [data-component="navbar"]
+  [class*="brandSub"] {
   text-shadow: none;
   transition: none;
 }

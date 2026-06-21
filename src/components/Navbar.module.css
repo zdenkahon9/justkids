@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
+  gap: 1.25rem;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -115,7 +115,7 @@
   padding: 0.625rem 1rem;
   color: var(--color-ink);
   font-weight: 600;
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   text-decoration: none;
   border-radius: var(--radius-full);
   transition:
@@ -129,7 +129,7 @@
   margin: 0;
   color: var(--color-ink);
   font-weight: 600;
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   line-height: var(--line-height-base);
   text-decoration: none;
   border-radius: var(--radius-full);
@@ -153,6 +153,7 @@
 .dropdownTriggerInner {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
 }
 
@@ -175,9 +176,9 @@
 .dropdownChevron {
   display: block;
   flex-shrink: 0;
-  align-self: center;
+  width: 1rem;
+  height: 1rem;
   color: var(--color-blush-vivid);
-  transform: translateY(0.07em);
   transition:
     color 220ms ease,
     transform 220ms ease;
@@ -186,13 +187,12 @@
 .dropdown:hover .dropdownChevron,
 .dropdown:focus-within .dropdownChevron {
   color: var(--color-blush-deep);
-  transform: translateY(0.07em);
 }
 
 .dropdown:has(.dropdownList a:hover) .dropdownChevron,
 .dropdown:has(.dropdownList a:focus-visible) .dropdownChevron {
   color: var(--color-blush-deep);
-  transform: rotate(180deg) translateY(-0.07em);
+  transform: rotate(180deg);
 }
 
 .dropdownSurface {
@@ -401,10 +401,6 @@
   .navInner {
     gap: 1rem;
   }
-
-  .brandName {
-    font-size: var(--text-2xl);
-  }
 }
 
 @media (min-width: 1024px) {
@@ -417,8 +413,12 @@
     display: block;
   }
 
+  .brandName {
+    font-size: var(--text-3xl);
+  }
+
   .navLinks > ul {
-    gap: 0.3rem;
+    gap: 1rem;
   }
 
   .navCta {

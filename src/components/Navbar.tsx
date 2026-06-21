@@ -23,8 +23,47 @@ const ABOUT_DROPDOWN_LINKS: NavLink[] = [
   { href: "/recenze", label: "Recenze" },
 ];
 
-const isAboutNavItem = (l: NavLink) =>
-  l.href === "#o-mne" && l.label === "O mně";
+/** Desktop submenu under „Další akce“ */
+const EVENTS_DROPDOWN_LINKS: NavLink[] = [
+  { href: "/workshopy", label: "Workshopy" },
+  { href: "/#kempy", label: "Kempy" },
+];
+
+/** Desktop submenu under „Cvičení pro děti“ */
+const EXERCISE_DROPDOWN_LINKS: NavLink[] = [
+  { href: "/vekove-kategorie", label: "Věkové kategorie" },
+  { href: "/#lokace", label: "Kde cvičíme" },
+];
+
+type NavDropdownId = "o-mne" | "cviceni-pro-deti" | "dalsi-akce";
+
+const NAV_DROPDOWNS: Record<
+  NavDropdownId,
+  { match: (l: NavLink) => boolean; links: NavLink[] }
+> = {
+  "o-mne": {
+    match: (l) => l.href === "#o-mne" && l.label === "O mně",
+    links: ABOUT_DROPDOWN_LINKS,
+  },
+  "cviceni-pro-deti": {
+    match: (l) => l.label === "Cvičení pro děti",
+    links: EXERCISE_DROPDOWN_LINKS,
+  },
+  "dalsi-akce": {
+    match: (l) => l.label === "Další akce",
+    links: EVENTS_DROPDOWN_LINKS,
+  },
+};
+
+const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
+  for (const [id, config] of Object.entries(NAV_DROPDOWNS) as [
+    NavDropdownId,
+    (typeof NAV_DROPDOWNS)[NavDropdownId],
+  ][]) {
+    if (config.match(l)) return id;
+  }
+  return null;
+};
 
 const Navbar = ({
   links,
@@ -46,9 +85,13 @@ const Navbar = ({
     );
   });
   const [open, setOpen] = useState(false);
-  const [lockAboutDropdown, setLockAboutDropdown] = useState(false);
+  const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(
+    null,
+  );
   const openRef = useRef(open);
-  const aboutDropdownRef = useRef<HTMLLIElement | null>(null);
+  const dropdownRefs = useRef<Partial<Record<NavDropdownId, HTMLLIElement>>>(
+    {},
+  );
   openRef.current = open;
 
   // Sticky / shrink on scroll (Omnifood-like)
@@ -116,28 +159,31 @@ const Navbar = ({
 
   // Keep dropdown locked after submenu click while pointer still hovers the dropdown
   useEffect(() => {
-    if (!lockAboutDropdown) return;
+    if (!lockedDropdown) return;
     const onPointerMove = () => {
-      const dropdownEl = aboutDropdownRef.current;
+      const dropdownEl = dropdownRefs.current[lockedDropdown];
       if (!dropdownEl) return;
       if (!dropdownEl.matches(":hover")) {
-        setLockAboutDropdown(false);
+        setLockedDropdown(null);
       }
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     return () => window.removeEventListener("pointermove", onPointerMove);
-  }, [lockAboutDropdown]);
+  }, [lockedDropdown]);
 
   const handleNav = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement>,
       href: string,
-      options?: { closeDropdownAfterClick?: boolean },
+      options?: {
+        closeDropdownAfterClick?: boolean;
+        dropdownId?: NavDropdownId;
+      },
     ) => {
       if (!href.startsWith("#")) return;
       e.preventDefault();
-      if (options?.closeDropdownAfterClick) {
-        setLockAboutDropdown(true);
+      if (options?.closeDropdownAfterClick && options.dropdownId) {
+        setLockedDropdown(options.dropdownId);
       }
       const menuWasOpen = openRef.current;
       setOpen(false);
@@ -181,73 +227,85 @@ const Navbar = ({
           />
           <span className={styles.brandText}>
             <span className={styles.brandName}>{brand}</span>
-            <span className={styles.brandSub}>pohybem k radosti</span>
+            {/* <span className={styles.brandSub}>pohybem k radosti</span> */}
           </span>
         </a>
 
         <nav className={styles.navLinks} aria-label="Hlavní navigace">
           <ul>
-            {links.map((l) =>
-              isAboutNavItem(l) ? (
-                <li
-                  key={l.href}
-                  ref={aboutDropdownRef}
-                  className={`${styles.dropdown} ${lockAboutDropdown ? styles.dropdownLocked : ""}`}
-                >
-                  <button
-                    type="button"
-                    className={styles.dropdownTrigger}
-                    aria-haspopup="true"
-                    aria-controls="nav-submenu-o-mne"
+            {links.map((l) => {
+              const dropdownId = getNavDropdownId(l);
+              if (dropdownId) {
+                const submenuLinks = NAV_DROPDOWNS[dropdownId].links;
+                return (
+                  <li
+                    key={l.href + l.label}
+                    ref={(el) => {
+                      if (el) dropdownRefs.current[dropdownId] = el;
+                    }}
+                    className={`${styles.dropdown} ${lockedDropdown === dropdownId ? styles.dropdownLocked : ""}`}
                   >
-                    <span className={styles.dropdownTriggerInner}>
-                      {l.label}
-                      <svg
-                        className={styles.dropdownChevron}
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
+                    <button
+                      type="button"
+                      className={styles.dropdownTrigger}
+                      aria-haspopup="true"
+                      aria-controls={`nav-submenu-${dropdownId}`}
+                    >
+                      <span className={styles.dropdownTriggerInner}>
+                        {l.label}
+                        <svg
+                          className={styles.dropdownChevron}
+                          width="16"
+                          height="16"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M2.5 4.25L6 7.75L9.5 4.25"
+                            stroke="currentColor"
+                            strokeWidth="1.75"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                    <div className={styles.dropdownSurface}>
+                      <ul
+                        id={`nav-submenu-${dropdownId}`}
+                        className={styles.dropdownList}
                       >
-                        <path
-                          d="M2.5 4.25L6 7.75L9.5 4.25"
-                          stroke="currentColor"
-                          strokeWidth="1.75"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                  <div className={styles.dropdownSurface}>
-                    <ul id="nav-submenu-o-mne" className={styles.dropdownList}>
-                      {ABOUT_DROPDOWN_LINKS.map((sub) => (
-                        <li key={sub.href + sub.label}>
-                          <a
-                            href={sub.href}
-                            onClick={(e) =>
-                              handleNav(e, sub.href, {
-                                closeDropdownAfterClick: true,
-                              })
-                            }
-                          >
-                            {sub.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </li>
-              ) : (
-                <li key={l.href}>
+                        {submenuLinks.map((sub) => (
+                          <li key={sub.href + sub.label}>
+                            <a
+                              href={sub.href}
+                              onClick={(e) =>
+                                handleNav(e, sub.href, {
+                                  closeDropdownAfterClick: true,
+                                  dropdownId,
+                                })
+                              }
+                            >
+                              {sub.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={l.href + l.label}>
                   <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
                     {l.label}
                   </a>
                 </li>
-              ),
-            )}
+              );
+            })}
           </ul>
         </nav>
 
