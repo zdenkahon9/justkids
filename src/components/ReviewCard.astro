@@ -8,6 +8,7 @@ interface Props {
   index: number;
   accent: string;
   clamp?: boolean;
+  clampLines?: number;
   showMore?: boolean;
   reveal?: boolean;
 }
@@ -17,6 +18,7 @@ const {
   index: i,
   accent,
   clamp = false,
+  clampLines = 4,
   showMore = false,
   reveal = true,
 } = Astro.props;
@@ -24,8 +26,8 @@ const {
 
 <li class="reviews__slide">
   <article
-    class:list={["review", { reveal }]}
-    style={`--accent: ${accent}; transition-delay: ${i * 90}ms;`}
+    class:list={["review", { reveal, "review--clamped": clamp }]}
+    style={`--accent: ${accent}; transition-delay: ${i * 90}ms;${clamp ? ` --review-clamp-lines: ${clampLines};` : ""}`}
   >
     {
       r.rating && (
@@ -153,8 +155,8 @@ const {
   .review__text--clamp {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: var(--review-clamp-lines, 4);
+    line-clamp: var(--review-clamp-lines, 4);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
@@ -243,12 +245,30 @@ const {
       content: close-quote;
     }
 
+    .review--clamped .review__text {
+      white-space: normal;
+      quotes: none;
+    }
+
+    .review--clamped .review__text::before,
+    .review--clamped .review__text::after {
+      content: none;
+    }
+
     .review__footer {
       display: none;
     }
 
     .review__more {
       display: none;
+    }
+
+    .review--clamped .review__footer {
+      display: flex;
+    }
+
+    .review--clamped .review__more {
+      display: inline-flex;
     }
   }
 </style>

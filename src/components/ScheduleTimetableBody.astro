@@ -1,0 +1,255 @@
+---
+import Icon from "astro-iconify";
+import {
+  formatScheduleActivities,
+  type ScheduleLocation,
+} from "../data/schedule";
+
+interface Props {
+  location: ScheduleLocation;
+}
+
+const { location } = Astro.props;
+---
+
+{
+  location.days.map((day, dayIndex) => (
+    <div class="schedule__day-block">
+      {day.label ? <p class="schedule__day">{day.label}</p> : null}
+      <div class="schedule__timeline">
+        <span class="schedule__axis-line" aria-hidden="true">
+          <svg
+            class="schedule__axis-line-graphic"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <rect class="schedule__axis-line-fill" />
+          </svg>
+        </span>
+        <ul class="schedule__slots">
+          {day.slots.map((slot) => (
+            <li class="schedule__slot">
+              <span class="schedule__axis" aria-hidden="true">
+                <svg
+                  class="schedule__axis-dot"
+                  viewBox="0 0 10 10"
+                  aria-hidden="true"
+                >
+                  <circle class="schedule__axis-dot-fill" cx="5" cy="5" r="5" />
+                </svg>
+              </span>
+              <span class="schedule__time">{slot.time}</span>
+              <span class="schedule__activity">
+                {formatScheduleActivities(slot.activities)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {dayIndex < location.days.length - 1 ? (
+        <hr class="schedule__day-divider" aria-hidden="true" />
+      ) : null}
+    </div>
+  ))
+}
+
+<div class="schedule__venue">
+  <Icon name="ph:map-pin" class="schedule__venue-icon" aria-hidden="true" />
+  <div class="schedule__venue-text">
+    <p class="schedule__venue-name">
+      <a
+        class="schedule__venue-link"
+        href={location.venue.mapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Otevřít ${location.venue.city} v Google Maps`}
+      >
+        {location.venue.city}
+      </a>
+    </p>
+    <p class="schedule__venue-address">{location.venue.address}</p>
+  </div>
+</div>
+
+<style>
+  .schedule__day {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--accent);
+  }
+
+  .schedule__day-block + .schedule__day-block .schedule__day {
+    margin-top: var(--space-1);
+  }
+
+  .schedule__timeline {
+    position: relative;
+  }
+
+  .schedule__axis-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--schedule-axis-col) / 2);
+    width: var(--schedule-axis-width);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .schedule__axis-line-graphic {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .schedule__axis-line-fill {
+    width: 100%;
+    height: 100%;
+    fill: var(--accent-soft);
+    shape-rendering: crispEdges;
+    transition: fill 220ms ease;
+  }
+
+  .schedule__slots {
+    list-style: none;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .schedule__slot {
+    display: flex;
+    align-items: center;
+    min-height: var(--schedule-row-height);
+  }
+
+  .schedule__time,
+  .schedule__activity {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .schedule__time {
+    flex: 0 0 var(--schedule-time-col);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .schedule__axis {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 var(--schedule-axis-col);
+    align-self: stretch;
+    margin-right: var(--schedule-axis-to-time-gap);
+  }
+
+  .schedule__axis-dot {
+    display: block;
+    flex-shrink: 0;
+    width: var(--schedule-dot-size);
+    height: var(--schedule-dot-size);
+  }
+
+  .schedule__axis-dot-fill {
+    fill: var(--accent-soft);
+    transition: fill 220ms ease;
+  }
+
+  .schedule__activity {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: var(--schedule-time-to-activity-gap);
+    letter-spacing: 0.02em;
+  }
+
+  .schedule__day-divider {
+    border: none;
+    height: 1px;
+    margin: var(--space-5) 0;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .schedule__venue {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: var(--space-5);
+    padding: 1rem 1.625rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    transition: background 220ms ease;
+  }
+
+  .schedule__venue:has(.schedule__venue-link:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .schedule__venue-icon {
+    flex-shrink: 0;
+    width: var(--card-icon-graphic-size);
+    height: var(--card-icon-graphic-size);
+    margin-top: 0.125rem;
+    pointer-events: none;
+    color: var(--accent);
+  }
+
+  .schedule__venue-text {
+    min-width: 0;
+    pointer-events: none;
+  }
+
+  .schedule__venue-name {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .schedule__venue-link {
+    position: static;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .schedule__venue-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    cursor: pointer;
+  }
+
+  .schedule__venue-link:focus-visible {
+    outline: none;
+  }
+
+  .schedule__venue-address {
+    margin: 0.125rem 0 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
+    pointer-events: none;
+  }
+</style>

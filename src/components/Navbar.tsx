@@ -42,7 +42,9 @@ const NAV_DROPDOWNS: Record<
   { match: (l: NavLink) => boolean; links: NavLink[] }
 > = {
   "o-mne": {
-    match: (l) => l.href === "#o-mne" && l.label === "O mně",
+    match: (l) =>
+      l.label === "O mně" &&
+      (l.href === "#o-mne" || l.href === "/#o-mne"),
     links: ABOUT_DROPDOWN_LINKS,
   },
   "cviceni-pro-deti": {
@@ -54,6 +56,18 @@ const NAV_DROPDOWNS: Record<
     links: EVENTS_DROPDOWN_LINKS,
   },
 };
+
+const getAboutDropdownLinks = (parentHref: string): NavLink[] =>
+  ABOUT_DROPDOWN_LINKS.map((sub) =>
+    sub.label === "Kdo jsem"
+      ? { ...sub, href: parentHref.startsWith("/") ? "/#o-mne" : "#o-mne" }
+      : sub,
+  );
+
+const getSubmenuLinks = (dropdownId: NavDropdownId, parentHref: string) =>
+  dropdownId === "o-mne"
+    ? getAboutDropdownLinks(parentHref)
+    : NAV_DROPDOWNS[dropdownId].links;
 
 const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
   for (const [id, config] of Object.entries(NAV_DROPDOWNS) as [
@@ -157,21 +171,35 @@ const Navbar = ({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Keep dropdown locked after submenu click while pointer still hovers the dropdown
-  useEffect(() => {
-    if (!lockedDropdown) return;
-    const onPointerMove = () => {
-      const dropdownEl = dropdownRefs.current[lockedDropdown];
-      if (!dropdownEl) return;
-      if (!dropdownEl.matches(":hover")) {
-        setLockedDropdown(null);
+  const scrollToHash = useCallback((hash: string, delayScroll: boolean) => {
+    const scrollToTarget = () => {
+      const el = document.querySelector(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", hash);
       }
     };
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onPointerMove);
-  }, [lockedDropdown]);
+    if (delayScroll) {
+      setTimeout(scrollToTarget, 0);
+    } else {
+      scrollToTarget();
+    }
+  }, []);
 
-  const handleNav = useCallback(
+  /** Mobile menu — same-page # anchors only (unchanged from original) */
+  const handleMobileNav = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (!href.startsWith("#")) return;
+      e.preventDefault();
+      const menuWasOpen = openRef.current;
+      setOpen(false);
+      scrollToHash(href, menuWasOpen);
+    },
+    [scrollToHash],
+  );
+
+  /** Desktop nav + dropdown submenu — page links, /# anchors, dropdown lock */
+  const handleDesktopNav = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement>,
       href: string,
@@ -180,28 +208,32 @@ const Navbar = ({
         dropdownId?: NavDropdownId;
       },
     ) => {
-      if (!href.startsWith("#")) return;
+      const hashIdx = href.indexOf("#");
+      const closeDropdown =
+        options?.closeDropdownAfterClick && options.dropdownId
+          ? () => setLockedDropdown(options.dropdownId!)
+          : null;
+
+      if (hashIdx === -1) {
+        closeDropdown?.();
+        return;
+      }
+
+      const hash = href.slice(hashIdx);
+      const pathPart = href.slice(0, hashIdx);
+      const isSamePage =
+        !pathPart || pathPart === window.location.pathname;
+
+      if (!isSamePage) {
+        closeDropdown?.();
+        return;
+      }
+
       e.preventDefault();
-      if (options?.closeDropdownAfterClick && options.dropdownId) {
-        setLockedDropdown(options.dropdownId);
-      }
-      const menuWasOpen = openRef.current;
-      setOpen(false);
-      const scrollToTarget = () => {
-        const el = document.querySelector(href);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.replaceState(null, "", href);
-        }
-      };
-      // Mobile: scroll-lock cleanup does window.scrollTo(previousY) and would undo an immediate scrollIntoView
-      if (menuWasOpen) {
-        setTimeout(scrollToTarget, 0);
-      } else {
-        scrollToTarget();
-      }
+      closeDropdown?.();
+      scrollToHash(hash, false);
     },
-    [],
+    [scrollToHash],
   );
 
   const showSolidNav = variant === "solid" || scrolled;
@@ -215,7 +247,7 @@ const Navbar = ({
         <a
           href={logoHref}
           className={styles.navBrand}
-          onClick={(e) => handleNav(e, logoHref)}
+          onClick={(e) => handleMobileNav(e, logoHref)}
           aria-label={`${brand} - na začátek stránky`}
         >
           <img
@@ -236,7 +268,7 @@ const Navbar = ({
             {links.map((l) => {
               const dropdownId = getNavDropdownId(l);
               if (dropdownId) {
-                const submenuLinks = NAV_DROPDOWNS[dropdownId].links;
+                const submenuLinks = getSubmenuLinks(dropdownId, l.href);
                 return (
                   <li
                     key={l.href + l.label}
@@ -244,12 +276,18 @@ const Navbar = ({
                       if (el) dropdownRefs.current[dropdownId] = el;
                     }}
                     className={`${styles.dropdown} ${lockedDropdown === dropdownId ? styles.dropdownLocked : ""}`}
+                    onMouseLeave={() => {
+                      if (lockedDropdown === dropdownId) setLockedDropdown(null);
+                    }}
                   >
                     <button
                       type="button"
                       className={styles.dropdownTrigger}
                       aria-haspopup="true"
                       aria-controls={`nav-submenu-${dropdownId}`}
+                      onMouseDown={() => {
+                        if (lockedDropdown === dropdownId) setLockedDropdown(null);
+                      }}
                     >
                       <span className={styles.dropdownTriggerInner}>
                         {l.label}
@@ -282,7 +320,7 @@ const Navbar = ({
                             <a
                               href={sub.href}
                               onClick={(e) =>
-                                handleNav(e, sub.href, {
+                                handleDesktopNav(e, sub.href, {
                                   closeDropdownAfterClick: true,
                                   dropdownId,
                                 })
@@ -300,7 +338,7 @@ const Navbar = ({
 
               return (
                 <li key={l.href + l.label}>
-                  <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
+                  <a href={l.href} onClick={(e) => handleDesktopNav(e, l.href)}>
                     {l.label}
                   </a>
                 </li>
@@ -344,7 +382,7 @@ const Navbar = ({
         <ul>
           {mobileItems.map((l, i) => (
             <li key={l.href} style={{ ["--i" as string]: i }}>
-              <a href={l.href} onClick={(e) => handleNav(e, l.href)}>
+              <a href={l.href} onClick={(e) => handleMobileNav(e, l.href)}>
                 {l.label}
               </a>
             </li>

@@ -4,8 +4,8 @@ import { reviews } from "../data/reviews";
 import ReviewCard from "./ReviewCard.astro";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
-const MOBILE_REVIEW_COUNT = 3;
-const MOBILE_SLIDE_COUNT = MOBILE_REVIEW_COUNT + 1;
+const HOME_REVIEW_COUNT = 3;
+const MOBILE_SLIDE_COUNT = HOME_REVIEW_COUNT + 1;
 
 const accentMap: Record<string, string> = {
   blush: "var(--color-blush-mid)",
@@ -13,7 +13,7 @@ const accentMap: Record<string, string> = {
   lilac: "var(--color-lilac-mid)",
 };
 
-const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
+const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
 ---
 
 <section id="recenze" class="section reviews" aria-labelledby="reviews-title">
@@ -31,7 +31,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
     <div class="reviews__mobile" aria-roledescription="carousel">
       <ul class="reviews__track" role="list">
         {
-          mobileReviews.map((r, i) => (
+          homeReviews.map((r, i) => (
             <ReviewCard
               review={r}
               index={i}
@@ -76,7 +76,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
               class={`reviews__dot${i === 0 ? " is-active" : ""}`}
               role="tab"
               aria-label={
-                i < MOBILE_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"
+                i < HOME_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"
               }
               aria-selected={i === 0 ? "true" : "false"}
               data-index={i}
@@ -88,14 +88,20 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     <ul class="reviews__grid reviews__grid--desktop" role="list">
       {
-        reviews.map((r, i) => (
-          <ReviewCard review={r} index={i} accent={accentMap[r.accent]} />
+        homeReviews.map((r, i) => (
+          <ReviewCard
+            review={r}
+            index={i}
+            accent={accentMap[r.accent]}
+            clamp
+            showMore
+          />
         ))
       }
     </ul>
 
     <div class="reviews__all reveal">
-      <a class="reviews__all-link" href="/recenze">
+      <a class="btn btn-primary" href="/recenze">
         Zobrazit všechny recenze
         <span aria-hidden="true">→</span>
       </a>
@@ -113,9 +119,14 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     const track = section.querySelector<HTMLElement>(".reviews__track");
     const slider = section.querySelector<HTMLElement>(".reviews__mobile");
+    const desktopGrid = section.querySelector<HTMLElement>(
+      ".reviews__grid--desktop",
+    );
     const dots =
       slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
-    const cards = slider?.querySelectorAll<HTMLElement>(".review") ?? [];
+    const mobileCards = slider?.querySelectorAll<HTMLElement>(".review") ?? [];
+    const desktopCards =
+      desktopGrid?.querySelectorAll<HTMLElement>(".review") ?? [];
 
     const slides = track
       ? [...track.querySelectorAll<HTMLElement>(".reviews__slide")]
@@ -123,7 +134,10 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     if (!track) return;
 
-    const isActive = () => mobileQuery.matches && track.clientWidth > 0;
+    const isCarouselActive = () => mobileQuery.matches && track.clientWidth > 0;
+
+    const getClampedCards = () =>
+      mobileQuery.matches ? [...mobileCards] : [...desktopCards];
 
     const getActiveIndex = () => {
       if (slides.length === 0) return 0;
@@ -153,7 +167,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
     };
 
     const updateDots = () => {
-      if (!isActive()) return;
+      if (!isCarouselActive()) return;
 
       const index = getActiveIndex();
 
@@ -165,13 +179,13 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
     };
 
     const resetToStart = () => {
-      if (!isActive()) return;
+      if (!isCarouselActive()) return;
       track.scrollLeft = 0;
       updateDots();
     };
 
     const updateReadMoreButtons = () => {
-      cards.forEach((card) => {
+      getClampedCards().forEach((card) => {
         const text = card.querySelector<HTMLElement>(".review__text");
         const footer = card.querySelector<HTMLElement>(".review__footer");
         const button = card.querySelector<HTMLAnchorElement>(".review__more");
@@ -182,7 +196,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
           if (footer) footer.hidden = true;
         };
 
-        if (!isActive() || !text.classList.contains("review__text--clamp")) {
+        if (!text.classList.contains("review__text--clamp")) {
           hideFooter();
           return;
         }
@@ -194,7 +208,7 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
     };
 
     const refreshCarousel = () => {
-      if (!isActive()) return;
+      if (!isCarouselActive()) return;
       const slide = slides[getActiveIndex()];
       if (slide) track.scrollLeft = slide.offsetLeft;
       updateDots();
@@ -228,13 +242,17 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     const resizeObserver = new ResizeObserver(() => {
       refreshCarousel();
+      updateReadMoreButtons();
     });
     resizeObserver.observe(track);
+    if (desktopGrid) resizeObserver.observe(desktopGrid);
 
     if (mobileQuery.matches) {
       requestAnimationFrame(() => {
         requestAnimationFrame(resetToStart);
       });
+    } else {
+      requestAnimationFrame(() => updateReadMoreButtons());
     }
   };
 
@@ -451,9 +469,12 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
 
     .reviews__grid.reviews__grid--desktop {
       display: grid;
-      width: fit-content;
-      max-width: 100%;
-      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      width: 100%;
+      max-width: calc(
+        3 * var(--card-grid-width-md) + 2 * var(--stack-gap)
+      );
+      margin-inline: auto;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       justify-content: center;
     }
 
@@ -463,32 +484,21 @@ const mobileReviews = reviews.slice(0, MOBILE_REVIEW_COUNT);
       margin-top: var(--space-9);
     }
 
-    .reviews__all-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-body);
-      font-size: var(--text-lg);
-      font-weight: 600;
-      color: var(--color-blush-deep);
-      text-decoration: none;
-      transition: gap 200ms ease;
+    .reviews__all :global(.btn) {
+      width: auto;
+      max-width: none;
+      box-shadow: none;
     }
 
-    .reviews__all-link:hover,
-    .reviews__all-link:focus-visible {
-      text-decoration: underline;
+    @media (hover: hover) and (pointer: fine) {
+      .reviews__all :global(.btn-primary:hover) {
+        box-shadow: var(--shadow-pop);
+      }
     }
 
-    .reviews__all-link:hover {
-      gap: 0.75rem;
-    }
-  }
-
-  @media (min-width: 1180px) {
-    .reviews__grid.reviews__grid--desktop {
-      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
-      margin-inline: auto;
+    .reviews__all :global(.btn-primary:active) {
+      box-shadow: var(--shadow-pop);
+      transform: translate3d(0, 0, 0) scale(0.98);
     }
   }
 </style>

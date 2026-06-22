@@ -37,6 +37,18 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
               <div class="rules__text">
                 <h3 class="rules__title">{rule.title.replace(/\n/g, " ")}</h3>
                 <p class="rules__detail">{rule.detail}</p>
+                <svg
+                  class="rules__scribble"
+                  viewBox="0 0 140 12"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6,10 C45,2 95,3 134,9"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    fill="none"></path>
+                </svg>
               </div>
             </div>
           </li>
@@ -67,7 +79,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__list {
-    --rules-icon-size: var(--card-icon-size-corner);
+    --rules-icon-size: 4.5rem;
+    --rules-icon-graphic-size: 2.125rem;
     --rules-line-blush: color-mix(
       in srgb,
       var(--color-blush-deep) 30%,
@@ -164,8 +177,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__icon-graphic {
-    width: var(--card-icon-graphic-size-corner);
-    height: var(--card-icon-graphic-size-corner);
+    width: var(--rules-icon-graphic-size);
+    height: var(--rules-icon-graphic-size);
   }
 
   .rules__detail {
@@ -175,5 +188,76 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
+  }
+
+  .rules__scribble {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .rules__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+      max-width: 900px;
+    }
+
+    .rules__list::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 9rem;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(42, 31, 56, 0.22) 0 5px,
+        transparent 5px 12px
+      );
+      pointer-events: none;
+    }
+
+    .rules__item:not(:last-child) {
+      padding-bottom: 0;
+    }
+
+    .rules__item:not(:last-child)::after,
+    .rules__item:last-child .rules__illustration::after {
+      display: none;
+    }
+
+    .rules__item {
+      justify-self: center;
+      width: 100%;
+      max-width: 22rem;
+    }
+
+    .rules__content {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-5);
+      text-align: center;
+      width: 100%;
+    }
+
+    .rules__illustration {
+      align-self: auto;
+    }
+
+    .rules__scribble {
+      display: block;
+      width: 7.5rem;
+      height: 0.75rem;
+      margin: 1.5625rem auto 0;
+      color: color-mix(in srgb, var(--accent) 62%, white);
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .rules__list {
+      max-width: 980px;
+      gap: var(--space-8);
+    }
   }
 </style>

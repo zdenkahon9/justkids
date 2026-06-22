@@ -155,6 +155,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
+  font-size: var(--text-lg);
 }
 
 .navLinks > ul > li > a:hover,
@@ -184,13 +185,8 @@
     transform 220ms ease;
 }
 
-.dropdown:hover .dropdownChevron,
-.dropdown:focus-within .dropdownChevron {
-  color: var(--color-blush-deep);
-}
-
-.dropdown:has(.dropdownList a:hover) .dropdownChevron,
-.dropdown:has(.dropdownList a:focus-visible) .dropdownChevron {
+.dropdown:hover:not(.dropdownLocked) .dropdownChevron,
+.dropdown:focus-within:not(.dropdownLocked) .dropdownChevron {
   color: var(--color-blush-deep);
   transform: rotate(180deg);
 }
@@ -245,7 +241,7 @@
   padding: 0.625rem 1rem;
   color: var(--color-ink);
   font-weight: 600;
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   text-decoration: none;
   border-radius: var(--radius-full);
   text-align: center;
@@ -446,10 +442,6 @@
   .navInner {
     grid-template-columns: auto 1fr;
     gap: 0.3rem;
-  }
-
-  .navLinks > ul > li > a {
-    font-size: 0.9375rem;
   }
 
   .navInner:global(.container-x) {

@@ -175,7 +175,7 @@ const mapEmbed = (lat: number, lng: number) =>
 <style>
   /*
    * Mobile-first: stejná architektura jako Schedule — jedna karta, pill, divider, body.
-   * Od 768px tablet/desktop grid karet vedle sebe.
+   * Od 1024px desktop grid — 3 karty vedle sebe (pružné sloupce).
    */
   #lokace {
     scroll-margin-top: var(--section-scroll-margin);
@@ -375,9 +375,15 @@ const mapEmbed = (lat: number, lng: number) =>
     }
 
     .locations-tabs {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .locations-tabs {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--stack-gap);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-4);
       width: 100%;
       max-width: none;
       margin-inline: unset;
@@ -632,7 +638,7 @@ const mapEmbed = (lat: number, lng: number) =>
   }
 
   @media (hover: hover) and (pointer: fine) {
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       .location:hover {
         transform: translateY(-4px);
         box-shadow: 0 26px 55px -18px
@@ -641,7 +647,7 @@ const mapEmbed = (lat: number, lng: number) =>
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .location:active {
       transform: translateY(-2px) scale(0.99);
       box-shadow: 0 18px 40px -18px
@@ -651,38 +657,17 @@ const mapEmbed = (lat: number, lng: number) =>
 
   @media (prefers-reduced-motion: reduce) {
     @media (hover: hover) and (pointer: fine) {
-      @media (min-width: 768px) {
+      @media (min-width: 1024px) {
         .location:hover {
           transform: none;
         }
       }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       .location:active {
         transform: none;
       }
-    }
-  }
-
-  /*
-   * Sekce #lokace: od viewportu 1180px dvě karty po 420px, gap zůstává var(--stack-gap).
-   * Selektor s #lokace přebije pravidlo .locations-tabs z @media (min-width: 768px).
-   */
-  @media (min-width: 1180px) {
-    #lokace .locations-tabs {
-      grid-template-columns: repeat(2, 420px);
-      justify-content: center;
-      width: fit-content;
-      max-width: calc(420px + var(--stack-gap) + 420px);
-      margin-inline: auto;
-    }
-
-    #lokace .locations-tabs__panels .locations-tabs__panel {
-      width: 420px;
-      max-width: 420px;
-      min-width: 420px;
-      box-sizing: border-box;
     }
   }
 </style>

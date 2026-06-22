@@ -363,6 +363,10 @@ h3 {
 }
 
 @media (min-width: 640px) {
+  :root {
+    --text-h3: 1.75rem;
+  }
+
   .container-x {
     padding-inline: var(--container-padding-x-lg);
   }

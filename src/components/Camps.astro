@@ -132,8 +132,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     scroll-margin-top: var(--section-scroll-margin);
   }
   .camps {
-    --card-icon-size: 4.375rem;
-    --card-icon-graphic-size: 2rem;
+    --card-icon-size: 4.125rem;
+    --card-icon-graphic-size: 1.875rem;
     background: linear-gradient(
       180deg,
       transparent 0%,
@@ -338,7 +338,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     gap: 1.25rem;
     margin: 0 0 var(--space-6);
     font-family: var(--font-body);
-    font-size: var(--text-base);
+    font-size: var(--text-lg);
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
@@ -442,8 +442,10 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   @media (min-width: 768px) {
     .camps__list {
       width: fit-content;
-      max-width: 100%;
-      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      max-width: calc(2 * 25rem + var(--stack-gap));
+      grid-template-columns: repeat(2, 25rem);
+      gap: var(--stack-gap);
+      margin-inline: auto;
     }
   }
 </style>
