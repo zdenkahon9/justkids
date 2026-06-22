@@ -33,8 +33,10 @@ const year = new Date().getFullYear();
         </div>
       </a>
       <p class="footer__about">
-        Hravé cvičení pro miminka a děti od 3 měsíců do 9 let. Ve Zdicích,
-        Hořovicích a Broumech.
+        Hravé cvičení pro miminka a děti od 3 měsíců do 9 let.
+        <span class="footer__about-locations"
+          >Ve Zdicích, Hořovicích a Broumech.</span
+        >
       </p>
 
       <div class="footer__social-wrap">
@@ -209,9 +211,9 @@ const year = new Date().getFullYear();
   }
 
   .footer__social-wrap {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .footer__social-label {
@@ -224,8 +226,8 @@ const year = new Date().getFullYear();
 
   .footer__social {
     display: flex;
-    justify-content: flex-start;
-    gap: 1.5rem;
+    justify-content: center;
+    gap: var(--text-lg);
   }
 
   .footer__social-link {
@@ -384,45 +386,9 @@ const year = new Date().getFullYear();
     color: var(--color-ink-soft);
   }
 
-  /* Media queries */
+  /* Media queries — layout only; spacing & sizes stay from mobile base */
 
   @media (min-width: 640px) {
-    #kontakt {
-      scroll-margin-top: var(--nav-height);
-    }
-
-    .footer__brand-link {
-      gap: 0.85rem;
-    }
-
-    .footer__brand h2 {
-      font-size: var(--text-2-5xl);
-    }
-
-    .footer__tagline {
-      font-size: var(--text-lg);
-    }
-
-    .footer__social-label {
-      margin: 0 0 1rem;
-      font-size: var(--text-base);
-      font-weight: 500;
-      color: var(--color-ink-soft);
-    }
-
-    .footer__social {
-      gap: 2rem;
-    }
-
-    .footer__col {
-      padding-top: 1.25rem;
-    }
-
-    .footer__phone,
-    .footer__email {
-      gap: var(--space-2);
-    }
-
     .footer__bottom-inner {
       justify-content: space-between;
       text-align: unset;
@@ -430,12 +396,6 @@ const year = new Date().getFullYear();
   }
 
   @media (min-width: 640px) and (max-width: 1023px) {
-    .footer__about {
-      font-size: var(--text-base);
-      text-align: left;
-      max-width: 21rem;
-    }
-
     /* Kontakt + Lokace vlevo pod sebou, Navigace vpravo přes obě řádky */
     .footer__inner {
       grid-template-columns: 1fr 1fr;
@@ -443,8 +403,6 @@ const year = new Date().getFullYear();
         "brand brand"
         "kontakt navigace"
         "lokace navigace";
-      gap: 2rem;
-      padding-block: 3rem 2rem;
       align-items: start;
     }
 
@@ -469,8 +427,6 @@ const year = new Date().getFullYear();
     .footer__inner {
       grid-template-columns: 1.6fr 1fr 1fr 1fr;
       grid-template-areas: none;
-      gap: 3rem;
-      padding-block: 4rem 3rem;
     }
 
     .footer__brand {
@@ -485,7 +441,20 @@ const year = new Date().getFullYear();
 
     .footer__about {
       max-width: 240px;
-      text-align: left;
+      margin: 0 0 2rem;
+      font-size: var(--text-sm);
+    }
+
+    .footer__about-locations {
+      display: block;
+    }
+
+    .footer__col a {
+      font-size: var(--text-sm);
+    }
+
+    .footer__instructor {
+      font-size: var(--text-sm);
     }
 
     .footer__col {
