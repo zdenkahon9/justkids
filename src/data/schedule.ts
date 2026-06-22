@@ -25,6 +25,7 @@ export type ScheduleLocation = {
   accentSoft: "blush-soft" | "lilac-soft" | "sky-soft";
   venue: {
     city: string;
+    street: string;
     address: string;
     mapUrl: string;
   };
@@ -71,8 +72,13 @@ const venueFor = (
 ) => {
   const location = locations.find((item) => item.id === id);
   if (!location) {
+    const [street = fallbackAddress, city = fallbackCity] = fallbackAddress
+      .split(",")
+      .map((part) => part.trim());
+
     return {
-      city: fallbackCity,
+      city: city || fallbackCity,
+      street: street || fallbackAddress,
       address: fallbackAddress,
       mapUrl:
         fallbackMapUrl ??
@@ -82,6 +88,7 @@ const venueFor = (
 
   return {
     city: location.city,
+    street: location.street,
     address: `${location.street}, ${location.city}`,
     mapUrl: location.mapUrl,
   };

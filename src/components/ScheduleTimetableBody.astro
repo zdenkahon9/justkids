@@ -67,7 +67,11 @@ const { location } = Astro.props;
         {location.venue.city}
       </a>
     </p>
-    <p class="schedule__venue-address">{location.venue.address}</p>
+    <p class="schedule__venue-address">
+      <span class="schedule__venue-street">{location.venue.street}</span><span
+        class="schedule__venue-address-sep">, </span
+      ><span class="schedule__venue-city">{location.venue.city}</span>
+    </p>
   </div>
 </div>
 
@@ -251,5 +255,20 @@ const { location } = Astro.props;
     line-height: var(--line-height-base);
     color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
     pointer-events: none;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1179px) {
+    .schedule__venue-address {
+      margin: 0.25rem 0 0;
+    }
+
+    .schedule__venue-address-sep {
+      display: none;
+    }
+
+    .schedule__venue-street,
+    .schedule__venue-city {
+      display: block;
+    }
   }
 </style>
