@@ -725,9 +725,27 @@ const agePageCardThemesWithoutParents = [
     }
   }
 
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .age-page__pill-half,
+    .age-page__pill-schedule {
+      font-size: var(--text-lg);
+    }
+  }
+
   @media (min-width: 1024px) {
     .age-page__pill {
       font-size: var(--text-lg);
+    }
+
+    .age-page__pill-half,
+    .age-page__pill-schedule {
+      font-size: var(--text-xl);
+    }
+
+    .age-page__pill-schedule-icon,
+    .age-page__pill-schedule-graphic {
+      width: var(--text-2-5xl);
+      height: var(--text-2-5xl);
     }
   }
 

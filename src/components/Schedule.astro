@@ -310,10 +310,14 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
       flex: 1 1 auto;
     }
 
-    .schedule__card-tab--zdice,
-    .schedule__card-tab--horovice,
-    .schedule__card-tab--broumy {
-      font-size: var(--text-lg);
+    .schedule__card-tab {
+      font-size: var(--text-xl);
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1179px) {
+    .schedule__grid--desktop .schedule__card {
+      --schedule-time-to-activity-gap: 10px !important;
     }
   }
 </style>
