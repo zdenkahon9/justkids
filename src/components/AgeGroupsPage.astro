@@ -711,7 +711,26 @@ const agePageCardThemesWithoutParents = [
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .age-page__filter,
+    .age-page__group-heading {
+      width: 100%;
+    }
+
+    .age-page__grid {
+      width: 100%;
+      max-width: 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-content: center;
+    }
+
+    .age-page__pill-half,
+    .age-page__pill-schedule {
+      font-size: var(--text-lg);
+    }
+  }
+
+  @media (min-width: 1024px) {
     .age-page__filter,
     .age-page__group-heading {
       width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
@@ -723,16 +742,7 @@ const agePageCardThemesWithoutParents = [
       grid-template-columns: repeat(2, var(--card-grid-width-md));
       justify-content: center;
     }
-  }
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .age-page__pill-half,
-    .age-page__pill-schedule {
-      font-size: var(--text-lg);
-    }
-  }
-
-  @media (min-width: 1024px) {
     .age-page__pill {
       font-size: var(--text-lg);
     }
