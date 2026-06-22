@@ -686,6 +686,31 @@ const agePageCardThemesWithoutParents = [
     color: var(--color-ink);
   }
 
+  @media (min-width: 640px) {
+    .age-page__grid > li {
+      display: flex;
+    }
+
+    .age-page__card {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .age-page__body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .age-page__content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+  }
+
   @media (min-width: 768px) {
     .age-page__filter,
     .age-page__group-heading {

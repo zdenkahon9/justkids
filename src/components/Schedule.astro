@@ -279,7 +279,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     }
   }
 
-  @media (min-width: 1180px) {
+  @media (min-width: 1024px) {
     .schedule__panel--mobile {
       display: none;
     }
@@ -290,6 +290,24 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
       gap: var(--space-4);
       width: 100%;
       margin: 0 auto var(--space-9);
+    }
+
+    .schedule__grid--desktop
+      .schedule__card:nth-child(2)
+      :global(.schedule__day-block),
+    .schedule__grid--desktop
+      .schedule__card:nth-child(3)
+      :global(.schedule__day-block) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Volný prostor pod sloty — timeline (a osa) zůstane jen u bodů */
+    .schedule__grid--desktop
+      .schedule__card:nth-child(3)
+      :global(.schedule__day-block)::after {
+      content: "";
+      flex: 1 1 auto;
     }
   }
 </style>
@@ -341,4 +359,62 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   setupSchedulePill();
   document.addEventListener("astro:page-load", setupSchedulePill);
+
+  const SCHEDULE_DESKTOP_MQ = "(min-width: 1024px)";
+
+  const syncScheduleHoroviceBroumyDayBlocks = () => {
+    const grid = document.querySelector<HTMLElement>(
+      ".schedule__grid--desktop",
+    );
+    if (!grid) return;
+
+    const horoviceDay = grid.querySelector<HTMLElement>(
+      ".schedule__card:nth-child(2) .schedule__day-block",
+    );
+    const broumyDay = grid.querySelector<HTMLElement>(
+      ".schedule__card:nth-child(3) .schedule__day-block",
+    );
+
+    if (!horoviceDay || !broumyDay) return;
+
+    broumyDay.style.minHeight = "";
+
+    if (!window.matchMedia(SCHEDULE_DESKTOP_MQ).matches) return;
+    if (getComputedStyle(grid).display === "none") return;
+
+    broumyDay.style.minHeight = `${horoviceDay.getBoundingClientRect().height}px`;
+  };
+
+  const setupScheduleDayBlockSync = () => {
+    const grid = document.querySelector<HTMLElement>(
+      ".schedule__grid--desktop",
+    );
+    if (!grid || grid.dataset.dayBlockSyncReady === "true") return;
+    grid.dataset.dayBlockSyncReady = "true";
+
+    const run = () => {
+      requestAnimationFrame(syncScheduleHoroviceBroumyDayBlocks);
+    };
+
+    run();
+    window.addEventListener("resize", run, { passive: true });
+    document.fonts?.ready.then(run);
+
+    const horoviceDay = grid.querySelector<HTMLElement>(
+      ".schedule__card:nth-child(2) .schedule__day-block",
+    );
+    if (horoviceDay) {
+      const observer = new ResizeObserver(run);
+      observer.observe(horoviceDay);
+    }
+  };
+
+  setupScheduleDayBlockSync();
+  document.addEventListener("astro:page-load", () => {
+    const grid = document.querySelector<HTMLElement>(
+      ".schedule__grid--desktop",
+    );
+    if (grid) delete grid.dataset.dayBlockSyncReady;
+    setupScheduleDayBlockSync();
+  });
 </script>

@@ -191,6 +191,23 @@ import Icon from "astro-iconify";
     padding-top: 1.25rem;
   }
 
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .about__text {
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .about__content {
+      align-items: center;
+      text-align: center;
+      margin-inline: auto;
+    }
+
+    .about__content p {
+      margin-inline: auto;
+    }
+  }
+
   @media (min-width: 1024px) {
     .about__inner {
       grid-template-columns: 1fr 1.2fr;
