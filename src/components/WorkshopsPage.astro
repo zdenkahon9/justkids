@@ -305,13 +305,12 @@ const pageMeta = workshopsPageMeta;
   }
 
   .workshops-page__intro .section-header {
-    --section-header-spacing: 3rem;
-    margin-bottom: var(--section-header-spacing);
+    margin-bottom: 4rem;
   }
 
   .workshops-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 2rem;
+    margin: 0 0 var(--space-8);
   }
 
   /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
@@ -407,7 +406,7 @@ const pageMeta = workshopsPageMeta;
     font-size: var(--text-base);
     line-height: var(--line-height-base);
     white-space: nowrap;
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     min-height: calc(2rem + 1em * var(--line-height-base));
   }
 
@@ -436,7 +435,7 @@ const pageMeta = workshopsPageMeta;
     justify-content: center;
     box-sizing: border-box;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     color: var(--accent);
     font-weight: 600;
     text-align: center;
@@ -495,10 +494,10 @@ const pageMeta = workshopsPageMeta;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    gap: 0.5rem;
+    gap: var(--space-2);
     width: 100%;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     background: #fefefe;
     color: var(--color-ink);
     --workshops-page-scroll-offset: var(--workshops-page-anchor-offset);
@@ -1004,7 +1003,7 @@ const pageMeta = workshopsPageMeta;
 
   @media (min-width: 1024px) {
     .workshops-page__filter {
-      width: min(100%, calc(2 * var(--card-grid-width) + var(--stack-gap)));
+      display: none;
     }
 
     .workshops__grid {

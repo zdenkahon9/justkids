@@ -10,6 +10,8 @@ export type WorkshopsHomeMeta = {
   cardNoteHighlight: string;
   /** Text v `.workshops-home__note` po zvýraznění */
   cardNoteTail: string;
+  /** Popis v levém sloupci karty (desktop 1024px+) */
+  cardNoteDescription: string;
   /** Text v `.workshops-home__info` pod seznamem workshopů */
   cardInfoText: string;
   detailHref: string;
@@ -26,6 +28,8 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   cardNoteLead: "Dopřejte svému miminku ten",
   cardNoteHighlight: "nejlepší start",
   cardNoteTail: "do života.",
+  cardNoteDescription:
+    "Naše workshopy vám pomohou získat jistotu, pochopit potřeby dítěte a podpořit jeho zdravý vývoj.",
   cardInfoText: "Aktuální termíny a místa konání najdete v detailu.",
   detailHref: "/workshopy",
   ctaLabel: "Všechny workshopy",

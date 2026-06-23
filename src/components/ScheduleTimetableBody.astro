@@ -190,9 +190,9 @@ const { location } = Astro.props;
     position: relative;
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: var(--space-2);
     margin-top: var(--space-5);
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     border-radius: var(--radius-pill);
     background: var(--accent-soft);
     transition: background 220ms ease;
@@ -259,7 +259,7 @@ const { location } = Astro.props;
 
   @media (min-width: 1024px) and (max-width: 1179px) {
     .schedule__venue-address {
-      margin: 0.25rem 0 0;
+      margin: var(--space-1) 0 0;
     }
 
     .schedule__venue-address-sep {

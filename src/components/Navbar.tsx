@@ -95,7 +95,8 @@ const Navbar = ({
     return (
       variant === "solid" ||
       window.scrollY > 60 ||
-      document.documentElement.dataset.workshopsHomeArrival === "true"
+      document.documentElement.dataset.workshopsHomeArrival === "true" ||
+      document.documentElement.dataset.ageHomeArrival === "true"
     );
   });
   const [open, setOpen] = useState(false);

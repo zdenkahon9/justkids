@@ -137,7 +137,7 @@ const year = new Date().getFullYear();
 
   .footer {
     scroll-margin-top: var(--nav-height);
-    margin-top: 4rem;
+    margin-top: var(--space-12);
     background: linear-gradient(
       180deg,
       #fff9f4 0%,
@@ -150,14 +150,14 @@ const year = new Date().getFullYear();
   }
 
   #kontakt {
-    scroll-margin-top: -3rem;
+    scroll-margin-top: calc(-1 * var(--space-10));
   }
 
   .footer__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.75rem;
-    padding-block: 2.25rem 1.75rem;
+    gap: var(--space-7);
+    padding-block: 2.25rem var(--space-7);
   }
 
   .footer__brand {
@@ -168,7 +168,7 @@ const year = new Date().getFullYear();
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 0.75rem;
+    gap: var(--space-3);
     text-decoration: none;
     color: inherit;
     margin-bottom: var(--space-4);
@@ -198,7 +198,7 @@ const year = new Date().getFullYear();
 
   .footer__about {
     color: var(--color-ink);
-    margin: 0 0 1.5rem;
+    margin: 0 0 var(--space-6);
     max-width: 22rem;
     font-size: var(--text-base);
     line-height: var(--line-height-base);
@@ -217,7 +217,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__social-label {
-    margin: 0 0 0.5rem;
+    margin: 0 0 var(--space-2);
     font-size: var(--text-base);
     font-weight: 600;
     color: var(--color-ink);
@@ -283,7 +283,7 @@ const year = new Date().getFullYear();
     line-height: var(--line-height-xl);
     color: var(--color-ink-soft);
     font-weight: 700;
-    margin: 0 0 1.25rem;
+    margin: 0 0 var(--space-5);
   }
 
   .footer__col ul {
@@ -294,15 +294,15 @@ const year = new Date().getFullYear();
   }
 
   .footer__col.footer__col--kontakt ul {
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .footer__col.footer__col--lokace ul {
-    gap: 1.5rem;
+    gap: var(--space-6);
   }
 
   .footer__col.footer__col--navigace ul {
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .footer__col a {
@@ -358,7 +358,7 @@ const year = new Date().getFullYear();
   .footer__email {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .footer__phone-icon,
@@ -371,7 +371,7 @@ const year = new Date().getFullYear();
 
   .footer__bottom {
     border-top: 1px solid rgba(42, 31, 56, 0.08);
-    padding-block: 1rem;
+    padding-block: var(--space-4);
     background: rgba(255, 255, 255, 0.4);
   }
 
@@ -381,7 +381,7 @@ const year = new Date().getFullYear();
     justify-content: center;
     text-align: center;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-4);
     font-size: var(--text-sm);
     color: var(--color-ink-soft);
   }
@@ -441,7 +441,7 @@ const year = new Date().getFullYear();
 
     .footer__about {
       max-width: 240px;
-      margin: 0 0 2rem;
+      margin: 0 0 var(--space-8);
       font-size: var(--text-sm);
     }
 

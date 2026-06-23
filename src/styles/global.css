@@ -171,6 +171,11 @@ body {
   max-width: 100%;
 }
 
+html[data-age-home-arrival] {
+  visibility: hidden;
+  background-color: var(--color-cream);
+}
+
 #main {
   background-color: var(--color-cream);
 }
@@ -201,7 +206,7 @@ h3 {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  padding: 1rem 1.625rem;
+  padding: var(--space-4) 1.625rem;
   font-family: var(--font-body);
   font-weight: 700;
   font-size: var(--text-base);
@@ -411,7 +416,7 @@ h3 {
   left: 1rem;
   background: var(--color-ink);
   color: white;
-  padding: 0.75rem 1rem;
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-full);
   z-index: 100;
   font-weight: 700;
@@ -438,7 +443,7 @@ html[data-workshops-home-arrival] [data-component="navbar"] {
   background: rgba(255, 249, 244, 0.88);
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
-  padding: 0.5rem 0;
+  padding: var(--space-2) 0;
   box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
   transition: none;
 }

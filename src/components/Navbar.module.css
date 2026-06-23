@@ -22,7 +22,7 @@
   background: rgba(255, 249, 244, 0.88);
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
-  padding: 0.5rem 0;
+  padding: var(--space-2) 0;
   box-shadow: 0 6px 30px -16px rgba(123, 90, 160, 0.25);
 }
 
@@ -32,7 +32,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .navBrand {
@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: var(--space-5);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -112,7 +112,7 @@
 
 .navLinks > ul > li > a {
   display: inline-block;
-  padding: 0.625rem 1rem;
+  padding: 0.625rem var(--space-4);
   color: var(--color-ink);
   font-weight: 600;
   font-size: var(--text-lg);
@@ -125,7 +125,7 @@
 
 .navLinks > ul > li > button.dropdownTrigger {
   display: inline-block;
-  padding: 0.625rem 1rem;
+  padding: 0.625rem var(--space-4);
   margin: 0;
   color: var(--color-ink);
   font-weight: 600;
@@ -222,7 +222,7 @@
 .dropdownList {
   list-style: none;
   margin: 0;
-  padding: 0.75rem;
+  padding: var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -238,7 +238,7 @@
 
 .dropdownList a {
   display: block;
-  padding: 0.625rem 1rem;
+  padding: 0.625rem var(--space-4);
   color: var(--color-ink);
   font-weight: 600;
   font-size: var(--text-lg);
@@ -321,8 +321,8 @@
   top: var(--nav-height);
   height: calc(100svh - var(--nav-height));
   background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
-  padding-block: 0 1.25rem;
-  padding-inline: 1.25rem;
+  padding-block: 0 var(--space-5);
+  padding-inline: var(--space-5);
   z-index: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -348,7 +348,7 @@
 }
 
 .navMobile ul li:last-child {
-  padding-top: 1rem;
+  padding-top: var(--space-4);
   display: flex;
   justify-content: center;
 }
@@ -369,7 +369,7 @@
 
 .navMobile a:not(:global(.btn)) {
   display: block;
-  padding: 0.875rem 1rem;
+  padding: 0.875rem var(--space-4);
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 600;
@@ -395,14 +395,14 @@
 
 @media (min-width: 640px) {
   .navInner {
-    gap: 1rem;
+    gap: var(--space-4);
   }
 }
 
 @media (min-width: 1024px) {
   .navInner {
     grid-template-columns: auto 1fr auto;
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .navLinks {
@@ -414,7 +414,7 @@
   }
 
   .navLinks > ul {
-    gap: 1rem;
+    gap: var(--space-4);
   }
 
   .navCta {
@@ -445,7 +445,7 @@
   }
 
   .navInner:global(.container-x) {
-    padding-inline: 1.25rem;
+    padding-inline: var(--space-5);
   }
 
   .navCta:global(.btn) {

@@ -22,7 +22,8 @@ export const rules: Rule[] = [
   {
     id: 2,
     title: "Odhlášení\n24h předem",
-    detail: "Pokud nemůžete přijít, dejte mi prosím vědět den předem, ať lekci využije někdo další.",
+    detail:
+      "Nemůžete-li přijít, dejte mi prosím vědět den předem, ať lekci využije někdo další.",
     accent: "sky-deep",
     icon: "ph:clock-counter-clockwise-fill",
   },

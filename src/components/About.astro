@@ -78,7 +78,7 @@ import Icon from "astro-iconify";
   .about__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: var(--space-10);
     align-items: center;
     text-align: left;
   }
@@ -149,7 +149,7 @@ import Icon from "astro-iconify";
 
   .about__divider {
     position: relative;
-    margin: 1.5rem 0 2rem;
+    margin: var(--space-6) 0 var(--space-8);
     height: 1px;
     background: var(--color-blush-mid);
   }
@@ -160,7 +160,7 @@ import Icon from "astro-iconify";
     top: 50%;
     transform: translate(-50%, -50%);
     background: var(--color-cream);
-    padding: 0 1rem;
+    padding: 0 var(--space-4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -188,7 +188,7 @@ import Icon from "astro-iconify";
 
   .about__content p + p {
     border-top: var(--location-divider);
-    padding-top: 1.25rem;
+    padding-top: var(--space-5);
   }
 
   @media (min-width: 640px) and (max-width: 1023px) {

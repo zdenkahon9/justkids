@@ -88,7 +88,7 @@ import { site } from "../data/site";
     padding: 0;
     padding-top: var(--nav-height);
     /* Tucks cream under the wave for zoom / subpixel rounding at the next section */
-    padding-bottom: max(8px, 0.5rem);
+    padding-bottom: max(8px, var(--space-2));
     overflow: hidden;
     isolation: isolate;
     /* Fills any 1px compositor gap so pink veil / photo never show at section fold */
@@ -184,7 +184,7 @@ import { site } from "../data/site";
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: var(--space-10);
     align-items: center;
     width: 100%;
     text-align: center;
@@ -208,7 +208,7 @@ import { site } from "../data/site";
   }
 
   .hero__title {
-    margin: 0 0 3rem;
+    margin: 0 0 var(--space-10);
     font-family: var(--font-hero);
     font-weight: 400;
     font-size: clamp(3rem, 13cqi, 4.375rem);
@@ -224,8 +224,8 @@ import { site } from "../data/site";
     font-size: var(--text-lg);
     color: var(--color-ink);
     max-width: 38rem;
-    margin: 0 auto 3rem;
-    padding-left: 1rem;
+    margin: 0 auto var(--space-10);
+    padding-left: var(--space-4);
     text-align: left;
   }
 
@@ -233,7 +233,7 @@ import { site } from "../data/site";
     display: flex;
     flex-wrap: wrap;
     gap: 1.2rem;
-    margin-bottom: 3rem;
+    margin-bottom: var(--space-10);
     justify-content: center;
   }
 
@@ -304,16 +304,16 @@ import { site } from "../data/site";
 
   @media (min-width: 640px) and (max-width: 1023px) {
     .hero__title {
-      margin: 2rem 0 3.5rem;
+      margin: var(--space-8) 0 var(--space-11);
     }
 
     .hero__lead {
       font-size: var(--text-xl);
-      margin: 0 auto 3.5rem;
+      margin: 0 auto var(--space-11);
     }
 
     .hero__cta {
-      gap: 1.5rem;
+      gap: var(--space-6);
     }
   }
 
@@ -344,7 +344,7 @@ import { site } from "../data/site";
     }
 
     .hero__lead {
-      margin: 0 0 3rem;
+      margin: 0 0 var(--space-10);
       padding-left: 0;
       text-align: left;
     }
@@ -369,7 +369,7 @@ import { site } from "../data/site";
   /* Narrow desktop: two-column hero — heading reads huge vs logo; keep title smaller than full desktop clamp */
   @media (min-width: 1024px) and (max-width: 1155px) {
     .hero__title {
-      margin: 0rem 0 3rem;
+      margin: 0rem 0 var(--space-10);
     }
   }
 

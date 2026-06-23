@@ -195,9 +195,27 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   @media (hover: hover) and (pointer: fine) {
     .camp:hover {
       transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent-color) 40%, white);
       box-shadow: 0 18px 40px -18px
         color-mix(in srgb, var(--accent-color) 40%, transparent);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (max-width: 1023px) {
+    .camp:hover {
+      border-color: color-mix(in srgb, var(--accent-color) 40%, white);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .camp {
+      border: 1px solid color-mix(in srgb, var(--color-ink) 10%, #fefefe);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .camp:hover {
+        border-color: color-mix(in srgb, var(--color-ink) 10%, #fefefe);
+        box-shadow: 0 24px 48px -16px rgba(42, 31, 56, 0.1);
+      }
     }
   }
 
@@ -335,7 +353,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   .camp__meta-row {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: var(--space-5);
     margin: 0 0 var(--space-6);
     font-family: var(--font-body);
     font-size: var(--text-lg);

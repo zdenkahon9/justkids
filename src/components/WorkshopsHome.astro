@@ -1,6 +1,10 @@
 ---
 import Icon from "astro-iconify";
-import { workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
+import {
+  workshops,
+  workshopsHomeMeta,
+  workshopIconById,
+} from "../data/WorkshopsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = workshopsHomeMeta;
@@ -27,21 +31,35 @@ const meta = workshopsHomeMeta;
           class="workshops-home__card reveal"
           style={`--accent: ${cardAccentDeep(workshops[0].accent)};`}
         >
-          <p class="workshops-home__note">
-            <span class="workshops-home__note-inner">
-              <Icon
-                name="twemoji:pink-heart"
-                class="workshops-home__note-icon"
-              />
-              <span class="workshops-home__note-text">
-                {meta.cardNoteLead}{" "}
-                <span class="workshops-home__note-highlight">
-                  {meta.cardNoteHighlight}
-                </span>{" "}
-                {meta.cardNoteTail}
+          <div class="workshops-home__aside">
+            <p class="workshops-home__note">
+              <span class="workshops-home__note-inner">
+                <span class="workshops-home__note-icon-ring" aria-hidden="true">
+                  <Icon
+                    name="twemoji:pink-heart"
+                    class="workshops-home__note-icon"
+                  />
+                </span>
+                <span class="workshops-home__note-text">
+                  {meta.cardNoteLead}{" "}
+                  <span class="workshops-home__note-highlight">
+                    {meta.cardNoteHighlight}
+                  </span>{" "}
+                  {meta.cardNoteTail}
+                </span>
               </span>
-            </span>
-          </p>
+            </p>
+            <p class="workshops-home__note-description">
+              {meta.cardNoteDescription}
+            </p>
+            <a
+              class="workshops-home__card-cta btn btn-primary"
+              href={meta.detailHref}
+            >
+              {meta.ctaLabel}
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
           <div class="workshops-home__body">
             <ul class="workshops-home__topics">
               {
@@ -54,6 +72,17 @@ const meta = workshopsHomeMeta;
                       <span class="workshops-home__rule" aria-hidden="true" />
                     ) : null}
                     <div class="workshops-home__topic-row">
+                      <span
+                        class="workshops-home__topic-icon"
+                        aria-hidden="true"
+                      >
+                        <Icon
+                          name={
+                            workshopIconById[w.id] ?? "streamline:health-care-2"
+                          }
+                          class="workshops-home__topic-icon-graphic"
+                        />
+                      </span>
                       <div class="workshops-home__topic-copy">
                         <h3 class="workshops-home__topic-label">{w.title}</h3>
                         <span
@@ -145,6 +174,23 @@ const meta = workshopsHomeMeta;
       box-shadow 280ms ease;
   }
 
+  .workshops-home__aside {
+    display: contents;
+  }
+
+  .workshops-home__note-description,
+  .workshops-home__card-cta {
+    display: none;
+  }
+
+  .workshops-home__topic-icon {
+    display: none;
+  }
+
+  .workshops-home__note-icon-ring {
+    display: contents;
+  }
+
   .workshops-home__note {
     margin: 0;
     padding: var(--space-8) var(--card-padding-x) var(--space-8);
@@ -179,8 +225,8 @@ const meta = workshopsHomeMeta;
 
   .workshops-home__note-icon {
     flex-shrink: 0;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .workshops-home__body {
@@ -339,13 +385,161 @@ const meta = workshopsHomeMeta;
   }
 
   @media (min-width: 1024px) {
+    .workshops-home__grid {
+      width: min(100%, 60rem);
+      max-width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      justify-content: stretch;
+    }
+
+    .workshops-home__card {
+      display: grid;
+      grid-template-columns: minmax(0, 32%) minmax(0, 68%);
+      align-items: stretch;
+      border: 1px solid color-mix(in srgb, var(--color-ink) 10%, #fefefe);
+    }
+
+    .workshops-home__aside {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+      padding: var(--card-padding);
+      background: var(--color-apricot-soft);
+    }
+
+    .workshops-home__note {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      text-align: left;
+    }
+
+    .workshops-home__note-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-6);
+      text-align: left;
+    }
+
+    .workshops-home__note-icon-ring {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: var(--radius-full);
+      background: var(--color-blush-soft);
+    }
+
+    .workshops-home__note-icon {
+      width: 1.375rem;
+      height: 1.375rem;
+    }
+
+    .workshops-home__note-text {
+      max-width: 14ch;
+      font-size: var(--text-h3);
+      line-height: var(--line-height-xl);
+      font-weight: 600;
+      line-height: var(--line-height-2xl);
+    }
+
+    .workshops-home__note-description {
+      display: block;
+      margin: 0;
+      max-width: 28ch;
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      font-weight: 400;
+      line-height: var(--line-height-base);
+      color: var(--color-ink);
+    }
+
+    .workshops-home__card-cta {
+      display: inline-flex;
+      margin-top: auto;
+      width: 100%;
+      max-width: 18rem;
+      box-shadow: none;
+    }
+
+    .workshops-home__cta {
+      display: none;
+    }
+
+    .workshops-home__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: var(--card-padding);
+    }
+
+    .workshops-home__topic-row {
+      min-height: 96px;
+      gap: var(--space-5);
+      margin-left: 0.75rem;
+    }
+
+    .workshops-home__topic-label {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-h3);
+      line-height: var(--line-height-xl);
+    }
+
+    .workshops-home__topic-rule {
+      display: none;
+    }
+
     .workshops-home__topic-summary {
       font-size: var(--text-lg);
+      color: var(--color-ink);
+    }
+
+    .workshops-home__topic:last-child .workshops-home__topic-row {
+      margin-bottom: 1rem;
+    }
+
+    .workshops-home__arrow {
+      position: relative;
+      inset-inline-end: var(--space-4);
+      width: var(--space-10);
+      height: var(--space-10);
+      transition: transform 180ms ease;
+    }
+
+    .workshops-home__arrow:hover,
+    .workshops-home__arrow:focus-visible {
+      transform: translateX(0.25rem);
+    }
+
+    .workshops-home__arrow-graphic {
+      width: var(--text-3xl);
+      height: var(--text-3xl);
+    }
+
+    .workshops-home__info {
+      margin-top: var(--space-7);
+    }
+
+    .workshops-home__info-inner {
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-2xl);
     }
 
     .workshops-home__info-text {
       font-size: var(--text-base);
     }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .workshops-home__card-cta:hover {
+      box-shadow: var(--shadow-pop);
+    }
+  }
+
+  .workshops-home__card-cta:active {
+    box-shadow: var(--shadow-pop);
+    transform: translate3d(0, 0, 0) scale(0.98);
   }
 </style>
 

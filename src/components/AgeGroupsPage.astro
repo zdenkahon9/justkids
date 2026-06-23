@@ -312,7 +312,7 @@ const agePageCardThemesWithoutParents = [
 
   .age-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin: 0 0 2rem;
+    margin: 0 0 var(--space-8);
   }
 
   /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
@@ -380,7 +380,7 @@ const agePageCardThemesWithoutParents = [
     font-size: var(--text-base);
     line-height: var(--line-height-base);
     white-space: nowrap;
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     min-height: calc(2rem + 1em * var(--line-height-base));
   }
 
@@ -402,7 +402,7 @@ const agePageCardThemesWithoutParents = [
     justify-content: center;
     box-sizing: border-box;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     font-weight: 600;
     text-align: center;
     text-decoration: none;
@@ -462,7 +462,7 @@ const agePageCardThemesWithoutParents = [
     gap: 0.6rem;
     width: 100%;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: 1rem 1.625rem;
+    padding: var(--space-4) 1.625rem;
     color: var(--color-lilac-deep);
     --accent-soft: var(--color-lilac-soft);
     font: inherit;
@@ -730,6 +730,10 @@ const agePageCardThemesWithoutParents = [
   }
 
   @media (min-width: 1024px) {
+    .age-page {
+      --age-page-anchor-offset-groups: calc(var(--nav-height) + var(--space-8));
+    }
+
     .age-page__filter,
     .age-page__group-heading {
       width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
