@@ -4,9 +4,6 @@ import { ageGroupsHomeCards, ageGroupsHomeMeta } from "../data/ageGroupsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = ageGroupsHomeMeta;
-
-/** TEMP: nastav na false a vrať <a> v kartě — celá karta je zase klikací odkaz */
-const TEMP_DISABLE_CARD_LINKS = true;
 ---
 
 <section
@@ -46,13 +43,9 @@ const TEMP_DISABLE_CARD_LINKS = true;
               <div class="age-home__body">
                 <div class="age-home__content">
                   <h3 class="age-home__heading">
-                    {TEMP_DISABLE_CARD_LINKS ? (
-                      <span>{card.title}</span>
-                    ) : (
-                      <a class="age-home__card-link" href={meta.detailHref}>
-                        {card.title}
-                      </a>
-                    )}
+                    <a class="age-home__card-link" href={meta.detailHref}>
+                      {card.title}
+                    </a>
                   </h3>
                   <div class="age-home__age-row">
                     <span class="age-home__age">{card.ageRange}</span>
@@ -67,10 +60,10 @@ const TEMP_DISABLE_CARD_LINKS = true;
                       <>
                         {index > 0 ? (
                           <span class="age-home__groups-sep" aria-hidden="true">
-                            •
+                            {" • "}
                           </span>
                         ) : null}
-                        <span class="age-home__group">{group}</span>
+                        {group}
                       </>
                     ))}
                   </p>
@@ -231,7 +224,6 @@ const TEMP_DISABLE_CARD_LINKS = true;
 
   .age-home__groups-sep {
     color: var(--accent);
-    margin-inline: 0.35em;
   }
 
   .age-home__rule {
@@ -359,7 +351,15 @@ const TEMP_DISABLE_CARD_LINKS = true;
     }
 
     .age-home__groups-sep {
-      margin-inline: 0;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .age-home__groups-sep::before {
+      content: "•";
+      font-size: var(--text-lg);
+      line-height: var(--line-height-xl);
+      color: var(--accent);
     }
 
     .age-home__summary {

@@ -91,17 +91,12 @@ const splitLocationName = (name: string) => {
                                   </>
                                 </h3>
                                 <address class="location__address">
-                                  <>
-                                    <span class="location__address-street">
-                                      {l.street}
-                                    </span>
-                                    <span class="location__address-sep">
-                                      ,{" "}
-                                    </span>
-                                    <span class="location__address-locality">
-                                      {l.zip} {l.city}
-                                    </span>
-                                  </>
+                                  <span class="location__address-street"
+                                    >{l.street}</span
+                                  ><span class="location__address-sep">, </span
+                                  ><span class="location__address-locality"
+                                    >{l.zip} {l.city}</span
+                                  >
                                 </address>
                               </div>
                             </div>
@@ -640,6 +635,22 @@ const splitLocationName = (name: string) => {
 
     .location__head-text h3 {
       margin: 0 0 var(--space-3);
+    }
+
+    .location__address {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: 0;
+    }
+
+    .location__address-sep {
+      display: none;
+    }
+
+    .location__address-street::after {
+      content: ",\00a0";
     }
   }
 
