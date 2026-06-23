@@ -129,44 +129,79 @@ const pageMeta = workshopsPageMeta;
                 <>
                   <div class="workshop__price">
                     <p class="workshop__price-label">{pageMeta.priceLabel}</p>
-                    <p class="workshop__price-value">{w.price}</p>
+                    <p class="workshop__price-value">{w.price ?? pageMeta.defaultPrice}</p>
                   </div>
                   <hr class="workshops-page__divider" aria-hidden="true" />
                 </>
               ) : null}
               {w.dates?.length ? (
                 <>
-                  <p class="workshop__terms-label">{pageMeta.termsLabel}</p>
-                  <ul class="workshop__dates">
-                    {w.dates.map((date) => (
-                      <li>
-                        <a
-                          class="workshop__date-card"
-                          href={date.href ?? site.reservationUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
-                        >
-                          <div
-                            class="workshop__date-card-date"
-                            aria-hidden="true"
+                  <div class="workshop__terms" data-workshop-terms>
+                    <button
+                      type="button"
+                      class="workshop__terms-toggle"
+                      aria-expanded="false"
+                      aria-controls={`workshop-dates-${w.id}`}
+                    >
+                      <span
+                        class="workshop__terms-label"
+                        id={`workshop-terms-label-${w.id}`}
+                      >
+                        {pageMeta.termsLabel}
+                      </span>
+                      <svg
+                        class="workshop__terms-chevron"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M2.5 4.25L6 7.75L9.5 4.25"
+                          stroke="currentColor"
+                          stroke-width="1.75"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                      </svg>
+                    </button>
+                    <ul
+                      id={`workshop-dates-${w.id}`}
+                      class="workshop__dates"
+                      role="region"
+                      aria-labelledby={`workshop-terms-label-${w.id}`}
+                    >
+                      {w.dates.map((date) => (
+                        <li>
+                          <a
+                            class="workshop__date-card"
+                            href={date.href ?? site.reservationUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
                           >
-                            <span class="workshop__date-day">{date.day}</span>
-                            <span class="workshop__date-month">
-                              {date.month}
-                            </span>
-                          </div>
-                          <div class="workshop__date-card-body">
-                            <p class="workshop__date-venue">{date.venueName}</p>
-                            <p class="workshop__date-time">{date.time}</p>
-                            <p class="workshop__date-spots">
-                              {pageMeta.spotsLabel}
-                            </p>
-                          </div>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                            <div
+                              class="workshop__date-card-date"
+                              aria-hidden="true"
+                            >
+                              <span class="workshop__date-day">{date.day}</span>
+                              <span class="workshop__date-month">
+                                {date.month}
+                              </span>
+                            </div>
+                            <div class="workshop__date-card-body">
+                              <p class="workshop__date-venue">{date.venueName}</p>
+                              <p class="workshop__date-time">{date.time}</p>
+                              <p class="workshop__date-spots">
+                                {pageMeta.spotsLabel}
+                              </p>
+                            </div>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <hr class="workshops-page__divider" aria-hidden="true" />
                   <div class="workshops-page__cta">
                     <a
@@ -297,6 +332,7 @@ const pageMeta = workshopsPageMeta;
   .workshops-page .section-subtitle {
     width: 0;
     min-width: 100%;
+    white-space: pre-line;
     text-wrap: pretty;
   }
 
@@ -317,6 +353,8 @@ const pageMeta = workshopsPageMeta;
     .workshops-page .section-subtitle {
       width: auto;
       min-width: 0;
+      max-width: 28rem;
+      margin-inline: auto;
       text-wrap: wrap;
     }
   }
@@ -371,6 +409,12 @@ const pageMeta = workshopsPageMeta;
     white-space: nowrap;
     padding: 1rem 1.625rem;
     min-height: calc(2rem + 1em * var(--line-height-base));
+  }
+
+  @media (min-width: 1024px) {
+    .workshops-page__pill {
+      font-size: var(--text-lg);
+    }
   }
 
   .workshops-page__nav + .workshops-page__pill {
@@ -563,6 +607,7 @@ const pageMeta = workshopsPageMeta;
   /* .workshop__summary, */
   .workshop__details,
   .workshop__highlights-label,
+  .workshop__terms,
   .workshop__terms-label,
   .workshop__dates,
   .workshop__price,
@@ -623,6 +668,15 @@ const pageMeta = workshopsPageMeta;
     color: var(--color-ink);
   }
 
+  @media (min-width: 1024px) {
+    .workshops__grid .workshop:first-child .workshop__lead h3 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(2em * var(--line-height-xl));
+    }
+  }
+
   .workshops-page__rule {
     display: block;
     width: 100%;
@@ -659,14 +713,50 @@ const pageMeta = workshopsPageMeta;
     border-radius: var(--radius-pill);
   }
 
-  .workshop__highlights-label,
-  .workshop__terms-label {
+  .workshop__highlights-label {
     margin: 0 0 var(--space-4);
     font-family: var(--font-body);
     font-size: var(--text-lg);
     font-weight: 700;
     line-height: var(--line-height-base);
     color: var(--accent);
+  }
+
+  .workshop__terms-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .workshop__terms-label {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    color: inherit;
+  }
+
+  .workshop__terms.is-expanded .workshop__terms-toggle {
+    margin-bottom: var(--space-8);
+  }
+
+  .workshop__terms-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
   .workshop__price-label {
@@ -676,6 +766,14 @@ const pageMeta = workshopsPageMeta;
     font-weight: 700;
     line-height: var(--line-height-base);
     color: var(--accent);
+  }
+
+  @media (min-width: 1024px) {
+    .workshop__highlights-label,
+    .workshop__terms-label,
+    .workshop__price-label {
+      font-size: var(--text-xl);
+    }
   }
 
   .workshop__highlights {
@@ -696,6 +794,19 @@ const pageMeta = workshopsPageMeta;
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
+  }
+
+  @media (min-width: 1024px) {
+    .workshop__highlights > li > span {
+      font-size: var(--text-lg);
+    }
+
+    .workshops__grid .workshop:nth-child(2) .workshop__highlights {
+      min-height: calc(
+        7 * max(var(--text-2xl), calc(var(--text-lg) * var(--line-height-base))) +
+          6 * var(--space-4)
+      );
+    }
   }
 
   .workshops-page__divider {
@@ -732,13 +843,30 @@ const pageMeta = workshopsPageMeta;
     color: var(--accent);
   }
 
+  .workshop__terms-chevron {
+    display: block;
+    flex-shrink: 0;
+    width: var(--text-xl);
+    height: var(--text-xl);
+    transition: transform 220ms ease;
+  }
+
+  .workshop__terms.is-expanded .workshop__terms-chevron {
+    transform: rotate(180deg);
+  }
+
   .workshop__dates {
     list-style: none;
-    margin: 0;
+    margin: var(--space-4) 0 0;
     padding: 0;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: var(--space-3);
+  }
+
+  .workshop__terms.is-expanded .workshop__dates {
+    display: flex;
+    margin-top: 0;
   }
 
   .workshop__date-card {
@@ -874,23 +1002,26 @@ const pageMeta = workshopsPageMeta;
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     .workshops-page__filter {
-      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+      width: min(100%, calc(2 * var(--card-grid-width) + var(--stack-gap)));
     }
 
     .workshops__grid {
-      --workshop-card-width: var(--card-grid-width-md);
+      --workshop-card-width: var(--card-grid-width);
       width: fit-content;
       max-width: 100%;
       grid-template-columns: repeat(2, var(--workshop-card-width));
+      gap: var(--space-12) var(--space-6);
       justify-content: center;
     }
   }
 
   @media (min-width: 1180px) {
-    .workshops__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+    .workshops__grid .workshop:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: var(--workshop-card-width);
     }
   }
 </style>
@@ -986,5 +1117,36 @@ const pageMeta = workshopsPageMeta;
   };
 
   setupWorkshopsPageNav();
+
+  const setupWorkshopsTermsAccordions = () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-workshop-terms]")
+      .forEach((terms) => {
+        if (terms.dataset.termsReady === "true") return;
+        terms.dataset.termsReady = "true";
+
+        const toggle = terms.querySelector<HTMLButtonElement>(
+          ".workshop__terms-toggle",
+        );
+        const dates = terms.querySelector<HTMLElement>(".workshop__dates");
+        if (!toggle || !dates) return;
+
+        const syncToggle = () => {
+          const expanded = terms.classList.contains("is-expanded");
+          toggle.setAttribute("aria-expanded", String(expanded));
+          dates.setAttribute("aria-hidden", String(!expanded));
+        };
+
+        toggle.addEventListener("click", () => {
+          terms.classList.toggle("is-expanded");
+          syncToggle();
+        });
+
+        syncToggle();
+      });
+  };
+
+  setupWorkshopsTermsAccordions();
   document.addEventListener("astro:page-load", setupWorkshopsPageNav);
+  document.addEventListener("astro:page-load", setupWorkshopsTermsAccordions);
 </script>
