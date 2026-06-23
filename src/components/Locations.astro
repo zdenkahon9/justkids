@@ -66,123 +66,131 @@ const splitLocationName = (name: string) => {
                   const nameParts = splitLocationName(l.name);
 
                   return (
-                  <div
-                    class="locations-tabs__panel"
-                    id={`location-panel-${i}`}
-                    role="region"
-                    aria-label={l.city}
-                  >
-                    <article
-                      class="location reveal"
-                      style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
+                    <div
+                      class="locations-tabs__panel"
+                      id={`location-panel-${i}`}
+                      role="region"
+                      aria-label={l.city}
                     >
-                      <div class="location__details">
-                        <div class="location__summary">
-                          <div class="location__head">
-                            <div class="location__head-text">
-                              <h3>
-                                <span class="location__name-first"
-                                  >{nameParts.first}</span
-                                ><span class="location__name-rest"
-                                  >{nameParts.rest}</span
-                                >
-                              </h3>
-                              <address class="location__address">
-                                <span class="location__address-street"
-                                  >{l.street}</span
-                                ><span class="location__address-sep">, </span
-                                ><span class="location__address-locality"
-                                  >{l.zip} {l.city}</span
-                                >
-                              </address>
+                      <article
+                        class="location reveal"
+                        style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
+                      >
+                        <div class="location__details">
+                          <div class="location__summary">
+                            <div class="location__head">
+                              <div class="location__head-text">
+                                <h3>
+                                  <>
+                                    <span class="location__name-first">
+                                      {nameParts.first}
+                                    </span>
+                                    <span class="location__name-rest">
+                                      {nameParts.rest}
+                                    </span>
+                                  </>
+                                </h3>
+                                <address class="location__address">
+                                  <>
+                                    <span class="location__address-street">
+                                      {l.street}
+                                    </span>
+                                    <span class="location__address-sep">
+                                      ,{" "}
+                                    </span>
+                                    <span class="location__address-locality">
+                                      {l.zip} {l.city}
+                                    </span>
+                                  </>
+                                </address>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <span class="location__rule" aria-hidden="true"></span>
+                          <span class="location__rule" aria-hidden="true" />
 
-                        <div class="location__panel">
-                          <div class="location__expandable">
-                            <div class="location__parking">
-                              <span class="location__parking-label">
-                                <span
-                                  class="location__p-mark"
+                          <div class="location__panel">
+                            <div class="location__expandable">
+                              <div class="location__parking">
+                                <span class="location__parking-label">
+                                  <span
+                                    class="location__p-mark"
+                                    aria-hidden="true"
+                                  >
+                                    <Icon
+                                      name="streamline:parking-sign-solid"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                  Parkování
+                                </span>
+                                <p>{l.parking}</p>
+                              </div>
+
+                              <a
+                                href={l.mapUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="location__nav-link"
+                              >
+                                Navigovat v Google Maps
+                                <svg
+                                  class="location__extern-icon"
+                                  viewBox="0 0 24 24"
+                                  width="16"
+                                  height="16"
                                   aria-hidden="true"
                                 >
-                                  <Icon
-                                    name="streamline:parking-sign-solid"
-                                    aria-hidden="true"
+                                  <path
+                                    fill="currentColor"
+                                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
                                   />
-                                </span>
-                                Parkování
-                              </span>
-                              <p>{l.parking}</p>
+                                  <path
+                                    fill="currentColor"
+                                    d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                                  />
+                                </svg>
+                              </a>
                             </div>
-
-                            <a
-                              href={l.mapUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="location__nav-link"
-                            >
-                              Navigovat v Google Maps
-                              <svg
-                                class="location__extern-icon"
-                                viewBox="0 0 24 24"
-                                width="16"
-                                height="16"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fill="currentColor"
-                                  d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                                />
-                                <path
-                                  fill="currentColor"
-                                  d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                                />
-                              </svg>
-                            </a>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="location__map-shell">
-                        <iframe
-                          class="location__map-frame"
-                          src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
-                          title={`Mapa: ${l.name}`}
-                          loading="lazy"
-                          referrerpolicy="no-referrer-when-downgrade"
-                          allowfullscreen
-                        />
-                        <a
-                          href={l.mapUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="location__map-overlay"
-                        >
-                          Otevřít v Mapách
-                          <svg
-                            class="location__extern-icon"
-                            viewBox="0 0 24 24"
-                            width="16"
-                            height="16"
-                            aria-hidden="true"
+                        <div class="location__map-shell">
+                          <iframe
+                            class="location__map-frame"
+                            src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
+                            title={`Mapa: ${l.name}`}
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen
+                          />
+                          <a
+                            href={l.mapUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="location__map-overlay"
                           >
-                            <path
-                              fill="currentColor"
-                              d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                            />
-                            <path
-                              fill="currentColor"
-                              d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                            />
-                          </svg>
-                        </a>
-                      </div>
-                    </article>
-                  </div>
+                            Otevřít v Mapách
+                            <svg
+                              class="location__extern-icon"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              height="16"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
+                              />
+                              <path
+                                fill="currentColor"
+                                d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                              />
+                            </svg>
+                          </a>
+                        </div>
+                      </article>
+                    </div>
                   );
                 })
               }
@@ -347,7 +355,7 @@ const splitLocationName = (name: string) => {
     display: block;
   }
 
-  /* locations__rule + location__rule (desktop) = accent; mapa = location-divider */
+  /* locations__rule = accent (taby); location__rule = šedý; mapa = location-divider */
   .location {
     --location-divider: 1px solid rgba(236, 47, 142, 0.16);
 
@@ -404,7 +412,7 @@ const splitLocationName = (name: string) => {
     .locations-tabs {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-4);
+      gap: var(--space-6);
       width: 100%;
       max-width: none;
       margin-inline: unset;
@@ -474,7 +482,6 @@ const splitLocationName = (name: string) => {
       max-height: none;
     }
   }
-
 
   .location__map-shell {
     position: relative;
@@ -627,6 +634,10 @@ const splitLocationName = (name: string) => {
   }
 
   @media (min-width: 1180px) {
+    .location__head-text {
+      text-align: center;
+    }
+
     .location__head-text h3 {
       margin: 0 0 var(--space-3);
     }
@@ -647,12 +658,6 @@ const splitLocationName = (name: string) => {
 
     & > p {
       min-height: 3rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .location__rule {
-      background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
     }
   }
 

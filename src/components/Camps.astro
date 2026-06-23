@@ -442,8 +442,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   @media (min-width: 768px) {
     .camps__list {
       width: fit-content;
-      max-width: calc(2 * 25rem + var(--stack-gap));
-      grid-template-columns: repeat(2, 25rem);
+      max-width: calc(2 * var(--card-grid-width) + var(--stack-gap));
+      grid-template-columns: repeat(2, var(--card-grid-width));
       gap: var(--stack-gap);
       margin-inline: auto;
     }

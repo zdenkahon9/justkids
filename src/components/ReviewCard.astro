@@ -219,6 +219,31 @@ const {
     border-radius: var(--radius-full);
   }
 
+  @media (min-width: 1024px) {
+    .review--clamped .review__text {
+      font-size: var(--text-lg);
+    }
+
+    .review__more {
+      font-size: var(--text-lg);
+    }
+
+    .review__more span[aria-hidden="true"] {
+      display: inline-block;
+      transition: transform 180ms ease;
+    }
+
+    .review__more:hover,
+    .review__more:focus-visible {
+      text-decoration: none;
+    }
+
+    .review__more:hover span[aria-hidden="true"],
+    .review__more:focus-visible span[aria-hidden="true"] {
+      transform: translateX(0.25rem);
+    }
+  }
+
   @media (min-width: 768px) {
     @media (hover: hover) and (pointer: fine) {
       .review:hover {

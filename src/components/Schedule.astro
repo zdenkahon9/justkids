@@ -101,7 +101,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
             >
               {location.label}
             </div>
-            <span class="age-page__rule" aria-hidden="true"></span>
+            <span class="age-page__rule" aria-hidden="true" />
             <ScheduleTimetableBody location={location} />
           </article>
         ))
@@ -311,7 +311,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     }
 
     .schedule__card-tab {
-      font-size: var(--text-xl);
+      font-size: var(--text-lg);
     }
   }
 

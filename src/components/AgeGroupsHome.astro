@@ -4,6 +4,9 @@ import { ageGroupsHomeCards, ageGroupsHomeMeta } from "../data/ageGroupsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = ageGroupsHomeMeta;
+
+/** TEMP: nastav na false a vrať <a> v kartě — celá karta je zase klikací odkaz */
+const TEMP_DISABLE_CARD_LINKS = true;
 ---
 
 <section
@@ -43,9 +46,13 @@ const meta = ageGroupsHomeMeta;
               <div class="age-home__body">
                 <div class="age-home__content">
                   <h3 class="age-home__heading">
-                    <a class="age-home__card-link" href={meta.detailHref}>
-                      {card.title}
-                    </a>
+                    {TEMP_DISABLE_CARD_LINKS ? (
+                      <span>{card.title}</span>
+                    ) : (
+                      <a class="age-home__card-link" href={meta.detailHref}>
+                        {card.title}
+                      </a>
+                    )}
                   </h3>
                   <div class="age-home__age-row">
                     <span class="age-home__age">{card.ageRange}</span>
@@ -60,10 +67,10 @@ const meta = ageGroupsHomeMeta;
                       <>
                         {index > 0 ? (
                           <span class="age-home__groups-sep" aria-hidden="true">
-                            {" • "}
+                            •
                           </span>
                         ) : null}
-                        {group}
+                        <span class="age-home__group">{group}</span>
                       </>
                     ))}
                   </p>
@@ -224,6 +231,7 @@ const meta = ageGroupsHomeMeta;
 
   .age-home__groups-sep {
     color: var(--accent);
+    margin-inline: 0.35em;
   }
 
   .age-home__rule {
@@ -289,12 +297,43 @@ const meta = ageGroupsHomeMeta;
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
+  @media (min-width: 640px) {
+    .age-home__content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .age-home__age-row {
+      display: contents;
+    }
+
+    .age-home__illustration {
+      position: static;
+      transform: none;
+      align-self: center;
+      margin-bottom: var(--space-4);
+      order: -1;
+    }
+
+    .age-home__groups {
+      font-size: var(--text-lg);
+    }
+
+    .age-home__blob {
+      transform: scale(1.35, 1.55);
+      transform-origin: 100% 0;
+    }
+  }
+
   @media (min-width: 768px) {
     .age-home__grid {
-      width: fit-content;
+      width: min(100%, 1040px);
       max-width: 100%;
-      grid-template-columns: repeat(2, var(--card-grid-width-md));
-      justify-content: center;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+      justify-content: stretch;
     }
 
     .age-home__cta :global(.btn) {
@@ -303,10 +342,33 @@ const meta = ageGroupsHomeMeta;
     }
   }
 
-  @media (min-width: 1180px) {
+  @media (min-width: 1024px) {
     .age-home__grid {
-      max-width: calc(2 * var(--card-grid-width-md) + var(--stack-gap));
-      margin-inline: auto;
+      width: fit-content;
+      max-width: calc(760px + var(--space-7));
+      grid-template-columns: repeat(2, 380px);
+      justify-content: center;
+    }
+
+    .age-home__groups {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .age-home__groups-sep {
+      margin-inline: 0;
+    }
+
+    .age-home__summary {
+      max-width: 24ch;
+      font-size: var(--text-lg);
+    }
+
+    .age-home__rule {
+      margin: var(--space-5) 0 var(--space-6);
     }
   }
 </style>
