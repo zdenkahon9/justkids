@@ -66,17 +66,17 @@
   /* Line Height */
   --line-height-xs: 1;
   --line-height-sm: 1.1;
-  --line-height-base: 1.6;
   --line-height-lg: 1.2;
   --line-height-xl: 1.25;
   --line-height-2xl: 1.3;
+  --line-height-base: 1.6;
 
   /* Radius */
-  --radius-full: 9999px;
-  --radius-card: 1.5rem;
   --radius-sm: 0.25rem;
   --radius-pill: 0.75rem;
   --radius-2xl: 1rem;
+  --radius-card: 1.5rem;
+  --radius-full: 9999px;
 
   /* Space (padding, margin)*/
   --space-1: 0.25rem;
