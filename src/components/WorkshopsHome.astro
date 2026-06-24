@@ -89,6 +89,9 @@ const meta = workshopsHomeMeta;
                           class="workshops-home__topic-rule"
                           aria-hidden="true"
                         />
+                        {w.ageRange && w.id !== "prvni-pomoc-u-deti" ? (
+                          <span class="workshop__age">{w.ageRange}</span>
+                        ) : null}
                         {w.homeSummary ? (
                           <p class="workshops-home__topic-summary">
                             {w.homeSummary}
@@ -184,6 +187,10 @@ const meta = workshopsHomeMeta;
   }
 
   .workshops-home__topic-icon {
+    display: none;
+  }
+
+  .workshop__age {
     display: none;
   }
 
@@ -394,7 +401,7 @@ const meta = workshopsHomeMeta;
 
     .workshops-home__card {
       display: grid;
-      grid-template-columns: minmax(0, 32%) minmax(0, 68%);
+      grid-template-columns: minmax(0, 31%) minmax(0, 69%);
       align-items: stretch;
       border: 1px solid color-mix(in srgb, var(--color-ink) 10%, #fefefe);
     }
@@ -402,8 +409,9 @@ const meta = workshopsHomeMeta;
     .workshops-home__aside {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: flex-start;
-      gap: var(--space-8);
+      height: 100%;
       padding: var(--card-padding);
       background: var(--color-apricot-soft);
     }
@@ -425,6 +433,7 @@ const meta = workshopsHomeMeta;
     .workshops-home__note-icon-ring {
       display: grid;
       place-items: center;
+      align-self: center;
       width: 2.75rem;
       height: 2.75rem;
       border-radius: var(--radius-full);
@@ -457,9 +466,8 @@ const meta = workshopsHomeMeta;
 
     .workshops-home__card-cta {
       display: inline-flex;
-      margin-top: auto;
       width: 100%;
-      max-width: 18rem;
+      max-width: 16rem;
       box-shadow: none;
     }
 
@@ -475,7 +483,8 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__topic-row {
-      min-height: 96px;
+      min-height: 110px;
+      align-items: center;
       gap: var(--space-5);
       margin-left: 0.75rem;
     }
@@ -486,8 +495,23 @@ const meta = workshopsHomeMeta;
       line-height: var(--line-height-xl);
     }
 
+    .workshop__age {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 0 var(--space-3);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--accent-soft);
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      line-height: var(--line-height-lg);
+      color: var(--accent);
+    }
+
     .workshops-home__topic-rule {
-      display: none;
+      display: block;
+      margin: 0 0 var(--space-3);
     }
 
     .workshops-home__topic-summary {
@@ -522,12 +546,18 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__info-inner {
-      padding: var(--space-3) var(--space-6);
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-6);
       border-radius: var(--radius-2xl);
     }
 
+    .workshops-home__info-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
     .workshops-home__info-text {
-      font-size: var(--text-base);
+      font-size: var(--text-sm);
     }
   }
 

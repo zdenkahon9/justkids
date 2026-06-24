@@ -8,6 +8,7 @@ import {
 import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+import { sortWorkshopDates } from "../utils/sortWorkshopDates";
 
 const workshopsPageGridId = "workshops-page-grid";
 
@@ -129,7 +130,9 @@ const pageMeta = workshopsPageMeta;
                 <>
                   <div class="workshop__price">
                     <p class="workshop__price-label">{pageMeta.priceLabel}</p>
-                    <p class="workshop__price-value">{w.price ?? pageMeta.defaultPrice}</p>
+                    <p class="workshop__price-value">
+                      {w.price ?? pageMeta.defaultPrice}
+                    </p>
                   </div>
                   <hr class="workshops-page__divider" aria-hidden="true" />
                 </>
@@ -163,7 +166,8 @@ const pageMeta = workshopsPageMeta;
                           stroke="currentColor"
                           stroke-width="1.75"
                           stroke-linecap="round"
-                          stroke-linejoin="round"></path>
+                          stroke-linejoin="round"
+                        />
                       </svg>
                     </button>
                     <ul
@@ -172,7 +176,7 @@ const pageMeta = workshopsPageMeta;
                       role="region"
                       aria-labelledby={`workshop-terms-label-${w.id}`}
                     >
-                      {w.dates.map((date) => (
+                      {sortWorkshopDates(w.dates ?? []).map((date) => (
                         <li>
                           <a
                             class="workshop__date-card"
@@ -191,7 +195,9 @@ const pageMeta = workshopsPageMeta;
                               </span>
                             </div>
                             <div class="workshop__date-card-body">
-                              <p class="workshop__date-venue">{date.venueName}</p>
+                              <p class="workshop__date-venue">
+                                {date.venueName}
+                              </p>
                               <p class="workshop__date-time">{date.time}</p>
                               <p class="workshop__date-spots">
                                 {pageMeta.spotsLabel}
@@ -339,25 +345,6 @@ const pageMeta = workshopsPageMeta;
     color: var(--color-sky-deep);
   }
 
-  @media (min-width: 640px) {
-    .workshops-page__head {
-      display: contents;
-    }
-
-    .workshops-page__head h1,
-    .workshops-page .section-subtitle {
-      grid-column: auto;
-    }
-
-    .workshops-page .section-subtitle {
-      width: auto;
-      min-width: 0;
-      max-width: 28rem;
-      margin-inline: auto;
-      text-wrap: wrap;
-    }
-  }
-
   .workshops-page__filter {
     position: relative;
     z-index: 10;
@@ -408,12 +395,6 @@ const pageMeta = workshopsPageMeta;
     white-space: nowrap;
     padding: var(--space-4) 1.625rem;
     min-height: calc(2rem + 1em * var(--line-height-base));
-  }
-
-  @media (min-width: 1024px) {
-    .workshops-page__pill {
-      font-size: var(--text-lg);
-    }
   }
 
   .workshops-page__nav + .workshops-page__pill {
@@ -590,18 +571,6 @@ const pageMeta = workshopsPageMeta;
       box-shadow 280ms ease;
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .workshop:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 26px 55px -18px
-        color-mix(in srgb, var(--accent) 45%, transparent);
-    }
-
-    .workshop:hover .workshop__icon {
-      transform: translate(-50%, -50%) scale(1.05);
-    }
-  }
-
   .workshop__age,
   /* .workshop__summary, */
   .workshop__details,
@@ -665,15 +634,6 @@ const pageMeta = workshopsPageMeta;
     line-height: var(--line-height-xl);
     text-align: center;
     color: var(--color-ink);
-  }
-
-  @media (min-width: 1024px) {
-    .workshops__grid .workshop:first-child .workshop__lead h3 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: calc(2em * var(--line-height-xl));
-    }
   }
 
   .workshops-page__rule {
@@ -767,14 +727,6 @@ const pageMeta = workshopsPageMeta;
     color: var(--accent);
   }
 
-  @media (min-width: 1024px) {
-    .workshop__highlights-label,
-    .workshop__terms-label,
-    .workshop__price-label {
-      font-size: var(--text-xl);
-    }
-  }
-
   .workshop__highlights {
     list-style: none;
     margin: 0;
@@ -793,19 +745,6 @@ const pageMeta = workshopsPageMeta;
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink);
-  }
-
-  @media (min-width: 1024px) {
-    .workshop__highlights > li > span {
-      font-size: var(--text-lg);
-    }
-
-    .workshops__grid .workshop:nth-child(2) .workshop__highlights {
-      min-height: calc(
-        7 * max(var(--text-3xl), calc(var(--text-lg) * var(--line-height-base))) +
-          6 * var(--space-4)
-      );
-    }
   }
 
   .workshops-page__divider {
@@ -882,14 +821,6 @@ const pageMeta = workshopsPageMeta;
     transition:
       transform 220ms ease,
       box-shadow 220ms ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .workshop__date-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 36px -14px
-        color-mix(in srgb, var(--accent) 40%, transparent);
-    }
   }
 
   .workshop__date-card:active {
@@ -972,14 +903,6 @@ const pageMeta = workshopsPageMeta;
     box-shadow: none;
   }
 
-  @media (min-width: 768px) {
-    .workshops-page__cta :global(.btn) {
-      width: auto;
-      max-width: none;
-      min-width: 0;
-    }
-  }
-
   .workshop .workshops-page__cta :global(.btn-primary) {
     border-color: color-mix(in srgb, var(--accent) 28%, transparent);
   }
@@ -988,22 +911,52 @@ const pageMeta = workshopsPageMeta;
     background: var(--accent);
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    .workshop .workshops-page__cta :global(.btn-primary:hover) {
-      box-shadow: 0 22px 50px -16px
-        color-mix(in srgb, var(--accent) 60%, transparent);
-    }
-  }
-
   .workshop .workshops-page__cta :global(.btn-primary:active) {
     box-shadow: 0 22px 50px -16px
       color-mix(in srgb, var(--accent) 60%, transparent);
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
+  /* ---------- Media queries ---------- */
+
+  @media (min-width: 640px) {
+    .workshops-page__head {
+      display: contents;
+    }
+
+    .workshops-page__head h1,
+    .workshops-page .section-subtitle {
+      grid-column: auto;
+    }
+
+    .workshops-page .section-subtitle {
+      width: auto;
+      min-width: 0;
+      max-width: 28rem;
+      margin-inline: auto;
+      text-wrap: wrap;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .workshops-page__cta :global(.btn) {
+      width: auto;
+      max-width: none;
+      min-width: 0;
+    }
+  }
+
   @media (min-width: 1024px) {
+    .workshops-page {
+      --workshops-page-anchor-offset-third-extra: var(--space-8);
+    }
+
     .workshops-page__filter {
       display: none;
+    }
+
+    .workshops-page__pill {
+      font-size: var(--text-lg);
     }
 
     .workshops__grid {
@@ -1011,8 +964,44 @@ const pageMeta = workshopsPageMeta;
       width: fit-content;
       max-width: 100%;
       grid-template-columns: repeat(2, var(--workshop-card-width));
-      gap: var(--space-12) var(--space-6);
+      gap: var(--space-12) var(--space-10);
       justify-content: center;
+    }
+
+    .workshops__grid .workshop:first-child .workshop__lead h3 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(2em * var(--line-height-xl));
+    }
+
+    .workshops__grid .workshop:nth-child(2) .workshop__highlights {
+      min-height: calc(
+        7 *
+          max(var(--text-3xl), calc(var(--text-lg) * var(--line-height-base))) +
+          6 * var(--space-4)
+      );
+    }
+
+    .workshops__grid .workshop:nth-child(3) {
+      scroll-margin-top: calc(
+        var(--workshops-page-anchor-offset) +
+          var(--workshops-page-anchor-offset-third-extra)
+      );
+    }
+
+    .workshop__highlights-label,
+    .workshop__terms-label,
+    .workshop__price-label {
+      font-size: var(--text-xl);
+    }
+
+    .workshop__highlights > li > span {
+      font-size: var(--text-lg);
+    }
+
+    .workshop__date-day {
+      font-size: var(--text-xl);
     }
   }
 
@@ -1021,6 +1010,29 @@ const pageMeta = workshopsPageMeta;
       grid-column: 1 / -1;
       justify-self: center;
       width: var(--workshop-card-width);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .workshop:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 55px -18px
+        color-mix(in srgb, var(--accent) 45%, transparent);
+    }
+
+    .workshop:hover .workshop__icon {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .workshop__date-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px -14px
+        color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+
+    .workshop .workshops-page__cta :global(.btn-primary:hover) {
+      box-shadow: 0 22px 50px -16px
+        color-mix(in srgb, var(--accent) 60%, transparent);
     }
   }
 </style>

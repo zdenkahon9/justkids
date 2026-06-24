@@ -82,14 +82,22 @@ const mobileNavLinks = [
         return;
       }
 
-      var offsetEl = page.querySelector(".workshops-page__pill-link") || page;
+      var offsetExpr =
+        "calc(var(--workshops-page-anchor-offset) + var(--space-6))";
+      if (
+        window.matchMedia("(min-width: 1024px)").matches &&
+        target.matches(".workshops__grid .workshop:nth-child(3)")
+      ) {
+        offsetExpr =
+          "calc(var(--workshops-page-anchor-offset) + var(--space-6) + var(--workshops-page-anchor-offset-third-extra, 0px))";
+      }
+
       var probe = document.createElement("div");
       probe.style.position = "absolute";
       probe.style.visibility = "hidden";
       probe.style.pointerEvents = "none";
-      probe.style.height =
-        "calc(var(--workshops-page-scroll-offset) + var(--space-6))";
-      offsetEl.appendChild(probe);
+      probe.style.height = offsetExpr;
+      page.appendChild(probe);
       var offset = probe.getBoundingClientRect().height;
       probe.remove();
 

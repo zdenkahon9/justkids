@@ -1,56 +1,35 @@
 ---
 import Icon from "astro-iconify";
-import { workshops } from "../data/WorkshopsHome";
-import { workshopsPageMeta } from "../data/WorkshopsPage";
+import FacebookIcon from "./FacebookIcon.astro";
+import InstagramIcon from "./InstagramIcon.astro";
+import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+import { sortWorkshopDates } from "../utils/sortWorkshopDates";
+import { site } from "../data/site";
 
 const pageMeta = workshopsPageMeta;
 
-const monthOrder: Record<string, number> = {
-  LED: 1,
-  UNO: 2,
-  BRE: 3,
-  DUB: 4,
-  KVE: 5,
-  KVĚ: 5,
-  CER: 6,
-  ČER: 6,
-  CVC: 7,
-  SRP: 8,
-  ZAR: 9,
-  ZÁŘ: 9,
-  RIJ: 10,
-  ŘIJ: 10,
-  LIS: 11,
-  PRO: 12,
-};
-
-const parseTime = (time: string) => {
-  const match = time.match(/(\d{1,2}):(\d{2})/);
-  if (!match) return 0;
-  return Number.parseInt(match[1], 10) * 60 + Number.parseInt(match[2], 10);
-};
-
-const allDateSlots = workshops
-  .flatMap((workshop) =>
+const allDateSlots = sortWorkshopDates(
+  workshopsPage.flatMap((workshop) =>
     (workshop.dates ?? []).map((date) => ({
       ...date,
       workshopTitle: workshop.title,
       accentDeep: cardAccentDeep(workshop.accent),
       accentSoft: cardAccentSoft(workshop.accent),
     })),
-  )
-  .sort((a, b) => {
-    const monthA = monthOrder[a.month.toUpperCase()] ?? 99;
-    const monthB = monthOrder[b.month.toUpperCase()] ?? 99;
-    if (monthA !== monthB) return monthA - monthB;
+  ),
+);
 
-    const dayA = Number.parseInt(a.day, 10);
-    const dayB = Number.parseInt(b.day, 10);
-    if (dayA !== dayB) return dayA - dayB;
-
-    return parseTime(a.time) - parseTime(b.time);
-  });
+/** Stejné termíny jako v kartách WorkshopsPage (desktop ≥1024px) */
+const categories = workshopsPage
+  .filter((workshop) => workshop.dates?.length)
+  .map((workshop) => ({
+    id: workshop.id,
+    title: workshop.title,
+    accentDeep: cardAccentDeep(workshop.accent),
+    accentSoft: cardAccentSoft(workshop.accent),
+    dates: sortWorkshopDates(workshop.dates ?? []),
+  }));
 ---
 
 <section
@@ -81,7 +60,14 @@ const allDateSlots = workshops
                           aria-hidden="true"
                         />
                       ) : null}
-                      <div class="workshops-page__date-slot-row">
+                      <a
+                        class="workshops-page__date-slot-row"
+                        href={date.href ?? site.reservationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={`--accent: ${date.accentDeep}; --accent-soft: ${date.accentSoft};`}
+                        aria-label={`Rezervovat ${date.workshopTitle}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
+                      >
                         <div
                           class="workshops-page__date-slot-date"
                           style={`--accent: ${date.accentDeep}; --accent-soft: ${date.accentSoft};`}
@@ -96,26 +82,13 @@ const allDateSlots = workshops
                         </div>
                         <div class="workshops-page__date-slot-body">
                           <p class="workshops-page__date-slot-venue">
-                            {date.workshopTitle}
-                          </p>
-                          <p class="workshops-page__date-slot-place">
-                            <Icon
-                              name="ph:map-pin"
-                              class="schedule__venue-icon"
-                              aria-hidden="true"
-                            />
                             {date.venueName}
                           </p>
                           <p class="workshops-page__date-slot-time">
-                            <Icon
-                              name="ph:clock"
-                              class="schedule__venue-icon"
-                              aria-hidden="true"
-                            />
                             {date.time}
                           </p>
                         </div>
-                      </div>
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -125,6 +98,103 @@ const allDateSlots = workshops
         </article>
       </li>
     </ul>
+
+    <div class="workshops-cats reveal">
+      <div class="workshops-cats__grid">
+        {
+          categories.map((category) => (
+            <article
+              class="workshops-cats__card"
+              style={`--accent: ${category.accentDeep}; --accent-soft: ${category.accentSoft};`}
+            >
+              <header class="workshops-cats__card-head">
+                <h3 class="workshops-cats__card-title">
+                  <span>{category.title}</span>
+                </h3>
+                <span class="workshops-home__topic-rule" aria-hidden="true" />
+              </header>
+
+              <div class="workshops-cats__card-body">
+                <ul class="workshops-cats__slots">
+                  {category.dates.map((date, dateIndex) => (
+                    <li class="workshops-cats__slot">
+                      {dateIndex > 0 ? (
+                        <hr
+                          class="workshops-page__divider"
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                      <div class="workshops-cats__slot-link">
+                        <span
+                          class="workshops-cats__slot-date"
+                          aria-hidden="true"
+                        >
+                          <span class="workshops-cats__slot-day">
+                            {date.day}
+                          </span>
+                          <span class="workshops-cats__slot-month">
+                            {date.month}
+                          </span>
+                        </span>
+                        <span class="workshops-cats__slot-info">
+                          <span class="workshops-cats__slot-venue">
+                            {date.venueName}
+                          </span>
+                          <span class="workshops-cats__slot-time">
+                            {date.time}
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <aside class="workshops-cats__banner">
+        <span class="workshops-cats__banner-icon" aria-hidden="true">
+          <Icon
+            name="lineicons:calendar-days"
+            class="workshops-cats__banner-icon-graphic"
+          />
+        </span>
+        <div class="workshops-cats__banner-copy">
+          <p class="workshops-cats__banner-title">
+            Nenašli jste vhodný termín?
+          </p>
+          <p class="workshops-cats__banner-text">
+            Sledujte nás, pravidelně přidáváme nové workshopy.
+          </p>
+        </div>
+        <div class="workshops-cats__banner-social">
+          <a
+            href={site.social.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            class="workshops-cats__banner-social-link workshops-cats__banner-social-link--facebook"
+          >
+            <FacebookIcon width={32} height={32} />
+          </a>
+          <a
+            href={site.social.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            class="workshops-cats__banner-social-link"
+          >
+            <InstagramIcon
+              gradientId="all-dates-ig-grad"
+              width={32}
+              height={32}
+            />
+          </a>
+        </div>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -230,6 +300,16 @@ const allDateSlots = workshops
         var(--space-2)
     );
     padding: var(--space-2) 0;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-2xl);
+    transition: background 180ms ease;
+  }
+
+  .workshops-page__date-slot-row:hover,
+  .workshops-page__date-slot-row:focus-visible {
+    background: var(--accent-soft);
+    outline: none;
   }
 
   .workshops-page__date-slot:last-child .workshops-page__date-slot-row {
@@ -283,36 +363,13 @@ const allDateSlots = workshops
     color: var(--color-ink);
   }
 
-  .workshops-page__date-slot-place {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 400;
-    line-height: var(--line-height-base);
-    color: var(--color-ink);
-  }
-
-  .schedule__venue-icon {
-    flex-shrink: 0;
-    width: var(--text-base);
-    height: var(--text-base);
-    pointer-events: none;
-    color: var(--color-ink-soft);
-  }
-
   .workshops-page__date-slot-time {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
     margin: 0;
     font-family: var(--font-body);
     font-size: var(--text-sm);
     font-weight: 400;
     line-height: var(--line-height-base);
-    color: var(--color-ink);
+    color: var(--color-ink-soft);
   }
 
   @media (min-width: 768px) {
@@ -330,4 +387,310 @@ const allDateSlots = workshops
       margin-inline: auto;
     }
   }
+
+  /* ---------- Desktop ≥1024px: kategorie + filtry + banner ---------- */
+  /* Pod 1024px schované — platí původní mřížka termínů */
+  .workshops-cats {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .workshops-page__dates-grid {
+      display: none;
+    }
+
+    .workshops-cats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(240px, 300px));
+      column-gap: var(--space-6);
+      row-gap: var(--space-8);
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
+      margin-bottom: var(--space-9);
+    }
+
+    /* Mřížka tří sloupců */
+    .workshops-cats__grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: subgrid;
+      align-items: stretch;
+      min-height: 400px;
+    }
+
+    .workshops-cats__card {
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      padding: var(--space-8) var(--space-6);
+      border: var(--card-border);
+      border-radius: var(--radius-card);
+      background: #fefefe;
+    }
+
+    .workshops-cats__card-head {
+      margin-bottom: var(--space-6);
+    }
+
+    .workshops-cats__card-title {
+      margin: 0;
+      padding-top: var(--space-2);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      line-height: var(--line-height-lg);
+      color: var(--color-ink);
+      text-align: center;
+    }
+
+    .workshops-cats__card:first-child .workshops-cats__card-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .workshops-cats__card .workshops-home__topic-rule {
+      display: block;
+      width: 2.75rem;
+      height: 2px;
+      border-radius: var(--radius-full);
+      background: var(--accent);
+      margin: var(--space-3) auto 0;
+    }
+
+    .workshops-cats__slots {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .workshops-cats__slot .workshops-page__divider {
+      border: none;
+      height: 1px;
+      margin: var(--space-4) 0 var(--space-4);
+      background: rgba(42, 31, 56, 0.12);
+    }
+
+    .workshops-cats__slot-link {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: var(--space-4);
+      box-sizing: border-box;
+      min-height: 5rem;
+      padding: var(--space-3) var(--space-2);
+      border-radius: var(--radius-2xl);
+      background: var(--accent-soft);
+    }
+
+    .workshops-cats__slot-date {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.125rem;
+      box-sizing: border-box;
+      width: 3.25rem;
+      min-height: 3.25rem;
+      padding-right: var(--space-3);
+      border-radius: var(--radius-2xl);
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .workshops-cats__slot-date::after {
+      content: "";
+      position: absolute;
+      top: 0.25rem;
+      right: 0;
+      bottom: 0.25rem;
+      width: 1px;
+      background: var(--accent);
+    }
+
+    .workshops-cats__slot-day {
+      font-family: var(--font-body);
+      font-size: var(--text-xl);
+      font-weight: 700;
+      line-height: var(--line-height-xs);
+    }
+
+    .workshops-cats__slot-month {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+
+    .workshops-cats__slot-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      min-width: 0;
+    }
+
+    .workshops-cats__slot-venue {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      font-weight: 600;
+      line-height: var(--line-height-lg);
+      color: var(--color-ink);
+    }
+
+    .workshops-cats__slot-time {
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 400;
+      color: var(--color-ink-soft);
+    }
+
+    /* Banner „Nenašli jste termín?“ */
+    .workshops-cats__banner {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: var(--space-5);
+      padding: var(--space-6) var(--space-7);
+      border-radius: var(--radius-card);
+      background: var(--color-lilac-soft);
+    }
+
+    .workshops-cats__banner-icon {
+      display: grid;
+      place-items: center;
+      width: 3.25rem;
+      height: 3.25rem;
+      border-radius: var(--radius-2xl);
+      background: #fefefe;
+      color: var(--color-lilac-deep);
+    }
+
+    .workshops-cats__banner-icon-graphic {
+      display: block;
+      width: var(--space-8);
+      height: var(--space-8);
+    }
+
+    .workshops-cats__banner-icon-graphic :global(svg) {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .workshops-cats__banner-copy {
+      min-width: 0;
+    }
+
+    .workshops-cats__banner-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-ink);
+    }
+
+    .workshops-cats__banner-text {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 400;
+      color: var(--color-ink-soft);
+    }
+
+    .workshops-cats__banner-social {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .workshops-cats__banner-social-link {
+      display: inline-flex;
+      transition: transform 200ms ease;
+    }
+
+    .workshops-cats__banner-social-link :global(svg) {
+      display: block;
+      width: var(--footer-social-icon-size);
+      height: var(--footer-social-icon-size);
+    }
+
+    .workshops-cats__banner-social-link:hover {
+      transform: translateY(-2px);
+    }
+
+    .workshops-cats__banner-social-link--facebook {
+      color: #1877f2;
+    }
+  }
 </style>
+
+<script>
+  const WORKSHOPS_CATS_DESKTOP_MQ = "(min-width: 1024px)";
+
+  const syncWorkshopsCatsFirstCardTitle = () => {
+    const grid = document.querySelector<HTMLElement>(".workshops-cats__grid");
+    if (!grid) return;
+
+    const firstTitle = grid.querySelector<HTMLElement>(
+      ".workshops-cats__card:first-child .workshops-cats__card-title",
+    );
+    const otherTitles = grid.querySelectorAll<HTMLElement>(
+      ".workshops-cats__card:not(:first-child) .workshops-cats__card-title",
+    );
+
+    if (!firstTitle || otherTitles.length === 0) return;
+
+    firstTitle.style.minHeight = "";
+
+    const cats = grid.closest<HTMLElement>(".workshops-cats");
+    if (!window.matchMedia(WORKSHOPS_CATS_DESKTOP_MQ).matches) return;
+    if (!cats || getComputedStyle(cats).display === "none") return;
+
+    let maxHeight = 0;
+    otherTitles.forEach((title) => {
+      maxHeight = Math.max(maxHeight, title.getBoundingClientRect().height);
+    });
+
+    if (maxHeight > 0) {
+      firstTitle.style.minHeight = `${maxHeight}px`;
+    }
+  };
+
+  const setupWorkshopsCatsFirstCardTitleSync = () => {
+    const grid = document.querySelector<HTMLElement>(".workshops-cats__grid");
+    if (!grid || grid.dataset.firstCardTitleSyncReady === "true") return;
+    grid.dataset.firstCardTitleSyncReady = "true";
+
+    const run = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(syncWorkshopsCatsFirstCardTitle);
+      });
+    };
+
+    run();
+    window.addEventListener("resize", run, { passive: true });
+    document.fonts?.ready.then(run);
+
+    grid
+      .querySelectorAll<HTMLElement>(
+        ".workshops-cats__card:not(:first-child) .workshops-cats__card-title",
+      )
+      .forEach((title) => {
+        const observer = new ResizeObserver(run);
+        observer.observe(title);
+      });
+  };
+
+  setupWorkshopsCatsFirstCardTitleSync();
+  document.addEventListener("astro:page-load", () => {
+    const grid = document.querySelector<HTMLElement>(".workshops-cats__grid");
+    if (grid) delete grid.dataset.firstCardTitleSyncReady;
+    setupWorkshopsCatsFirstCardTitleSync();
+  });
+</script>

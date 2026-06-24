@@ -78,7 +78,7 @@ export const camps: Camp[] = [
     time: "9:00 – 12:00",
     venue: {
       name: "Centrum Rosenbaum",
-      address: "Broumy",
+      address: "Na Návsi 11, Broumy",
     },
     audience: {
       primary: "Děti 1-3 roky",

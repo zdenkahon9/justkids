@@ -54,7 +54,6 @@ import Icon from "astro-iconify";
 
 <style>
   #o-mne {
-    /* scroll-margin-top: 1.5rem; */
     scroll-margin-top: var(--section-scroll-margin);
     position: relative;
     z-index: 1;
@@ -209,6 +208,10 @@ import Icon from "astro-iconify";
   }
 
   @media (min-width: 1024px) {
+    #o-mne {
+      scroll-margin-top: calc(-1 * var(--space-10));
+    }
+
     .about__inner {
       grid-template-columns: 1fr 1.2fr;
       gap: 5rem;
