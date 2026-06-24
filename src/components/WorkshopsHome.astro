@@ -84,7 +84,19 @@ const meta = workshopsHomeMeta;
                         />
                       </span>
                       <div class="workshops-home__topic-copy">
-                        <h3 class="workshops-home__topic-label">{w.title}</h3>
+                        <h3 class="workshops-home__topic-label">
+                          <a
+                            class="workshops-home__topic-link"
+                            href={`${meta.detailHref}#${w.id}`}
+                            data-workshops-home-arrow={w.id}
+                            aria-label={`Přejít na workshop ${w.title}`}
+                          >
+                            {w.title}
+                          </a>
+                          <span class="workshops-home__topic-label-plain">
+                            {w.title}
+                          </span>
+                        </h3>
                         <span
                           class="workshops-home__topic-rule"
                           aria-hidden="true"
@@ -289,6 +301,10 @@ const meta = workshopsHomeMeta;
     color: var(--color-ink);
   }
 
+  .workshops-home__topic-link {
+    display: none;
+  }
+
   .workshops-home__topic-rule {
     display: block;
     width: 2.75rem;
@@ -483,16 +499,50 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__topic-row {
+      position: relative;
       min-height: 110px;
       align-items: center;
       gap: var(--space-5);
       margin-left: 0.75rem;
     }
 
+    .workshops-home__topic-label-plain {
+      display: none;
+    }
+
+    .workshops-home__topic-link {
+      display: inline;
+      position: static;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .workshops-home__topic-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+
+    .workshops-home__topic-link:focus-visible {
+      outline: none;
+    }
+
+    .workshops-home__topic-row:has(.workshops-home__topic-link:focus-visible) {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: var(--radius-card);
+    }
+
     .workshops-home__topic-label {
       margin: 0 0 var(--space-2);
       font-size: var(--text-h3);
       line-height: var(--line-height-xl);
+    }
+
+    .workshops-home__topic-rule {
+      display: block;
+      margin: 0 0 var(--space-3);
     }
 
     .workshop__age {
@@ -509,11 +559,6 @@ const meta = workshopsHomeMeta;
       color: var(--accent);
     }
 
-    .workshops-home__topic-rule {
-      display: block;
-      margin: 0 0 var(--space-3);
-    }
-
     .workshops-home__topic-summary {
       font-size: var(--text-lg);
       color: var(--color-ink);
@@ -528,12 +573,20 @@ const meta = workshopsHomeMeta;
       inset-inline-end: var(--space-4);
       width: var(--space-10);
       height: var(--space-10);
+      pointer-events: none;
       transition: transform 180ms ease;
+    }
+
+    .workshops-home__topic-row:has(.workshops-home__topic-link:hover)
+      .workshops-home__arrow,
+    .workshops-home__topic-row:has(.workshops-home__topic-link:focus-visible)
+      .workshops-home__arrow {
+      transform: translateX(0.25rem);
     }
 
     .workshops-home__arrow:hover,
     .workshops-home__arrow:focus-visible {
-      transform: translateX(0.25rem);
+      transform: none;
     }
 
     .workshops-home__arrow-graphic {
@@ -576,6 +629,18 @@ const meta = workshopsHomeMeta;
 <script>
   const WORKSHOPS_HOME_SCROLL_KEY = "workshops-home-scroll";
 
+  const syncWorkshopsHomeArrowTabIndex = () => {
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+
+    document
+      .querySelectorAll<HTMLAnchorElement>(
+        ".workshops-home__arrow[data-workshops-home-arrow]",
+      )
+      .forEach((link) => {
+        link.tabIndex = isDesktop ? -1 : 0;
+      });
+  };
+
   const setupWorkshopsHomeArrows = () => {
     document
       .querySelectorAll<HTMLAnchorElement>("[data-workshops-home-arrow]")
@@ -595,5 +660,10 @@ const meta = workshopsHomeMeta;
   };
 
   setupWorkshopsHomeArrows();
+  syncWorkshopsHomeArrowTabIndex();
+  window.addEventListener("resize", syncWorkshopsHomeArrowTabIndex, {
+    passive: true,
+  });
   document.addEventListener("astro:page-load", setupWorkshopsHomeArrows);
+  document.addEventListener("astro:page-load", syncWorkshopsHomeArrowTabIndex);
 </script>

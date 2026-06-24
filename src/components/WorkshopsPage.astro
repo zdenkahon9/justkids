@@ -557,7 +557,9 @@ const pageMeta = workshopsPageMeta;
   .workshop {
     --workshop-title: #2d3748;
     --workshop-body: #4a5568;
-    scroll-margin-top: var(--workshops-page-anchor-offset);
+    scroll-margin-top: calc(
+      var(--workshops-page-anchor-offset) + var(--space-6)
+    );
     position: relative;
     overflow: visible;
     background: #fefefe;
@@ -948,7 +950,10 @@ const pageMeta = workshopsPageMeta;
 
   @media (min-width: 1024px) {
     .workshops-page {
-      --workshops-page-anchor-offset-third-extra: var(--space-8);
+      --workshops-page-anchor-offset-third: calc(
+        var(--workshops-page-anchor-offset) + var(--space-6) + var(--space-12) +
+          var(--space-10) + var(--space-8)
+      );
     }
 
     .workshops-page__filter {
@@ -966,6 +971,7 @@ const pageMeta = workshopsPageMeta;
       grid-template-columns: repeat(2, var(--workshop-card-width));
       gap: var(--space-12) var(--space-10);
       justify-content: center;
+      align-items: start;
     }
 
     .workshops__grid .workshop:first-child .workshop__lead h3 {
@@ -984,10 +990,7 @@ const pageMeta = workshopsPageMeta;
     }
 
     .workshops__grid .workshop:nth-child(3) {
-      scroll-margin-top: calc(
-        var(--workshops-page-anchor-offset) +
-          var(--workshops-page-anchor-offset-third-extra)
-      );
+      scroll-margin-top: var(--workshops-page-anchor-offset-third);
     }
 
     .workshop__highlights-label,
