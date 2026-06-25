@@ -756,6 +756,12 @@ const pageMeta = workshopsPageMeta;
     background: rgba(42, 31, 56, 0.12);
   }
 
+  /* DOČASNĚ SKRYTO — divider pod nejbližšími termíny (nad skrytým tlačítkem).
+     Pro vrácení smaž celé toto pravidlo. */
+  .workshops-page__divider:has(+ .workshops-page__cta) {
+    display: none;
+  }
+
   .workshop__price {
     display: flex;
     flex-direction: row;
@@ -893,7 +899,8 @@ const pageMeta = workshopsPageMeta;
   }
 
   .workshops-page__cta {
-    display: flex;
+    /* DOČASNĚ SKRYTO (mobil i počítač) — pro vrácení změň display zpět na flex */
+    display: none;
     justify-content: center;
     width: 100%;
   }
