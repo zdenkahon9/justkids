@@ -1,5 +1,4 @@
 ---
-import Icon from "astro-iconify";
 import { locations, locationsMeta } from "../data/locations";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
@@ -106,22 +105,6 @@ const splitLocationName = (name: string) => {
 
                           <div class="location__panel">
                             <div class="location__expandable">
-                              <div class="location__parking">
-                                <span class="location__parking-label">
-                                  <span
-                                    class="location__p-mark"
-                                    aria-hidden="true"
-                                  >
-                                    <Icon
-                                      name="streamline:parking-sign-solid"
-                                      aria-hidden="true"
-                                    />
-                                  </span>
-                                  Parkování
-                                </span>
-                                <p>{l.parking}</p>
-                              </div>
-
                               <a
                                 href={l.mapUrl}
                                 target="_blank"
@@ -389,8 +372,8 @@ const splitLocationName = (name: string) => {
     margin-inline: calc(-1 * var(--card-padding-x));
     margin-top: var(--space-5);
     margin-bottom: calc(-1 * var(--card-padding-y));
-    height: 10rem;
-    max-height: 10rem;
+    height: 13rem;
+    max-height: 13rem;
   }
 
   @media (min-width: 768px) {
@@ -473,7 +456,7 @@ const splitLocationName = (name: string) => {
       margin-inline: unset;
       margin-top: auto;
       margin-bottom: 0;
-      height: clamp(8rem, 20vw, 11rem);
+      height: clamp(11rem, 24vw, 14rem);
       max-height: none;
     }
   }
@@ -576,6 +559,13 @@ const splitLocationName = (name: string) => {
     min-width: 0;
   }
 
+  @media (max-width: 767px) {
+    .location__head-text,
+    .location__head-text .location__address {
+      text-align: center;
+    }
+  }
+
   .location__head-text h3 {
     font-family: var(--font-display);
     font-size: var(--text-h3);
@@ -629,6 +619,11 @@ const splitLocationName = (name: string) => {
   }
 
   @media (min-width: 1180px) {
+    .locations-tabs {
+      max-width: 64rem;
+      margin-inline: auto;
+    }
+
     .location__head-text {
       text-align: center;
     }
@@ -661,46 +656,6 @@ const splitLocationName = (name: string) => {
     margin: var(--space-5) 0 var(--space-5);
     border: none;
     background: rgba(42, 31, 56, 0.12);
-  }
-
-  .location__parking {
-    padding: 0;
-    margin-bottom: var(--space-5);
-
-    & > p {
-      min-height: 3rem;
-    }
-  }
-
-  .location__parking-label {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
-    font-weight: 700;
-    font-size: var(--text-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: var(--space-3);
-  }
-
-  .location__p-mark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    color: var(--color-sky-deep);
-  }
-
-  .location__p-mark :global(svg) {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .location__parking p {
-    margin: 0;
-    font-size: var(--text-base);
-    color: var(--color-ink);
   }
 
   #lokace .location__nav-link {
