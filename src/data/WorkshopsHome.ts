@@ -164,7 +164,7 @@ export const workshops: Workshop[] = [
       "Popáleniny",
     ],
     forWhom: "Rodiče s miminky 0–6 měsíců",
-    ageRange: "pro všechny rodiče",
+    ageRange: "nejen pro rodiče",
     price: "200 Kč",
     dates: prvniPomocDates,
     accent: "blush-deep",

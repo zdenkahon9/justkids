@@ -228,12 +228,19 @@
   align-items: stretch;
   gap: 0.1rem;
   border-radius: var(--radius-2xl);
-  background: rgba(255, 249, 244, 0.96);
-  backdrop-filter: saturate(150%) blur(12px);
-  -webkit-backdrop-filter: saturate(150%) blur(12px);
+  background: #fefefe;
   box-shadow:
     0 14px 40px -16px rgba(123, 90, 160, 0.32),
     0 0 0 1px rgba(236, 47, 142, 0.1);
+}
+
+.dropdownDivider {
+  align-self: center;
+  width: 100%;
+  border: none;
+  height: 1px;
+  margin: 0.25rem 0;
+  background: rgba(42, 31, 56, 0.12);
 }
 
 .dropdownList a {

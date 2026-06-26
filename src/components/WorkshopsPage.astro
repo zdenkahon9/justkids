@@ -199,9 +199,6 @@ const pageMeta = workshopsPageMeta;
                                 {date.venueName}
                               </p>
                               <p class="workshop__date-time">{date.time}</p>
-                              <p class="workshop__date-spots">
-                                {pageMeta.spotsLabel}
-                              </p>
                             </div>
                           </a>
                         </li>
@@ -956,13 +953,6 @@ const pageMeta = workshopsPageMeta;
   }
 
   @media (min-width: 1024px) {
-    .workshops-page {
-      --workshops-page-anchor-offset-third: calc(
-        var(--workshops-page-anchor-offset) + var(--space-6) + var(--space-12) +
-          var(--space-10) + var(--space-8)
-      );
-    }
-
     .workshops-page__filter {
       display: none;
     }
@@ -996,8 +986,10 @@ const pageMeta = workshopsPageMeta;
       );
     }
 
+    /* 3. karta je v 2. řádku → menší offset, ať po scrollu vyjede výš
+       a schová spodní okraje karet z řádku nad ní */
     .workshops__grid .workshop:nth-child(3) {
-      scroll-margin-top: var(--workshops-page-anchor-offset-third);
+      scroll-margin-top: calc(var(--nav-height) + var(--space-8));
     }
 
     .workshop__highlights-label,

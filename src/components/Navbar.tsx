@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, Fragment } from "react";
 import styles from "./Navbar.module.css";
 
 type NavLink = {
@@ -316,20 +316,28 @@ const Navbar = ({
                         id={`nav-submenu-${dropdownId}`}
                         className={styles.dropdownList}
                       >
-                        {submenuLinks.map((sub) => (
-                          <li key={sub.href + sub.label}>
-                            <a
-                              href={sub.href}
-                              onClick={(e) =>
-                                handleDesktopNav(e, sub.href, {
-                                  closeDropdownAfterClick: true,
-                                  dropdownId,
-                                })
-                              }
-                            >
-                              {sub.label}
-                            </a>
-                          </li>
+                        {submenuLinks.map((sub, i) => (
+                          <Fragment key={sub.href + sub.label}>
+                            {i > 0 ? (
+                              <hr
+                                className={styles.dropdownDivider}
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            <li>
+                              <a
+                                href={sub.href}
+                                onClick={(e) =>
+                                  handleDesktopNav(e, sub.href, {
+                                    closeDropdownAfterClick: true,
+                                    dropdownId,
+                                  })
+                                }
+                              >
+                                {sub.label}
+                              </a>
+                            </li>
+                          </Fragment>
                         ))}
                       </ul>
                     </div>

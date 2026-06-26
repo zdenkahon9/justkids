@@ -101,7 +101,7 @@ const meta = workshopsHomeMeta;
                           class="workshops-home__topic-rule"
                           aria-hidden="true"
                         />
-                        {w.ageRange && w.id !== "prvni-pomoc-u-deti" ? (
+                        {w.ageRange ? (
                           <span class="workshop__age">{w.ageRange}</span>
                         ) : null}
                         {w.homeSummary ? (
