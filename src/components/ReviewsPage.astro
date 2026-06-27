@@ -5,6 +5,16 @@ import { site } from "../data/site";
 import { splitReviewText } from "../utils/splitReviewText";
 
 const meta = reviewsPageMeta;
+
+const monthYearFormatter = new Intl.DateTimeFormat("cs-CZ", {
+  month: "long",
+  year: "numeric",
+});
+
+const formatMonthYear = (isoDate: string) =>
+  monthYearFormatter.format(new Date(isoDate));
+
+const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 ---
 
 <section class="section reviews-page" aria-labelledby="reviews-page-title">
@@ -53,25 +63,16 @@ const meta = reviewsPageMeta;
       {
         reviews.map((r) => (
           <li class="reviews-page__item">
-            {r.rating && (
-              <div
-                class="reviews-page__stars"
-                aria-label={`Hodnocení ${r.rating} z 5`}
-              >
-                {Array.from({ length: 5 }, (_, k) => (
-                  <svg
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    class={k < (r.rating ?? 0) ? "is-on" : ""}
-                  >
-                    <path
-                      d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                ))}
-              </div>
-            )}
+            <div class="reviews-page__stars" aria-label="Hodnocení 5 z 5">
+              {Array.from({ length: 5 }, () => (
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="is-on">
+                  <path
+                    d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              ))}
+            </div>
 
             <blockquote class="reviews-page__text">
               {splitReviewText(r.text).map((part) =>
@@ -83,9 +84,9 @@ const meta = reviewsPageMeta;
               )}
             </blockquote>
 
-            {r.childAge && (
-              <span class="reviews-page__date">{r.childAge}</span>
-            )}
+            <span class="reviews-page__date">
+              {getFirstName(r.user.name)}, {formatMonthYear(r.date)}
+            </span>
           </li>
         ))
       }

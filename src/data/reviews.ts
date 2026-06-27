@@ -1,12 +1,32 @@
 import reviewsData from "./reviews.json";
 
-export type Review = {
+export type ReviewUser = {
   id: string;
-  author: string;
-  childAge?: string;
+  name: string;
+  profileUrl: string | null;
+  profilePic: string;
+};
+
+export type ReviewPageAdLibrary = {
+  id: string;
+  pamv_comms_data: null;
+};
+
+export type Review = {
+  facebookUrl: string;
+  id: string;
+  legacyId: string;
+  user: ReviewUser;
+  date: string;
+  url: string;
+  isRecommended: boolean;
   text: string;
-  accent: "blush" | "sky" | "lilac";
-  rating?: number;
+  likesCount: number;
+  commentsCount: number;
+  facebookId: string;
+  pageName: string;
+  pageAdLibrary: ReviewPageAdLibrary;
+  inputUrl: string;
 };
 
 export const reviews: Review[] = reviewsData as Review[];

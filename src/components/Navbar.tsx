@@ -1,4 +1,11 @@
-import { useEffect, useState, useCallback, useRef, Fragment } from "react";
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+  useSyncExternalStore,
+  Fragment,
+} from "react";
 import styles from "./Navbar.module.css";
 
 type NavLink = {
@@ -79,6 +86,35 @@ const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
   return null;
 };
 
+/** Subscribe to scroll once — shared by every Navbar instance via useSyncExternalStore */
+const subscribeScroll = (onChange: () => void) => {
+  window.addEventListener("scroll", onChange, { passive: true });
+  return () => window.removeEventListener("scroll", onChange);
+};
+
+/**
+ * Reads the "solid navbar" condition from the browser without an SSR/hydration
+ * mismatch. React renders `getServerSnapshot` first (matching the server HTML),
+ * then swaps to the live client value right after hydration — no warning.
+ */
+const useScrolledNav = (variant: NavbarProps["variant"]) => {
+  const getSnapshot = useCallback(
+    () =>
+      variant === "solid" ||
+      window.scrollY > 60 ||
+      document.documentElement.dataset.workshopsHomeArrival === "true" ||
+      document.documentElement.dataset.ageHomeArrival === "true",
+    [variant],
+  );
+
+  const getServerSnapshot = useCallback(
+    () => variant === "solid",
+    [variant],
+  );
+
+  return useSyncExternalStore(subscribeScroll, getSnapshot, getServerSnapshot);
+};
+
 const Navbar = ({
   links,
   mobileLinks,
@@ -89,16 +125,7 @@ const Navbar = ({
   variant = "default",
 }: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
-  const [scrolled, setScrolled] = useState(() => {
-    if (typeof window === "undefined") return variant === "solid";
-
-    return (
-      variant === "solid" ||
-      window.scrollY > 60 ||
-      document.documentElement.dataset.workshopsHomeArrival === "true" ||
-      document.documentElement.dataset.ageHomeArrival === "true"
-    );
-  });
+  const scrolled = useScrolledNav(variant);
   const [open, setOpen] = useState(false);
   const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(
     null,
@@ -108,16 +135,6 @@ const Navbar = ({
     {},
   );
   openRef.current = open;
-
-  // Sticky / shrink on scroll (Omnifood-like)
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   // Lock page scroll when mobile menu is open (html + body; fixed + scrollY for iOS Safari)
   useEffect(() => {
