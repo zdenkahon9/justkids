@@ -21,7 +21,7 @@ export const rules: Rule[] = [
   },
   {
     id: 2,
-    title: "Odhlášení\ndo 19.00 předchozího dne",
+    title: "Odhlášení\n z lekce do 19.00",
     detail:
       "Nemůžete-li přijít, dejte mi prosím vědět do 19.00 předchozího dne.",
     accent: "sky-deep",
@@ -31,9 +31,9 @@ export const rules: Rule[] = [
     id: 3,
     title: "Jsme tu jeden\npro druhého",
     detail:
-      "Telefon necháváme v šatně (nebo v režimu letadlo). Těchto 45 minut je časem pro budování vztahu s dítětem.",
+      "Telefon necháváme v šatně. Těchto 45 minut je časem pro budování vztahu s dítětem.",
     accent: "blush-deep",
-    icon: "ph:airplane-tilt-fill",
+    icon: "local:phone-off",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ export const rules: Rule[] = [
     detail:
       "Děti nás kopírují. Když cvičí, skáče a raduje se máma nebo táta, dítě se přidá mnohem radostněji.",
     accent: "sky-deep",
-    icon: "ph:hand-heart-fill",
+    icon: "material-symbols-light:handshake-outline-rounded",
   },
   {
     id: 5,
@@ -49,7 +49,7 @@ export const rules: Rule[] = [
     detail:
       "V tělocvičně neběháme s jídlem v puse. Na nářadí jistící rodič vždy stojí u dítěte (jistíme za trup, ne za ruce).",
     accent: "blush-deep",
-    icon: "ph:shield-check-fill",
+    icon: "stash:shield-duotone",
   },
   {
     id: 6,
@@ -57,22 +57,21 @@ export const rules: Rule[] = [
     detail:
       "Pokud dítě nechce cvičit, nenuťte ho. Může se jen dívat – i pozorování je forma učení.",
     accent: "sky-deep",
-    icon: "ph:heart-fill",
+    icon: "fluent:hand-open-heart-20-regular",
   },
   {
     id: 7,
     title: "Čistý\nprostor",
-    detail:
-      "Do tělocvičny vstupujeme v čisté obuvi (nebo naboso) a bez pití (pít chodíme na kraj na žíněnku, aby se nepolila podlaha).",
+    detail: "Do tělocvičny vstupujeme v ponožkách (nebo naboso) a bez pití.",
     accent: "blush-deep",
-    icon: "ph:sneaker-move-fill",
+    icon: "ion:sparkles-outline",
   },
   {
     id: 8,
     title: "Uklízíme\nspolečně",
     detail:
-      "Pomůcky vracíme na své místo společně s dětmi. Je to součást výchovy a rituálu ukončení lekce.",
+      "Pomůcky uklízíme společně s dětmi. Je to součást výchovy a rituálu ukončení lekce.",
     accent: "sky-deep",
-    icon: "ph:broom-fill",
+    icon: "ph:broom",
   },
 ];

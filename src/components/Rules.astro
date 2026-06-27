@@ -21,16 +21,38 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
         rules.map((rule, i) => (
           <li
             class="rules__item"
-            style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)};`}
+            style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)}; --rules-row: ${Math.floor(i / 2) + 1};`}
           >
-            <div
-              class="rules__content reveal"
-              style={`transition-delay: ${i * 80}ms;`}
-            >
+            <div class="rules__content">
               {rule.icon ? (
                 <div class="rules__illustration" aria-hidden="true">
                   <span class="rules__icon-ring">
-                    <Icon name={rule.icon} class="rules__icon-graphic" />
+                    {rule.icon === "local:phone-off" ? (
+                      <svg
+                        class="rules__icon-graphic"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <rect x="5.5" y="1.5" width="9" height="17" rx="2.5" />
+                        <circle
+                          cx="10"
+                          cy="15.4"
+                          r="0.7"
+                          fill="currentColor"
+                          stroke="none"
+                        />
+                        <path d="M3 2.5 17 17.5" />
+                      </svg>
+                    ) : (
+                      <Icon
+                        name={rule.icon}
+                        class={`rules__icon-graphic${rule.icon === "material-symbols-light:handshake-outline-rounded" ? " rules__icon-graphic--bold" : ""}${rule.icon === "fluent:hand-open-heart-20-regular" ? " rules__icon-graphic--lg" : ""}`}
+                      />
+                    )}
                   </span>
                 </div>
               ) : null}
@@ -47,7 +69,8 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                     stroke="currentColor"
                     stroke-width="3"
                     stroke-linecap="round"
-                    fill="none"></path>
+                    fill="none"
+                  />
                 </svg>
               </div>
             </div>
@@ -69,7 +92,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
   /* Mobile-first: kompaktnější header; od 640px globální spacing */
   .rules .section-header {
-    --section-header-spacing: var(--space-8);
+    --section-header-spacing: var(--space-10);
   }
 
   @media (min-width: 640px) {
@@ -110,31 +133,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__item:not(:last-child) {
-    padding-bottom: var(--space-12);
-  }
-
-  .rules__item:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: calc(var(--rules-icon-size) / 2);
-    top: var(--rules-icon-size);
-    bottom: 0;
-    width: 1px;
-    transform: translateX(-50%);
-    background: var(--rules-line-blush);
-    pointer-events: none;
-  }
-
-  .rules__item:last-child .rules__illustration::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: var(--rules-icon-size);
-    bottom: 0;
-    width: 1px;
-    transform: translateX(-50%);
-    background: var(--rules-line-sky);
-    pointer-events: none;
+    padding-bottom: var(--space-10);
   }
 
   .rules__content {
@@ -181,6 +180,21 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     height: var(--rules-icon-graphic-size);
   }
 
+  /* Ztloustnutí „outline“ ikon z Iconify (kreslené výplní, ne tahem):
+     přidáme tah v barvě výplně kolem celé kontury */
+  .rules__icon-graphic--bold {
+    stroke: currentColor;
+    stroke-width: 0.4;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    transform: scale(1.15);
+  }
+
+  /* Zvětšení vybrané ikony (vizuální dorovnání velikosti) */
+  .rules__icon-graphic--lg {
+    transform: scale(1.15);
+  }
+
   .rules__detail {
     margin: 0;
     font-family: var(--font-body);
@@ -194,76 +208,166 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     display: none;
   }
 
-  @media (min-width: 768px) {
+  /* ===== Mobil (do 767px): časová osa vlevo, uzlíky = ikony ===== */
+  @media (max-width: 767.98px) {
     .rules__list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-6);
-      max-width: 900px;
+      /* menší kruh i ikona */
+      --rules-icon-size: 3.5rem;
+      --rules-icon-graphic-size: 1.625rem;
+      --rules-line-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
+
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
+    /* Svislá osa vede skrz středy ikon, ikony ji zakrývají */
     .rules__list::before {
       content: "";
       position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
+      left: calc(var(--rules-icon-size) / 2);
+      top: calc(var(--rules-icon-size) / 2);
+      bottom: calc(var(--rules-icon-size) / 2);
       width: 1px;
-      height: 9rem;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(42, 31, 56, 0.22) 0 5px,
-        transparent 5px 12px
-      );
+      transform: translateX(-50%);
+      background: var(--rules-line-color);
       pointer-events: none;
+      z-index: 0;
     }
+  }
 
+  /* ===== Desktop (od 768px): timeline se dvěma sloupci, bez karet ===== */
+  @media (min-width: 768px) {
     .rules__item:not(:last-child) {
       padding-bottom: 0;
     }
 
+    .rules__list {
+      /* mezera mezi sloupci – uprostřed vede osa */
+      --rules-col-gap: 7rem;
+      --rules-node-size: 0.85rem;
+      --rules-line-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--rules-col-gap);
+      row-gap: var(--space-12);
+      align-items: start;
+      max-width: 62rem;
+      padding: 0;
+    }
+
+    /* prostřední svislá osa */
+    .rules__list::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 1px;
+      height: auto;
+      background: var(--rules-line-color);
+      pointer-events: none;
+    }
+
+    /* vypneme případné mobilní spojnice */
     .rules__item:not(:last-child)::after,
     .rules__item:last-child .rules__illustration::after {
       display: none;
     }
 
     .rules__item {
-      justify-self: center;
+      grid-row: var(--rules-row);
       width: 100%;
-      max-width: 22rem;
+      max-width: none;
+      margin: 0;
+      padding: 0;
     }
 
+    /* liché řádky vlevo, sudé vpravo */
+    .rules__item:nth-child(odd) {
+      grid-column: 1;
+    }
+
+    .rules__item:nth-child(even) {
+      grid-column: 2;
+    }
+
+    /* ikona na střed textu (nadpis + detail), ne prázdného bloku */
     .rules__content {
-      flex-direction: column;
+      position: relative;
+      display: flex;
+      flex-direction: row;
       align-items: center;
-      gap: var(--space-5);
-      text-align: center;
+      gap: var(--space-4);
+      box-sizing: border-box;
+      text-align: left;
       width: 100%;
+    }
+
+    .rules__text {
+      flex: 1;
+      min-width: 0;
     }
 
     .rules__illustration {
-      align-self: auto;
+      position: relative;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .rules__title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-lg);
+    }
+
+    .rules__detail {
+      margin: 0;
+      color: var(--color-ink);
     }
 
     .rules__scribble {
-      display: block;
-      width: 7.5rem;
-      height: 0.75rem;
-      margin: 1.5625rem auto 0;
-      color: color-mix(in srgb, var(--accent) 62%, white);
+      display: none;
+    }
+
+    /* uzlík na ose – zarovnaný se středem ikony (střed .rules__content) */
+    .rules__item:nth-child(odd) .rules__content::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: calc(-1 * var(--rules-col-gap) / 2);
+      width: var(--rules-node-size);
+      height: var(--rules-node-size);
+      border-radius: var(--radius-full);
+      background: var(--color-blush-deep);
+      box-shadow: 0 0 0 5px
+        color-mix(in srgb, var(--color-blush-deep) 18%, transparent);
+      transform: translate(50%, -50%);
+      z-index: 2;
     }
   }
 
   @media (min-width: 1024px) {
+    .rules__list {
+      --rules-icon-size: 3.5rem;
+      --rules-icon-graphic-size: 1.625rem;
+      --rules-detail-row: calc(3 * var(--text-lg) * var(--line-height-base));
+    }
+
+    .rules__title {
+      font-size: var(--text-5xl);
+    }
+
     .rules__detail {
+      min-height: var(--rules-detail-row);
       font-size: var(--text-lg);
     }
   }
 
   @media (min-width: 1180px) {
     .rules__list {
-      max-width: 980px;
-      gap: var(--space-8);
+      max-width: 66rem;
+      --rules-col-gap: 8rem;
     }
   }
 </style>
