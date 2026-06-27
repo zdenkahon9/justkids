@@ -57,7 +57,7 @@ justkids/
 │   │   └── index.astro    # jediná stránka (single-page)
 │   └── styles/
 │       └── global.css     # design tokens + globální styly
-├── astro.config.mjs
+├── astro.config.ts
 ├── tsconfig.json
 └── package.json
 ```
@@ -142,7 +142,7 @@ V `src/data/ageGroups.ts`. Skupina označená `optional: true` zobrazí badge "v
 - **robots.txt** je v `public/robots.txt`
 - **Canonical URL** pro jistotu nastavena v base layoutu
 
-Po nasazení nezapomeň v `astro.config.mjs` nastavit reálnou doménu (`site: "https://justkids.cz"`).
+Po nasazení nezapomeň nastavit `SITE_URL` v prostředí podle `.env.example`.
 
 ---
 
