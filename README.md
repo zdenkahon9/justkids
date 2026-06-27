@@ -10,16 +10,16 @@ Statický web postavený v **Astro + React + TypeScript**. Mobile-first, rychlý
 
 ```bash
 # 1) Instalace závislostí
-npm install
+pnpm install
 
 # 2) Lokální vývoj (http://localhost:4321)
-npm run dev
+pnpm dev
 
 # 3) Produkční build
-npm run build
+pnpm build
 
 # 4) Náhled produkčního buildu
-npm run preview
+pnpm preview
 ```
 
 ---
@@ -178,7 +178,7 @@ Místo toho se používají vlastní SVG ilustrace v sekci `Gallery.astro` a por
 
 Web lze nasadit kamkoli, kde chodí statické HTML:
 
-- **Netlify** (přetáhnout složku `dist/` po `npm run build`)
+- **Netlify** (přetáhnout složku `dist/` po `pnpm build`)
 - **Vercel** (`vercel deploy`)
 - **GitHub Pages** (s GitHub Actions)
 - **Vlastní hosting** (nahrát `dist/` přes FTP)
