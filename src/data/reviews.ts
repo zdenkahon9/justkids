@@ -27,9 +27,21 @@ export type Review = {
   pageName: string;
   pageAdLibrary: ReviewPageAdLibrary;
   inputUrl: string;
+  accent: "blush" | "sky" | "lilac";
+  rating?: number;
 };
 
-export const reviews: Review[] = reviewsData as Review[];
+type RawReview = Omit<Review, "accent" | "rating">;
+
+const accents: Review["accent"][] = ["blush", "sky", "lilac"];
+
+export const reviews: Review[] = (reviewsData as RawReview[]).map(
+  (review, index) => ({
+    ...review,
+    accent: accents[index % accents.length],
+    ...(review.isRecommended ? { rating: 5 } : {}),
+  }),
+);
 
 export type ReviewsPageMeta = {
   title: string;

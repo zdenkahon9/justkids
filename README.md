@@ -76,9 +76,10 @@ Otevři `src/data/news.ts` a přidej novou položku **na začátek** pole `news`
 export const news: NewsItem[] = [
   {
     title: "Název novinky",
-    date: "2026-05-01",                 // formát YYYY-MM-DD
+    date: "2026-05-01", // formát YYYY-MM-DD
     text: "Krátký popis (1-3 věty).",
-    link: {                             // volitelné
+    link: {
+      // volitelné
       href: "#rezervace",
       label: "Rezervovat místo",
     },
