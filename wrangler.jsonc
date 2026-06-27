@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "justkids",
+  "name": "justkids-dev",
   // Update to today's date
   "compatibility_date": "2026-05-06",
   "assets": {
