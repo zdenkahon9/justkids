@@ -44,7 +44,6 @@ justkids/
 │   │   ├── Gallery.astro
 │   │   ├── Pricing.astro
 │   │   ├── News.astro
-│   │   ├── CtaBanner.astro
 │   │   └── Footer.astro
 │   ├── data/              # ⭐ tady se upravuje obsah
 │   │   ├── site.ts        # kontakt, sociální sítě, REZERVAČNÍ ODKAZ

@@ -1,13 +1,13 @@
 import reviewsData from "./reviews.json";
 
-export type ReviewUser = {
+type ReviewUser = {
   id: string;
   name: string;
   profileUrl: string | null;
   profilePic: string;
 };
 
-export type ReviewPageAdLibrary = {
+type ReviewPageAdLibrary = {
   id: string;
   pamv_comms_data: null;
 };

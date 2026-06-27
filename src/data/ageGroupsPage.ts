@@ -102,6 +102,3 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     accent: "lilac",
   },
 ];
-
-/** @deprecated Použij ageGroupsPageWithParents — zachováno pro kompatibilitu */
-export const ageGroupsPage = ageGroupsPageWithParents;

@@ -6,12 +6,12 @@ export type ScheduleMeta = {
   titleAccent: string;
 };
 
-export type ScheduleSlot = {
+type ScheduleSlot = {
   time: string;
   activities: string[];
 };
 
-export type ScheduleDay = {
+type ScheduleDay = {
   label?: string;
   slots: ScheduleSlot[];
 };
