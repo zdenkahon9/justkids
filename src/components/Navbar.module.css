@@ -273,7 +273,7 @@
   color: var(--color-blush-deep);
 }
 
-.navCta {
+.navCta:global(.btn) {
   display: none;
   margin-left: 0;
 }
@@ -424,7 +424,7 @@
     gap: var(--space-4);
   }
 
-  .navCta {
+  .navCta:global(.btn) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
