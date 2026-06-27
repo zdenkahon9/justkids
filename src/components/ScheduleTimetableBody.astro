@@ -3,9 +3,9 @@ import Icon from "astro-iconify";
 
 import { formatScheduleActivities, type ScheduleLocation } from "../data/schedule";
 
-interface Props {
+type Props = {
   location: ScheduleLocation;
-}
+};
 
 const { location } = Astro.props;
 ---

@@ -73,40 +73,40 @@ const mobileNavLinks = [
     (function () {
       if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
-      var targetId = sessionStorage.getItem(scrollKey);
+      const targetId = sessionStorage.getItem(scrollKey);
       if (!targetId) return;
 
-      var reveal = function () {
+      const reveal = function () {
         delete document.documentElement.dataset[arrivalAttr];
       };
 
-      var runScroll = function () {
-        var agePage = document.querySelector(".age-page");
-        var target = document.getElementById(targetId);
+      const runScroll = function () {
+        const agePage = document.querySelector(".age-page");
+        const target = document.getElementById(targetId);
         if (!agePage || !target) return false;
 
-        var offsetEl =
+        const offsetEl =
           targetId === "s-rodici"
             ? agePage.querySelector(".age-page__pill-half--with-parents")
             : agePage.querySelector(".age-page__pill-half--without-parents");
         if (!offsetEl) return false;
 
-        var probe = document.createElement("div");
+        const probe = document.createElement("div");
         probe.style.position = "absolute";
         probe.style.visibility = "hidden";
         probe.style.pointerEvents = "none";
         probe.style.height = "var(--age-page-pill-scroll-offset)";
         offsetEl.appendChild(probe);
-        var offset = probe.getBoundingClientRect().height;
+        const offset = probe.getBoundingClientRect().height;
         probe.remove();
 
-        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo(0, top);
         history.replaceState(null, "", "#" + targetId);
         return true;
       };
 
-      var finish = function () {
+      const finish = function () {
         sessionStorage.removeItem(scrollKey);
         reveal();
       };

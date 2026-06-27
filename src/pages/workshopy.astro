@@ -63,23 +63,23 @@ const mobileNavLinks = [
     }}
   >
     (function () {
-      var targetId = sessionStorage.getItem(scrollKey);
+      const targetId = sessionStorage.getItem(scrollKey);
       if (!targetId) return;
 
-      var target = document.getElementById(targetId);
+      const target = document.getElementById(targetId);
       if (!target) {
         delete document.documentElement.dataset[arrivalAttr];
         return;
       }
 
-      var scrollToTarget = function () {
-        var offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
-        var top = target.getBoundingClientRect().top + window.scrollY - offset;
+      const scrollToTarget = function () {
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo(0, top);
         history.replaceState(null, "", "#" + targetId);
       };
 
-      var finish = function () {
+      const finish = function () {
         sessionStorage.removeItem(scrollKey);
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {

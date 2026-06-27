@@ -4,7 +4,7 @@ import Icon from "astro-iconify";
 import type { Review } from "../data/reviews";
 import { splitReviewText } from "../utils/splitReviewText";
 
-interface Props {
+type Props = {
   review: Review;
   index: number;
   accent: string;
@@ -12,7 +12,7 @@ interface Props {
   clampLines?: number;
   showMore?: boolean;
   reveal?: boolean;
-}
+};
 
 const {
   review: r,
