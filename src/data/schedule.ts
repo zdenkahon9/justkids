@@ -52,10 +52,7 @@ export const scheduleLayout = {
 export const formatScheduleActivities = (activities: string[]) =>
   activities.join(", ").toUpperCase();
 
-const SCHEDULE_ACCENT_SOFT_VARS: Record<
-  ScheduleLocation["accentSoft"],
-  string
-> = {
+const SCHEDULE_ACCENT_SOFT_VARS: Record<ScheduleLocation["accentSoft"], string> = {
   "blush-soft": "var(--color-blush-soft)",
   "lilac-soft": "var(--color-lilac-soft)",
   "sky-soft": "var(--color-sky-soft)",

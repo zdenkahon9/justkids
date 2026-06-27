@@ -1,11 +1,12 @@
 import {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  useSyncExternalStore,
   Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
 } from "react";
+
 import styles from "./Navbar.module.css";
 
 type NavLink = {
@@ -49,9 +50,7 @@ const NAV_DROPDOWNS: Record<
   { match: (l: NavLink) => boolean; links: NavLink[] }
 > = {
   "o-mne": {
-    match: (l) =>
-      l.label === "O mně" &&
-      (l.href === "#o-mne" || l.href === "/#o-mne"),
+    match: (l) => l.label === "O mně" && (l.href === "#o-mne" || l.href === "/#o-mne"),
     links: ABOUT_DROPDOWN_LINKS,
   },
   "cviceni-pro-deti": {
@@ -107,10 +106,7 @@ const useScrolledNav = (variant: NavbarProps["variant"]) => {
     [variant],
   );
 
-  const getServerSnapshot = useCallback(
-    () => variant === "solid",
-    [variant],
-  );
+  const getServerSnapshot = useCallback(() => variant === "solid", [variant]);
 
   return useSyncExternalStore(subscribeScroll, getSnapshot, getServerSnapshot);
 };
@@ -127,13 +123,9 @@ const Navbar = ({
   const mobileItems = mobileLinks ?? links;
   const scrolled = useScrolledNav(variant);
   const [open, setOpen] = useState(false);
-  const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(
-    null,
-  );
+  const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(null);
   const openRef = useRef(open);
-  const dropdownRefs = useRef<Partial<Record<NavDropdownId, HTMLLIElement>>>(
-    {},
-  );
+  const dropdownRefs = useRef<Partial<Record<NavDropdownId, HTMLLIElement>>>({});
   openRef.current = open;
 
   // Lock page scroll when mobile menu is open (html + body; fixed + scrollY for iOS Safari)
@@ -239,8 +231,7 @@ const Navbar = ({
 
       const hash = href.slice(hashIdx);
       const pathPart = href.slice(0, hashIdx);
-      const isSamePage =
-        !pathPart || pathPart === window.location.pathname;
+      const isSamePage = !pathPart || pathPart === window.location.pathname;
 
       if (!isSamePage) {
         closeDropdown?.();
@@ -268,13 +259,7 @@ const Navbar = ({
           onClick={(e) => handleMobileNav(e, logoHref)}
           aria-label={`${brand} - na začátek stránky`}
         >
-          <img
-            src={logoSrc}
-            alt=""
-            width={48}
-            height={48}
-            className={styles.navLogo}
-          />
+          <img src={logoSrc} alt="" width={48} height={48} className={styles.navLogo} />
           <span className={styles.brandText}>
             <span className={styles.brandName}>{brand}</span>
             {/* <span className={styles.brandSub}>pohybem k radosti</span> */}
@@ -336,10 +321,7 @@ const Navbar = ({
                         {submenuLinks.map((sub, i) => (
                           <Fragment key={sub.href + sub.label}>
                             {i > 0 ? (
-                              <hr
-                                className={styles.dropdownDivider}
-                                aria-hidden="true"
-                              />
+                              <hr className={styles.dropdownDivider} aria-hidden="true" />
                             ) : null}
                             <li>
                               <a

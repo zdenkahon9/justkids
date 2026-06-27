@@ -1,12 +1,12 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
-import WorkshopsPage from "../components/WorkshopsPage.astro";
 import WorkshopsAllDates from "../components/WorkshopsAllDates.astro";
+import WorkshopsPage from "../components/WorkshopsPage.astro";
+import { site } from "../data/site";
 import { workshopsHomeMeta } from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
-import { site } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${workshopsHomeMeta.title} ${workshopsHomeMeta.titleAccent} | ${site.name}`;
 const pageDescription = workshopsPageMeta.pageDescription;
@@ -32,15 +32,8 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonical={canonical}
->
-  <script
-    is:inline
-    define:vars={{ scrollKey: "workshops-home-scroll" }}
-  >
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+  <script is:inline define:vars={{ scrollKey: "workshops-home-scroll" }}>
     if (sessionStorage.getItem(scrollKey)) {
       document.documentElement.dataset.workshopsHomeArrival = "true";
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";

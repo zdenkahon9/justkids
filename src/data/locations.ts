@@ -24,8 +24,7 @@ export const locations: Location[] = [
     city: "Zdice",
     zip: "267 51",
     parking: "Parkování na náměstí nad prodejnou Coop.",
-    mapUrl:
-      "https://www.google.com/maps/search/?api=1&query=Husova+964%2C+267+51+Zdice",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=Husova+964%2C+267+51+Zdice",
     mapCoords: { lat: 49.912799, lng: 13.97766 },
     accent: "blush",
   },

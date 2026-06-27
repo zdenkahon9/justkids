@@ -1,7 +1,8 @@
 ---
 import Icon from "astro-iconify";
-import { splitReviewText } from "../utils/splitReviewText";
+
 import type { Review } from "../data/reviews";
+import { splitReviewText } from "../utils/splitReviewText";
 
 interface Props {
   review: Review;
@@ -55,11 +56,7 @@ const {
     <blockquote class:list={["review__text", { "review__text--clamp": clamp }]}>
       {
         splitReviewText(r.text).map((part) =>
-          part.emoji ? (
-            <span class="review__emoji">{part.value}</span>
-          ) : (
-            part.value
-          ),
+          part.emoji ? <span class="review__emoji">{part.value}</span> : part.value,
         )
       }
     </blockquote>
@@ -184,11 +181,7 @@ const {
     height: 1px;
     margin: 0 0 var(--space-5);
     border: none;
-    background: color-mix(
-      in srgb,
-      var(--color-blush-deep) 30%,
-      var(--color-ink) 8%
-    );
+    background: color-mix(in srgb, var(--color-blush-deep) 30%, var(--color-ink) 8%);
   }
 
   .review__more {
@@ -248,8 +241,7 @@ const {
     @media (hover: hover) and (pointer: fine) {
       .review:hover {
         transform: translateY(-4px);
-        box-shadow: 0 26px 55px -18px
-          color-mix(in srgb, var(--accent) 45%, transparent);
+        box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
       }
     }
 

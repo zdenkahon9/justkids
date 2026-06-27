@@ -1,10 +1,11 @@
 ---
 import Icon from "astro-iconify";
+
 import { ageGroupsHomeCards } from "../data/ageGroupsHome";
 import {
-  ageGroupsPageWithParents,
-  ageGroupsPageWithoutParents,
   ageGroupsPageMeta,
+  ageGroupsPageWithoutParents,
+  ageGroupsPageWithParents,
 } from "../data/ageGroupsPage";
 import { scheduleMeta } from "../data/schedule";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -52,11 +53,7 @@ const agePageCardThemesWithoutParents = [
 ] as const;
 ---
 
-<section
-  id={meta.sectionId}
-  class="section age-page"
-  aria-labelledby="age-page-title"
->
+<section id={meta.sectionId} class="section age-page" aria-labelledby="age-page-title">
   <div class="age-page__intro">
     <div class="age-page__intro-nav-bg" aria-hidden="true">
       <div class="age-page__intro-photo"></div>
@@ -77,10 +74,7 @@ const agePageCardThemesWithoutParents = [
 
   <div class="container-x">
     <div class="age-page__filter reveal">
-      <nav
-        class="age-page__pill age-page__pill--split"
-        aria-label="Přejít na kategorii"
-      >
+      <nav class="age-page__pill age-page__pill--split" aria-label="Přejít na kategorii">
         <a
           href={`#${agePageWithParentsSection.id}`}
           class="age-page__pill-half age-page__pill-half--with-parents"
@@ -803,12 +797,8 @@ const agePageCardThemesWithoutParents = [
             return;
           }
 
-          const offset = readCssVarLength(
-            link,
-            "--age-page-pill-scroll-offset",
-          );
-          const top =
-            target.getBoundingClientRect().top + window.scrollY - offset;
+          const offset = readCssVarLength(link, "--age-page-pill-scroll-offset");
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
 
           window.scrollTo({ top, behavior: "smooth" });
           history.replaceState(null, "", href);

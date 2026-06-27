@@ -1,8 +1,9 @@
 ---
 import Icon from "astro-iconify";
+
 import { reviews } from "../data/reviews";
-import ReviewCard from "./ReviewCard.astro";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+import ReviewCard from "./ReviewCard.astro";
 
 const HOME_REVIEW_COUNT = 3;
 const MOBILE_SLIDE_COUNT = HOME_REVIEW_COUNT + 1;
@@ -56,9 +57,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
                 />
               </span>
             </div>
-            <p class="review--cta__text">
-              Přečtěte si další zkušenosti rodičů.
-            </p>
+            <p class="review--cta__text">Přečtěte si další zkušenosti rodičů.</p>
             <span class="review--cta__rule" aria-hidden="true"></span>
             <a class="review--cta__more" href="/recenze">
               Zobrazit všechny recenze
@@ -75,9 +74,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
               type="button"
               class={`reviews__dot${i === 0 ? " is-active" : ""}`}
               role="tab"
-              aria-label={
-                i < HOME_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"
-              }
+              aria-label={i < HOME_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"}
               aria-selected={i === 0 ? "true" : "false"}
               data-index={i}
             />
@@ -89,13 +86,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     <ul class="reviews__grid reviews__grid--desktop" role="list">
       {
         homeReviews.map((r, i) => (
-          <ReviewCard
-            review={r}
-            index={i}
-            accent={accentMap[r.accent]}
-            clamp
-            showMore
-          />
+          <ReviewCard review={r} index={i} accent={accentMap[r.accent]} clamp showMore />
         ))
       }
     </ul>
@@ -119,14 +110,10 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
 
     const track = section.querySelector<HTMLElement>(".reviews__track");
     const slider = section.querySelector<HTMLElement>(".reviews__mobile");
-    const desktopGrid = section.querySelector<HTMLElement>(
-      ".reviews__grid--desktop",
-    );
-    const dots =
-      slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
+    const desktopGrid = section.querySelector<HTMLElement>(".reviews__grid--desktop");
+    const dots = slider?.querySelectorAll<HTMLButtonElement>(".reviews__dot") ?? [];
     const mobileCards = slider?.querySelectorAll<HTMLElement>(".review") ?? [];
-    const desktopCards =
-      desktopGrid?.querySelectorAll<HTMLElement>(".review") ?? [];
+    const desktopCards = desktopGrid?.querySelectorAll<HTMLElement>(".review") ?? [];
 
     const slides = track
       ? [...track.querySelectorAll<HTMLElement>(".reviews__slide")]
@@ -470,9 +457,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     .reviews__grid.reviews__grid--desktop {
       display: grid;
       width: 100%;
-      max-width: calc(
-        3 * var(--card-grid-width-md) + 2 * var(--stack-gap)
-      );
+      max-width: calc(3 * var(--card-grid-width-md) + 2 * var(--stack-gap));
       margin-inline: auto;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       justify-content: center;

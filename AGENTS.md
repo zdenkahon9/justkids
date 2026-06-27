@@ -2,7 +2,8 @@
 
 ## Working Flow For Issues
 
-This repo is managed issue-by-issue. Follow this flow for every task so the work stays consistent.
+This repo is managed issue-by-issue. Follow this flow for every task so the work stays
+consistent.
 
 1. Read the GitHub issue first.
    - Prefer `gh issue view <number> --repo zdenkahon9/justkids --comments`.
@@ -16,8 +17,10 @@ This repo is managed issue-by-issue. Follow this flow for every task so the work
 
 3. Check the reference repo when the issue mentions it.
    - Reference repo: `marekh19/marekhonzal.com`.
-   - Use it to resolve unclear details, but prefer the explicit issue text when the issue and reference differ.
-   - Match patterns, config style, scripts, and project conventions where they make sense for this repo.
+   - Use it to resolve unclear details, but prefer the explicit issue text when the issue
+     and reference differ.
+   - Match patterns, config style, scripts, and project conventions where they make sense
+     for this repo.
 
 4. Implement narrowly.
    - Change only the files needed for the issue.
@@ -28,13 +31,15 @@ This repo is managed issue-by-issue. Follow this flow for every task so the work
 5. Verify exactly what the issue asks for.
    - Run the commands listed in the issue.
    - If the issue does not specify commands, run the smallest relevant verification set.
-   - For package-manager work, verify the CI-like path, for example `corepack pnpm install --frozen-lockfile` and `corepack pnpm build`.
+   - For package-manager work, verify the CI-like path, for example
+     `corepack pnpm install --frozen-lockfile` and `corepack pnpm build`.
    - If a dev server is part of the issue, start it, confirm an HTTP `200`, then stop it.
 
 6. Review the issue checklist before calling it done.
    - Go through the issue point by point.
    - Confirm every requested file was added, edited, removed, or left alone intentionally.
-   - Search for stale references such as old commands, old package manager names, old config names, or old documentation.
+   - Search for stale references such as old commands, old package manager names, old
+     config names, or old documentation.
    - Check `git diff --stat` and relevant diffs before finalizing.
 
 7. Commit and push immediately after verification passes.
@@ -45,7 +50,8 @@ This repo is managed issue-by-issue. Follow this flow for every task so the work
 
 8. Close the GitHub issue only after the verified work is committed and pushed.
    - Use `gh issue close <number> --repo zdenkahon9/justkids --comment "<summary>"`.
-   - The close comment should mention the main change, verification commands that passed, and the pushed commit.
+   - The close comment should mention the main change, verification commands that passed,
+     and the pushed commit.
    - If commit or push fails, do not close the issue yet.
 
 ## Project-Specific Mantinely
@@ -69,11 +75,15 @@ allowBuilds:
 
 ## Verification Notes
 
-- `corepack enable` may require system write access for global shims. If it fails on permissions, do not treat that alone as project failure.
-- `corepack prepare pnpm@<version> --activate` plus `corepack pnpm ...` is acceptable for project verification.
+- `corepack enable` may require system write access for global shims. If it fails on
+  permissions, do not treat that alone as project failure.
+- `corepack prepare pnpm@<version> --activate` plus `corepack pnpm ...` is acceptable for
+  project verification.
 - Build warnings are not automatically blockers, but they must be reported if they appear.
-- If verification cannot be completed, do not close the issue. Explain exactly what blocked it.
-- If verification passes but commit or push fails, do not close the issue. Explain exactly what blocked publishing the fix.
+- If verification cannot be completed, do not close the issue. Explain exactly what
+  blocked it.
+- If verification passes but commit or push fails, do not close the issue. Explain exactly
+  what blocked publishing the fix.
 
 ## Communication
 

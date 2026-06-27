@@ -1,10 +1,10 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import ReviewsPage from "../components/ReviewsPage.astro";
 import { reviewsPageMeta } from "../data/reviews";
 import { site } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${reviewsPageMeta.title} ${reviewsPageMeta.titleAccent} | ${site.name}`;
 const pageDescription = reviewsPageMeta.pageDescription;
@@ -30,11 +30,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonical={canonical}
->
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
   <Navbar
     client:load
     links={navLinks}

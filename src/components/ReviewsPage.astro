@@ -1,5 +1,6 @@
 ---
 import Icon from "astro-iconify";
+
 import { reviews, reviewsPageMeta } from "../data/reviews";
 import { site } from "../data/site";
 import { splitReviewText } from "../utils/splitReviewText";
@@ -11,8 +12,7 @@ const monthYearFormatter = new Intl.DateTimeFormat("cs-CZ", {
   year: "numeric",
 });
 
-const formatMonthYear = (isoDate: string) =>
-  monthYearFormatter.format(new Date(isoDate));
+const formatMonthYear = (isoDate: string) => monthYearFormatter.format(new Date(isoDate));
 
 const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 ---
@@ -314,8 +314,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 
   /* Stejná barva oddělovače jako age-page__rule (např. první karta Locations) */
   .reviews-page__item + .reviews-page__item {
-    border-top: 1px solid
-      color-mix(in srgb, var(--accent) 16%, var(--color-ink) 4%);
+    border-top: 1px solid color-mix(in srgb, var(--accent) 16%, var(--color-ink) 4%);
   }
 
   /* Same star styling as the homepage review cards */

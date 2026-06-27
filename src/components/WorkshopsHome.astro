@@ -1,10 +1,7 @@
 ---
 import Icon from "astro-iconify";
-import {
-  workshops,
-  workshopsHomeMeta,
-  workshopIconById,
-} from "../data/WorkshopsHome";
+
+import { workshopIconById, workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = workshopsHomeMeta;
@@ -35,10 +32,7 @@ const meta = workshopsHomeMeta;
             <p class="workshops-home__note">
               <span class="workshops-home__note-inner">
                 <span class="workshops-home__note-icon-ring" aria-hidden="true">
-                  <Icon
-                    name="twemoji:pink-heart"
-                    class="workshops-home__note-icon"
-                  />
+                  <Icon name="twemoji:pink-heart" class="workshops-home__note-icon" />
                 </span>
                 <span class="workshops-home__note-text">
                   {meta.cardNoteLead}{" "}
@@ -52,10 +46,7 @@ const meta = workshopsHomeMeta;
             <p class="workshops-home__note-description">
               {meta.cardNoteDescription}
             </p>
-            <a
-              class="workshops-home__card-cta btn btn-primary"
-              href={meta.detailHref}
-            >
+            <a class="workshops-home__card-cta btn btn-primary" href={meta.detailHref}>
               {meta.ctaLabel}
               <span aria-hidden="true">→</span>
             </a>
@@ -72,14 +63,9 @@ const meta = workshopsHomeMeta;
                       <span class="workshops-home__rule" aria-hidden="true" />
                     ) : null}
                     <div class="workshops-home__topic-row">
-                      <span
-                        class="workshops-home__topic-icon"
-                        aria-hidden="true"
-                      >
+                      <span class="workshops-home__topic-icon" aria-hidden="true">
                         <Icon
-                          name={
-                            workshopIconById[w.id] ?? "streamline:health-care-2"
-                          }
+                          name={workshopIconById[w.id] ?? "streamline:health-care-2"}
                           class="workshops-home__topic-icon-graphic"
                         />
                       </span>
@@ -93,21 +79,14 @@ const meta = workshopsHomeMeta;
                           >
                             {w.title}
                           </a>
-                          <span class="workshops-home__topic-label-plain">
-                            {w.title}
-                          </span>
+                          <span class="workshops-home__topic-label-plain">{w.title}</span>
                         </h3>
-                        <span
-                          class="workshops-home__topic-rule"
-                          aria-hidden="true"
-                        />
+                        <span class="workshops-home__topic-rule" aria-hidden="true" />
                         {w.ageRange ? (
                           <span class="workshop__age">{w.ageRange}</span>
                         ) : null}
                         {w.homeSummary ? (
-                          <p class="workshops-home__topic-summary">
-                            {w.homeSummary}
-                          </p>
+                          <p class="workshops-home__topic-summary">{w.homeSummary}</p>
                         ) : null}
                       </div>
                       <a
@@ -133,9 +112,7 @@ const meta = workshopsHomeMeta;
                   class="workshops-home__info-icon"
                   aria-hidden="true"
                 />
-                <span class="workshops-home__info-text"
-                  >{meta.cardInfoText}</span
-                >
+                <span class="workshops-home__info-text">{meta.cardInfoText}</span>
               </span>
             </p>
           </div>

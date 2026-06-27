@@ -11,11 +11,7 @@ const splitLocationName = (name: string) => {
 };
 ---
 
-<section
-  id="lokace"
-  class="section locations"
-  aria-labelledby="locations-title"
->
+<section id="lokace" class="section locations" aria-labelledby="locations-title">
   <div class="container-x">
     <header class="section-header reveal">
       <span class="eyebrow">Kde nás najdete</span>
@@ -24,9 +20,7 @@ const splitLocationName = (name: string) => {
       </h2>
       <p class="section-subtitle locations__subtitle">
         {locationsMeta.subtitleLead}{" "}
-        <span class="locations__subtitle-cities"
-          >{locationsMeta.subtitleCities}</span
-        >
+        <span class="locations__subtitle-cities">{locationsMeta.subtitleCities}</span>
       </p>
     </header>
 
@@ -90,12 +84,15 @@ const splitLocationName = (name: string) => {
                                   </>
                                 </h3>
                                 <address class="location__address">
-                                  <span class="location__address-street"
-                                    >{l.street}</span
-                                  ><span class="location__address-sep">, </span
-                                  ><span class="location__address-locality"
-                                    >{l.zip} {l.city}</span
-                                  >
+                                  <>
+                                    <span class="location__address-street">
+                                      {l.street}
+                                    </span>
+                                    <span class="location__address-sep">, </span>
+                                    <span class="location__address-locality">
+                                      {l.zip} {l.city}
+                                    </span>
+                                  </>
                                 </address>
                               </div>
                             </div>
@@ -315,19 +312,13 @@ const splitLocationName = (name: string) => {
     box-sizing: border-box;
   }
 
-  .locations__card:has(
-      .locations-tabs__switcher .locations-tabs__item:nth-child(1)[open]
-    )
+  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(1)[open])
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(1),
-  .locations__card:has(
-      .locations-tabs__switcher .locations-tabs__item:nth-child(2)[open]
-    )
+  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(2)[open])
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(2),
-  .locations__card:has(
-      .locations-tabs__switcher .locations-tabs__item:nth-child(3)[open]
-    )
+  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(3)[open])
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(3) {
     display: block;
@@ -688,8 +679,7 @@ const splitLocationName = (name: string) => {
     @media (min-width: 1024px) {
       .location:hover {
         transform: translateY(-4px);
-        box-shadow: 0 26px 55px -18px
-          color-mix(in srgb, var(--accent) 45%, transparent);
+        box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
       }
     }
   }
@@ -697,8 +687,7 @@ const splitLocationName = (name: string) => {
   @media (min-width: 1024px) {
     .location:active {
       transform: translateY(-2px) scale(0.99);
-      box-shadow: 0 18px 40px -18px
-        color-mix(in srgb, var(--accent) 35%, transparent);
+      box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 35%, transparent);
     }
   }
 
@@ -721,16 +710,12 @@ const splitLocationName = (name: string) => {
 
 <script>
   const setupLocationsTabs = () => {
-    const switcher = document.querySelector<HTMLElement>(
-      ".locations-tabs__switcher",
-    );
+    const switcher = document.querySelector<HTMLElement>(".locations-tabs__switcher");
     if (!switcher || switcher.dataset.tabsReady === "true") return;
     switcher.dataset.tabsReady = "true";
 
     const card = switcher.closest<HTMLElement>(".locations__card");
-    const items = switcher.querySelectorAll<HTMLDetailsElement>(
-      ".locations-tabs__item",
-    );
+    const items = switcher.querySelectorAll<HTMLDetailsElement>(".locations-tabs__item");
 
     const syncAccent = (item: HTMLDetailsElement) => {
       const accent = item.dataset.accent;

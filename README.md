@@ -2,7 +2,8 @@
 
 > Cvičení s miminky a dětmi v Hořovicích a ve Zdicích.
 
-Statický web postavený v **Astro + React + TypeScript**. Mobile-first, rychlý, SEO-friendly.
+Statický web postavený v **Astro + React + TypeScript**. Mobile-first, rychlý,
+SEO-friendly.
 
 ---
 
@@ -88,8 +89,8 @@ export const news: NewsItem[] = [
 ];
 ```
 
-Novinky se na webu **automaticky řadí od nejnovější**.
-Pokud chceš novinku skrýt, jednoduše ji smaž nebo zakomentuj.
+Novinky se na webu **automaticky řadí od nejnovější**. Pokud chceš novinku skrýt,
+jednoduše ji smaž nebo zakomentuj.
 
 ### 🔗 Změna rezervačního odkazu
 
@@ -127,7 +128,8 @@ V `src/data/locations.ts` můžeš upravit adresy nebo informace o parkování.
 
 ### 💰 Ceník
 
-V `src/data/pricing.ts`. Vlajka "Nejoblíbenější" se zobrazuje u tarifu, který má `highlight: true`.
+V `src/data/pricing.ts`. Vlajka "Nejoblíbenější" se zobrazuje u tarifu, který má
+`highlight: true`.
 
 ### 👶 Věkové skupiny
 
@@ -159,9 +161,11 @@ Po nasazení nezapomeň nastavit `SITE_URL` v prostředí podle `.env.example`.
 
 ## Cookies / Analytics
 
-Web zatím **neobsahuje žádné trackery ani analytics**, takže není potřeba ani cookie banner.
+Web zatím **neobsahuje žádné trackery ani analytics**, takže není potřeba ani cookie
+banner.
 
-Až budeš přidávat analytics (Google Analytics, Plausible…), nezapomeň přidat i cookie lištu (např. cookieconsent.com nebo vlastní řešení) a aktualizovat tento README.
+Až budeš přidávat analytics (Google Analytics, Plausible…), nezapomeň přidat i cookie
+lištu (např. cookieconsent.com nebo vlastní řešení) a aktualizovat tento README.
 
 ---
 
@@ -170,8 +174,8 @@ Až budeš přidávat analytics (Google Analytics, Plausible…), nezapomeň př
 - Logo: `public/images/logo.png`
 - Pozadí: `public/images/pozadi.png`
 
-**❗ Pro ochranu soukromí dětí (GDPR) na webu nejsou žádné reálné fotky dětí.**
-Místo toho se používají vlastní SVG ilustrace v sekci `Gallery.astro` a portrét v `About.astro`.
+**❗ Pro ochranu soukromí dětí (GDPR) na webu nejsou žádné reálné fotky dětí.** Místo toho
+se používají vlastní SVG ilustrace v sekci `Gallery.astro` a portrét v `About.astro`.
 
 ---
 

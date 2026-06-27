@@ -6,8 +6,8 @@
  */
 
 import { writeFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
@@ -90,9 +90,7 @@ async function fetchAllDatasetItems() {
   let offset = 0;
 
   while (true) {
-    const url = new URL(
-      `https://api.apify.com/v2/datasets/${datasetId}/items`,
-    );
+    const url = new URL(`https://api.apify.com/v2/datasets/${datasetId}/items`);
     url.searchParams.set("format", "json");
     url.searchParams.set("clean", "true");
     url.searchParams.set("offset", String(offset));
@@ -129,9 +127,7 @@ async function fetchAllDatasetItems() {
 
 const items = await fetchAllDatasetItems();
 
-const reviews = items
-  .map((item, index) => mapApifyReview(item, index))
-  .filter(Boolean);
+const reviews = items.map((item, index) => mapApifyReview(item, index)).filter(Boolean);
 
 if (reviews.length === 0) {
   console.error("Dataset neobsahuje žádné recenze s textem.");

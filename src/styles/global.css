@@ -433,9 +433,7 @@ h3 {
   width: var(--card-icon-graphic-size);
   height: var(--card-icon-graphic-size);
   flex-shrink: 0;
-  filter: drop-shadow(
-    0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
-  );
+  filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
 }
 
 /* Příjezd ze šipek WorkshopsHome — navbar hned ve scrolled stavu, bez poskoku */
@@ -454,12 +452,8 @@ html[data-workshops-home-arrival] [data-component="navbar"] img {
   transition: none;
 }
 
-html[data-workshops-home-arrival]
-  [data-component="navbar"]
-  [class*="brandName"],
-html[data-workshops-home-arrival]
-  [data-component="navbar"]
-  [class*="brandSub"] {
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandName"],
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandSub"] {
   text-shadow: none;
   transition: none;
 }

@@ -1,7 +1,8 @@
 ---
 import "../styles/global.css";
-import { site } from "../data/site";
+
 import { locations } from "../data/locations";
+import { site } from "../data/site";
 
 type Props = {
   title?: string;
@@ -113,9 +114,7 @@ const localBusiness = {
 
     {/* Reveal-on-scroll observer (vanilla, lightweight) */}
     <script>
-      const reduce = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const els = document.querySelectorAll(".reveal");
       if (reduce || !("IntersectionObserver" in window)) {
         els.forEach((e) => e.classList.add("is-visible"));

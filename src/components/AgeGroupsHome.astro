@@ -1,16 +1,13 @@
 ---
 import Icon from "astro-iconify";
+
 import { ageGroupsHomeCards, ageGroupsHomeMeta } from "../data/ageGroupsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = ageGroupsHomeMeta;
 ---
 
-<section
-  id={meta.sectionId}
-  class="section age-home"
-  aria-labelledby="age-home-title"
->
+<section id={meta.sectionId} class="section age-home" aria-labelledby="age-home-title">
   <div class="container-x">
     <header class="section-header reveal">
       <span class="eyebrow">{meta.eyebrow}</span>
@@ -19,8 +16,8 @@ const meta = ageGroupsHomeMeta;
         <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
       <p class="section-subtitle">
-        Od 3 měsíců do 9 let – každá věková skupina má vlastní cvičení
-        přizpůsobené vývoji dítěte.
+        Od 3 měsíců do 9 let – každá věková skupina má vlastní cvičení přizpůsobené vývoji
+        dítěte.
       </p>
     </header>
 
@@ -256,8 +253,7 @@ const meta = ageGroupsHomeMeta;
   @media (hover: hover) and (pointer: fine) {
     .age-home__card:has(.age-home__card-link:hover) {
       transform: translateY(-4px);
-      box-shadow: 0 26px 55px -18px
-        color-mix(in srgb, var(--accent) 45%, transparent);
+      box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
     }
 
     .age-home__card:has(.age-home__card-link:hover) .age-home__icon-ring {
@@ -267,8 +263,7 @@ const meta = ageGroupsHomeMeta;
 
   .age-home__card:has(.age-home__card-link:active) {
     transform: translateY(-2px) scale(0.99);
-    box-shadow: 0 18px 40px -18px
-      color-mix(in srgb, var(--accent) 35%, transparent);
+    box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
   .age-home__card:has(.age-home__card-link:active) .age-home__icon-ring {
@@ -368,8 +363,7 @@ const meta = ageGroupsHomeMeta;
     @media (hover: hover) and (pointer: fine) {
       .age-home__card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 26px 55px -18px
-          color-mix(in srgb, var(--accent) 45%, transparent);
+        box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
       }
 
       .age-home__card:hover .age-home__icon-ring {
@@ -379,8 +373,7 @@ const meta = ageGroupsHomeMeta;
 
     .age-home__card:active {
       transform: translateY(-2px) scale(0.99);
-      box-shadow: 0 18px 40px -18px
-        color-mix(in srgb, var(--accent) 35%, transparent);
+      box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 35%, transparent);
     }
 
     .age-home__card:active .age-home__icon-ring {

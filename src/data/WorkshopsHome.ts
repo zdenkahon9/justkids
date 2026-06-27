@@ -152,8 +152,7 @@ export const workshops: Workshop[] = [
     id: "prvni-pomoc-u-deti",
     title: "První pomoc u dětí",
     homeSummary: "Specifika dětské první pomoci a krizové situace.",
-    summary:
-      "Jak reagovat v krizových situacích a poskytnout dítěti první pomoc.",
+    summary: "Jak reagovat v krizových situacích a poskytnout dítěti první pomoc.",
     highlights: [
       "Specifika dětské první pomoci",
       "Řešení nejčastějších situací",

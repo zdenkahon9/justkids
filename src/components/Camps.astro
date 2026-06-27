@@ -1,5 +1,6 @@
 ---
 import Icon from "astro-iconify";
+
 import { campFeatureIcons, camps, campsMeta } from "../data/camps";
 import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -26,11 +27,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
           >
             <div class="camp__body">
               <p class="camp__location-badge">
-                <Icon
-                  name="ph:map-pin"
-                  class="camp__location-icon"
-                  aria-hidden="true"
-                />
+                <Icon name="ph:map-pin" class="camp__location-icon" aria-hidden="true" />
                 {c.city}
               </p>
               <h3>{c.title}</h3>
@@ -40,10 +37,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                     class="camp__icon-ring"
                     style={`--accent: ${item.accentDeep}; --accent-soft: ${item.accentSoft};`}
                   >
-                    <Icon
-                      name={item.icon}
-                      class="camp__icon-graphic card-icon-graphic"
-                    />
+                    <Icon name={item.icon} class="camp__icon-graphic card-icon-graphic" />
                   </span>
                 ))}
               </div>
@@ -67,11 +61,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                   {c.dateRange}
                 </p>
                 <p class="camp__meta-row">
-                  <Icon
-                    name="ph:clock"
-                    class="camp__meta-icon"
-                    aria-hidden="true"
-                  />
+                  <Icon name="ph:clock" class="camp__meta-icon" aria-hidden="true" />
                   {c.time}
                 </p>
                 <p class="camp__meta-row camp__meta-row--venue">
@@ -83,9 +73,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                   <span class="camp__meta-venue">
                     <span>{c.venue.name}</span>
                     {c.venue.address ? (
-                      <span class="camp__meta-venue-address">
-                        {c.venue.address}
-                      </span>
+                      <span class="camp__meta-venue-address">{c.venue.address}</span>
                     ) : null}
                   </span>
                 </p>
@@ -280,11 +268,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     height: 1px;
     margin: var(--space-5) 0 var(--space-7);
     border: none;
-    background: color-mix(
-      in srgb,
-      var(--accent-color) 30%,
-      var(--color-ink) 8%
-    );
+    background: color-mix(in srgb, var(--accent-color) 30%, var(--color-ink) 8%);
     transition: background 220ms ease;
   }
 
@@ -447,14 +431,12 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
   @media (hover: hover) and (pointer: fine) {
     .camp .camp__cta :global(.btn-primary:hover) {
-      box-shadow: 0 22px 50px -16px
-        color-mix(in srgb, var(--accent) 60%, transparent);
+      box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--accent) 60%, transparent);
     }
   }
 
   .camp .camp__cta :global(.btn-primary:active) {
-    box-shadow: 0 22px 50px -16px
-      color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--accent) 60%, transparent);
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 

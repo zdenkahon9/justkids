@@ -41,11 +41,7 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     groupsLabel: "od 3 měsíců",
     description:
       "První společné chvíle plné doteku, blízkosti a jemného pohybu, které podporují zdravý vývoj miminka i jistotu rodiče.",
-    highlights: [
-      "Zábavné říkanky",
-      "Jemná masáž miminek",
-      "Hravé cviky pro radost",
-    ],
+    highlights: ["Zábavné říkanky", "Jemná masáž miminek", "Hravé cviky pro radost"],
     icon: "fxemoji:cherryblossom",
     accent: "sky",
   },
@@ -77,11 +73,7 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     title: "Active",
     description:
       "Společné hry plné smíchu, pohybu a nových dovedností, které posilují samostatnost i přirozenou dětskou energii.",
-    highlights: [
-      "Hry ve skupině",
-      "Prvky gymnastiky",
-      "Koncentrace a poslouchání",
-    ],
+    highlights: ["Hry ve skupině", "Prvky gymnastiky", "Koncentrace a poslouchání"],
     icon: "emojione:monkey-face",
     accent: "cream",
   },

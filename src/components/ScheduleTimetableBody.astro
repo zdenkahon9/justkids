@@ -1,9 +1,7 @@
 ---
 import Icon from "astro-iconify";
-import {
-  formatScheduleActivities,
-  type ScheduleLocation,
-} from "../data/schedule";
+
+import { formatScheduleActivities, type ScheduleLocation } from "../data/schedule";
 
 interface Props {
   location: ScheduleLocation;
@@ -30,11 +28,7 @@ const { location } = Astro.props;
           {day.slots.map((slot) => (
             <li class="schedule__slot">
               <span class="schedule__axis" aria-hidden="true">
-                <svg
-                  class="schedule__axis-dot"
-                  viewBox="0 0 10 10"
-                  aria-hidden="true"
-                >
+                <svg class="schedule__axis-dot" viewBox="0 0 10 10" aria-hidden="true">
                   <circle class="schedule__axis-dot-fill" cx="5" cy="5" r="5" />
                 </svg>
               </span>
@@ -69,8 +63,9 @@ const { location } = Astro.props;
     </p>
     <p class="schedule__venue-address">
       <span class="schedule__venue-street">{location.venue.street}</span><span
-        class="schedule__venue-address-sep">, </span
-      ><span class="schedule__venue-city">{location.venue.city}</span>
+        class="schedule__venue-address-sep"
+        >,
+      </span><span class="schedule__venue-city">{location.venue.city}</span>
     </p>
   </div>
 </div>

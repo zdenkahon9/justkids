@@ -2,8 +2,8 @@
 import {
   scheduleAccentSoftVar,
   scheduleLayout,
-  scheduleMeta,
   scheduleLocations,
+  scheduleMeta,
 } from "../data/schedule";
 import { cardAccentDeep } from "../utils/cardAccent";
 import ScheduleTimetableBody from "./ScheduleTimetableBody.astro";
@@ -27,11 +27,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
   ].join("; ");
 ---
 
-<section
-  id={meta.sectionId}
-  class="section schedule"
-  aria-labelledby="schedule-title"
->
+<section id={meta.sectionId} class="section schedule" aria-labelledby="schedule-title">
   <div class="container-x">
     <header class="section-header reveal">
       <h2 id="schedule-title">
@@ -45,10 +41,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
         class="schedule__card"
         style={`--accent: ${cardAccent}; --accent-soft: ${cardAccentSoftColor}; --schedule-axis-col: ${scheduleLayout.axisColumn}; --schedule-axis-width: ${scheduleLayout.axisWidth}; --schedule-dot-size: ${scheduleLayout.dotSize}; --schedule-row-height: ${scheduleLayout.rowHeight}; --schedule-time-col: ${scheduleLayout.timeColumn}; --schedule-axis-to-time-gap: ${scheduleLayout.axisToTimeGap}; --schedule-time-to-activity-gap: ${scheduleLayout.timeToActivityGap};`}
       >
-        <nav
-          class="schedule__pill schedule__pill--split"
-          aria-label="Vybrat pobočku"
-        >
+        <nav class="schedule__pill schedule__pill--split" aria-label="Vybrat pobočku">
           {
             scheduleLocations.map((location, index) => (
               <button
@@ -292,12 +285,8 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
       margin: 0 auto var(--space-9);
     }
 
-    .schedule__grid--desktop
-      .schedule__card:nth-child(2)
-      :global(.schedule__day-block),
-    .schedule__grid--desktop
-      .schedule__card:nth-child(3)
-      :global(.schedule__day-block) {
+    .schedule__grid--desktop .schedule__card:nth-child(2) :global(.schedule__day-block),
+    .schedule__grid--desktop .schedule__card:nth-child(3) :global(.schedule__day-block) {
       display: flex;
       flex-direction: column;
     }
@@ -331,12 +320,8 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     pill.dataset.pillReady = "true";
 
     const card = pill.closest<HTMLElement>(".schedule__card");
-    const timetables = card?.querySelectorAll<HTMLElement>(
-      ".schedule__timetable",
-    );
-    const buttons = pill.querySelectorAll<HTMLButtonElement>(
-      ".schedule__pill-third",
-    );
+    const timetables = card?.querySelectorAll<HTMLElement>(".schedule__timetable");
+    const buttons = pill.querySelectorAll<HTMLButtonElement>(".schedule__pill-third");
 
     const setActive = (button: HTMLButtonElement) => {
       buttons.forEach((item) => {
@@ -373,9 +358,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
   const SCHEDULE_DESKTOP_MQ = "(min-width: 1024px)";
 
   const syncScheduleHoroviceBroumyDayBlocks = () => {
-    const grid = document.querySelector<HTMLElement>(
-      ".schedule__grid--desktop",
-    );
+    const grid = document.querySelector<HTMLElement>(".schedule__grid--desktop");
     if (!grid) return;
 
     const horoviceDay = grid.querySelector<HTMLElement>(
@@ -396,9 +379,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
   };
 
   const setupScheduleDayBlockSync = () => {
-    const grid = document.querySelector<HTMLElement>(
-      ".schedule__grid--desktop",
-    );
+    const grid = document.querySelector<HTMLElement>(".schedule__grid--desktop");
     if (!grid || grid.dataset.dayBlockSyncReady === "true") return;
     grid.dataset.dayBlockSyncReady = "true";
 
@@ -421,9 +402,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   setupScheduleDayBlockSync();
   document.addEventListener("astro:page-load", () => {
-    const grid = document.querySelector<HTMLElement>(
-      ".schedule__grid--desktop",
-    );
+    const grid = document.querySelector<HTMLElement>(".schedule__grid--desktop");
     if (grid) delete grid.dataset.dayBlockSyncReady;
     setupScheduleDayBlockSync();
   });

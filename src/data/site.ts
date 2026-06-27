@@ -28,8 +28,7 @@ export const site = {
   // Sociální sítě
   social: {
     facebook: "https://www.facebook.com/profile.php?id=61564479295700",
-    facebookReviews:
-      "https://www.facebook.com/profile.php?id=61564479295700&sk=reviews",
+    facebookReviews: "https://www.facebook.com/profile.php?id=61564479295700&sk=reviews",
     instagram: "https://www.instagram.com/justkids.cz/",
   },
 } as const;

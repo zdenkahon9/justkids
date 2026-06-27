@@ -1,12 +1,9 @@
 ---
 import Icon from "astro-iconify";
-import {
-  workshops,
-  workshopsHomeMeta,
-  workshopIconById,
-} from "../data/WorkshopsHome";
-import { workshopsPageMeta } from "../data/WorkshopsPage";
+
 import { site } from "../data/site";
+import { workshopIconById, workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
+import { workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 import { sortWorkshopDates } from "../utils/sortWorkshopDates";
 
@@ -43,10 +40,7 @@ const pageMeta = workshopsPageMeta;
     <div class="workshops-page__filter reveal">
       <div class="workshops-page__nav">
         <div class="workshops-page__nav-scroll" data-workshops-nav-scroll>
-          <nav
-            class="workshops-page__nav-track"
-            aria-label="Přejít na workshop"
-          >
+          <nav class="workshops-page__nav-track" aria-label="Přejít na workshop">
             {
               workshops.map((w) => (
                 <div
@@ -62,17 +56,13 @@ const pageMeta = workshopsPageMeta;
           </nav>
         </div>
         <div class="workshops-page__nav-scrollbar" aria-hidden="true">
-          <span
-            class="workshops-page__nav-scrollbar-thumb"
-            data-workshops-nav-thumb></span>
+          <span class="workshops-page__nav-scrollbar-thumb" data-workshops-nav-thumb
+          ></span>
         </div>
       </div>
 
       <div class="workshops-page__pill workshops-page__pill--all-dates">
-        <a
-          href={`#${pageMeta.allDatesSectionId}`}
-          class="workshops-page__pill-all-dates"
-        >
+        <a href={`#${pageMeta.allDatesSectionId}`} class="workshops-page__pill-all-dates">
           <span class="workshops-page__pill-all-dates-icon" aria-hidden="true">
             <Icon
               name="lineicons:calendar-days"
@@ -102,9 +92,7 @@ const pageMeta = workshopsPageMeta;
               <div class="workshop__lead">
                 <h3>{w.title}</h3>
               </div>
-              {w.ageRange ? (
-                <span class="workshop__age">{w.ageRange}</span>
-              ) : null}
+              {w.ageRange ? <span class="workshop__age">{w.ageRange}</span> : null}
             </div>
             <span class="workshops-page__rule" aria-hidden="true" />
 
@@ -185,19 +173,12 @@ const pageMeta = workshopsPageMeta;
                             rel="noopener noreferrer"
                             aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
                           >
-                            <div
-                              class="workshop__date-card-date"
-                              aria-hidden="true"
-                            >
+                            <div class="workshop__date-card-date" aria-hidden="true">
                               <span class="workshop__date-day">{date.day}</span>
-                              <span class="workshop__date-month">
-                                {date.month}
-                              </span>
+                              <span class="workshop__date-month">{date.month}</span>
                             </div>
                             <div class="workshop__date-card-body">
-                              <p class="workshop__date-venue">
-                                {date.venueName}
-                              </p>
+                              <p class="workshop__date-venue">{date.venueName}</p>
                               <p class="workshop__date-time">{date.time}</p>
                             </div>
                           </a>
@@ -452,8 +433,7 @@ const pageMeta = workshopsPageMeta;
     will-change: transform, width;
   }
 
-  .workshops-page__nav-scrollbar.is-hidden
-    .workshops-page__nav-scrollbar-thumb {
+  .workshops-page__nav-scrollbar.is-hidden .workshops-page__nav-scrollbar-thumb {
     width: 100% !important;
     transform: translateX(0) !important;
     opacity: 0.35;
@@ -510,8 +490,7 @@ const pageMeta = workshopsPageMeta;
   }
 
   .workshops-page__pill-all-dates:hover .workshops-page__pill-all-dates-icon,
-  .workshops-page__pill-all-dates:focus-visible
-    .workshops-page__pill-all-dates-icon,
+  .workshops-page__pill-all-dates:focus-visible .workshops-page__pill-all-dates-icon,
   .workshops-page__pill-all-dates:active .workshops-page__pill-all-dates-icon {
     color: #fefefe;
   }
@@ -536,9 +515,7 @@ const pageMeta = workshopsPageMeta;
   .workshops__grid {
     --workshop-card-width: var(--card-grid-width);
     --workshop-icon-size: calc(var(--card-icon-size-corner) - var(--space-1));
-    --workshop-icon-graphic-size: calc(
-      var(--footer-social-icon-size) + var(--space-1)
-    );
+    --workshop-icon-graphic-size: calc(var(--footer-social-icon-size) + var(--space-1));
     --workshop-icon-overlap: calc(var(--workshop-icon-size) / 2);
     list-style: none;
     padding: var(--workshop-icon-overlap) 0 0;
@@ -554,9 +531,7 @@ const pageMeta = workshopsPageMeta;
   .workshop {
     --workshop-title: #2d3748;
     --workshop-body: #4a5568;
-    scroll-margin-top: calc(
-      var(--workshops-page-anchor-offset) + var(--space-6)
-    );
+    scroll-margin-top: calc(var(--workshops-page-anchor-offset) + var(--space-6));
     position: relative;
     overflow: visible;
     background: #fefefe;
@@ -830,8 +805,7 @@ const pageMeta = workshopsPageMeta;
 
   .workshop__date-card:active {
     transform: translateY(-1px) scale(0.99);
-    box-shadow: 0 12px 28px -14px
-      color-mix(in srgb, var(--accent) 35%, transparent);
+    box-shadow: 0 12px 28px -14px color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
   .workshop__date-card:focus-visible {
@@ -918,8 +892,7 @@ const pageMeta = workshopsPageMeta;
   }
 
   .workshop .workshops-page__cta :global(.btn-primary:active) {
-    box-shadow: 0 22px 50px -16px
-      color-mix(in srgb, var(--accent) 60%, transparent);
+    box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--accent) 60%, transparent);
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
@@ -980,9 +953,8 @@ const pageMeta = workshopsPageMeta;
 
     .workshops__grid .workshop:nth-child(2) .workshop__highlights {
       min-height: calc(
-        7 *
-          max(var(--text-3xl), calc(var(--text-lg) * var(--line-height-base))) +
-          6 * var(--space-4)
+        7 * max(var(--text-3xl), calc(var(--text-lg) * var(--line-height-base))) + 6 *
+          var(--space-4)
       );
     }
 
@@ -1018,8 +990,7 @@ const pageMeta = workshopsPageMeta;
   @media (hover: hover) and (pointer: fine) {
     .workshop:hover {
       transform: translateY(-4px);
-      box-shadow: 0 26px 55px -18px
-        color-mix(in srgb, var(--accent) 45%, transparent);
+      box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
     }
 
     .workshop:hover .workshop__icon {
@@ -1028,13 +999,11 @@ const pageMeta = workshopsPageMeta;
 
     .workshop__date-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 36px -14px
-        color-mix(in srgb, var(--accent) 40%, transparent);
+      box-shadow: 0 16px 36px -14px color-mix(in srgb, var(--accent) 40%, transparent);
     }
 
     .workshop .workshops-page__cta :global(.btn-primary:hover) {
-      box-shadow: 0 22px 50px -16px
-        color-mix(in srgb, var(--accent) 60%, transparent);
+      box-shadow: 0 22px 50px -16px color-mix(in srgb, var(--accent) 60%, transparent);
     }
   }
 </style>
@@ -1057,15 +1026,9 @@ const pageMeta = workshopsPageMeta;
     if (!page || page.dataset.navReady === "true") return;
     page.dataset.navReady = "true";
 
-    const scrollEl = page.querySelector<HTMLElement>(
-      "[data-workshops-nav-scroll]",
-    );
-    const thumbEl = page.querySelector<HTMLElement>(
-      "[data-workshops-nav-thumb]",
-    );
-    const scrollbarEl = thumbEl?.closest<HTMLElement>(
-      ".workshops-page__nav-scrollbar",
-    );
+    const scrollEl = page.querySelector<HTMLElement>("[data-workshops-nav-scroll]");
+    const thumbEl = page.querySelector<HTMLElement>("[data-workshops-nav-thumb]");
+    const scrollbarEl = thumbEl?.closest<HTMLElement>(".workshops-page__nav-scrollbar");
 
     const updateNavScrollbar = () => {
       if (!scrollEl || !thumbEl || !scrollbarEl) return;
@@ -1116,12 +1079,8 @@ const pageMeta = workshopsPageMeta;
             return;
           }
 
-          const offset = readCssVarLength(
-            link,
-            "--workshops-page-scroll-offset",
-          );
-          const top =
-            target.getBoundingClientRect().top + window.scrollY - offset;
+          const offset = readCssVarLength(link, "--workshops-page-scroll-offset");
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
 
           window.scrollTo({ top, behavior: "smooth" });
           history.replaceState(null, "", href);
@@ -1132,31 +1091,27 @@ const pageMeta = workshopsPageMeta;
   setupWorkshopsPageNav();
 
   const setupWorkshopsTermsAccordions = () => {
-    document
-      .querySelectorAll<HTMLElement>("[data-workshop-terms]")
-      .forEach((terms) => {
-        if (terms.dataset.termsReady === "true") return;
-        terms.dataset.termsReady = "true";
+    document.querySelectorAll<HTMLElement>("[data-workshop-terms]").forEach((terms) => {
+      if (terms.dataset.termsReady === "true") return;
+      terms.dataset.termsReady = "true";
 
-        const toggle = terms.querySelector<HTMLButtonElement>(
-          ".workshop__terms-toggle",
-        );
-        const dates = terms.querySelector<HTMLElement>(".workshop__dates");
-        if (!toggle || !dates) return;
+      const toggle = terms.querySelector<HTMLButtonElement>(".workshop__terms-toggle");
+      const dates = terms.querySelector<HTMLElement>(".workshop__dates");
+      if (!toggle || !dates) return;
 
-        const syncToggle = () => {
-          const expanded = terms.classList.contains("is-expanded");
-          toggle.setAttribute("aria-expanded", String(expanded));
-          dates.setAttribute("aria-hidden", String(!expanded));
-        };
+      const syncToggle = () => {
+        const expanded = terms.classList.contains("is-expanded");
+        toggle.setAttribute("aria-expanded", String(expanded));
+        dates.setAttribute("aria-hidden", String(!expanded));
+      };
 
-        toggle.addEventListener("click", () => {
-          terms.classList.toggle("is-expanded");
-          syncToggle();
-        });
-
+      toggle.addEventListener("click", () => {
+        terms.classList.toggle("is-expanded");
         syncToggle();
       });
+
+      syncToggle();
+    });
   };
 
   setupWorkshopsTermsAccordions();

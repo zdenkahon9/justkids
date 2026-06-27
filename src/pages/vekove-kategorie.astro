@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
 import AgeGroupsPage from "../components/AgeGroupsPage.astro";
-import Schedule from "../components/Schedule.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
+import Schedule from "../components/Schedule.astro";
 import { ageGroupsPageMeta } from "../data/ageGroupsPage";
 import { site } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${ageGroupsPageMeta.eyebrow} | ${site.name}`;
 const pageDescription = ageGroupsPageMeta.pageDescription;
@@ -32,11 +32,7 @@ const mobileNavLinks = [
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
-  <script
-    slot="head"
-    is:inline
-    define:vars={{ scrollKey: "age-home-scroll" }}
-  >
+  <script slot="head" is:inline define:vars={{ scrollKey: "age-home-scroll" }}>
     if (
       window.matchMedia("(min-width: 1024px)").matches &&
       sessionStorage.getItem(scrollKey)

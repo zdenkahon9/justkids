@@ -1,9 +1,10 @@
 ---
+import Icon from "astro-iconify";
+
+import { locations } from "../data/locations";
+import { site } from "../data/site";
 import FacebookIcon from "./FacebookIcon.astro";
 import InstagramIcon from "./InstagramIcon.astro";
-import Icon from "astro-iconify";
-import { site } from "../data/site";
-import { locations } from "../data/locations";
 
 const navLinks = [
   { href: "#o-mne", label: "O mně" },
@@ -21,11 +22,7 @@ const year = new Date().getFullYear();
 <footer id="kontakt" class="footer" aria-labelledby="footer-title">
   <div class="container-x footer__inner">
     <div class="footer__brand">
-      <a
-        href="#hero"
-        class="footer__brand-link"
-        aria-label={`${site.name} - na začátek`}
-      >
+      <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>
         <img src="/images/logo.png" alt="" width="56" height="56" />
         <div>
           <h2 id="footer-title">{site.name}</h2>
@@ -34,9 +31,7 @@ const year = new Date().getFullYear();
       </a>
       <p class="footer__about">
         Hravé cvičení pro miminka a děti od 3 měsíců do 9 let.
-        <span class="footer__about-locations"
-          >Ve Zdicích, Hořovicích a Broumech.</span
-        >
+        <span class="footer__about-locations">Ve Zdicích, Hořovicích a Broumech.</span>
       </p>
 
       <div class="footer__social-wrap">
@@ -71,16 +66,11 @@ const year = new Date().getFullYear();
 
         <li class="footer__phone">
           <Icon name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
-          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
-            >{site.contact.phone}</a
+          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>{site.contact.phone}</a
           >
         </li>
         <li class="footer__email">
-          <Icon
-            name="ph:envelope-simple"
-            class="footer__email-icon"
-            aria-hidden="true"
-          />
+          <Icon name="ph:envelope-simple" class="footer__email-icon" aria-hidden="true" />
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </li>
       </ul>

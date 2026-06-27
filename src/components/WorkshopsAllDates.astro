@@ -1,11 +1,12 @@
 ---
 import Icon from "astro-iconify";
-import FacebookIcon from "./FacebookIcon.astro";
-import InstagramIcon from "./InstagramIcon.astro";
+
+import { site } from "../data/site";
 import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 import { sortWorkshopDates } from "../utils/sortWorkshopDates";
-import { site } from "../data/site";
+import FacebookIcon from "./FacebookIcon.astro";
+import InstagramIcon from "./InstagramIcon.astro";
 
 const pageMeta = workshopsPageMeta;
 
@@ -55,10 +56,7 @@ const categories = workshopsPage
                   {allDateSlots.map((date, dateIndex) => (
                     <li class="workshops-page__date-slot">
                       {dateIndex > 0 ? (
-                        <span
-                          class="workshops-page__date-slot-rule"
-                          aria-hidden="true"
-                        />
+                        <span class="workshops-page__date-slot-rule" aria-hidden="true" />
                       ) : null}
                       <a
                         class="workshops-page__date-slot-row"
@@ -73,20 +71,14 @@ const categories = workshopsPage
                           style={`--accent: ${date.accentDeep}; --accent-soft: ${date.accentSoft};`}
                           aria-hidden="true"
                         >
-                          <span class="workshops-page__date-slot-day">
-                            {date.day}
-                          </span>
+                          <span class="workshops-page__date-slot-day">{date.day}</span>
                           <span class="workshops-page__date-slot-month">
                             {date.month}
                           </span>
                         </div>
                         <div class="workshops-page__date-slot-body">
-                          <p class="workshops-page__date-slot-venue">
-                            {date.venueName}
-                          </p>
-                          <p class="workshops-page__date-slot-time">
-                            {date.time}
-                          </p>
+                          <p class="workshops-page__date-slot-venue">{date.venueName}</p>
+                          <p class="workshops-page__date-slot-time">{date.time}</p>
                         </div>
                       </a>
                     </li>
@@ -119,30 +111,16 @@ const categories = workshopsPage
                   {category.dates.map((date, dateIndex) => (
                     <li class="workshops-cats__slot">
                       {dateIndex > 0 ? (
-                        <hr
-                          class="workshops-page__divider"
-                          aria-hidden="true"
-                        />
+                        <hr class="workshops-page__divider" aria-hidden="true" />
                       ) : null}
                       <div class="workshops-cats__slot-link">
-                        <span
-                          class="workshops-cats__slot-date"
-                          aria-hidden="true"
-                        >
-                          <span class="workshops-cats__slot-day">
-                            {date.day}
-                          </span>
-                          <span class="workshops-cats__slot-month">
-                            {date.month}
-                          </span>
+                        <span class="workshops-cats__slot-date" aria-hidden="true">
+                          <span class="workshops-cats__slot-day">{date.day}</span>
+                          <span class="workshops-cats__slot-month">{date.month}</span>
                         </span>
                         <span class="workshops-cats__slot-info">
-                          <span class="workshops-cats__slot-venue">
-                            {date.venueName}
-                          </span>
-                          <span class="workshops-cats__slot-time">
-                            {date.time}
-                          </span>
+                          <span class="workshops-cats__slot-venue">{date.venueName}</span>
+                          <span class="workshops-cats__slot-time">{date.time}</span>
                         </span>
                       </div>
                     </li>
@@ -162,9 +140,7 @@ const categories = workshopsPage
           />
         </span>
         <div class="workshops-cats__banner-copy">
-          <p class="workshops-cats__banner-title">
-            Nenašli jste vhodný termín?
-          </p>
+          <p class="workshops-cats__banner-title">Nenašli jste vhodný termín?</p>
           <p class="workshops-cats__banner-text">
             Sledujte nás, pravidelně přidáváme nové workshopy.
           </p>
@@ -186,11 +162,7 @@ const categories = workshopsPage
             aria-label="Instagram"
             class="workshops-cats__banner-social-link"
           >
-            <InstagramIcon
-              gradientId="all-dates-ig-grad"
-              width={32}
-              height={32}
-            />
+            <InstagramIcon gradientId="all-dates-ig-grad" width={32} height={32} />
           </a>
         </div>
       </aside>
@@ -296,8 +268,7 @@ const categories = workshopsPage
     gap: var(--space-4);
     box-sizing: border-box;
     height: calc(
-      4 * var(--text-base) * var(--line-height-base) + 0.25rem + 2 *
-        var(--space-2)
+      4 * var(--text-base) * var(--line-height-base) + 0.25rem + 2 * var(--space-2)
     );
     padding: var(--space-2) 0;
     text-decoration: none;

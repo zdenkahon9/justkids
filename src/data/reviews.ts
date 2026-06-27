@@ -35,13 +35,11 @@ type RawReview = Omit<Review, "accent" | "rating">;
 
 const accents: Review["accent"][] = ["blush", "sky", "lilac"];
 
-export const reviews: Review[] = (reviewsData as RawReview[]).map(
-  (review, index) => ({
-    ...review,
-    accent: accents[index % accents.length],
-    ...(review.isRecommended ? { rating: 5 } : {}),
-  }),
-);
+export const reviews: Review[] = (reviewsData as RawReview[]).map((review, index) => ({
+  ...review,
+  accent: accents[index % accents.length],
+  ...(review.isRecommended ? { rating: 5 } : {}),
+}));
 
 export type ReviewsPageMeta = {
   title: string;

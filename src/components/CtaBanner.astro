@@ -16,7 +16,9 @@ import { site } from "../data/site";
         <h2 id="cta-title">
           Pojďme si <span class="section-title-accent">zacvičit</span>
         </h2>
-        <p>Místa v lekcích jsou omezená. Rezervujte si svoje včas - online během minuty.</p>
+        <p>
+          Místa v lekcích jsou omezená. Rezervujte si svoje včas - online během minuty.
+        </p>
       </div>
 
       <div class="cta-banner__actions">
@@ -29,9 +31,7 @@ import { site } from "../data/site";
           Rezervovat lekci
           <span aria-hidden="true">→</span>
         </a>
-        <a href={`mailto:${site.contact.email}`} class="btn btn-ghost">
-          Napsat e-mail
-        </a>
+        <a href={`mailto:${site.contact.email}`} class="btn btn-ghost"> Napsat e-mail </a>
       </div>
     </div>
   </div>
@@ -70,7 +70,13 @@ import { site } from "../data/site";
 
   .cta-banner__inner {
     position: relative;
-    background: linear-gradient(135deg, #fff9f4 0%, #ffe1ed 40%, #ece1f7 80%, #d6ecfa 100%);
+    background: linear-gradient(
+      135deg,
+      #fff9f4 0%,
+      #ffe1ed 40%,
+      #ece1f7 80%,
+      #d6ecfa 100%
+    );
     border-radius: var(--radius-card);
     padding: clamp(2.5rem, 6vw, 4.5rem) clamp(var(--space-6), 5vw, 3.5rem);
     overflow: hidden;
@@ -96,21 +102,27 @@ import { site } from "../data/site";
   }
 
   .cta-balloon--1 {
-    width: 80px; height: 95px;
+    width: 80px;
+    height: 95px;
     background: radial-gradient(circle at 30% 30%, white, #fcc2d6);
-    top: -20px; left: 12%;
+    top: -20px;
+    left: 12%;
     animation: float-medium 6s ease-in-out infinite;
   }
   .cta-balloon--2 {
-    width: 60px; height: 72px;
+    width: 60px;
+    height: 72px;
     background: radial-gradient(circle at 30% 30%, white, #a9d4f0);
-    bottom: -15px; right: 22%;
+    bottom: -15px;
+    right: 22%;
     animation: float-slow 8s ease-in-out infinite reverse;
   }
   .cta-balloon--3 {
-    width: 50px; height: 60px;
+    width: 50px;
+    height: 60px;
     background: radial-gradient(circle at 30% 30%, white, #d4bff5);
-    top: 30%; right: 5%;
+    top: 30%;
+    right: 5%;
     animation: drift 9s ease-in-out infinite;
   }
 
