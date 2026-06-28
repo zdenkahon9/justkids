@@ -2,8 +2,12 @@
 import "../styles/global.css";
 
 import MetaHead from "../components/Meta/Head.astro";
-import { defaultSeo } from "../config/seo";
-import { locations } from "../data/locations";
+import SchemaOrg from "../components/SchemaOrg.astro";
+import {
+  createBreadcrumbSchema,
+  createLocalBusinessSchema,
+  createWebsiteSchema,
+} from "../config/schemaJson";
 import { site } from "../data/site";
 
 type Props = {
@@ -13,31 +17,16 @@ type Props = {
 
 const { title, description } = Astro.props;
 
-const ogImage = new URL(site.ogImage, site.url).toString();
-
-const localBusiness = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: site.name,
-  description: defaultSeo.metaDescription,
-  url: site.url,
-  image: ogImage,
-  telephone: site.contact.phone,
-  email: site.contact.email,
-  sameAs: [site.social.facebook, site.social.instagram],
-  address: locations.map((l) => ({
-    "@type": "PostalAddress",
-    streetAddress: l.street,
-    addressLocality: l.city,
-    postalCode: l.zip,
-    addressCountry: "CZ",
-  })),
-  areaServed: ["Zdice", "Hořovice", "Beroun", "Středočeský kraj"],
-  audience: {
-    "@type": "Audience",
-    audienceType: "rodiče s dětmi 3 měsíce - 3 roky",
-  },
-};
+const siteUrl = Astro.site ?? new URL(site.url);
+const websiteSchema = createWebsiteSchema(siteUrl);
+const localBusinessSchema = createLocalBusinessSchema(siteUrl);
+const breadcrumbSchema =
+  Astro.url.pathname === "/"
+    ? undefined
+    : createBreadcrumbSchema(siteUrl, [
+        { name: "Domů", path: "/" },
+        { name: title, path: Astro.url.pathname },
+      ]);
 ---
 
 <!doctype html>
@@ -60,12 +49,9 @@ const localBusiness = {
       href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap"
     />
 
-    {/* Schema stays here until the typed builders in issue #16. */}
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(localBusiness)}
-    />
+    <SchemaOrg schema={websiteSchema} />
+    <SchemaOrg schema={localBusinessSchema} />
+    {breadcrumbSchema && <SchemaOrg schema={breadcrumbSchema} />}
     <slot name="head" />
   </MetaHead>
 
