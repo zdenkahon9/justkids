@@ -6,6 +6,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import type { ReactNode } from "react";
 
 import styles from "./Navbar.module.css";
 
@@ -18,8 +19,8 @@ type NavbarProps = {
   links: NavLink[];
   mobileLinks?: NavLink[];
   reservationUrl: string;
-  logoSrc: string;
   brand: string;
+  children: ReactNode;
   logoHref?: string;
   /** Podstránky bez hero — plné pozadí a stín od začátku */
   variant?: "default" | "solid";
@@ -115,8 +116,8 @@ const Navbar = ({
   links,
   mobileLinks,
   reservationUrl,
-  logoSrc,
   brand,
+  children,
   logoHref = "#hero",
   variant = "default",
 }: NavbarProps) => {
@@ -259,7 +260,7 @@ const Navbar = ({
           onClick={(e) => handleMobileNav(e, logoHref)}
           aria-label={`${brand} - na začátek stránky`}
         >
-          <img src={logoSrc} alt="" width={48} height={48} className={styles.navLogo} />
+          <span className={styles.navLogo}>{children}</span>
           <span className={styles.brandText}>
             <span className={styles.brandName}>{brand}</span>
             {/* <span className={styles.brandSub}>pohybem k radosti</span> */}

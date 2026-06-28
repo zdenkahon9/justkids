@@ -29,14 +29,14 @@ pnpm preview
 
 ```
 justkids/
-├── public/                # statické soubory (favicon, obrázky, robots.txt)
-│   ├── images/            # logo a pozadí
+├── public/                # statické soubory (favicon, fonty, manifest)
 │   ├── favicon.svg
 │   └── robots.txt
 ├── src/
-│   ├── assets/            # interní obrázky pro Astro
+│   ├── assets/images/     # obrázky optimalizované přes Astro Image
 │   ├── components/        # malé znovupoužitelné komponenty
-│   │   ├── Navbar.tsx     # interaktivní (React) - sticky + mobile menu
+│   │   ├── Navbar.astro   # navigace s optimalizovaným logem
+│   │   ├── NavbarInteractive.tsx # interaktivní React menu
 │   │   ├── Hero.astro
 │   │   ├── About.astro
 │   │   ├── AgeGroups.astro
@@ -173,8 +173,8 @@ lištu (např. cookieconsent.com nebo vlastní řešení) a aktualizovat tento R
 
 ## Obrázky
 
-- Logo: `public/images/logo.png`
-- Pozadí: `public/images/pozadi.png`
+- Logo: `src/assets/images/logo.png`
+- Pozadí: `src/assets/images/pozadi.png`
 
 **❗ Pro ochranu soukromí dětí (GDPR) na webu nejsou žádné reálné fotky dětí.** Místo toho
 se používají vlastní SVG ilustrace v sekci `Gallery.astro` a portrét v `About.astro`.

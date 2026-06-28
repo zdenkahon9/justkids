@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets";
+
+import logo from "../assets/images/logo.png";
+import NavbarInteractive from "./NavbarInteractive";
+
+type NavLink = {
+  href: string;
+  label: string;
+};
+
+type Props = {
+  links: NavLink[];
+  mobileLinks?: NavLink[];
+  reservationUrl: string;
+  brand: string;
+  logoHref?: string;
+  variant?: "default" | "solid";
+};
+---
+
+<NavbarInteractive client:load {...Astro.props}>
+  <Image src={logo} alt="" width={52} densities={[2, 3]} format="webp" priority />
+</NavbarInteractive>

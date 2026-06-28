@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
+import logo from "../assets/images/logo.png";
 import { locations } from "../data/locations";
 import { site } from "../data/site";
 import FacebookIcon from "./FacebookIcon.astro";
@@ -23,7 +25,7 @@ const year = new Date().getFullYear();
   <div class="container-x footer__inner">
     <div class="footer__brand">
       <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>
-        <img src="/images/logo.png" alt="" width="56" height="56" />
+        <Image src={logo} alt="" width={56} densities={[2, 3]} format="webp" />
         <div>
           <h2 id="footer-title">{site.name}</h2>
           <span class="footer__tagline">{site.tagline}</span>

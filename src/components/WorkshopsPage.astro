@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
+import heroBalloons from "../assets/images/hero-balloons.png";
 import { site } from "../data/site";
 import { workshopIconById, workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
 import { workshopsPageMeta } from "../data/WorkshopsPage";
@@ -20,7 +22,15 @@ const pageMeta = workshopsPageMeta;
 >
   <div class="workshops-page__intro">
     <div class="workshops-page__intro-nav-bg" aria-hidden="true">
-      <div class="workshops-page__intro-photo"></div>
+      <Image
+        src={heroBalloons}
+        alt=""
+        class="workshops-page__intro-photo"
+        widths={[480, 768, 1024]}
+        sizes="100vw"
+        format="webp"
+        priority
+      />
       <div class="workshops-page__intro-veil"></div>
     </div>
     <div class="container-x workshops-page__intro-inner">
@@ -245,10 +255,9 @@ const pageMeta = workshopsPageMeta;
     right: -3%;
     top: -3svh;
     height: 106svh;
-    background-image: url("/images/hero-balloons.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 106%;
+    object-fit: cover;
+    object-position: center;
     filter: blur(5px) saturate(1.05);
     transform: scale(1.06);
     transform-origin: center top;

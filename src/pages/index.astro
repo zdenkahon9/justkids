@@ -5,7 +5,7 @@ import Camps from "../components/Camps.astro";
 import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import Locations from "../components/Locations.astro";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../components/Navbar.astro";
 import ReviewsHome from "../components/ReviewsHome.astro";
 import Rules from "../components/Rules.astro";
 import WorkshopsHome from "../components/WorkshopsHome.astro";
@@ -35,11 +35,9 @@ const mobileNavLinks = [
 
 <BaseLayout title={pageSeo.home.title} description={pageSeo.home.description}>
   <Navbar
-    client:load
     links={navLinks}
     mobileLinks={mobileNavLinks}
     reservationUrl={site.signupFormUrl}
-    logoSrc="/images/logo.png"
     brand={site.name}
   />
 

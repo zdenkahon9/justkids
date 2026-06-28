@@ -1,6 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../components/Navbar.astro";
 import WorkshopsAllDates from "../components/WorkshopsAllDates.astro";
 import WorkshopsPage from "../components/WorkshopsPage.astro";
 import { pageSeo } from "../config/seo";
@@ -36,11 +36,9 @@ const mobileNavLinks = [
   </script>
 
   <Navbar
-    client:load
     links={navLinks}
     mobileLinks={mobileNavLinks}
     reservationUrl={site.signupFormUrl}
-    logoSrc="/images/logo.png"
     brand={site.name}
     logoHref="/"
   />

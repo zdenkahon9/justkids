@@ -34,7 +34,7 @@
   --color-meadow-deep: #5fa838;
 
   /*
-   * 4th sibling accent (age card 4): continues the balloon arc in pozadi.png — sky ~204°,
+   * 4th sibling accent (age card 4): continues the balloon arc in assets/images/pozadi.png — sky ~204°,
    * lilac ~266°, blush ~330° — this sits ~348° (rose-coral toward peach), not yellow-brown.
    */
   --color-coral-deep: #d46e86;
@@ -141,7 +141,7 @@
 
 /* ---------- Base ---------- */
 html {
-  /* Fixed .nav: vertical space + logo row (see Navbar.tsx .nav / .nav.is-scrolled) */
+  /* Fixed .nav: vertical space + logo row (see Navbar.module.css .nav / .nav.is-scrolled) */
   --nav-height: calc(2.2rem + 48px);
   --nav-height-scrolled: calc(1.1rem + 40px);
   scroll-behavior: smooth;
@@ -438,9 +438,7 @@ h3 {
   width: var(--card-icon-graphic-size);
   height: var(--card-icon-graphic-size);
   flex-shrink: 0;
-  filter: drop-shadow(
-    0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
-  );
+  filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
 }
 
 /* Příjezd ze šipek WorkshopsHome — navbar hned ve scrolled stavu, bez poskoku */
@@ -459,12 +457,8 @@ html[data-workshops-home-arrival] [data-component="navbar"] img {
   transition: none;
 }
 
-html[data-workshops-home-arrival]
-  [data-component="navbar"]
-  [class*="brandName"],
-html[data-workshops-home-arrival]
-  [data-component="navbar"]
-  [class*="brandSub"] {
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandName"],
+html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandSub"] {
   text-shadow: none;
   transition: none;
 }

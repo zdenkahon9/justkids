@@ -1,7 +1,7 @@
 ---
 import AgeGroupsPage from "../components/AgeGroupsPage.astro";
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../components/Navbar.astro";
 import Schedule from "../components/Schedule.astro";
 import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
@@ -45,11 +45,9 @@ const mobileNavLinks = [
   </style>
 
   <Navbar
-    client:load
     links={navLinks}
     mobileLinks={mobileNavLinks}
     reservationUrl={site.signupFormUrl}
-    logoSrc="/images/logo.png"
     brand={site.name}
     logoHref="/"
   />

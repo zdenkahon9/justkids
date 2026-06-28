@@ -1,6 +1,6 @@
 ---
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.tsx";
+import Navbar from "../components/Navbar.astro";
 import ReviewsPage from "../components/ReviewsPage.astro";
 import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
@@ -28,11 +28,9 @@ const mobileNavLinks = [
 
 <BaseLayout title={pageSeo.reviews.title} description={pageSeo.reviews.description}>
   <Navbar
-    client:load
     links={navLinks}
     mobileLinks={mobileNavLinks}
     reservationUrl={site.signupFormUrl}
-    logoSrc="/images/logo.png"
     brand={site.name}
     logoHref="/"
   />

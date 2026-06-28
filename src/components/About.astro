@@ -1,5 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
+
+import aboutMomBaby from "../assets/images/about-mom-baby-original.png";
 ---
 
 <section id="o-mne" class="section about" aria-labelledby="about-title">
@@ -8,11 +11,12 @@ import { Icon } from "astro-icon/components";
       <div class="about__portrait-frame">
         <span class="about__portrait-glow" aria-hidden="true"></span>
         <div class="about__portrait">
-          <img
-            src="/images/about-mom-baby-original.png"
+          <Image
+            src={aboutMomBaby}
             alt="Maminka s miminkem"
-            loading="lazy"
-            decoding="async"
+            widths={[280, 420, 560]}
+            sizes="(min-width: 1024px) 440px, 280px"
+            format="webp"
           />
         </div>
       </div>

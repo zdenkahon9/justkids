@@ -1,11 +1,32 @@
 ---
+import { Image } from "astro:assets";
+
+import heroBalloons from "../assets/images/hero-balloons.png";
+import heroBoy from "../assets/images/hero-boy.png";
+import heroGym from "../assets/images/hero-gym.png";
 import { site } from "../data/site";
 ---
 
 <section id="hero" class="hero" aria-label="Úvod">
   <div class="hero__bg" aria-hidden="true">
-    <div class="hero__photo"></div>
-    <div class="hero__gym"></div>
+    <Image
+      src={heroBalloons}
+      alt=""
+      class="hero__photo"
+      widths={[480, 768, 1024]}
+      sizes="100vw"
+      format="webp"
+      priority
+    />
+    <Image
+      src={heroGym}
+      alt=""
+      class="hero__gym"
+      widths={[640, 899]}
+      sizes="(min-width: 1024px) 58vw, 0px"
+      format="webp"
+      priority
+    />
     <div class="hero__veil"></div>
   </div>
 
@@ -46,13 +67,14 @@ import { site } from "../data/site";
 
     <div class="hero__media">
       <div class="hero__figure-wrap">
-        <img
-          src="/images/hero-boy.png"
+        <Image
+          src={heroBoy}
           alt=""
           class="hero__figure"
-          width="623"
-          height="903"
-          decoding="async"
+          widths={[320, 480, 623]}
+          sizes="(min-width: 1024px) min(41vw, 419px), 0px"
+          format="webp"
+          priority
         />
       </div>
     </div>
@@ -125,10 +147,10 @@ import { site } from "../data/site";
   .hero__photo {
     position: absolute;
     inset: -3%;
-    background-image: url("/images/hero-balloons.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 106%;
+    height: 106%;
+    object-fit: cover;
+    object-position: center;
     filter: blur(5px) saturate(1.05);
     transform: scale(1.06);
     will-change: transform;
@@ -396,10 +418,9 @@ import { site } from "../data/site";
       right: 0;
       bottom: 0;
       width: 58%;
-      background-image: url("/images/hero-gym.png");
-      background-size: cover;
-      background-position: center right;
-      background-repeat: no-repeat;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
       -webkit-mask-image: linear-gradient(
         to right,
         transparent 0%,
