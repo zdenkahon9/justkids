@@ -5,14 +5,16 @@ import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
-import { envConfig } from "./env.config.ts";
+import { ENV_DEFAULTS, envConfig } from "./env.config.ts";
 
-const { SITE_URL, ENV_NAME } = loadEnv("", process.cwd(), "");
+const loadedEnv = loadEnv("", process.cwd(), "");
+const siteUrl = loadedEnv.SITE_URL || ENV_DEFAULTS.SITE_URL;
+const envName = loadedEnv.ENV_NAME || ENV_DEFAULTS.ENV_NAME;
 
 // https://astro.build/config
 export default defineConfig({
   env: envConfig,
-  site: SITE_URL ?? "https://dev.justkids.cz",
+  site: siteUrl,
   integrations: [
     react(),
     icon({
@@ -56,7 +58,7 @@ export default defineConfig({
         wordpress: ["external"],
       },
     }),
-    ENV_NAME === "production" && sitemap(),
+    envName === "production" && sitemap(),
   ],
   vite: {
     plugins: [tailwindcss()],

@@ -1,27 +1,34 @@
 import type { AstroUserConfig } from "astro";
 import { envField } from "astro/config";
 
+export const ENV_DEFAULTS = {
+  SITE_URL: "https://dev.justkids.cz",
+  ENV_NAME: "staging",
+  PUBLIC_UMAMI_SITE_ID: crypto.randomUUID(),
+  PUBLIC_UMAMI_SHARE_URL: "https://cloud.umami.is",
+} as const;
+
 export const envConfig = {
   schema: {
     SITE_URL: envField.string({
       context: "server",
       access: "public",
-      default: "http://localhost:4321",
+      default: ENV_DEFAULTS.SITE_URL,
     }),
     ENV_NAME: envField.string({
       context: "server",
       access: "public",
-      default: "staging",
+      default: ENV_DEFAULTS.ENV_NAME,
     }),
     PUBLIC_UMAMI_SITE_ID: envField.string({
       context: "client",
       access: "public",
-      default: crypto.randomUUID(),
+      default: ENV_DEFAULTS.PUBLIC_UMAMI_SITE_ID,
     }),
     PUBLIC_UMAMI_SHARE_URL: envField.string({
       context: "client",
       access: "public",
-      default: "https://cloud.umami.is",
+      default: ENV_DEFAULTS.PUBLIC_UMAMI_SHARE_URL,
     }),
   },
 } as const satisfies AstroUserConfig["env"];
