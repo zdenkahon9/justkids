@@ -2,7 +2,7 @@
 
 > Cvičení s miminky a dětmi v Hořovicích a ve Zdicích.
 
-Statický web postavený v **Astro + React + TypeScript**. Mobile-first, rychlý,
+Statický web postavený v **Astro + Preact + TypeScript**. Mobile-first, rychlý,
 SEO-friendly.
 
 ---
@@ -36,7 +36,7 @@ justkids/
 │   ├── assets/images/     # obrázky optimalizované přes Astro Image
 │   ├── components/        # malé znovupoužitelné komponenty
 │   │   ├── Navbar.astro   # navigace s optimalizovaným logem
-│   │   ├── NavbarInteractive.tsx # interaktivní React menu
+│   │   ├── NavbarInteractive.tsx # interaktivní Preact menu
 │   │   ├── Hero.astro
 │   │   ├── About.astro
 │   │   ├── AgeGroups.astro

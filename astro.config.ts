@@ -1,4 +1,4 @@
-import react from "@astrojs/react";
+import preact from "@astrojs/preact";
 import sitemap, { ChangeFreqEnum } from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
@@ -22,7 +22,7 @@ export default defineConfig({
   trailingSlash: "never",
   site: siteUrl,
   integrations: [
-    react(),
+    preact(),
     icon({
       include: {
         emojione: ["monkey-face"],

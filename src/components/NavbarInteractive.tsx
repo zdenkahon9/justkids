@@ -1,12 +1,6 @@
-import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
-import type { ReactNode } from "react";
+import { Fragment } from "preact";
+import type { ComponentChildren, TargetedMouseEvent } from "preact";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
 import styles from "./Navbar.module.css";
 
@@ -20,7 +14,7 @@ type NavbarProps = {
   mobileLinks?: NavLink[];
   reservationUrl: string;
   brand: string;
-  children: ReactNode;
+  children: ComponentChildren;
   logoHref?: string;
   /** Podstránky bez hero — plné pozadí a stín od začátku */
   variant?: "default" | "solid";
@@ -86,16 +80,15 @@ const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
   return null;
 };
 
-/** Subscribe to scroll once — shared by every Navbar instance via useSyncExternalStore */
+/** Subscribe to scroll changes while the Navbar island is mounted. */
 const subscribeScroll = (onChange: () => void) => {
   window.addEventListener("scroll", onChange, { passive: true });
   return () => window.removeEventListener("scroll", onChange);
 };
 
 /**
- * Reads the "solid navbar" condition from the browser without an SSR/hydration
- * mismatch. React renders `getServerSnapshot` first (matching the server HTML),
- * then swaps to the live client value right after hydration — no warning.
+ * Starts from the same value during SSR and hydration, then reads the live browser
+ * state after mount to avoid a hydration mismatch.
  */
 const useScrolledNav = (variant: NavbarProps["variant"]) => {
   const getSnapshot = useCallback(
@@ -107,9 +100,15 @@ const useScrolledNav = (variant: NavbarProps["variant"]) => {
     [variant],
   );
 
-  const getServerSnapshot = useCallback(() => variant === "solid", [variant]);
+  const [scrolled, setScrolled] = useState(variant === "solid");
 
-  return useSyncExternalStore(subscribeScroll, getSnapshot, getServerSnapshot);
+  useEffect(() => {
+    const updateScrolled = () => setScrolled(getSnapshot());
+    updateScrolled();
+    return subscribeScroll(updateScrolled);
+  }, [getSnapshot]);
+
+  return scrolled;
 };
 
 const Navbar = ({
@@ -199,7 +198,7 @@ const Navbar = ({
 
   /** Mobile menu — same-page # anchors only (unchanged from original) */
   const handleMobileNav = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    (e: TargetedMouseEvent<HTMLAnchorElement>, href: string) => {
       if (!href.startsWith("#")) return;
       e.preventDefault();
       const menuWasOpen = openRef.current;
@@ -212,7 +211,7 @@ const Navbar = ({
   /** Desktop nav + dropdown submenu — page links, /# anchors, dropdown lock */
   const handleDesktopNav = useCallback(
     (
-      e: React.MouseEvent<HTMLAnchorElement>,
+      e: TargetedMouseEvent<HTMLAnchorElement>,
       href: string,
       options?: {
         closeDropdownAfterClick?: boolean;
