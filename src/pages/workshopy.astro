@@ -3,13 +3,9 @@ import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import WorkshopsAllDates from "../components/WorkshopsAllDates.astro";
 import WorkshopsPage from "../components/WorkshopsPage.astro";
+import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
-import { workshopsHomeMeta } from "../data/WorkshopsHome";
-import { workshopsPageMeta } from "../data/WorkshopsPage";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const pageTitle = `${workshopsHomeMeta.title} ${workshopsHomeMeta.titleAccent} | ${site.name}`;
-const pageDescription = workshopsPageMeta.pageDescription;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -31,7 +27,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageSeo.workshops.title} description={pageSeo.workshops.description}>
   <script is:inline define:vars={{ scrollKey: "workshops-home-scroll" }}>
     if (sessionStorage.getItem(scrollKey)) {
       document.documentElement.dataset.workshopsHomeArrival = "true";

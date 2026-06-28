@@ -1,15 +1,20 @@
 import react from "@astrojs/react";
-import sitemap from "@astrojs/sitemap";
+import sitemap, { ChangeFreqEnum } from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 
 import { ENV_DEFAULTS, envConfig } from "./env.config.ts";
+import { normalizePagePath, pageSeoEntries } from "./src/config/seo.ts";
 
 const loadedEnv = loadEnv("", process.cwd(), "");
 const siteUrl = loadedEnv.SITE_URL || ENV_DEFAULTS.SITE_URL;
 const envName = loadedEnv.ENV_NAME || ENV_DEFAULTS.ENV_NAME;
+const sitemapChangeFrequency = {
+  weekly: ChangeFreqEnum.WEEKLY,
+  monthly: ChangeFreqEnum.MONTHLY,
+} as const;
 
 // https://astro.build/config
 export default defineConfig({
@@ -58,7 +63,23 @@ export default defineConfig({
         wordpress: ["external"],
       },
     }),
-    envName === "production" && sitemap(),
+    envName === "production" &&
+      sitemap({
+        filter: (page) =>
+          pageSeoEntries.some(({ path }) => path === normalizePagePath(page)),
+        serialize(item) {
+          const page = pageSeoEntries.find(
+            ({ path }) => path === normalizePagePath(item.url),
+          );
+          if (!page) return undefined;
+
+          return {
+            ...item,
+            changefreq: sitemapChangeFrequency[page.sitemap.changefreq],
+            priority: page.sitemap.priority,
+          };
+        },
+      }),
   ],
   vite: {
     plugins: [tailwindcss()],

@@ -44,12 +44,9 @@ export const reviews: Review[] = (reviewsData as RawReview[]).map((review, index
 export type ReviewsPageMeta = {
   title: string;
   titleAccent: string;
-  pageDescription: string;
 };
 
 export const reviewsPageMeta: ReviewsPageMeta = {
   title: "Recenze",
   titleAccent: "od rodičů",
-  pageDescription:
-    "Skutečné zkušenosti rodičů, kteří s námi absolvovali lekce cvičení a plavání.",
 };

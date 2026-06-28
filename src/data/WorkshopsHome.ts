@@ -24,7 +24,7 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   title: "Workshopy",
   titleAccent: "pro rodiče",
   subtitle:
-    "Praktické workhopy pro rodiče zaměřené na první pomoc u dětí, handling miminek a psychomotorický vývoj.",
+    "Praktické workhopy nejen pro rodiče zaměřené na první pomoc u dětí, handling miminek a psychomotorický vývoj.",
   cardNoteLead: "Dopřejte svému miminku ten",
   cardNoteHighlight: "nejlepší start",
   cardNoteTail: "do života.",

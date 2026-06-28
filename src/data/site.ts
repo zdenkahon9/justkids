@@ -6,8 +6,6 @@
 export const site = {
   name: "JustKids",
   tagline: "pohybem k radosti",
-  description:
-    "Cvičení pro miminka a děti od 3 měsíců do 9 let. Podporujeme zdravý pohybový vývoj dětí hravou formou, bez stresu a ve vlastním tempu. Těšíme se na vás ve Zdicích, Hořovicích a Broumech.",
   url: "https://justkids.cz",
   ogImage: "/images/logo.png",
 

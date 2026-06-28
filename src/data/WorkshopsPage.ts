@@ -3,8 +3,6 @@ import { workshops, type Workshop } from "./WorkshopsHome";
 export type WorkshopsPageMeta = {
   /** Id sekce — kotva pro odkaz `/#workshopy` i scroll-margin */
   sectionId: string;
-  /** Meta description pro <head> detailní stránky */
-  pageDescription: string;
   /** Podnadpis v intro `.section-subtitle` na detailní stránce */
   subtitle: string;
   /** Popisek nad cenou v `.workshop__price-label` */
@@ -29,8 +27,6 @@ export type WorkshopsPageMeta = {
 
 export const workshopsPageMeta: WorkshopsPageMeta = {
   sectionId: "workshopy",
-  pageDescription:
-    "Praktické workshopy pro rodiče – první pomoc u dětí, handling a psychomotorický vývoj miminek. Dopřejte svému dítěti ten nejlepší start do života.",
   subtitle:
     "Získejte jistotu v péči o své miminko.\nPraktické informace a dovednosti, které využijete v každodenní péči o své miminko.",
   priceLabel: "Cena workshopu",

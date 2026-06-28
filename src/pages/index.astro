@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar.tsx";
 import ReviewsHome from "../components/ReviewsHome.astro";
 import Rules from "../components/Rules.astro";
 import WorkshopsHome from "../components/WorkshopsHome.astro";
+import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -32,7 +33,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout>
+<BaseLayout title={pageSeo.home.title} description={pageSeo.home.description}>
   <Navbar
     client:load
     links={navLinks}

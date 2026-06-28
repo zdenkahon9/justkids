@@ -3,12 +3,9 @@ import AgeGroupsPage from "../components/AgeGroupsPage.astro";
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import Schedule from "../components/Schedule.astro";
-import { ageGroupsPageMeta } from "../data/ageGroupsPage";
+import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const pageTitle = `${ageGroupsPageMeta.eyebrow} | ${site.name}`;
-const pageDescription = ageGroupsPageMeta.pageDescription;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -30,7 +27,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageSeo.ageGroups.title} description={pageSeo.ageGroups.description}>
   <script slot="head" is:inline define:vars={{ scrollKey: "age-home-scroll" }}>
     if (
       window.matchMedia("(min-width: 1024px)").matches &&

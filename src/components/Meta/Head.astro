@@ -1,0 +1,39 @@
+---
+import { ENV } from "../../config/env";
+import { defaultSeo } from "../../config/seo";
+import DisallowRobots from "../DisallowRobots.astro";
+import CanonicalLink from "./CanonicalLink.astro";
+import Favicon from "./Favicon.astro";
+import Meta from "./Meta.astro";
+import OpenGraph from "./OpenGraph.astro";
+
+type Props = {
+  title: string;
+  description?: string;
+  ogImagePath?: string;
+  ogType?: "website" | "article";
+};
+
+const {
+  title,
+  description = defaultSeo.metaDescription,
+  ogImagePath = defaultSeo.ogImage,
+  ogType = "website",
+} = Astro.props;
+const pageTitle = defaultSeo.pageTitle(title);
+---
+
+<head>
+  <title>{pageTitle}</title>
+  <Meta description={description} />
+  {!ENV.IS_PRODUCTION && <DisallowRobots />}
+  <Favicon />
+  <CanonicalLink />
+  <OpenGraph
+    title={pageTitle}
+    description={description}
+    imagePath={ogImagePath}
+    type={ogType}
+  />
+  <slot />
+</head>

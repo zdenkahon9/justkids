@@ -18,7 +18,6 @@ export type AgeGroupsPageMeta = {
   title: string;
   titleAccent: string;
   subtitle: string;
-  pageDescription: string;
 };
 
 export const ageGroupsPageMeta: AgeGroupsPageMeta = {
@@ -28,8 +27,6 @@ export const ageGroupsPageMeta: AgeGroupsPageMeta = {
   titleAccent: "to pravé cvičení",
   subtitle:
     "Každá věková skupina má vlastní náplň – od jemné stimulace pro miminka po budování radosti ze cvičení u školních dětí. Vše v klidu a v tempu, které dítěti vyhovuje.",
-  pageDescription:
-    "Přehled věkových skupin JustKids – od miminek 3–6 měsíců po batolata 2–3 roky. Každá kategorie má vlastní náplň cvičení.",
 };
 
 /** Karty — cvičení s rodiči (Baby, Mini, Move, Active) */

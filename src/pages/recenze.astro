@@ -2,12 +2,9 @@
 import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.tsx";
 import ReviewsPage from "../components/ReviewsPage.astro";
-import { reviewsPageMeta } from "../data/reviews";
+import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const pageTitle = `${reviewsPageMeta.title} ${reviewsPageMeta.titleAccent} | ${site.name}`;
-const pageDescription = reviewsPageMeta.pageDescription;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -29,7 +26,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageSeo.reviews.title} description={pageSeo.reviews.description}>
   <Navbar
     client:load
     links={navLinks}

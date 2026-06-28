@@ -1,28 +1,25 @@
 ---
 import "../styles/global.css";
 
-import CanonicalLink from "../components/CanonicalLink.astro";
-import DisallowRobots from "../components/DisallowRobots.astro";
-import { ENV } from "../config/env";
+import MetaHead from "../components/Meta/Head.astro";
+import { defaultSeo } from "../config/seo";
 import { locations } from "../data/locations";
 import { site } from "../data/site";
 
 type Props = {
-  title?: string;
+  title: string;
   description?: string;
 };
 
-const { title = `${site.name} - ${site.tagline}`, description = site.description } =
-  Astro.props;
+const { title, description } = Astro.props;
 
 const ogImage = new URL(site.ogImage, site.url).toString();
-const pageUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, "");
 
 const localBusiness = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: site.name,
-  description: site.description,
+  description: defaultSeo.metaDescription,
   url: site.url,
   image: ogImage,
   telephone: site.contact.phone,
@@ -45,45 +42,8 @@ const localBusiness = {
 
 <!doctype html>
 <html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#FF4FA3" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="builtAt" content={`${new Date()}`} />
-    {!ENV.IS_PRODUCTION && <DisallowRobots />}
-
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <CanonicalLink />
-
-    {/* Favicon*/}
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Just Kids" />
-    <link rel="manifest" href="/site.webmanifest" />
-
-    {/* Open Graph */}
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="cs_CZ" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={pageUrl} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:site_name" content={site.name} />
-
-    {/* Twitter */}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-
-    {/* Fonts - preconnect for performance */}
+  <MetaHead title={title} description={description}>
+    {/* Fonts stay here until the self-hosting work in issue #19. */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -100,14 +60,14 @@ const localBusiness = {
       href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap"
     />
 
-    {/* Schema.org LocalBusiness */}
+    {/* Schema stays here until the typed builders in issue #16. */}
     <script
       is:inline
       type="application/ld+json"
       set:html={JSON.stringify(localBusiness)}
     />
     <slot name="head" />
-  </head>
+  </MetaHead>
 
   <body>
     <a href="#hero" class="skip-link">Přeskočit na obsah</a>

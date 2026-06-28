@@ -138,11 +138,14 @@ V `src/data/ageGroups.ts`. Skupina označená `optional: true` zobrazí badge "v
 
 ## SEO
 
-- **Meta tagy** (title, description, OG, Twitter Card) v `src/layouts/BaseLayout.astro`
+- **SEO metadata stránek** (title, description a sitemap nastavení) v `src/config/seo.ts`
+- **Meta tagy** (description, OG, Twitter Card, favicon a canonical) skládá
+  `src/components/Meta/Head.astro`
 - **Schema.org LocalBusiness** se generuje automaticky z `site.ts` a `locations.ts`
-- **Sitemap** se generuje při buildu (`@astrojs/sitemap`)
-- **robots.txt** je v `public/robots.txt`
-- **Canonical URL** pro jistotu nastavena v base layoutu
+- **Sitemap** se generuje pouze pro produkční build z rout definovaných v
+  `src/config/seo.ts`
+- **robots.txt** se generuje podle prostředí v `src/pages/robots.txt.ts`
+- **llms.txt** se generuje pouze v produkci a používá stejné popisy jako meta tagy
 
 Po nasazení nezapomeň nastavit `SITE_URL` v prostředí podle `.env.example`.
 
