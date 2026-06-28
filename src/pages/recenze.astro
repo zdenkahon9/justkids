@@ -8,7 +8,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${reviewsPageMeta.title} ${reviewsPageMeta.titleAccent} | ${site.name}`;
 const pageDescription = reviewsPageMeta.pageDescription;
-const canonical = `${site.url}/recenze`;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -30,7 +29,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <Navbar
     client:load
     links={navLinks}

@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 
+import CanonicalLink from "../components/CanonicalLink.astro";
 import DisallowRobots from "../components/DisallowRobots.astro";
 import { ENV } from "../config/env";
 import { locations } from "../data/locations";
@@ -9,16 +10,13 @@ import { site } from "../data/site";
 type Props = {
   title?: string;
   description?: string;
-  canonical?: string;
 };
 
-const {
-  title = `${site.name} - ${site.tagline}`,
-  description = site.description,
-  canonical = site.url,
-} = Astro.props;
+const { title = `${site.name} - ${site.tagline}`, description = site.description } =
+  Astro.props;
 
 const ogImage = new URL(site.ogImage, site.url).toString();
+const pageUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, "");
 
 const localBusiness = {
   "@context": "https://schema.org",
@@ -60,7 +58,7 @@ const localBusiness = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <CanonicalLink />
 
     {/* Favicon*/}
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -75,7 +73,7 @@ const localBusiness = {
     <meta property="og:locale" content="cs_CZ" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content={site.name} />
 

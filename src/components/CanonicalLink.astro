@@ -1,0 +1,6 @@
+---
+// Astro.site appends a trailing slash even with trailingSlash: "never"; strip it.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, "");
+---
+
+<link rel="canonical" href={canonicalUrl} />

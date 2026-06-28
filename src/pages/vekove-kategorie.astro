@@ -9,7 +9,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${ageGroupsPageMeta.eyebrow} | ${site.name}`;
 const pageDescription = ageGroupsPageMeta.pageDescription;
-const canonical = `${site.url}/vekove-kategorie`;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -31,7 +30,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <script slot="head" is:inline define:vars={{ scrollKey: "age-home-scroll" }}>
     if (
       window.matchMedia("(min-width: 1024px)").matches &&

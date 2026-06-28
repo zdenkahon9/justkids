@@ -10,7 +10,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle = `${workshopsHomeMeta.title} ${workshopsHomeMeta.titleAccent} | ${site.name}`;
 const pageDescription = workshopsPageMeta.pageDescription;
-const canonical = `${site.url}/workshopy`;
 
 const navLinks = [
   { href: "/#o-mne", label: "O mně" },
@@ -32,7 +31,7 @@ const mobileNavLinks = [
 ];
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} canonical={canonical}>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <script is:inline define:vars={{ scrollKey: "workshops-home-scroll" }}>
     if (sessionStorage.getItem(scrollKey)) {
       document.documentElement.dataset.workshopsHomeArrival = "true";
