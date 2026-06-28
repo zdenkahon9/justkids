@@ -50,10 +50,6 @@ export const createLocalBusinessSchema = (siteUrl: URL) =>
       addressCountry: "CZ",
     })),
     areaServed: ["Zdice", "Hořovice", "Beroun", "Středočeský kraj"],
-    audience: {
-      "@type": "Audience",
-      audienceType: "rodiče s dětmi 3 měsíce - 3 roky",
-    },
   }) as const;
 
 export const createBreadcrumbSchema = (siteUrl: URL, crumbs: readonly Crumb[]) =>
