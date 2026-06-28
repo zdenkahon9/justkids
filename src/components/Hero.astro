@@ -11,7 +11,18 @@ import { site } from "../data/site";
 
   <div class="container-x hero__inner">
     <div class="hero__copy">
-      <h1 class="hero__title">Pohybem<br /> <span>k radosti</span></h1>
+      <h1 class="hero__title">
+        Pohybem<br />
+        <span class="hero__title-accent"
+          >k radosti<span class="hero__heart-anchor" aria-hidden="true"
+            ><svg class="hero__heart" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z"
+              ></path>
+            </svg></span
+          ></span
+        >
+      </h1>
       <p class="hero__lead">
         Pro miminka a děti od 3 měsíců do 9 let. Společně objevujeme svět pohybu, smyslů a
         radosti - bez stresu, ve vlastním tempu. Těšíme se na vás ve
@@ -221,8 +232,8 @@ import { site } from "../data/site";
     padding-left: var(--space-4);
     font-family: var(--font-hero);
     font-weight: 400;
-    font-size: clamp(3.4rem, 13.5cqi, 5.3rem);
-    line-height: 1.15;
+    font-size: clamp(3.4rem, 14.5cqi, 5.3rem);
+    line-height: 1.01;
     letter-spacing: -0.015em;
     color: #f5f5f5;
     text-shadow:
@@ -233,6 +244,48 @@ import { site } from "../data/site";
   .hero__title span {
     display: inline-block;
     margin-left: 58px;
+  }
+
+  .hero__title-accent {
+    position: relative;
+  }
+
+  .hero__title-accent::after {
+    content: "";
+    position: absolute;
+    left: -0.03em;
+    right: -0.06em;
+    bottom: -0.06em;
+    height: 0.09em;
+    background-color: var(--color-blush-deep);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M1 9C48 1 151 0 199 7C148 5 50 6 1 11Z'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'%3E%3Cpath d='M1 9C48 1 151 0 199 7C148 5 50 6 1 11Z'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+    pointer-events: none;
+  }
+
+  .hero__title .hero__heart-anchor {
+    position: relative;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0;
+  }
+
+  .hero__heart {
+    position: absolute;
+    left: 0.2em;
+    bottom: 1.1em;
+    width: 0.48em;
+    height: 0.48em;
+    overflow: visible;
+    color: var(--color-blush-deep);
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform: rotate(8deg);
   }
 
   .hero__lead {
@@ -393,12 +446,12 @@ import { site } from "../data/site";
     .hero__title {
       margin: 0 0 var(--space-6);
       padding-left: 0;
-      line-height: 1.08;
+      line-height: 1.01;
     }
 
     .hero__title span {
       display: inline-block;
-      margin-left: 68px;
+      margin-left: 38px;
     }
 
     .hero__lead {

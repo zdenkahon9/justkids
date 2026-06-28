@@ -19,6 +19,7 @@ const sitemapChangeFrequency = {
 // https://astro.build/config
 export default defineConfig({
   env: envConfig,
+  trailingSlash: "never",
   site: siteUrl,
   integrations: [
     react(),

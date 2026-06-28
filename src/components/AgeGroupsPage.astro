@@ -35,16 +35,16 @@ const agePageCardThemesWithParents = [
     soft: cardAccentSoft("sky-deep"),
   },
   {
-    deep: cardAccentDeep("cream"),
-    soft: "color-mix(in srgb, var(--color-blush-deep) 7%, var(--color-cream-200) 93%)",
+    deep: "var(--color-meadow-deep)",
+    soft: "var(--color-meadow-soft)",
   },
 ] as const;
 
 /** Accent karet — cvičení bez rodičů (stejné pořadí jako s rodiči: blush → lilac → …) */
 const agePageCardThemesWithoutParents = [
   {
-    deep: cardAccentDeep("blush-deep"),
-    soft: cardAccentSoft("blush-deep"),
+    deep: "var(--color-apricot-deep)",
+    soft: "var(--color-apricot-soft)",
   },
   {
     deep: cardAccentDeep("lilac-deep"),
@@ -431,7 +431,7 @@ const agePageCardThemesWithoutParents = [
   }
 
   .age-page__pill-half--without-parents {
-    color: var(--color-sky-deep);
+    color: var(--color-accent);
     --accent-soft: var(--color-sky-soft);
     --age-page-pill-scroll-offset: var(--age-page-anchor-offset-groups);
   }

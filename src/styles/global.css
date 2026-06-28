@@ -4,18 +4,18 @@
 @theme {
   /* Soft pastel base */
   --color-cream: #fff9f4;
-  --color-cream-50: #fefcfa;
   --color-cream-100: #fdf6ef;
   --color-cream-200: #f7ecdf;
 
   /* Pastel apricot / peach */
   --color-apricot-soft: #fff0e6;
   --color-apricot-mid: #ffe9d6;
+  --color-apricot-deep: #e8943a;
 
   /* Pastel blues (from balloons) */
   --color-sky-soft: #d6ecfa;
   --color-sky-mid: #a9d4f0;
-  --color-sky-deep: #5ba9dd;
+  --color-sky-deep: #5497c7;
 
   /* Pastel pinks */
   --color-blush-soft: #ffe1ed;
@@ -26,7 +26,11 @@
   /* Pastel lavenders */
   --color-lilac-soft: #ece1f7;
   --color-lilac-mid: #d4bff5;
-  --color-lilac-deep: #b58be0;
+  --color-lilac-deep: #9a6fc4;
+
+  /* Pastel greens (meadow — variant A) */
+  --color-meadow-soft: #dff0d0;
+  --color-meadow-deep: #5fa838;
 
   /*
    * 4th sibling accent (age card 4): continues the balloon arc in pozadi.png — sky ~204°,
@@ -433,7 +437,9 @@ h3 {
   width: var(--card-icon-graphic-size);
   height: var(--card-icon-graphic-size);
   flex-shrink: 0;
-  filter: drop-shadow(0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent));
+  filter: drop-shadow(
+    0 3px 10px color-mix(in srgb, var(--accent) 35%, transparent)
+  );
 }
 
 /* Příjezd ze šipek WorkshopsHome — navbar hned ve scrolled stavu, bez poskoku */
@@ -452,8 +458,12 @@ html[data-workshops-home-arrival] [data-component="navbar"] img {
   transition: none;
 }
 
-html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandName"],
-html[data-workshops-home-arrival] [data-component="navbar"] [class*="brandSub"] {
+html[data-workshops-home-arrival]
+  [data-component="navbar"]
+  [class*="brandName"],
+html[data-workshops-home-arrival]
+  [data-component="navbar"]
+  [class*="brandSub"] {
   text-shadow: none;
   transition: none;
 }

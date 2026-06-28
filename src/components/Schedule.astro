@@ -55,6 +55,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
                 data-location={location.id}
                 data-accent={cardAccentDeep(location.accent)}
                 data-accent-soft={scheduleAccentSoftVar(location.accentSoft)}
+                style={`--accent: ${cardAccentDeep(location.accent)}; --accent-soft: ${scheduleAccentSoftVar(location.accentSoft)}`}
               >
                 {location.label}
               </button>
@@ -170,24 +171,8 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   .schedule__pill-third.is-active {
     font-weight: 600;
-  }
-
-  .schedule__pill-third--zdice.is-active,
-  .schedule__pill-third--horovice.is-active,
-  .schedule__pill-third--broumy.is-active {
     background: var(--accent-soft);
-  }
-
-  .schedule__pill-third--zdice.is-active {
-    color: var(--color-blush-deep);
-  }
-
-  .schedule__pill-third--horovice.is-active {
-    color: var(--color-lilac-deep);
-  }
-
-  .schedule__pill-third--broumy.is-active {
-    color: var(--color-sky-deep);
+    color: var(--accent);
   }
 
   .schedule__pill-third:not(.is-active):hover,
@@ -243,18 +228,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     line-height: var(--line-height-base);
     text-align: center;
     background: var(--accent-soft);
-  }
-
-  .schedule__card-tab--zdice {
-    color: var(--color-blush-deep);
-  }
-
-  .schedule__card-tab--horovice {
-    color: var(--color-lilac-deep);
-  }
-
-  .schedule__card-tab--broumy {
-    color: var(--color-sky-deep);
+    color: var(--accent);
   }
 
   .schedule__grid--desktop .schedule__card > .age-page__rule {
