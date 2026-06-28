@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { workshopIconById, workshops, workshopsHomeMeta } from "../data/WorkshopsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -32,7 +32,11 @@ const meta = workshopsHomeMeta;
             <p class="workshops-home__note">
               <span class="workshops-home__note-inner">
                 <span class="workshops-home__note-icon-ring" aria-hidden="true">
-                  <Icon name="twemoji:pink-heart" class="workshops-home__note-icon" />
+                  <Icon
+                    is:inline
+                    name="twemoji:pink-heart"
+                    class="workshops-home__note-icon"
+                  />
                 </span>
                 <span class="workshops-home__note-text">
                   {meta.cardNoteLead}{" "}
@@ -65,7 +69,10 @@ const meta = workshopsHomeMeta;
                     <div class="workshops-home__topic-row">
                       <span class="workshops-home__topic-icon" aria-hidden="true">
                         <Icon
-                          name={workshopIconById[w.id] ?? "streamline:health-care-2"}
+                          is:inline
+                          name={
+                            workshopIconById[w.id] ?? "streamline-sharp:health-care-2"
+                          }
                           class="workshops-home__topic-icon-graphic"
                         />
                       </span>
@@ -96,6 +103,7 @@ const meta = workshopsHomeMeta;
                         aria-label={`Přejít na workshop ${w.title}`}
                       >
                         <Icon
+                          is:inline
                           name="iconamoon:arrow-right-2-light"
                           class="workshops-home__arrow-graphic"
                         />
@@ -108,6 +116,7 @@ const meta = workshopsHomeMeta;
             <p class="workshops-home__info">
               <span class="workshops-home__info-inner">
                 <Icon
+                  is:inline
                   name="fluent:info-24-regular"
                   class="workshops-home__info-icon"
                   aria-hidden="true"

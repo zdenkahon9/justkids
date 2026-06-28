@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 ---
 
 <section id="o-mne" class="section about" aria-labelledby="about-title">
@@ -26,7 +26,7 @@ import Icon from "astro-iconify";
 
       <div class="about__divider">
         <span aria-hidden="true">
-          <Icon name="twemoji:pink-heart" class="about__divider-icon" />
+          <Icon is:inline name="twemoji:pink-heart" class="about__divider-icon" />
         </span>
       </div>
 

@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { formatScheduleActivities, type ScheduleLocation } from "../data/schedule";
 
@@ -48,7 +48,7 @@ const { location } = Astro.props;
 }
 
 <div class="schedule__venue">
-  <Icon name="ph:map-pin" class="schedule__venue-icon" aria-hidden="true" />
+  <Icon is:inline name="ph:map-pin" class="schedule__venue-icon" aria-hidden="true" />
   <div class="schedule__venue-text">
     <p class="schedule__venue-name">
       <a

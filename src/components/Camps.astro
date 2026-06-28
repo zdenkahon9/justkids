@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { campFeatureIcons, camps, campsMeta } from "../data/camps";
 import { site } from "../data/site";
@@ -27,7 +27,12 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
           >
             <div class="camp__body">
               <p class="camp__location-badge">
-                <Icon name="ph:map-pin" class="camp__location-icon" aria-hidden="true" />
+                <Icon
+                  is:inline
+                  name="ph:map-pin"
+                  class="camp__location-icon"
+                  aria-hidden="true"
+                />
                 {c.city}
               </p>
               <h3>{c.title}</h3>
@@ -37,7 +42,11 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                     class="camp__icon-ring"
                     style={`--accent: ${item.accentDeep}; --accent-soft: ${item.accentSoft};`}
                   >
-                    <Icon name={item.icon} class="camp__icon-graphic card-icon-graphic" />
+                    <Icon
+                      is:inline
+                      name={item.icon}
+                      class="camp__icon-graphic card-icon-graphic"
+                    />
                   </span>
                 ))}
               </div>
@@ -54,6 +63,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
               <div class="camp__meta">
                 <p class="camp__meta-row">
                   <Icon
+                    is:inline
                     name="lineicons:calendar-days"
                     class="camp__meta-icon"
                     aria-hidden="true"
@@ -61,11 +71,17 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                   {c.dateRange}
                 </p>
                 <p class="camp__meta-row">
-                  <Icon name="ph:clock" class="camp__meta-icon" aria-hidden="true" />
+                  <Icon
+                    is:inline
+                    name="ph:clock"
+                    class="camp__meta-icon"
+                    aria-hidden="true"
+                  />
                   {c.time}
                 </p>
                 <p class="camp__meta-row camp__meta-row--venue">
                   <Icon
+                    is:inline
                     name="fluent:home-heart-24-regular"
                     class="camp__meta-icon"
                     aria-hidden="true"
@@ -79,6 +95,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                 </p>
                 <p class="camp__meta-row camp__meta-row--audience">
                   <Icon
+                    is:inline
                     name="fluent:people-24-regular"
                     class="camp__meta-icon"
                     aria-hidden="true"

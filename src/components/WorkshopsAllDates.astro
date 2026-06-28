@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { site } from "../data/site";
 import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
@@ -135,6 +135,7 @@ const categories = workshopsPage
       <aside class="workshops-cats__banner">
         <span class="workshops-cats__banner-icon" aria-hidden="true">
           <Icon
+            is:inline
             name="lineicons:calendar-days"
             class="workshops-cats__banner-icon-graphic"
           />

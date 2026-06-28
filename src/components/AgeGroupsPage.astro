@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { ageGroupsHomeCards } from "../data/ageGroupsHome";
 import {
@@ -93,6 +93,7 @@ const agePageCardThemesWithoutParents = [
         <a href={`#${scheduleMeta.sectionId}`} class="age-page__pill-schedule">
           <span class="age-page__pill-schedule-icon" aria-hidden="true">
             <Icon
+              is:inline
               name="lineicons:calendar-days"
               class="age-page__pill-schedule-graphic"
             />
@@ -109,6 +110,7 @@ const agePageCardThemesWithoutParents = [
     >
       <span class="age-page__group-heading-icon" aria-hidden="true">
         <Icon
+          is:inline
           name={agePageWithParentsSection.icon}
           class="age-page__group-heading-graphic"
         />
@@ -140,7 +142,7 @@ const agePageCardThemesWithoutParents = [
                       <span class="age-page__age">{g.range}</span>
                       <div class="age-page__illustration" aria-hidden="true">
                         <span class="age-page__icon-ring">
-                          <Icon name={g.icon} class="age-page__icon-graphic" />
+                          <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
                         </span>
                       </div>
                     </div>
@@ -165,6 +167,7 @@ const agePageCardThemesWithoutParents = [
     >
       <span class="age-page__group-heading-icon" aria-hidden="true">
         <Icon
+          is:inline
           name={agePageWithoutParentsSection.icon}
           class="age-page__group-heading-graphic"
         />
@@ -196,7 +199,7 @@ const agePageCardThemesWithoutParents = [
                       <span class="age-page__age">{g.range}</span>
                       <div class="age-page__illustration" aria-hidden="true">
                         <span class="age-page__icon-ring">
-                          <Icon name={g.icon} class="age-page__icon-graphic" />
+                          <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
                         </span>
                       </div>
                     </div>

@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { reviews } from "../data/reviews";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -52,6 +52,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
             <div class="review--cta__illustration" aria-hidden="true">
               <span class="review--cta__icon-ring">
                 <Icon
+                  is:inline
                   name="fluent:chat-multiple-20-regular"
                   class="review--cta__icon-graphic"
                 />

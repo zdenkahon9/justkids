@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { rules } from "../data/rules";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -48,6 +48,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
                       </svg>
                     ) : (
                       <Icon
+                        is:inline
                         name={rule.icon}
                         class={`rules__icon-graphic${rule.icon === "material-symbols-light:handshake-outline-rounded" ? " rules__icon-graphic--bold" : ""}${rule.icon === "fluent:hand-open-heart-20-regular" ? " rules__icon-graphic--lg" : ""}`}
                       />

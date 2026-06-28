@@ -11,5 +11,6 @@ export default {
     ],
     project: ["src/**/*"],
   },
-  ignoreDependencies: [],
+  // Astro Icon discovers installed collections dynamically from package.json.
+  ignoreDependencies: ["^@iconify-json/"],
 } satisfies KnipConfig;

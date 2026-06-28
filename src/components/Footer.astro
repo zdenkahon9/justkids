@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { locations } from "../data/locations";
 import { site } from "../data/site";
@@ -65,12 +65,17 @@ const year = new Date().getFullYear();
         <li class="footer__instructor">{site.contact.instructorName}</li>
 
         <li class="footer__phone">
-          <Icon name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
+          <Icon is:inline name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
           <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>{site.contact.phone}</a
           >
         </li>
         <li class="footer__email">
-          <Icon name="ph:envelope-simple" class="footer__email-icon" aria-hidden="true" />
+          <Icon
+            is:inline
+            name="ph:envelope-simple"
+            class="footer__email-icon"
+            aria-hidden="true"
+          />
           <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
         </li>
       </ul>
@@ -86,6 +91,7 @@ const year = new Date().getFullYear();
                 <span class="footer__location-title">
                   <strong>{l.name}</strong>
                   <Icon
+                    is:inline
                     name="wordpress:external"
                     class="footer__location-external"
                     aria-hidden="true"

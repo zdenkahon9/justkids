@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import { ageGroupsHomeCards, ageGroupsHomeMeta } from "../data/ageGroupsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
@@ -49,7 +49,7 @@ const meta = ageGroupsHomeMeta;
                     <span class="age-home__age">{card.ageRange}</span>
                     <div class="age-home__illustration" aria-hidden="true">
                       <span class="age-home__icon-ring">
-                        <Icon name={card.icon} class="age-home__icon-graphic" />
+                        <Icon is:inline name={card.icon} class="age-home__icon-graphic" />
                       </span>
                     </div>
                   </div>

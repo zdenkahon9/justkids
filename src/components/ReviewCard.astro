@@ -1,5 +1,5 @@
 ---
-import Icon from "astro-iconify";
+import { Icon } from "astro-icon/components";
 
 import type { Review } from "../data/reviews";
 import { splitReviewText } from "../utils/splitReviewText";
@@ -50,7 +50,7 @@ const {
     }
 
     <span class="review__quote" aria-hidden="true">
-      <Icon name="raphael:quote" class="review__quote-icon" />
+      <Icon is:inline name="raphael:quote" class="review__quote-icon" />
     </span>
 
     <blockquote class:list={["review__text", { "review__text--clamp": clamp }]}>
