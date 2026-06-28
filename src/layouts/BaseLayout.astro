@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 
+import DisallowRobots from "../components/DisallowRobots.astro";
+import { ENV } from "../config/env";
 import { locations } from "../data/locations";
 import { site } from "../data/site";
 
@@ -54,6 +56,7 @@ const localBusiness = {
     <meta name="theme-color" content="#FF4FA3" />
     <meta name="generator" content={Astro.generator} />
     <meta name="builtAt" content={`${new Date()}`} />
+    {!ENV.IS_PRODUCTION && <DisallowRobots />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
