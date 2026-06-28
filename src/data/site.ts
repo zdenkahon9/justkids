@@ -7,12 +7,12 @@ export const site = {
   name: "JustKids",
   tagline: "pohybem k radosti",
   description:
-    "Cvičení pro miminka a děti od 3 měsíců do 3 let v Hořovicích a ve Zdicích. Hravě, klidně, s láskou. Rezervujte si lekci online.",
+    "Cvičení pro miminka a děti od 3 měsíců do 9 let. Podporujeme zdravý pohybový vývoj dětí hravou formou, bez stresu a ve vlastním tempu. Těšíme se na vás ve Zdicích, Hořovicích a Broumech.",
   url: "https://justkids.cz",
   ogImage: "/images/logo.png",
 
   // ⚠️ NAHRAĎ tímto odkazem na rezervační systém (Reservio nebo Reservanto), až bude vybrán
-  reservationUrl: "https://www.reservio.com/",
+  // reservationUrl: "https://www.reservio.com/",
 
   // Odkaz na přihlašovací Google formulář (tlačítka „Rezervace“ v navigaci)
   signupFormUrl:

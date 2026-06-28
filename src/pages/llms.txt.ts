@@ -15,7 +15,7 @@ export const GET: APIRoute = ({ site: astroSite }) => {
     `> ${site.description}`,
     "## Pages",
     [
-      toLink("Domů", "/", "Cvičení pro miminka a děti 3 měsíce–3 roky.", astroSite),
+      toLink("Domů", "/", "Cvičení pro miminka a děti od 3 měsíců do 9 let.", astroSite),
       toLink(
         "Věkové kategorie",
         "/vekove-kategorie",

@@ -171,7 +171,7 @@ const pageMeta = workshopsPageMeta;
                         <li>
                           <a
                             class="workshop__date-card"
-                            href={date.href ?? site.reservationUrl}
+                            href={date.href ?? site.signupFormUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
@@ -193,7 +193,7 @@ const pageMeta = workshopsPageMeta;
                   <div class="workshops-page__cta">
                     <a
                       class="btn btn-primary"
-                      href={site.reservationUrl}
+                      href={site.signupFormUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
