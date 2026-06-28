@@ -1,0 +1,71 @@
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/inter-v20-latin-ext-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: italic;
+  font-weight: 400;
+  src: url("/fonts/inter-v20-latin-ext-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/inter-v20-latin-ext-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/fonts/inter-v20-latin-ext-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/inter-v20-latin-ext-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Baloo 2";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/fonts/baloo-2-v23-latin-ext-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Baloo 2";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/baloo-2-v23-latin-ext-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Kalam";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/kalam-v18-latin-ext-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/fonts/caveat-v23-latin-ext-600.woff2") format("woff2");
+}

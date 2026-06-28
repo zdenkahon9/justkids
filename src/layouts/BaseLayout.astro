@@ -2,6 +2,7 @@
 import "../styles/global.css";
 
 import MetaHead from "../components/Meta/Head.astro";
+import PreloadFonts from "../components/Meta/PreloadFonts.astro";
 import SchemaOrg from "../components/SchemaOrg.astro";
 import {
   createBreadcrumbSchema,
@@ -32,22 +33,7 @@ const breadcrumbSchema =
 <!doctype html>
 <html lang="cs">
   <MetaHead title={title} description={description}>
-    {/* Fonts stay here until the self-hosting work in issue #19. */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Baloo+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sniglet:wght@400;800&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Baloo+2:wght@400..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sniglet:wght@400;800&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap"
-    />
+    <PreloadFonts />
 
     <SchemaOrg schema={websiteSchema} />
     <SchemaOrg schema={localBusinessSchema} />
