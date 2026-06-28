@@ -6,7 +6,7 @@ import { loadEnv } from "vite";
 
 import { envConfig } from "./env.config.ts";
 
-const { SITE_URL, ENV_NAME } = loadEnv(process.env.NODE_ENV ?? "", process.cwd(), "");
+const { SITE_URL, ENV_NAME } = loadEnv("", process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
