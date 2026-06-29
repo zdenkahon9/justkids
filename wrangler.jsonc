@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "justkids-dev",
+  "name": "justkids",
   // Update to today's date
   "compatibility_date": "2026-05-06",
   "assets": {
@@ -9,9 +9,13 @@
     "html_handling": "drop-trailing-slash",
   },
   "env": {
-    "dev": {
+    "staging": {
       "workers_dev": false,
       "routes": [{ "pattern": "dev.justkids.cz", "custom_domain": true }],
+    },
+    "production": {
+      "workers_dev": false,
+      "routes": [{ "pattern": "justkids.cz", "custom_domain": true }],
     },
   },
 }
