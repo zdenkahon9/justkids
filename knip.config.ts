@@ -12,5 +12,6 @@ export default {
     project: ["src/**/*"],
   },
   // Astro Icon discovers installed collections dynamically from package.json.
-  ignoreDependencies: ["^@iconify-json/"],
+  // Wrangler provides the JSON schema referenced by wrangler.jsonc.
+  ignoreDependencies: ["^@iconify-json/", "wrangler"],
 } satisfies KnipConfig;
