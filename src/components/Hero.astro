@@ -35,17 +35,17 @@ import { site } from "../data/site";
       <h1 class="hero__title">
         Pohybem<br />
         <span class="hero__title-accent">k radosti</span>
+        <svg
+          class="hero__title-flourish"
+          viewBox="70 180 1910 450"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M102 603C250 535 410 510 610 512C850 502 1060 527 1240 531C1430 535 1600 510 1730 468C1760 458 1779 447 1796 436C1724 380 1658 325 1673 263C1682 219 1702 198 1737 205C1768 211 1787 235 1801 257C1806 266 1804 278 1804 285C1808 246 1841 207 1876 202C1917 197 1942 219 1947 256C1955 315 1915 358 1879 387C1849 412 1822 430 1796 436C1827 458 1857 477 1891 489"
+          ></path>
+        </svg>
       </h1>
-      <svg
-        class="hero__title-flourish"
-        viewBox="70 180 1910 450"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M102 603C250 535 410 510 610 512C850 502 1060 527 1240 531C1430 535 1600 510 1730 468C1760 458 1779 447 1796 436C1724 380 1658 325 1673 263C1682 219 1702 198 1737 205C1768 211 1787 235 1801 257C1806 266 1804 278 1804 285C1808 246 1841 207 1876 202C1917 197 1942 219 1947 256C1955 315 1915 358 1879 387C1849 412 1822 430 1796 436C1827 458 1857 477 1891 489"
-        ></path>
-      </svg>
       <p class="hero__lead">
         Pro miminka a děti od 3 měsíců do 9 let. Společně objevujeme svět pohybu, smyslů a
         radosti - bez stresu, ve vlastním tempu. Těšíme se na vás ve
@@ -225,9 +225,7 @@ import { site } from "../data/site";
   }
 
   .hero__copy {
-    position: relative;
     container-type: inline-size;
-    isolation: isolate;
     animation: fade-up 800ms 100ms ease both;
   }
 
@@ -254,6 +252,9 @@ import { site } from "../data/site";
   }
 
   .hero__title {
+    position: relative;
+    isolation: isolate;
+    width: fit-content;
     margin: 0 0 var(--space-8);
     padding-left: var(--space-4);
     font-family: var(--font-hero);
@@ -279,10 +280,10 @@ import { site } from "../data/site";
   .hero__title-flourish {
     position: absolute;
     z-index: -1;
-    top: 4.75rem;
-    left: 0;
+    bottom: -0.12em;
+    left: -0.02em;
     display: block;
-    width: min(104%, 38rem);
+    width: 130%;
     height: auto;
     overflow: visible;
     color: #f5f5f5;
@@ -460,11 +461,6 @@ import { site } from "../data/site";
     .hero__title span {
       display: inline-block;
       margin-left: 38px;
-    }
-
-    .hero__title-flourish {
-      top: 4.5rem;
-      width: min(100%, 38rem);
     }
 
     .hero__lead {
