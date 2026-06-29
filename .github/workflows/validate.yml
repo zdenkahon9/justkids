@@ -39,4 +39,6 @@ jobs:
         run: pnpm typecheck
 
       - name: 🏗️ Build
+        env:
+          GOOGLE_MAPS_STATIC_API_KEY: ${{ secrets.GOOGLE_MAPS_STATIC_API_KEY }}
         run: pnpm build

@@ -40,6 +40,7 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
           ENV_NAME: production
+          GOOGLE_MAPS_STATIC_API_KEY: ${{ secrets.GOOGLE_MAPS_STATIC_API_KEY }}
           PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
           PUBLIC_UMAMI_SHARE_URL: ${{ vars.PUBLIC_UMAMI_SHARE_URL }}
         run: pnpm build
