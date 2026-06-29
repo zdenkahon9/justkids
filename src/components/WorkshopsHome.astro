@@ -198,7 +198,7 @@ const meta = workshopsHomeMeta;
 
   .workshops-home__note {
     margin: 0;
-    padding: var(--space-8) var(--card-padding-x) var(--space-8);
+    padding: var(--space-15) var(--card-padding-x) var(--space-15);
     border-radius: 0;
     background: var(--color-apricot-soft);
     text-align: center;
@@ -209,7 +209,7 @@ const meta = workshopsHomeMeta;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-4);
+    gap: var(--space-8);
     max-width: 100%;
     font-family: var(--font-body);
     font-size: var(--text-xl);
@@ -244,7 +244,7 @@ const meta = workshopsHomeMeta;
     padding: 0;
     margin: 0;
     display: grid;
-    gap: 0;
+    gap: var(--space-none);
   }
 
   .workshops-home__topic {
@@ -257,7 +257,7 @@ const meta = workshopsHomeMeta;
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0;
+    margin: var(--space-10) 0;
     border: none;
     background: rgba(42, 31, 56, 0.12);
   }
@@ -265,12 +265,12 @@ const meta = workshopsHomeMeta;
   .workshops-home__topic-row {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-8);
     margin: 0;
   }
 
   .workshops-home__topic:last-child .workshops-home__topic-row {
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-15);
   }
 
   .workshops-home__topic-copy {
@@ -279,7 +279,7 @@ const meta = workshopsHomeMeta;
   }
 
   .workshops-home__topic-label {
-    margin: 0 0 var(--space-3);
+    margin: 0 0 var(--space-6);
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 600;
@@ -297,7 +297,7 @@ const meta = workshopsHomeMeta;
     height: 2px;
     border-radius: var(--radius-full);
     background: var(--accent);
-    margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-8);
   }
 
   .workshops-home__topic-summary {
@@ -333,15 +333,15 @@ const meta = workshopsHomeMeta;
   }
 
   .workshops-home__info {
-    margin: var(--space-6) 0 0;
+    margin: var(--space-12) 0 0;
     padding: 0;
   }
 
   .workshops-home__info-inner {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-5) var(--space-3);
+    gap: var(--space-8);
+    padding: var(--space-10) var(--space-6);
     border-radius: var(--radius-pill);
     background: var(--color-blush-soft);
     font-family: var(--font-body);
@@ -428,7 +428,7 @@ const meta = workshopsHomeMeta;
     .workshops-home__note-inner {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--space-6);
+      gap: var(--space-12);
       text-align: left;
     }
 
@@ -443,8 +443,8 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__note-icon {
-      width: 1.375rem;
-      height: 1.375rem;
+      width: var(--space-11);
+      height: var(--space-11);
     }
 
     .workshops-home__note-text {
@@ -488,8 +488,8 @@ const meta = workshopsHomeMeta;
       position: relative;
       min-height: 110px;
       align-items: center;
-      gap: var(--space-5);
-      margin-left: 0.75rem;
+      gap: var(--space-10);
+      margin-left: var(--space-6);
     }
 
     .workshops-home__topic-label-plain {
@@ -521,21 +521,21 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__topic-label {
-      margin: 0 0 var(--space-2);
+      margin: 0 0 var(--space-4);
       font-size: var(--text-h3);
       line-height: var(--line-height-xl);
     }
 
     .workshops-home__topic-rule {
       display: block;
-      margin: 0 0 var(--space-3);
+      margin: 0 0 var(--space-6);
     }
 
     .workshop__age {
       display: inline-flex;
       align-items: center;
-      margin: 0 0 var(--space-3);
-      padding: var(--space-2) var(--space-4);
+      margin: 0 0 var(--space-6);
+      padding: var(--space-4) var(--space-8);
       border-radius: var(--radius-full);
       background: var(--accent-soft);
       font-family: var(--font-display);
@@ -551,14 +551,14 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__topic:last-child .workshops-home__topic-row {
-      margin-bottom: 1rem;
+      margin-bottom: var(--space-8);
     }
 
     .workshops-home__arrow {
       position: relative;
-      inset-inline-end: var(--space-4);
-      width: var(--space-10);
-      height: var(--space-10);
+      inset-inline-end: var(--space-8);
+      width: var(--space-18);
+      height: var(--space-18);
       pointer-events: none;
       transition: transform 180ms ease;
     }
@@ -581,12 +581,12 @@ const meta = workshopsHomeMeta;
     }
 
     .workshops-home__info {
-      margin-top: var(--space-7);
+      margin-top: var(--space-14);
     }
 
     .workshops-home__info-inner {
-      gap: var(--space-3);
-      padding: var(--space-2) var(--space-6);
+      gap: var(--space-6);
+      padding: var(--space-4) var(--space-12);
       border-radius: var(--radius-2xl);
     }
 

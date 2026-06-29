@@ -221,7 +221,7 @@ const splitLocationName = (name: string) => {
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-5);
+    margin: var(--space-10) 0 var(--space-10);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
     transition: background 220ms ease;
@@ -260,7 +260,7 @@ const splitLocationName = (name: string) => {
     min-width: 0;
     box-sizing: border-box;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: var(--space-4) 0;
+    padding: var(--space-8) 0;
     border: none;
     border-radius: 0;
     background: transparent;
@@ -361,7 +361,7 @@ const splitLocationName = (name: string) => {
     width: calc(100% + 2 * var(--card-padding-x));
     max-width: none;
     margin-inline: calc(-1 * var(--card-padding-x));
-    margin-top: var(--space-5);
+    margin-top: var(--space-10);
     margin-bottom: calc(-1 * var(--card-padding-y));
     height: 13rem;
     max-height: 13rem;
@@ -381,7 +381,7 @@ const splitLocationName = (name: string) => {
     .locations-tabs {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-6);
+      gap: var(--space-12);
       width: 100%;
       max-width: none;
       margin-inline: unset;
@@ -433,11 +433,11 @@ const splitLocationName = (name: string) => {
 
     .locations__body .location__details {
       padding: var(--card-padding);
-      padding-bottom: var(--space-6);
+      padding-bottom: var(--space-12);
     }
 
     .locations__body .location__head {
-      padding-top: var(--space-2);
+      padding-top: var(--space-4);
     }
 
     .locations__body .location__map-shell,
@@ -479,8 +479,8 @@ const splitLocationName = (name: string) => {
     z-index: 2;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: var(--space-2) var(--space-3);
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
     border-radius: var(--radius-pill);
     background: #fff;
     color: #1a73e8;
@@ -511,14 +511,14 @@ const splitLocationName = (name: string) => {
     min-height: 0;
     border: 0;
     padding: var(--card-padding);
-    padding-bottom: var(--space-6);
+    padding-bottom: var(--space-12);
     box-sizing: border-box;
   }
 
   .location__panel {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-12);
     flex: 1 1 auto;
     min-height: 0;
   }
@@ -527,7 +527,7 @@ const splitLocationName = (name: string) => {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-6);
     padding: 0;
   }
 
@@ -542,7 +542,7 @@ const splitLocationName = (name: string) => {
   .location__head {
     width: 100%;
     margin-bottom: 0;
-    padding-top: var(--space-2);
+    padding-top: var(--space-4);
   }
 
   .location__head-text {
@@ -561,7 +561,7 @@ const splitLocationName = (name: string) => {
     font-family: var(--font-display);
     font-size: var(--text-h3);
     font-weight: 600;
-    margin: 0 0 0.35rem;
+    margin: 0 0 var(--space-3);
     line-height: var(--line-height-xl);
     color: var(--color-ink);
   }
@@ -583,7 +583,7 @@ const splitLocationName = (name: string) => {
     }
 
     .location__head-text h3 {
-      margin: 0 0 var(--space-3);
+      margin: 0 0 var(--space-6);
     }
 
     .location__name-first::after {
@@ -620,7 +620,7 @@ const splitLocationName = (name: string) => {
     }
 
     .location__head-text h3 {
-      margin: 0 0 var(--space-3);
+      margin: 0 0 var(--space-6);
     }
 
     .location__address {
@@ -628,7 +628,7 @@ const splitLocationName = (name: string) => {
       flex-wrap: wrap;
       justify-content: center;
       align-items: baseline;
-      gap: 0;
+      gap: var(--space-none);
     }
 
     .location__address-sep {
@@ -644,17 +644,17 @@ const splitLocationName = (name: string) => {
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-5);
+    margin: var(--space-10) 0 var(--space-10);
     border: none;
     background: rgba(42, 31, 56, 0.12);
   }
 
   #lokace .location__nav-link {
     margin-top: auto;
-    /* padding-top: var(--space-5); */
+    /* padding-top: var(--space-10); */
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: var(--space-3);
     color: var(--color-blush-deep);
     font-family: var(--font-body);
     font-weight: 700;

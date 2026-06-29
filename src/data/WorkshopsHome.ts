@@ -35,110 +35,15 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   ctaLabel: "Všechny workshopy",
 };
 
-export type WorkshopDateSlot = {
-  id: string;
-  /** Den v měsíci v `.workshop__date-day` */
-  day: string;
-  /** Zkratka měsíce v `.workshop__date-month` */
-  month: string;
-  time: string;
-  venueName: string;
-  href?: string;
-};
-
-export type Workshop = {
+export type WorkshopHome = {
   id: string;
   title: string;
-  /** Text pro `.workshop__summary` — render v WorkshopsHome (zatím vypnuto) */
-  summary: string;
-  /** Odrážky v `.workshop__details` — jedna položka = jedno `<li>` */
-  highlights: string[];
-  /** When omitted, the card hides the duration pill */
-  duration?: string;
-  /** Věkový rozsah v `.workshop__header` (WorkshopsPage) */
+  /** Věkový rozsah v `.workshop__header` (WorkshopsHome) */
   ageRange?: string;
-  forWhom: string;
   /** Krátký popis pod názvem v `.workshops-home__topic-summary` */
   homeSummary?: string;
-  /** Cena v `.workshop__price-value` na WorkshopsPage */
-  price?: string;
-  /** Termíny v `.workshop__dates` na WorkshopsPage */
-  dates?: WorkshopDateSlot[];
   accent: "blush" | "blush-deep" | "sky" | "sky-deep" | "lilac" | "lilac-deep";
-  upcoming?: string;
 };
-
-const prvniPomocDates: WorkshopDateSlot[] = [
-  {
-    id: "prvni-pomoc-rosenbaum",
-    day: "4",
-    month: "KVĚ",
-    time: "od 18:15",
-    venueName: "Centrum Rosenbaum",
-  },
-  {
-    id: "prvni-pomoc-zdice",
-    day: "7",
-    month: "KVĚ",
-    time: "od 16:00",
-    venueName: "Fitcentrum Zdice",
-  },
-  {
-    id: "prvni-pomoc-horovice",
-    day: "16",
-    month: "KVĚ",
-    time: "od 9:00",
-    venueName: "Yogasee Hořovice",
-  },
-];
-
-const handlingDates: WorkshopDateSlot[] = [
-  {
-    id: "handling-rosenbaum",
-    day: "12",
-    month: "KVĚ",
-    time: "od 20:00",
-    venueName: "Centrum Rosenbaum",
-  },
-  {
-    id: "handling-zdice",
-    day: "15",
-    month: "KVĚ",
-    time: "od 17:00",
-    venueName: "Fitcentrum Zdice",
-  },
-  {
-    id: "handling-horovice",
-    day: "16",
-    month: "KVĚ",
-    time: "od 11:00",
-    venueName: "Yogasee Hořovice",
-  },
-];
-
-const prevenceDates: WorkshopDateSlot[] = [
-  {
-    id: "prevence-rosenbaum",
-    day: "25",
-    month: "KVĚ",
-    time: "od 18:15",
-    venueName: "Centrum Rosenbaum",
-  },
-  {
-    id: "prevence-zdice",
-    day: "21",
-    month: "KVĚ",
-    time: "od 16:00",
-    venueName: "Fitcentrum Zdice",
-  },
-  {
-    id: "prevence-horovice",
-    day: "16",
-    month: "KVĚ",
-    time: "od 13:00",
-    venueName: "Yogasee Hořovice",
-  },
-];
 
 /** Iconify názvy (sada:id) — mapování podle id workshopu */
 export const workshopIconById: Record<string, string> = {
@@ -147,68 +52,27 @@ export const workshopIconById: Record<string, string> = {
   "psychomotoricky-vyvoj-prevence": "ph:brain",
 };
 
-export const workshops: Workshop[] = [
+/** Teaser workshopy na homepage */
+export const workshops: WorkshopHome[] = [
   {
     id: "prvni-pomoc-u-deti",
     title: "První pomoc u dětí",
     homeSummary: "Specifika dětské první pomoci a krizové situace.",
-    summary: "Jak reagovat v krizových situacích a poskytnout dítěti první pomoc.",
-    highlights: [
-      "Specifika dětské první pomoci",
-      "Řešení nejčastějších situací",
-      "Resuscitace",
-      "Dušení",
-      "Úrazy",
-      "Krvácení",
-      "Popáleniny",
-    ],
-    forWhom: "Rodiče s miminky 0–6 měsíců",
     ageRange: "nejen pro rodiče",
-    price: "200 Kč",
-    dates: prvniPomocDates,
     accent: "blush-deep",
-    upcoming: "Termín na vyžádání",
   },
   {
     id: "handling-a-psychomotoricky-vyvoj",
     title: "Handling a psychomotorický vývoj",
     homeSummary: "Vývoj dítěte a správné zacházení.",
-    summary: "Porozumění pohybovému vývoji dítěte a správnému zacházení.",
-    highlights: [
-      "Správná manipulace",
-      "Správné polohování",
-      "Vývoj krok za krokem",
-      "Podpora přirozeného vývoje",
-      "Vhodné / nevhodné pomůcky",
-      "Kdy vyhledat odborníka",
-    ],
-    forWhom: "Miminka 0–6 měsíců",
     ageRange: "0-6 měsíců",
-    price: "200 Kč",
-    dates: handlingDates,
     accent: "lilac-deep",
-    upcoming: "Termín na vyžádání",
   },
   {
     id: "psychomotoricky-vyvoj-prevence",
     title: "Psychomotorický vývoj & prevence",
     homeSummary: "Vývoj dítěte krok za krokem a prevence obtíží.",
-    summary:
-      "Jak předcházet obtížím ve vývoji a podpořit přirozený rozvoj pohybu a vnímání.",
-    highlights: [
-      "Vývoj krok za krokem",
-      "Podpora přirozeného vývoje",
-      "Vhodné / nevhodné pomůcky",
-      "Prevence špatného držení těla",
-      "Botičky - kdy a jaké",
-      "Valgozita, w-sed, zkřížené syndromy",
-      "Kdy vyhledat odborníka",
-    ],
-    forWhom: "Rodiče miminek 0–12 měsíců",
     ageRange: "6-12 měsíců",
-    price: "200 Kč",
-    dates: prevenceDates,
     accent: "sky-deep",
-    upcoming: "Termín na vyžádání",
   },
 ];

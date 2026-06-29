@@ -30,7 +30,7 @@ export const ageGroupsHomeMeta: AgeGroupsHomeMeta = {
   title: "Pro každý věk",
   titleAccent: "to pravé cvičení",
   subtitle:
-    "Čtyři věkové skupiny od 3 měsíců do 3 let – vyberte tu, která sedí vašemu dítěti.",
+    "Od 3 měsíců do 9 let – každá věková skupina má vlastní cvičení přizpůsobené vývoji dítěte.",
   detailHref: "/vekove-kategorie",
   ctaLabel: "Zobrazit všechny kategorie",
   cardLinkLabel: "Zobrazit lekce",

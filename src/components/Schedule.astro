@@ -117,7 +117,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   .schedule__panel--mobile {
     width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-9);
+    margin: 0 auto var(--space-17);
   }
 
   .schedule__grid--desktop {
@@ -155,7 +155,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     justify-content: center;
     box-sizing: border-box;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: var(--space-4) 0;
+    padding: var(--space-8) 0;
     border: none;
     background: transparent;
     color: var(--color-ink);
@@ -197,7 +197,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-5);
+    margin: var(--space-10) 0 var(--space-10);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
     transition: background 220ms ease;
@@ -219,7 +219,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     box-sizing: border-box;
     width: 100%;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: var(--space-4) 0;
+    padding: var(--space-8) 0;
     border-radius: var(--radius-pill);
     border: 1.5px solid rgba(42, 31, 56, 0.12);
     font-family: var(--font-body);
@@ -235,7 +235,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-5);
+    margin: var(--space-10) 0 var(--space-10);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
   }
@@ -254,9 +254,9 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     .schedule__grid--desktop {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-4);
+      gap: var(--space-8);
       width: 100%;
-      margin: 0 auto var(--space-9);
+      margin: 0 auto var(--space-17);
     }
 
     .schedule__grid--desktop .schedule__card:nth-child(2) :global(.schedule__day-block),

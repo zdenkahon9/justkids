@@ -3,18 +3,16 @@ export type AgeGroupPage = {
   range: string;
   title: string;
   description: string;
-  highlights: string[];
   /** Krátký řádek pod věkem — vynechá se, pokud chybí */
   groupsLabel?: string;
   /** Iconify název (sada:id) — ikona pro kartu na detailní stránce */
   icon: string;
-  accent: "blush" | "sky" | "lilac" | "cream";
+  accent: "blush" | "sky" | "lilac" | "meadow" | "apricot";
   optional?: boolean;
 };
 
 export type AgeGroupsPageMeta = {
   sectionId: string;
-  eyebrow: string;
   title: string;
   titleAccent: string;
   subtitle: string;
@@ -22,7 +20,6 @@ export type AgeGroupsPageMeta = {
 
 export const ageGroupsPageMeta: AgeGroupsPageMeta = {
   sectionId: "vekove-skupiny",
-  eyebrow: "Věkové kategorie",
   title: "Pro každý věk",
   titleAccent: "to pravé cvičení",
   subtitle:
@@ -38,9 +35,8 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     groupsLabel: "od 3 měsíců",
     description:
       "První společné chvíle plné doteku, blízkosti a jemného pohybu, které podporují zdravý vývoj miminka i jistotu rodiče.",
-    highlights: ["Zábavné říkanky", "Jemná masáž miminek", "Hravé cviky pro radost"],
     icon: "fxemoji:cherryblossom",
-    accent: "sky",
+    accent: "lilac",
   },
   {
     id: "6-12",
@@ -49,9 +45,8 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     groupsLabel: "od rozlezení",
     description:
       "Radost z objevování vlastního těla, první pokusy o pohyb a hravé chvíle, kdy se dítě učí s důvěrou vnímat svět kolem sebe.",
-    highlights: ["Lezení a plazení", "Hrubá motorika", "Smyslové podněty"],
     icon: "twemoji:hatching-chick",
-    accent: "lilac",
+    accent: "blush",
   },
   {
     id: "1-2",
@@ -60,9 +55,8 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     groupsLabel: "od chůze",
     description:
       "Období prvních krůčků, zkoušení, objevování a zdokonalování – podporujeme jistotu, rovnováhu i radost z každého nového pohybu.",
-    highlights: ["Překážkové dráhy", "Rovnováha a koordinace", "Hudba a tanec"],
     icon: "noto-v1:lion",
-    accent: "blush",
+    accent: "sky",
   },
   {
     id: "2-3",
@@ -70,9 +64,8 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     title: "Active",
     description:
       "Společné hry plné smíchu, pohybu a nových dovedností, které posilují samostatnost i přirozenou dětskou energii.",
-    highlights: ["Hry ve skupině", "Prvky gymnastiky", "Koncentrace a poslouchání"],
     icon: "emojione:monkey-face",
-    accent: "cream",
+    accent: "meadow",
   },
 ];
 
@@ -84,9 +77,8 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     title: "Fit",
     description:
       "Pohyb jako radost, jistota i zdravý základ do života – děti si budují vztah ke sportu hravou a přirozenou cestou.",
-    highlights: [],
     icon: "noto:seedling",
-    accent: "sky",
+    accent: "apricot",
   },
   {
     id: "pro",
@@ -94,7 +86,6 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     title: "Pro",
     description:
       "Energie, pohyb a zábava v jednom. Děti si budují zdravý vztah k pohybu, získávají sebevědomí a především si užívají aktivní čas plný radosti a nových zážitků.",
-    highlights: [],
     icon: "fxemoji:rocket",
     accent: "lilac",
   },

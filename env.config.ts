@@ -6,6 +6,7 @@ export const ENV_DEFAULTS = {
   ENV_NAME: "staging",
   PUBLIC_UMAMI_SITE_ID: crypto.randomUUID(),
   PUBLIC_UMAMI_SHARE_URL: "https://cloud.umami.is",
+  GOOGLE_MAPS_STATIC_API_KEY: "",
 } as const;
 
 export const envConfig = {
@@ -29,6 +30,11 @@ export const envConfig = {
       context: "client",
       access: "public",
       default: ENV_DEFAULTS.PUBLIC_UMAMI_SHARE_URL,
+    }),
+    GOOGLE_MAPS_STATIC_API_KEY: envField.string({
+      context: "server",
+      access: "public",
+      default: ENV_DEFAULTS.GOOGLE_MAPS_STATIC_API_KEY,
     }),
   },
 } as const satisfies AstroUserConfig["env"];

@@ -1,4 +1,4 @@
-import type { WorkshopDateSlot } from "../data/WorkshopsHome";
+import type { WorkshopDateSlot } from "../data/WorkshopsPage";
 
 const monthOrder: Record<string, number> = {
   LED: 1,

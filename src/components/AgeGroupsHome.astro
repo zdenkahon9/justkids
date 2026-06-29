@@ -15,10 +15,7 @@ const meta = ageGroupsHomeMeta;
         {meta.title}{" "}
         <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
-      <p class="section-subtitle">
-        Od 3 měsíců do 9 let – každá věková skupina má vlastní cvičení přizpůsobené vývoji
-        dítěte.
-      </p>
+      <p class="section-subtitle">{meta.subtitle}</p>
     </header>
 
     <ul class="age-home__grid">
@@ -174,7 +171,7 @@ const meta = ageGroupsHomeMeta;
   .age-home__age-row {
     --age-text-height: calc(var(--text-2xl) * var(--line-height-2xl));
     position: relative;
-    padding-right: calc(var(--card-icon-size-corner) + var(--space-4));
+    padding-right: calc(var(--card-icon-size-corner) + var(--space-8));
   }
 
   .age-home__illustration {
@@ -201,7 +198,7 @@ const meta = ageGroupsHomeMeta;
   }
 
   .age-home__heading {
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
     font-family: var(--font-display);
     font-size: var(--text-h3);
     font-weight: 600;
@@ -212,7 +209,7 @@ const meta = ageGroupsHomeMeta;
   .age-home__age {
     display: block;
     width: 100%;
-    margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-8);
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 600;
@@ -236,7 +233,7 @@ const meta = ageGroupsHomeMeta;
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-5);
+    margin: var(--space-10) 0 var(--space-10);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
   }
@@ -314,7 +311,7 @@ const meta = ageGroupsHomeMeta;
       position: static;
       transform: none;
       align-self: center;
-      margin-bottom: var(--space-4);
+      margin-bottom: var(--space-8);
       order: -1;
     }
 
@@ -333,7 +330,7 @@ const meta = ageGroupsHomeMeta;
       width: min(100%, 1040px);
       max-width: 100%;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--space-6);
+      gap: var(--space-12);
       justify-content: stretch;
     }
 
@@ -383,9 +380,9 @@ const meta = ageGroupsHomeMeta;
     .age-home__more {
       display: inline-flex;
       align-items: center;
-      gap: var(--space-2);
+      gap: var(--space-4);
       align-self: center;
-      margin-top: var(--space-6);
+      margin-top: var(--space-12);
       padding: 0;
       border: none;
       background: none;
@@ -425,7 +422,7 @@ const meta = ageGroupsHomeMeta;
 
     .age-home__grid {
       width: fit-content;
-      max-width: calc(760px + var(--space-7));
+      max-width: calc(760px + var(--space-14));
       grid-template-columns: repeat(2, 380px);
       justify-content: center;
     }
@@ -435,7 +432,7 @@ const meta = ageGroupsHomeMeta;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      gap: var(--space-3);
+      gap: var(--space-6);
     }
 
     .age-home__groups-sep {
@@ -456,32 +453,31 @@ const meta = ageGroupsHomeMeta;
     }
 
     .age-home__rule {
-      margin: var(--space-5) 0 var(--space-6);
+      margin: var(--space-10) 0 var(--space-12);
     }
   }
 </style>
 
-<script>
+<script lang="ts">
   const AGE_HOME_SCROLL_KEY = "age-home-scroll";
 
   const setupAgeHomeMoreLinks = () => {
-    document
-      .querySelectorAll<HTMLAnchorElement>("[data-age-home-section]")
-      .forEach((link) => {
-        if (link.dataset.ageHomeMoreReady === "true") return;
-        link.dataset.ageHomeMoreReady = "true";
+    document.querySelectorAll("[data-age-home-section]").forEach((link) => {
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (link.dataset.ageHomeMoreReady === "true") return;
+      link.dataset.ageHomeMoreReady = "true";
 
-        link.addEventListener("click", (event) => {
-          if (!window.matchMedia("(min-width: 1024px)").matches) return;
+      link.addEventListener("click", (event) => {
+        if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
-          const sectionId = link.dataset.ageHomeSection;
-          if (!sectionId) return;
+        const sectionId = link.dataset.ageHomeSection;
+        if (!sectionId) return;
 
-          event.preventDefault();
-          sessionStorage.setItem(AGE_HOME_SCROLL_KEY, sectionId);
-          window.location.assign(link.pathname);
-        });
+        event.preventDefault();
+        sessionStorage.setItem(AGE_HOME_SCROLL_KEY, sectionId);
+        window.location.assign(link.pathname);
       });
+    });
   };
 
   setupAgeHomeMoreLinks();

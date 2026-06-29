@@ -135,7 +135,7 @@ const year = new Date().getFullYear();
 
   .footer {
     scroll-margin-top: var(--nav-height);
-    margin-top: var(--space-12);
+    margin-top: var(--space-20);
     background: linear-gradient(
       180deg,
       #fff9f4 0%,
@@ -148,14 +148,14 @@ const year = new Date().getFullYear();
   }
 
   #kontakt {
-    scroll-margin-top: calc(-1 * var(--space-10));
+    scroll-margin-top: calc(-1 * var(--space-18));
   }
 
   .footer__inner {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-7);
-    padding-block: 2.25rem var(--space-7);
+    gap: var(--space-14);
+    padding-block: var(--space-16) var(--space-14);
   }
 
   .footer__brand {
@@ -166,10 +166,10 @@ const year = new Date().getFullYear();
     display: inline-flex;
     align-items: center;
     justify-content: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-6);
     text-decoration: none;
     color: inherit;
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-8);
   }
 
   .footer__brand-link img {
@@ -196,7 +196,7 @@ const year = new Date().getFullYear();
 
   .footer__about {
     color: var(--color-ink);
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-12);
     max-width: 22rem;
     font-size: var(--text-base);
     line-height: var(--line-height-base);
@@ -204,7 +204,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__col {
-    padding-top: 1.35rem;
+    padding-top: var(--space-11);
     border-top: 1px solid rgba(236, 47, 142, 0.16);
   }
 
@@ -215,7 +215,7 @@ const year = new Date().getFullYear();
   }
 
   .footer__social-label {
-    margin: 0 0 var(--space-2);
+    margin: 0 0 var(--space-4);
     font-size: var(--text-base);
     font-weight: 600;
     color: var(--color-ink);
@@ -225,7 +225,7 @@ const year = new Date().getFullYear();
   .footer__social {
     display: flex;
     justify-content: center;
-    gap: var(--text-lg);
+    gap: var(--space-10);
   }
 
   .footer__social-link {
@@ -281,7 +281,7 @@ const year = new Date().getFullYear();
     line-height: var(--line-height-xl);
     color: var(--color-ink-soft);
     font-weight: 700;
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
   }
 
   .footer__col ul {
@@ -292,15 +292,15 @@ const year = new Date().getFullYear();
   }
 
   .footer__col.footer__col--kontakt ul {
-    gap: var(--space-3);
-  }
-
-  .footer__col.footer__col--lokace ul {
     gap: var(--space-6);
   }
 
+  .footer__col.footer__col--lokace ul {
+    gap: var(--space-12);
+  }
+
   .footer__col.footer__col--navigace ul {
-    gap: var(--space-3);
+    gap: var(--space-6);
   }
 
   .footer__col a {
@@ -356,7 +356,7 @@ const year = new Date().getFullYear();
   .footer__email {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-6);
   }
 
   .footer__phone-icon,
@@ -369,7 +369,7 @@ const year = new Date().getFullYear();
 
   .footer__bottom {
     border-top: 1px solid rgba(42, 31, 56, 0.08);
-    padding-block: var(--space-4);
+    padding-block: var(--space-8);
     background: rgba(255, 255, 255, 0.4);
   }
 
@@ -379,7 +379,7 @@ const year = new Date().getFullYear();
     justify-content: center;
     text-align: center;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-8);
     font-size: var(--text-sm);
     color: var(--color-ink-soft);
   }
@@ -439,7 +439,7 @@ const year = new Date().getFullYear();
 
     .footer__about {
       max-width: 240px;
-      margin: 0 0 var(--space-8);
+      margin: 0 0 var(--space-15);
       font-size: var(--text-sm);
     }
 

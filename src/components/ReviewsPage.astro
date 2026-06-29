@@ -114,7 +114,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 <style>
   .reviews-page {
     --accent: var(--color-blush-deep);
-    --section-header-spacing: 3rem;
+    --section-header-spacing: var(--space-18);
     padding-top: 0;
     padding-bottom: 0;
     scroll-margin-top: var(--nav-height);
@@ -190,7 +190,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
   }
 
   .reviews-page__intro .section-header {
-    --section-header-spacing: 3rem;
+    --section-header-spacing: var(--space-18);
     margin-bottom: var(--section-header-spacing);
   }
 
@@ -238,7 +238,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 
   .reviews-page .section-header h1 {
     font-size: var(--text-clamp-h2);
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-15);
   }
 
   /* Mobile-first: centrovaný nadpis + podnadpis; od 640px průhledný obal */
@@ -281,7 +281,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 
   .about__divider {
     position: relative;
-    margin: var(--space-8) 0 var(--space-8);
+    margin: var(--space-15) 0 var(--space-15);
     height: 1px;
     background: var(--color-blush-mid);
   }
@@ -292,7 +292,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
     top: 50%;
     transform: translate(-50%, -50%);
     background: var(--color-cream);
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-8);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -311,15 +311,15 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
   }
 
   .reviews-page__item {
-    padding-block: var(--space-9);
+    padding-block: var(--space-17);
   }
 
   .reviews-page__item:first-child {
-    padding-top: var(--space-6);
+    padding-top: var(--space-12);
   }
 
   .reviews-page__item:last-child {
-    padding-bottom: var(--space-6);
+    padding-bottom: var(--space-12);
   }
 
   /* Stejná barva oddělovače jako age-page__rule (např. první karta Locations) */
@@ -331,7 +331,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
   .reviews-page__stars {
     display: inline-flex;
     align-items: center;
-    margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-8);
     font-size: var(--text-3xl);
     line-height: var(--line-height-xs);
     color: var(--color-ink);
@@ -365,7 +365,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
 
   .reviews-page__date {
     display: block;
-    margin-top: var(--space-6);
+    margin-top: var(--space-12);
     font-size: var(--text-sm);
     font-weight: 600;
     line-height: var(--line-height-base);
@@ -375,7 +375,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
   .reviews-page__footer {
     display: flex;
     justify-content: center;
-    margin-top: var(--space-10);
+    margin-top: var(--space-18);
   }
 
   @media (min-width: 768px) {

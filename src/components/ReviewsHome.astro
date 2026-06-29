@@ -262,7 +262,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-    gap: var(--space-5);
+    gap: var(--space-10);
   }
 
   .reviews__all {
@@ -290,7 +290,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     max-width: var(--card-grid-width);
     margin: 0 auto;
     padding: 0;
-    gap: 0;
+    gap: var(--space-none);
     list-style: none;
     overflow-x: auto;
     overflow-y: hidden;
@@ -331,11 +331,11 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
   .reviews__dots {
     display: flex;
     justify-content: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     width: 100%;
     max-width: var(--card-grid-width);
     margin-inline: auto;
-    padding-inline: var(--space-2);
+    padding-inline: var(--space-4);
   }
 
   .reviews__dot {
@@ -381,13 +381,13 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     height: 2px;
     border-radius: var(--radius-full);
     background: var(--accent);
-    margin: 0 auto var(--space-5);
+    margin: 0 auto var(--space-10);
   }
 
   .review--cta__illustration {
     display: flex;
     justify-content: center;
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
   }
 
   .review--cta__icon-ring {
@@ -406,7 +406,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
   }
 
   .review--cta__text {
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
     font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 600;
@@ -418,7 +418,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     display: block;
     width: 100%;
     height: 1px;
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-10);
     border: none;
     background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
   }
@@ -426,7 +426,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
   .review--cta__more {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     align-self: center;
     padding: 0;
     border: none;
@@ -467,7 +467,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     .reviews__all {
       display: flex;
       justify-content: center;
-      margin-top: var(--space-9);
+      margin-top: var(--space-17);
     }
 
     .reviews__all :global(.btn) {

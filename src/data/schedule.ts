@@ -40,13 +40,13 @@ export const scheduleMeta: ScheduleMeta = {
 
 /** Layout tokens for the vertical timeline axis — even px values only */
 export const scheduleLayout = {
-  axisColumn: "16px",
+  axisColumn: "var(--space-8)",
   axisWidth: "1px",
   dotSize: "10px",
   rowHeight: "26px",
   timeColumn: "68px",
   axisToTimeGap: "14px",
-  timeToActivityGap: "32px",
+  timeToActivityGap: "var(--space-15)",
 } as const;
 
 export const formatScheduleActivities = (activities: string[]) =>

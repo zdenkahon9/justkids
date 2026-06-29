@@ -88,12 +88,12 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
   /* Mobile-first: kompaktnější header; od 640px globální spacing */
   .rules .section-header {
-    --section-header-spacing: var(--space-10);
+    --section-header-spacing: var(--space-18);
   }
 
   @media (min-width: 640px) {
     .rules .section-header {
-      --section-header-spacing: var(--space-10);
+      --section-header-spacing: var(--space-18);
     }
   }
 
@@ -119,13 +119,13 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__item:not(:last-child) {
-    padding-bottom: var(--space-10);
+    padding-bottom: var(--space-18);
   }
 
   .rules__content {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-4);
+    gap: var(--space-8);
     box-sizing: border-box;
   }
 
@@ -141,7 +141,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   }
 
   .rules__title {
-    margin: 0 0 var(--space-4);
+    margin: 0 0 var(--space-8);
     min-width: 0;
     font-family: var(--font-display);
     font-size: var(--text-h3);
@@ -199,7 +199,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     .rules__list {
       /* menší kruh i ikona */
       --rules-icon-size: 3.5rem;
-      --rules-icon-graphic-size: 1.625rem;
+      --rules-icon-graphic-size: var(--space-13);
       --rules-line-color: color-mix(in srgb, var(--color-ink) 14%, transparent);
 
       padding-top: 0;
@@ -236,7 +236,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: var(--rules-col-gap);
-      row-gap: var(--space-12);
+      row-gap: var(--space-20);
       align-items: start;
       max-width: 62rem;
       padding: 0;
@@ -285,7 +285,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: var(--space-4);
+      gap: var(--space-8);
       box-sizing: border-box;
       text-align: left;
       width: 100%;
@@ -303,7 +303,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     }
 
     .rules__title {
-      margin: 0 0 var(--space-2);
+      margin: 0 0 var(--space-4);
       font-size: var(--text-lg);
     }
 
@@ -335,7 +335,7 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
   @media (min-width: 1024px) {
     .rules__list {
       --rules-icon-size: 3.5rem;
-      --rules-icon-graphic-size: 1.625rem;
+      --rules-icon-graphic-size: var(--space-13);
       --rules-detail-row: calc(3 * var(--text-lg) * var(--line-height-base));
     }
 

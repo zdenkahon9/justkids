@@ -185,7 +185,7 @@ const categories = workshopsPage
   .workshops-page__dates-grid {
     list-style: none;
     padding: 0;
-    margin: 0 auto var(--space-9);
+    margin: 0 auto var(--space-17);
     width: fit-content;
     max-width: 100%;
     display: grid;
@@ -210,14 +210,14 @@ const categories = workshopsPage
   .workshops-page__date-workshop {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-8);
   }
 
   .workshops-page__date-workshop-rule {
     display: block;
     width: 100%;
     height: 1px;
-    margin: var(--space-5) 0 var(--space-2);
+    margin: var(--space-10) 0 var(--space-4);
     border: none;
     background: rgba(42, 31, 56, 0.12);
   }
@@ -235,8 +235,8 @@ const categories = workshopsPage
   }
 
   .workshops-page__date-workshop-icon-graphic {
-    width: 1.625rem;
-    height: 1.625rem;
+    width: var(--space-13);
+    height: var(--space-13);
   }
 
   .workshops-page__date-workshop-label {
@@ -266,12 +266,12 @@ const categories = workshopsPage
   .workshops-page__date-slot-row {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-8);
     box-sizing: border-box;
     height: calc(
-      4 * var(--text-base) * var(--line-height-base) + 0.25rem + 2 * var(--space-2)
+      4 * var(--text-base) * var(--line-height-base) + 0.25rem + 2 * var(--space-4)
     );
-    padding: var(--space-2) 0;
+    padding: var(--space-4) 0;
     text-decoration: none;
     color: inherit;
     border-radius: var(--radius-2xl);
@@ -295,7 +295,7 @@ const categories = workshopsPage
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.125rem;
+    gap: var(--space-2);
     width: 4rem;
     min-height: 4rem;
     border-radius: var(--radius-pill);
@@ -323,7 +323,7 @@ const categories = workshopsPage
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.375rem;
+    gap: var(--space-3);
   }
 
   .workshops-page__date-slot-venue {
@@ -374,13 +374,13 @@ const categories = workshopsPage
     .workshops-cats {
       display: grid;
       grid-template-columns: repeat(3, minmax(240px, 300px));
-      column-gap: var(--space-6);
-      row-gap: var(--space-8);
+      column-gap: var(--space-12);
+      row-gap: var(--space-15);
       justify-content: center;
       width: fit-content;
       max-width: 100%;
       margin-inline: auto;
-      margin-bottom: var(--space-9);
+      margin-bottom: var(--space-17);
     }
 
     /* Mřížka tří sloupců */
@@ -396,19 +396,19 @@ const categories = workshopsPage
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      padding: var(--space-8) var(--space-6);
+      padding: var(--space-15) var(--space-12);
       border: var(--card-border);
       border-radius: var(--radius-card);
       background: #fefefe;
     }
 
     .workshops-cats__card-head {
-      margin-bottom: var(--space-6);
+      margin-bottom: var(--space-12);
     }
 
     .workshops-cats__card-title {
       margin: 0;
-      padding-top: var(--space-2);
+      padding-top: var(--space-4);
       font-family: var(--font-display);
       font-size: var(--text-2xl);
       font-weight: 600;
@@ -430,7 +430,7 @@ const categories = workshopsPage
       height: 2px;
       border-radius: var(--radius-full);
       background: var(--accent);
-      margin: var(--space-3) auto 0;
+      margin: var(--space-6) auto 0;
     }
 
     .workshops-cats__slots {
@@ -444,7 +444,7 @@ const categories = workshopsPage
     .workshops-cats__slot .workshops-page__divider {
       border: none;
       height: 1px;
-      margin: var(--space-4) 0 var(--space-4);
+      margin: var(--space-8) 0 var(--space-8);
       background: rgba(42, 31, 56, 0.12);
     }
 
@@ -452,10 +452,10 @@ const categories = workshopsPage
       display: grid;
       grid-template-columns: auto 1fr;
       align-items: center;
-      gap: var(--space-4);
+      gap: var(--space-8);
       box-sizing: border-box;
       min-height: 5rem;
-      padding: var(--space-3) var(--space-2);
+      padding: var(--space-6) var(--space-4);
       border-radius: var(--radius-2xl);
       background: var(--accent-soft);
     }
@@ -466,11 +466,11 @@ const categories = workshopsPage
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.125rem;
+      gap: var(--space-2);
       box-sizing: border-box;
       width: 3.25rem;
       min-height: 3.25rem;
-      padding-right: var(--space-3);
+      padding-right: var(--space-6);
       border-radius: var(--radius-2xl);
       color: var(--accent);
       text-align: center;
@@ -502,7 +502,7 @@ const categories = workshopsPage
     .workshops-cats__slot-info {
       display: flex;
       flex-direction: column;
-      gap: 0.125rem;
+      gap: var(--space-2);
       min-width: 0;
     }
 
@@ -527,8 +527,8 @@ const categories = workshopsPage
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      gap: var(--space-5);
-      padding: var(--space-6) var(--space-7);
+      gap: var(--space-10);
+      padding: var(--space-12) var(--space-14);
       border-radius: var(--radius-card);
       background: var(--color-lilac-soft);
     }
@@ -545,8 +545,8 @@ const categories = workshopsPage
 
     .workshops-cats__banner-icon-graphic {
       display: block;
-      width: var(--space-8);
-      height: var(--space-8);
+      width: var(--space-15);
+      height: var(--space-15);
     }
 
     .workshops-cats__banner-icon-graphic :global(svg) {
@@ -578,7 +578,7 @@ const categories = workshopsPage
     .workshops-cats__banner-social {
       display: flex;
       align-items: center;
-      gap: var(--space-4);
+      gap: var(--space-8);
     }
 
     .workshops-cats__banner-social-link {

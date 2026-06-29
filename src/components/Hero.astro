@@ -47,8 +47,8 @@ import { site } from "../data/site";
         </svg>
       </h1>
       <p class="hero__lead">
-        Pro miminka a děti od 3 měsíců do 9 let. Společně objevujeme svět pohybu, smyslů a
-        radosti - bez stresu, ve vlastním tempu. Těšíme se na vás ve
+        Cvičení pro miminka a děti od 3 měsíců do 9 let. Společně objevujeme svět pohybu,
+        smyslů a radosti - bez stresu, ve vlastním tempu. Těšíme se na vás ve
         <strong>Zdicích</strong>, <strong>Hořovicích</strong> a <strong>Broumech</strong>.
       </p>
 
@@ -116,7 +116,7 @@ import { site } from "../data/site";
     padding: 0;
     padding-top: var(--nav-height);
     /* Tucks cream under the wave for zoom / subpixel rounding at the next section */
-    padding-bottom: max(8px, var(--space-2));
+    padding-bottom: var(--space-4);
     overflow: hidden;
     isolation: isolate;
     /* Fills any 1px compositor gap so pink veil / photo never show at section fold */
@@ -217,7 +217,7 @@ import { site } from "../data/site";
     z-index: 2;
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-10);
+    gap: var(--space-18);
     align-items: center;
     width: 100%;
     text-align: left;
@@ -255,11 +255,11 @@ import { site } from "../data/site";
     position: relative;
     isolation: isolate;
     width: fit-content;
-    margin: 0 0 var(--space-8);
-    padding-left: var(--space-4);
+    margin: 0 0 var(--space-18);
+    padding-left: var(--space-8);
     font-family: var(--font-hero);
     font-weight: 400;
-    font-size: clamp(3.4rem, 14.5cqi, 5.3rem);
+    font-size: clamp(3.4rem, 19cqi, 5.625rem);
     line-height: 1.01;
     letter-spacing: -0.015em;
     color: #f5f5f5;
@@ -270,7 +270,7 @@ import { site } from "../data/site";
 
   .hero__title span {
     display: inline-block;
-    margin-left: 58px;
+    margin-left: 16px;
   }
 
   .hero__title-accent {
@@ -286,14 +286,14 @@ import { site } from "../data/site";
     width: 130%;
     height: auto;
     overflow: visible;
-    color: #f5f5f5;
+    color: #ff4fa3;
     filter: drop-shadow(0 2px 8px rgba(42, 31, 56, 0.18));
     pointer-events: none;
   }
 
   .hero__title-flourish path {
     stroke: currentColor;
-    stroke-width: 20;
+    stroke-width: 22;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -302,23 +302,23 @@ import { site } from "../data/site";
     font-size: var(--text-lg);
     color: var(--color-ink);
     max-width: 38rem;
-    margin: 0 auto var(--space-10);
-    padding-left: var(--space-4);
+    margin: 0 auto var(--space-18);
+    padding-left: var(--space-8);
     text-align: left;
   }
 
   .hero__cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.2rem;
-    margin-bottom: var(--space-10);
+    gap: var(--space-10);
+    margin-bottom: var(--space-18);
     justify-content: center;
   }
 
   .hero__pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: var(--space-5);
     justify-content: center;
     list-style: none;
     padding: 0;
@@ -381,31 +381,24 @@ import { site } from "../data/site";
 
   @media (max-width: 639px) {
     .hero__title-flourish {
-      bottom: -0.15em;
+      bottom: -0.28em;
       left: 0;
       width: 21.5rem;
     }
   }
 
-  @media (max-width: 350px) {
-    .hero__title-flourish {
-      left: -0.25rem;
-      width: 17.25rem;
-    }
-  }
-
   @media (min-width: 640px) and (max-width: 1023px) {
     .hero__title {
-      margin: var(--space-8) 0 var(--space-11);
+      margin: var(--space-15) 0 var(--space-19);
     }
 
     .hero__lead {
       font-size: var(--text-xl);
-      margin: 0 auto var(--space-11);
+      margin: 0 auto var(--space-19);
     }
 
     .hero__cta {
-      gap: var(--space-6);
+      gap: var(--space-12);
     }
   }
 
@@ -468,18 +461,18 @@ import { site } from "../data/site";
     }
 
     .hero__title {
-      margin: 0 0 var(--space-6);
+      margin: 0 0 var(--space-16);
       padding-left: 0;
       line-height: 1.01;
     }
 
     .hero__title span {
       display: inline-block;
-      margin-left: 38px;
+      margin-left: 16px;
     }
 
     .hero__lead {
-      margin: 0 0 var(--space-10);
+      margin: 0 0 var(--space-18);
       padding-left: 0;
       text-align: left;
     }
