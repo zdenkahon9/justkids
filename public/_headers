@@ -1,2 +1,47 @@
+# Security headers apply to every response. Cache rules stay separate because
+# Cloudflare combines duplicate headers from all matching rules.
+/*
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Content-Type-Options: nosniff
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cloud.umami.is; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://*.umami.is https://*.umami.dev; frame-src https://www.google.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests;
+
+# HTML pages: browsers revalidate while the CDN caches briefly.
+/
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/vekove-kategorie
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/workshopy
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/recenze
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+# Content-hashed Astro assets can be cached forever.
+/_astro/*
+  Cache-Control: public, max-age=63072000, immutable
+
+# Font versions are part of their filenames.
 /fonts/*
   Cache-Control: public, max-age=63072000, immutable
+
+# Favicons and web-app icons change rarely, but their filenames are not hashed.
+/favicon*
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
+/site.webmanifest
+  Cache-Control: public, max-age=86400
+/web-app-manifest-*.png
+  Cache-Control: public, max-age=86400
+
+# Feeds and crawler files should refresh at the same pace as HTML.
+/sitemap-*.xml
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/llms.txt
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+/robots.txt
+  Cache-Control: public, max-age=86400
