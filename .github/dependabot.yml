@@ -1,0 +1,36 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:00"
+      timezone: Europe/Prague
+    versioning-strategy: increase
+    groups:
+      minors-and-patches:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      majors:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: sunday
+      time: "03:15"
+      timezone: Europe/Prague
+    groups:
+      minors-and-patches:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      majors:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
