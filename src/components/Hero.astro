@@ -42,8 +42,12 @@ import { site } from "../data/site";
           aria-hidden="true"
         >
           <path
-            d="M102 603C250 535 410 510 610 512C850 502 1060 527 1240 531C1430 535 1600 510 1730 468C1760 458 1779 447 1796 436C1724 380 1658 325 1673 263C1682 219 1702 198 1737 205C1768 211 1787 235 1801 257C1806 266 1804 278 1804 285C1808 246 1841 207 1876 202C1917 197 1942 219 1947 256C1955 315 1915 358 1879 387C1849 412 1822 430 1796 436C1827 458 1857 477 1891 489"
+            d="M102 603C250 535 410 510 610 512C850 502 1060 527 1240 531C1430 535 1600 510 1730 468C1760 458 1779 447 1796 436"
           ></path>
+          <path
+            class="hero__title-heart"
+            d="M1796 436C1724 380 1658 325 1673 263C1682 219 1702 198 1737 205C1768 211 1787 235 1801 257C1806 266 1804 278 1804 285C1808 246 1841 207 1876 202C1917 197 1942 219 1947 256C1955 315 1915 358 1879 387C1849 412 1822 430 1796 436C1827 458 1857 477 1891 489"
+            transform="translate(1796 436) scale(0.9) translate(-1796 -436)"></path>
         </svg>
       </h1>
       <p class="hero__lead">
@@ -298,6 +302,10 @@ import { site } from "../data/site";
     stroke-linejoin: round;
   }
 
+  .hero__title-flourish .hero__title-heart {
+    stroke-width: 24.444;
+  }
+
   .hero__lead {
     font-size: var(--text-lg);
     color: var(--color-ink);
@@ -459,8 +467,7 @@ import { site } from "../data/site";
     }
 
     .hero__title {
-      margin: 0 0 var(--space-16);
-      padding-left: 0;
+      margin: 0 0 var(--space-18);
       line-height: 1.01;
     }
 

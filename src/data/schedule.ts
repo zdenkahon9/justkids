@@ -26,7 +26,6 @@ export type ScheduleLocation = {
   venue: {
     city: string;
     street: string;
-    address: string;
     mapUrl: string;
   };
   days: ScheduleDay[];
@@ -76,7 +75,6 @@ const venueFor = (
     return {
       city: city || fallbackCity,
       street: street || fallbackAddress,
-      address: fallbackAddress,
       mapUrl:
         fallbackMapUrl ??
         `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fallbackAddress)}`,
@@ -86,7 +84,6 @@ const venueFor = (
   return {
     city: location.city,
     street: location.street,
-    address: `${location.street}, ${location.city}`,
     mapUrl: location.mapUrl,
   };
 };

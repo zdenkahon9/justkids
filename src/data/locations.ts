@@ -4,7 +4,6 @@ export type Location = {
   street: string;
   city: string;
   zip: string;
-  parking: string;
   mapUrl: string;
   /** WGS84 — used for Google Maps embed pin */
   mapCoords: { lat: number; lng: number };
@@ -23,7 +22,6 @@ export const locations: Location[] = [
     street: "Husova 964",
     city: "Zdice",
     zip: "267 51",
-    parking: "Parkování na náměstí nad prodejnou Coop.",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Husova+964%2C+267+51+Zdice",
     mapCoords: { lat: 49.912799, lng: 13.97766 },
     accent: "blush",
@@ -34,7 +32,6 @@ export const locations: Location[] = [
     street: "Anýžova 449/8",
     city: "Hořovice",
     zip: "268 01",
-    parking: "Parkování na náměstí, kousek od studia Yogasee.",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Yogasee+Anýžova+449%2F8+Hořovice",
     mapCoords: { lat: 49.835747, lng: 13.901443 },
@@ -46,7 +43,6 @@ export const locations: Location[] = [
     street: "Na Návsi 11",
     city: "Broumy",
     zip: "267 42",
-    parking: "Parkování v blízkosti místa konání lekcí.",
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Centrum+Rosenbaum+Na+N%C3%A1vsi+11%2C+267+42+Broumy",
     mapCoords: { lat: 49.956704, lng: 13.853668 },

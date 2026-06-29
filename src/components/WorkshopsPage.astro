@@ -4,11 +4,12 @@ import { Icon } from "astro-icon/components";
 
 import heroBalloons from "../assets/images/hero-balloons.png";
 import { site } from "../data/site";
+import { workshopsAllDatesMeta } from "../data/workshopsAllDates";
 import {
   workshopIconById,
   workshopsPage,
   workshopsPageMeta,
-} from "../data/WorkshopsPage";
+} from "../data/workshopsPage";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 import { sortWorkshopDates } from "../utils/sortWorkshopDates";
 
@@ -74,7 +75,10 @@ const pageMeta = workshopsPageMeta;
       </div>
 
       <div class="workshops-page__pill workshops-page__pill--all-dates">
-        <a href={`#${pageMeta.allDatesSectionId}`} class="workshops-page__pill-all-dates">
+        <a
+          href={`#${workshopsAllDatesMeta.sectionId}`}
+          class="workshops-page__pill-all-dates"
+        >
           <span class="workshops-page__pill-all-dates-icon" aria-hidden="true">
             <Icon
               is:inline
@@ -869,15 +873,6 @@ const pageMeta = workshopsPageMeta;
     font-weight: 700;
     line-height: var(--line-height-base);
     color: var(--color-ink);
-  }
-
-  .workshop__date-spots {
-    margin: var(--space-1) 0 0;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 400;
-    line-height: var(--line-height-base);
-    color: color-mix(in srgb, var(--color-ink-soft) 42%, var(--color-ink) 58%);
   }
 
   .workshops-page__cta {

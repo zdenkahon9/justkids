@@ -11,18 +11,10 @@ export type WorkshopsPageMeta = {
   defaultPrice: string;
   /** Nadpis sekce termínů v `.workshop__terms-label` */
   termsLabel: string;
-  /** Popisek volných míst v `.workshop__date-spots` */
-  spotsLabel: string;
   /** Text tlačítka v `.workshops-page__cta` */
   signupLabel: string;
   /** Text pilulky „Zobrazit všechny termíny“ nad mřížkou */
   showAllDatesLabel: string;
-  /** Id sekce všech termínů pod mřížkou workshopů */
-  allDatesSectionId: string;
-  /** Nadpis sekce všech termínů — první část před `.section-title-accent` */
-  allDatesTitle: string;
-  /** Zvýrazněná část nadpisu v `.section-title-accent` */
-  allDatesTitleAccent: string;
 };
 
 export const workshopsPageMeta: WorkshopsPageMeta = {
@@ -34,16 +26,11 @@ export const workshopsPageMeta: WorkshopsPageMeta = {
   priceLabel: "Cena workshopu",
   defaultPrice: "200 Kč",
   termsLabel: "Nejbližší termíny",
-  spotsLabel: "Volná místa:",
   signupLabel: "Přihlásit se na workshop",
   showAllDatesLabel: "Zobrazit všechny termíny",
-  allDatesSectionId: "vsechny-terminy",
-  allDatesTitle: "Všechny",
-  allDatesTitleAccent: "termíny",
 };
 
 export type WorkshopDateSlot = {
-  id: string;
   /** Den v měsíci v `.workshop__date-day` */
   day: string;
   /** Zkratka měsíce v `.workshop__date-month` */
@@ -69,21 +56,18 @@ export type WorkshopPage = {
 
 const prvniPomocDates: WorkshopDateSlot[] = [
   {
-    id: "prvni-pomoc-rosenbaum",
     day: "4",
     month: "KVĚ",
     time: "od 18:15",
     venueName: "Centrum Rosenbaum",
   },
   {
-    id: "prvni-pomoc-zdice",
     day: "7",
     month: "KVĚ",
     time: "od 16:00",
     venueName: "Fitcentrum Zdice",
   },
   {
-    id: "prvni-pomoc-horovice",
     day: "16",
     month: "KVĚ",
     time: "od 9:00",
@@ -93,21 +77,18 @@ const prvniPomocDates: WorkshopDateSlot[] = [
 
 const handlingDates: WorkshopDateSlot[] = [
   {
-    id: "handling-rosenbaum",
     day: "12",
     month: "KVĚ",
     time: "od 20:00",
     venueName: "Centrum Rosenbaum",
   },
   {
-    id: "handling-zdice",
     day: "15",
     month: "KVĚ",
     time: "od 17:00",
     venueName: "Fitcentrum Zdice",
   },
   {
-    id: "handling-horovice",
     day: "16",
     month: "KVĚ",
     time: "od 11:00",
@@ -117,21 +98,18 @@ const handlingDates: WorkshopDateSlot[] = [
 
 const prevenceDates: WorkshopDateSlot[] = [
   {
-    id: "prevence-rosenbaum",
     day: "25",
     month: "KVĚ",
     time: "od 18:15",
     venueName: "Centrum Rosenbaum",
   },
   {
-    id: "prevence-zdice",
     day: "21",
     month: "KVĚ",
     time: "od 16:00",
     venueName: "Fitcentrum Zdice",
   },
   {
-    id: "prevence-horovice",
     day: "16",
     month: "KVĚ",
     time: "od 13:00",

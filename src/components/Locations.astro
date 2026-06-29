@@ -36,28 +36,31 @@ const splitLocationName = (name: string) => {
 
     <div class="locations-tabs">
       <div class="locations__panel reveal">
-        <article
+        <div
           class="locations__card"
           style={`--accent: ${cardAccentDeep(locations[0].accent)}; --accent-soft: ${cardAccentSoft(locations[0].accent)}`}
         >
-          <div class="locations-tabs__switcher" aria-label="Vybrat pobočku">
+          <div
+            class="locations-tabs__switcher"
+            role="tablist"
+            aria-label="Vyberte pobočku"
+          >
             {
               locations.map((l, i) => (
-                <details
-                  name="locations"
-                  class="locations-tabs__item"
-                  open={i === 0 ? true : undefined}
+                <button
+                  type="button"
+                  role="tab"
+                  id={`location-tab-${l.id}`}
+                  class="locations-tabs__tab"
+                  aria-selected={i === 0 ? "true" : "false"}
+                  aria-controls={`location-panel-${l.id}`}
+                  tabindex={i === 0 ? 0 : -1}
                   data-accent={cardAccentDeep(l.accent)}
                   data-accent-soft={cardAccentSoft(l.accent)}
                   style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}`}
                 >
-                  <summary
-                    class="locations-tabs__tab"
-                    aria-controls={`location-panel-${i}`}
-                  >
-                    {l.city}
-                  </summary>
-                </details>
+                  {l.city}
+                </button>
               ))
             }
           </div>
@@ -71,93 +74,44 @@ const splitLocationName = (name: string) => {
                   return (
                     <div
                       class="locations-tabs__panel"
-                      id={`location-panel-${i}`}
-                      role="region"
-                      aria-label={l.city}
+                      id={`location-panel-${l.id}`}
+                      role="tabpanel"
+                      aria-labelledby={`location-tab-${l.id}`}
                     >
                       <article
                         class="location reveal"
                         style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
                       >
                         <div class="location__details">
-                          <div class="location__summary">
-                            <div class="location__head">
-                              <div class="location__head-text">
-                                <h3>
-                                  <>
-                                    <span class="location__name-first">
-                                      {nameParts.first}
-                                    </span>
-                                    <span class="location__name-rest">
-                                      {nameParts.rest}
-                                    </span>
-                                  </>
-                                </h3>
-                                <address class="location__address">
-                                  <>
-                                    <span class="location__address-street">
-                                      {l.street}
-                                    </span>
-                                    <span class="location__address-sep">, </span>
-                                    <span class="location__address-locality">
-                                      {l.zip} {l.city}
-                                    </span>
-                                  </>
-                                </address>
-                              </div>
+                          <div class="location__head">
+                            <div class="location__head-text">
+                              <h3>
+                                <span class="location__name-first">
+                                  {nameParts.first}
+                                </span>
+                                <span class="location__name-rest">{nameParts.rest}</span>
+                              </h3>
+                              <address class="location__address">
+                                <span class="location__address-street">{l.street}</span>
+                                <span class="location__address-sep">,&nbsp;</span>
+                                <span class="location__address-locality">
+                                  {l.zip} {l.city}
+                                </span>
+                              </address>
                             </div>
                           </div>
-
                           <span class="location__rule" aria-hidden="true" />
-
-                          <div class="location__panel">
-                            <div class="location__expandable">
-                              <a
-                                href={l.mapUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="location__nav-link"
-                              >
-                                Navigovat v Google Maps
-                                <svg
-                                  class="location__extern-icon"
-                                  viewBox="0 0 24 24"
-                                  width="16"
-                                  height="16"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    fill="currentColor"
-                                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                                  />
-                                  <path
-                                    fill="currentColor"
-                                    d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                                  />
-                                </svg>
-                              </a>
-                            </div>
-                          </div>
                         </div>
 
                         <a
                           href={l.mapUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="location__map-shell"
-                          aria-label={`Otevřít ${l.name} v Google Maps`}
+                          class="location__map-link"
+                          aria-label={`Otevřít trasu do ${l.name} v Google Maps (nové okno)`}
                         >
-                          <Image
-                            class="location__map-frame"
-                            src={locationMapImage(l.id)}
-                            alt={`Mapa okolí: ${l.name}, ${l.street}, ${l.zip} ${l.city}`}
-                            widths={[326, 652]}
-                            sizes="(min-width: 1024px) 326px, (min-width: 768px) 728px, min(calc(100vw - 3rem), 412px)"
-                            format="webp"
-                            loading="lazy"
-                          />
-                          <span class="location__map-overlay" aria-hidden="true">
-                            Otevřít v Mapách
+                          <span class="location__map-action">
+                            Navigovat v Google Maps
                             <svg
                               class="location__extern-icon"
                               viewBox="0 0 24 24"
@@ -175,6 +129,17 @@ const splitLocationName = (name: string) => {
                               />
                             </svg>
                           </span>
+                          <span class="location__map-shell">
+                            <Image
+                              class="location__map-frame"
+                              src={locationMapImage(l.id)}
+                              alt=""
+                              widths={[326, 652]}
+                              sizes="(min-width: 1024px) 326px, (min-width: 768px) 728px, min(calc(100vw - 3rem), 412px)"
+                              format="webp"
+                              loading="lazy"
+                            />
+                          </span>
                         </a>
                       </article>
                     </div>
@@ -183,7 +148,7 @@ const splitLocationName = (name: string) => {
               }
             </div>
           </div>
-        </article>
+        </div>
       </div>
     </div>
   </div>
@@ -258,14 +223,9 @@ const splitLocationName = (name: string) => {
     min-height: calc(2rem + 1em * var(--line-height-base));
   }
 
-  .locations-tabs__item {
-    display: block;
-    flex: 1;
-    min-width: 0;
-  }
-
   .locations-tabs__tab {
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -290,27 +250,25 @@ const splitLocationName = (name: string) => {
     -webkit-tap-highlight-color: transparent;
     transition:
       background-color 220ms ease,
-      color 220ms ease;
+      color 220ms ease,
+      box-shadow 180ms ease;
   }
 
-  .locations-tabs__tab::-webkit-details-marker {
-    display: none;
-  }
-
-  .locations-tabs__tab::marker {
-    content: "";
-  }
-
-  details[open] > .locations-tabs__tab {
+  .locations-tabs__tab[aria-selected="true"] {
     background: var(--accent-soft);
     color: var(--accent);
     font-weight: 600;
   }
 
-  details:not([open]) > .locations-tabs__tab:hover,
-  details:not([open]) > .locations-tabs__tab:focus-visible {
+  .locations-tabs__tab[aria-selected="false"]:hover {
     background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+  }
+
+  .locations-tabs__tab:focus-visible {
+    position: relative;
+    z-index: 1;
     outline: none;
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 58%, white);
   }
 
   .locations__body {
@@ -324,19 +282,25 @@ const splitLocationName = (name: string) => {
     box-sizing: border-box;
   }
 
-  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(1)[open])
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__tab:nth-child(1)[aria-selected="true"]
+    )
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(1),
-  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(2)[open])
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__tab:nth-child(2)[aria-selected="true"]
+    )
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(2),
-  .locations__card:has(.locations-tabs__switcher .locations-tabs__item:nth-child(3)[open])
+  .locations__card:has(
+      .locations-tabs__switcher .locations-tabs__tab:nth-child(3)[aria-selected="true"]
+    )
     .locations-tabs__panels
     .locations-tabs__panel:nth-child(3) {
     display: block;
   }
 
-  /* locations__rule = accent (taby); location__rule = šedý; mapa = location-divider */
+  /* locations__rule = accent tabů; mapa = location-divider */
   .location {
     --location-divider: 1px solid rgba(236, 47, 142, 0.16);
 
@@ -373,7 +337,7 @@ const splitLocationName = (name: string) => {
     width: calc(100% + 2 * var(--card-padding-x));
     max-width: none;
     margin-inline: calc(-1 * var(--card-padding-x));
-    margin-top: var(--space-10);
+    margin-top: 0;
     margin-bottom: calc(-1 * var(--card-padding-y));
     height: 13rem;
     max-height: 13rem;
@@ -445,7 +409,7 @@ const splitLocationName = (name: string) => {
 
     .locations__body .location__details {
       padding: var(--card-padding);
-      padding-bottom: var(--space-12);
+      padding-bottom: 0;
     }
 
     .locations__body .location__head {
@@ -462,6 +426,53 @@ const splitLocationName = (name: string) => {
       height: clamp(11rem, 24vw, 14rem);
       max-height: none;
     }
+
+    .location__map-link {
+      margin-top: 0;
+    }
+
+    .location__map-action {
+      margin-inline: var(--card-padding-x);
+    }
+  }
+
+  .location__map-link {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .location__map-action {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: var(--space-3);
+    margin-bottom: var(--space-10);
+    color: var(--color-blush-deep);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-base);
+    border-bottom: 1.5px solid transparent;
+    transition:
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+
+  .location__map-link:hover .location__map-action {
+    color: var(--color-blush-vivid);
+    border-bottom-color: currentColor;
+  }
+
+  .location__map-link:focus-visible {
+    outline: none;
+  }
+
+  .location__map-link:focus-visible .location__map-action {
+    border-radius: var(--radius-sm);
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
   }
 
   .location__map-shell {
@@ -473,8 +484,6 @@ const splitLocationName = (name: string) => {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.85),
       inset 0 12px 28px -16px rgba(42, 31, 56, 0.06);
-    color: inherit;
-    text-decoration: none;
   }
 
   .location__map-frame {
@@ -485,33 +494,6 @@ const splitLocationName = (name: string) => {
     object-fit: cover;
     /* Slightly softer than raw Google embed — easier on long viewing */
     filter: contrast(0.97) saturate(0.94);
-  }
-
-  .location__map-overlay {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    z-index: 2;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-4) var(--space-6);
-    border-radius: var(--radius-pill);
-    background: #fff;
-    color: #1a73e8;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-    transition:
-      background-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .location__map-overlay:hover {
-    background: #f8f9fa;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
   }
 
   .location__extern-icon {
@@ -530,28 +512,13 @@ const splitLocationName = (name: string) => {
     box-sizing: border-box;
   }
 
-  .location__panel {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  .location__summary {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: var(--space-6);
-    padding: 0;
-  }
-
-  .location__expandable {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding: 0;
+  .location__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-10) 0 var(--space-10);
+    border: none;
+    background: rgba(42, 31, 56, 0.12);
   }
 
   .location__head {
@@ -570,6 +537,10 @@ const splitLocationName = (name: string) => {
     .location__head-text .location__address {
       text-align: center;
     }
+
+    .location__address {
+      justify-content: center;
+    }
   }
 
   .location__head-text h3 {
@@ -586,6 +557,10 @@ const splitLocationName = (name: string) => {
   }
 
   .location__address {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0;
     font-style: normal;
     margin: 0;
     font-size: var(--text-base);
@@ -611,6 +586,8 @@ const splitLocationName = (name: string) => {
     }
 
     .location__address {
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
 
@@ -639,49 +616,8 @@ const splitLocationName = (name: string) => {
     }
 
     .location__address {
-      display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      align-items: baseline;
-      gap: var(--space-none);
     }
-
-    .location__address-sep {
-      display: none;
-    }
-
-    .location__address-street::after {
-      content: ",\00a0";
-    }
-  }
-
-  .location__rule {
-    display: block;
-    width: 100%;
-    height: 1px;
-    margin: var(--space-10) 0 var(--space-10);
-    border: none;
-    background: rgba(42, 31, 56, 0.12);
-  }
-
-  #lokace .location__nav-link {
-    margin-top: auto;
-    /* padding-top: var(--space-10); */
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-3);
-    color: var(--color-blush-deep);
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: var(--text-base);
-    text-decoration: none;
-    border-bottom: 1.5px solid transparent;
-    transition: border-color 180ms ease;
-    align-self: flex-start;
-  }
-
-  #lokace .location__nav-link:hover {
-    border-bottom-color: var(--color-blush-vivid);
   }
 
   @media (prefers-contrast: more) {
@@ -692,7 +628,8 @@ const splitLocationName = (name: string) => {
 
   @media (hover: hover) and (pointer: fine) {
     @media (min-width: 1024px) {
-      .location:hover {
+      .location:has(.location__map-link:hover),
+      .location:focus-within {
         transform: translateY(-4px);
         box-shadow: 0 26px 55px -18px color-mix(in srgb, var(--accent) 45%, transparent);
       }
@@ -700,7 +637,7 @@ const splitLocationName = (name: string) => {
   }
 
   @media (min-width: 1024px) {
-    .location:active {
+    .location:has(.location__map-link:active) {
       transform: translateY(-2px) scale(0.99);
       box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--accent) 35%, transparent);
     }
@@ -709,14 +646,15 @@ const splitLocationName = (name: string) => {
   @media (prefers-reduced-motion: reduce) {
     @media (hover: hover) and (pointer: fine) {
       @media (min-width: 1024px) {
-        .location:hover {
+        .location:has(.location__map-link:hover),
+        .location:focus-within {
           transform: none;
         }
       }
     }
 
     @media (min-width: 1024px) {
-      .location:active {
+      .location:has(.location__map-link:active) {
         transform: none;
       }
     }
@@ -725,34 +663,54 @@ const splitLocationName = (name: string) => {
 
 <script>
   const setupLocationsTabs = () => {
-    const switcher = document.querySelector<HTMLElement>(".locations-tabs__switcher");
-    if (!switcher || switcher.dataset.tabsReady === "true") return;
-    switcher.dataset.tabsReady = "true";
+    document
+      .querySelectorAll<HTMLElement>(".locations-tabs__switcher")
+      .forEach((switcher) => {
+        if (switcher.dataset.tabsReady === "true") return;
+        switcher.dataset.tabsReady = "true";
 
-    const card = switcher.closest<HTMLElement>(".locations__card");
-    const items = switcher.querySelectorAll<HTMLDetailsElement>(".locations-tabs__item");
+        const card = switcher.closest<HTMLElement>(".locations__card");
+        const tabs = Array.from(
+          switcher.querySelectorAll<HTMLButtonElement>("[role='tab']"),
+        );
 
-    const syncAccent = (item: HTMLDetailsElement) => {
-      const accent = item.dataset.accent;
-      const accentSoft = item.dataset.accentSoft;
-      if (card && accent) {
-        card.style.setProperty("--accent", accent);
-      }
-      if (card && accentSoft) {
-        card.style.setProperty("--accent-soft", accentSoft);
-      }
-    };
+        const selectTab = (selectedTab: HTMLButtonElement, moveFocus = false) => {
+          tabs.forEach((tab) => {
+            const isSelected = tab === selectedTab;
+            tab.setAttribute("aria-selected", String(isSelected));
+            tab.tabIndex = isSelected ? 0 : -1;
+          });
 
-    items.forEach((item) => {
-      item.addEventListener("toggle", () => {
-        if (item.open) syncAccent(item);
+          const accent = selectedTab.dataset.accent;
+          const accentSoft = selectedTab.dataset.accentSoft;
+          if (card && accent) card.style.setProperty("--accent", accent);
+          if (card && accentSoft) card.style.setProperty("--accent-soft", accentSoft);
+          if (moveFocus) selectedTab.focus();
+        };
+
+        tabs.forEach((tab, index) => {
+          tab.addEventListener("click", () => selectTab(tab));
+          tab.addEventListener("keydown", (event) => {
+            let nextIndex: number | undefined;
+
+            if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+            if (event.key === "ArrowLeft") {
+              nextIndex = (index - 1 + tabs.length) % tabs.length;
+            }
+            if (event.key === "Home") nextIndex = 0;
+            if (event.key === "End") nextIndex = tabs.length - 1;
+
+            if (nextIndex === undefined) return;
+            event.preventDefault();
+            selectTab(tabs[nextIndex], true);
+          });
+        });
+
+        const selectedTab = tabs.find(
+          (tab) => tab.getAttribute("aria-selected") === "true",
+        );
+        if (selectedTab) selectTab(selectedTab);
       });
-    });
-
-    const openItem = switcher.querySelector<HTMLDetailsElement>(
-      ".locations-tabs__item[open]",
-    );
-    if (openItem) syncAccent(openItem);
   };
 
   setupLocationsTabs();

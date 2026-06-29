@@ -1,5 +1,4 @@
 export type AgeGroupPage = {
-  id: string;
   range: string;
   title: string;
   description: string;
@@ -8,7 +7,6 @@ export type AgeGroupPage = {
   /** Iconify název (sada:id) — ikona pro kartu na detailní stránce */
   icon: string;
   accent: "blush" | "sky" | "lilac" | "meadow" | "apricot";
-  optional?: boolean;
 };
 
 export type AgeGroupsPageMeta = {
@@ -29,7 +27,6 @@ export const ageGroupsPageMeta: AgeGroupsPageMeta = {
 /** Karty — cvičení s rodiči (Baby, Mini, Move, Active) */
 export const ageGroupsPageWithParents: AgeGroupPage[] = [
   {
-    id: "3-6",
     range: "3-6 měsíců",
     title: "Baby",
     groupsLabel: "od 3 měsíců",
@@ -39,7 +36,6 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     accent: "lilac",
   },
   {
-    id: "6-12",
     range: "6-12 měsíců",
     title: "Mini",
     groupsLabel: "od rozlezení",
@@ -49,7 +45,6 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     accent: "blush",
   },
   {
-    id: "1-2",
     range: "1-2 roky",
     title: "Move",
     groupsLabel: "od chůze",
@@ -59,7 +54,6 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
     accent: "sky",
   },
   {
-    id: "2-3",
     range: "2-3 roky",
     title: "Active",
     description:
@@ -72,7 +66,6 @@ export const ageGroupsPageWithParents: AgeGroupPage[] = [
 /** Karty — cvičení bez rodičů (Fit, Pro) */
 export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
   {
-    id: "fit",
     range: "3-6 let",
     title: "Fit",
     description:
@@ -81,7 +74,6 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     accent: "apricot",
   },
   {
-    id: "pro",
     range: "6-9 let",
     title: "Pro",
     description:

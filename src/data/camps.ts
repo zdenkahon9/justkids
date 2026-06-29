@@ -24,7 +24,6 @@ export const campFeatureIcons: CampFeatureIcon[] = [
 ];
 
 export type Camp = {
-  id: string;
   title: string;
   city: string;
   dateRange: string;
@@ -54,7 +53,6 @@ export const campsMeta = {
 
 export const camps: Camp[] = [
   {
-    id: "letni-kemp-cervenec",
     title: "Letní příměstský kemp",
     city: "Zdice",
     dateRange: "7. – 10. července",
@@ -71,7 +69,6 @@ export const camps: Camp[] = [
     accent: "blush",
   },
   {
-    id: "letni-kemp-srpen",
     title: "Letní příměstský kemp",
     city: "Broumy",
     dateRange: "17. – 21. srpna",

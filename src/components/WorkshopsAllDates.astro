@@ -2,16 +2,16 @@
 import { Icon } from "astro-icon/components";
 
 import { site } from "../data/site";
-import { workshopsPage, workshopsPageMeta } from "../data/WorkshopsPage";
+import { workshopsAllDates, workshopsAllDatesMeta } from "../data/workshopsAllDates";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 import { sortWorkshopDates } from "../utils/sortWorkshopDates";
 import FacebookIcon from "./FacebookIcon.astro";
 import InstagramIcon from "./InstagramIcon.astro";
 
-const pageMeta = workshopsPageMeta;
+const pageMeta = workshopsAllDatesMeta;
 
 const allDateSlots = sortWorkshopDates(
-  workshopsPage.flatMap((workshop) =>
+  workshopsAllDates.flatMap((workshop) =>
     (workshop.dates ?? []).map((date) => ({
       ...date,
       workshopTitle: workshop.title,
@@ -22,7 +22,7 @@ const allDateSlots = sortWorkshopDates(
 );
 
 /** Stejné termíny jako v kartách WorkshopsPage (desktop ≥1024px) */
-const categories = workshopsPage
+const categories = workshopsAllDates
   .filter((workshop) => workshop.dates?.length)
   .map((workshop) => ({
     id: workshop.id,
@@ -34,15 +34,15 @@ const categories = workshopsPage
 ---
 
 <section
-  id={pageMeta.allDatesSectionId}
+  id={pageMeta.sectionId}
   class="section workshops-page__all-dates"
   aria-labelledby="workshops-all-dates-title"
 >
   <div class="container-x">
     <header class="section-header reveal">
       <h2 id="workshops-all-dates-title">
-        {pageMeta.allDatesTitle}{" "}
-        <span class="section-title-accent">{pageMeta.allDatesTitleAccent}</span>
+        {pageMeta.title}{" "}
+        <span class="section-title-accent">{pageMeta.titleAccent}</span>
       </h2>
     </header>
 
