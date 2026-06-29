@@ -19,6 +19,6 @@ type Props = {
 };
 ---
 
-<NavbarInteractive client:load {...Astro.props}>
+<NavbarInteractive client:idle {...Astro.props}>
   <Image src={logo} alt="" width={52} densities={[2, 3]} format="webp" priority />
 </NavbarInteractive>
