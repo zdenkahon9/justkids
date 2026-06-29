@@ -1,6 +1,7 @@
 ---
 import { ENV } from "../../config/env";
 import { defaultSeo } from "../../config/seo";
+import Analytics from "../Analytics.astro";
 import DisallowRobots from "../DisallowRobots.astro";
 import CanonicalLink from "./CanonicalLink.astro";
 import Favicon from "./Favicon.astro";
@@ -29,6 +30,7 @@ const pageTitle = defaultSeo.pageTitle(title);
   {!ENV.IS_PRODUCTION && <DisallowRobots />}
   <Favicon />
   <CanonicalLink />
+  {!ENV.IS_LOCAL && <Analytics />}
   <OpenGraph
     title={pageTitle}
     description={description}

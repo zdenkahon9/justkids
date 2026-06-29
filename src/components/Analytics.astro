@@ -1,0 +1,10 @@
+---
+import { ENV } from "../config/env";
+
+const config = {
+  url: "https://cloud.umami.is/script.js",
+  websiteId: ENV.PUBLIC_UMAMI_SITE_ID,
+} as const;
+---
+
+<script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
