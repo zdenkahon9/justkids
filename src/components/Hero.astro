@@ -379,6 +379,21 @@ import { site } from "../data/site";
     transition: border-color 220ms ease;
   }
 
+  @media (max-width: 639px) {
+    .hero__title-flourish {
+      bottom: -0.15em;
+      left: 0;
+      width: 21.5rem;
+    }
+  }
+
+  @media (max-width: 350px) {
+    .hero__title-flourish {
+      left: -0.25rem;
+      width: 17.25rem;
+    }
+  }
+
   @media (min-width: 640px) and (max-width: 1023px) {
     .hero__title {
       margin: var(--space-8) 0 var(--space-11);
