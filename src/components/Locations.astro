@@ -1,9 +1,19 @@
 ---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
 import { locations, locationsMeta } from "../data/locations";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
-const mapEmbed = (lat: number, lng: number) =>
-  `https://www.google.com/maps?q=${lat},${lng}&z=16&hl=cs&output=embed`;
+const mapImages = import.meta.glob<{ default: ImageMetadata }>("../assets/maps/*.png", {
+  eager: true,
+});
+
+const locationMapImage = (id: string) => {
+  const image = mapImages[`../assets/maps/${id}.png`]?.default;
+  if (!image) throw new Error(`Missing generated map image for location "${id}".`);
+  return image;
+};
 
 const splitLocationName = (name: string) => {
   const [first, ...rest] = name.split(" ");
@@ -130,21 +140,23 @@ const splitLocationName = (name: string) => {
                           </div>
                         </div>
 
-                        <div class="location__map-shell">
-                          <iframe
+                        <a
+                          href={l.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="location__map-shell"
+                          aria-label={`Otevřít ${l.name} v Google Maps`}
+                        >
+                          <Image
                             class="location__map-frame"
-                            src={mapEmbed(l.mapCoords.lat, l.mapCoords.lng)}
-                            title={`Mapa: ${l.name}`}
+                            src={locationMapImage(l.id)}
+                            alt={`Mapa okolí: ${l.name}, ${l.street}, ${l.zip} ${l.city}`}
+                            widths={[326, 652]}
+                            sizes="(min-width: 1024px) 326px, (min-width: 768px) 728px, min(calc(100vw - 3rem), 412px)"
+                            format="webp"
                             loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            allowfullscreen
                           />
-                          <a
-                            href={l.mapUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="location__map-overlay"
-                          >
+                          <span class="location__map-overlay" aria-hidden="true">
                             Otevřít v Mapách
                             <svg
                               class="location__extern-icon"
@@ -162,8 +174,8 @@ const splitLocationName = (name: string) => {
                                 d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
                               />
                             </svg>
-                          </a>
-                        </div>
+                          </span>
+                        </a>
                       </article>
                     </div>
                   );
@@ -461,6 +473,8 @@ const splitLocationName = (name: string) => {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.85),
       inset 0 12px 28px -16px rgba(42, 31, 56, 0.06);
+    color: inherit;
+    text-decoration: none;
   }
 
   .location__map-frame {
@@ -468,6 +482,7 @@ const splitLocationName = (name: string) => {
     width: 100%;
     height: 100%;
     display: block;
+    object-fit: cover;
     /* Slightly softer than raw Google embed — easier on long viewing */
     filter: contrast(0.97) saturate(0.94);
   }

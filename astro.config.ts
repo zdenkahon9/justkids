@@ -7,10 +7,12 @@ import { loadEnv } from "vite";
 
 import { ENV_DEFAULTS, envConfig } from "./env.config.ts";
 import { normalizePagePath, pageSeoEntries } from "./src/config/seo.ts";
+import { staticLocationMaps } from "./src/integrations/staticLocationMaps.ts";
 
 const loadedEnv = loadEnv("", process.cwd(), "");
 const siteUrl = loadedEnv.SITE_URL || ENV_DEFAULTS.SITE_URL;
 const envName = loadedEnv.ENV_NAME || ENV_DEFAULTS.ENV_NAME;
+const googleMapsStaticApiKey = loadedEnv.GOOGLE_MAPS_STATIC_API_KEY ?? "";
 const sitemapChangeFrequency = {
   weekly: ChangeFreqEnum.WEEKLY,
   monthly: ChangeFreqEnum.MONTHLY,
@@ -22,6 +24,7 @@ export default defineConfig({
   trailingSlash: "never",
   site: siteUrl,
   integrations: [
+    staticLocationMaps(googleMapsStaticApiKey),
     preact(),
     icon({
       include: {
