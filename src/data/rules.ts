@@ -18,7 +18,7 @@ export const rules: Rule[] = [
     icon: "iconoir:clean-water",
   },
   {
-    title: "Odhlášení\n z lekce do 19.00",
+    title: "Odhlášení\n z lekce do 19:00",
     detail: "Nemůžete-li přijít, dejte mi prosím vědět do 19.00 předchozího dne.",
     accent: "sky-deep",
     icon: "ph:clock-counter-clockwise-fill",
