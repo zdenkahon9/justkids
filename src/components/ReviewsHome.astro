@@ -331,7 +331,6 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
   .reviews__dots {
     display: flex;
     justify-content: center;
-    gap: var(--space-4);
     width: 100%;
     max-width: var(--card-grid-width);
     margin-inline: auto;
@@ -339,19 +338,29 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
   }
 
   .reviews__dot {
-    width: 0.5rem;
-    height: 0.5rem;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
     padding: 0;
     border: none;
     border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--color-ink) 18%, white);
+    background: transparent;
     cursor: pointer;
+  }
+
+  .reviews__dot::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--color-ink) 18%, white);
     transition:
       background 180ms ease,
       transform 180ms ease;
   }
 
-  .reviews__dot.is-active {
+  .reviews__dot.is-active::before {
     background: var(--color-blush-vivid);
     transform: scale(1.15);
   }
