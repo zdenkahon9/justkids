@@ -125,6 +125,8 @@ const Navbar = ({
   const [open, setOpen] = useState(false);
   const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(null);
   const openRef = useRef(open);
+  /** Hash to scroll to after mobile menu unlock — avoids restore scroll overwriting anchor nav */
+  const pendingHashRef = useRef<string | null>(null);
   const dropdownRefs = useRef<Partial<Record<NavDropdownId, HTMLLIElement>>>({});
   openRef.current = open;
 
@@ -168,7 +170,24 @@ const Navbar = ({
       body.style.left = prev.bodyLeft;
       body.style.right = prev.bodyRight;
       body.style.width = prev.bodyWidth;
-      window.scrollTo(0, scrollY);
+
+      const hash = pendingHashRef.current;
+      pendingHashRef.current = null;
+
+      if (hash) {
+        // Wait for fixed-body unlock before scrolling — single rAF was still racing layout
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const el = document.querySelector(hash);
+            if (el) {
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+              history.replaceState(null, "", hash);
+            }
+          });
+        });
+      } else {
+        window.scrollTo(0, scrollY);
+      }
     };
   }, [open]);
 
@@ -181,29 +200,37 @@ const Navbar = ({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const scrollToHash = useCallback((hash: string, delayScroll: boolean) => {
-    const scrollToTarget = () => {
-      const el = document.querySelector(hash);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        history.replaceState(null, "", hash);
-      }
-    };
-    if (delayScroll) {
-      setTimeout(scrollToTarget, 0);
-    } else {
-      scrollToTarget();
+  const scrollToHash = useCallback((hash: string) => {
+    const el = document.querySelector(hash);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", hash);
     }
   }, []);
 
-  /** Mobile menu — same-page # anchors only (unchanged from original) */
+  /** Mobile menu — same-page # anchors; unlock body before scroll when menu was open */
   const handleMobileNav = useCallback(
     (e: TargetedMouseEvent<HTMLAnchorElement>, href: string) => {
-      if (!href.startsWith("#")) return;
+      const hashIdx = href.indexOf("#");
+      if (hashIdx === -1) return;
+
+      const hash = href.slice(hashIdx);
+      const pathPart = href.slice(0, hashIdx);
+      const isSamePage = !pathPart || pathPart === window.location.pathname;
+
+      if (!isSamePage) {
+        setOpen(false);
+        return;
+      }
+
       e.preventDefault();
-      const menuWasOpen = openRef.current;
-      setOpen(false);
-      scrollToHash(href, menuWasOpen);
+
+      if (openRef.current) {
+        pendingHashRef.current = hash;
+        setOpen(false);
+      } else {
+        scrollToHash(hash);
+      }
     },
     [scrollToHash],
   );
@@ -240,7 +267,7 @@ const Navbar = ({
 
       e.preventDefault();
       closeDropdown?.();
-      scrollToHash(hash, false);
+      scrollToHash(hash);
     },
     [scrollToHash],
   );
