@@ -103,7 +103,7 @@ const Navbar = ({
   reservationUrl,
   brand,
   children,
-  logoHref = ROUTES.home.hero,
+  logoHref = ROUTES.home._,
   variant = "default",
 }: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
