@@ -74,7 +74,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
       {
         reviews.map((r) => (
           <li class="reviews-page__item">
-            <div class="reviews-page__stars" aria-label="Hodnocení 5 z 5">
+            <div class="reviews-page__stars" role="img" aria-label="Hodnocení 5 z 5">
               {Array.from({ length: 5 }, () => (
                 <svg viewBox="0 0 24 24" aria-hidden="true" class="is-on">
                   <path
