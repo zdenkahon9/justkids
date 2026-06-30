@@ -1,3 +1,4 @@
+import { ROUTE_IDS } from "../config/routes";
 import { locations } from "./locations";
 
 export type ScheduleMeta = {
@@ -32,7 +33,7 @@ export type ScheduleLocation = {
 };
 
 export const scheduleMeta: ScheduleMeta = {
-  sectionId: "rozvrh-lekci",
+  sectionId: ROUTE_IDS.ageGroups.schedule,
   title: "Rozvrh",
   titleAccent: "lekcí",
 };

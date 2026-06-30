@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTES } from "../config/routes";
 import { reviews } from "../data/reviews";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 import ReviewCard from "./ReviewCard.astro";
@@ -60,7 +61,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
             </div>
             <p class="review--cta__text">Přečtěte si další zkušenosti rodičů.</p>
             <span class="review--cta__rule" aria-hidden="true"></span>
-            <a class="review--cta__more" href="/recenze">
+            <a class="review--cta__more" href={ROUTES.reviews._}>
               Zobrazit všechny recenze
               <span aria-hidden="true">→</span>
             </a>
@@ -93,7 +94,7 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
     </ul>
 
     <div class="reviews__all reveal">
-      <a class="btn btn-primary" href="/recenze">
+      <a class="btn btn-primary" href={ROUTES.reviews._}>
         Zobrazit všechny recenze
         <span aria-hidden="true">→</span>
       </a>

@@ -4,10 +4,11 @@ import { Image } from "astro:assets";
 import heroBalloons from "../assets/images/hero-balloons.png";
 import heroBoy from "../assets/images/hero-boy.png";
 import heroGym from "../assets/images/hero-gym.png";
+import { ROUTE_IDS, ROUTES } from "../config/routes";
 import { site } from "../data/site";
 ---
 
-<section id="hero" class="hero" aria-label="Úvod">
+<section id={ROUTE_IDS.home.hero} class="hero" aria-label="Úvod">
   <div class="hero__bg" aria-hidden="true">
     <Image
       src={heroBalloons}
@@ -66,7 +67,7 @@ import { site } from "../data/site";
           Rezervovat lekci
           <span aria-hidden="true">→</span>
         </a>
-        <a href="/vekove-kategorie" class="btn btn-ghost"> Prohlédnout kurzy </a>
+        <a href={ROUTES.ageGroups._} class="btn btn-ghost"> Prohlédnout kurzy </a>
       </div>
     </div>
 
@@ -84,7 +85,7 @@ import { site } from "../data/site";
     </div>
   </div>
 
-  <a href="#o-mne" class="hero__scroll" aria-label="Pokračovat dolů">
+  <a href={ROUTES.home.about} class="hero__scroll" aria-label="Pokračovat dolů">
     <span></span>
   </a>
 

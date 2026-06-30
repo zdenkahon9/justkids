@@ -1,3 +1,5 @@
+import { ROUTE_IDS } from "../config/routes";
+
 export type WorkshopsPageMeta = {
   /** Id sekce — kotva pro odkaz `/#workshopy` i scroll-margin */
   sectionId: string;
@@ -18,7 +20,7 @@ export type WorkshopsPageMeta = {
 };
 
 export const workshopsPageMeta: WorkshopsPageMeta = {
-  sectionId: "workshopy",
+  sectionId: ROUTE_IDS.workshops.page,
   title: "Workshopy",
   titleAccent: "pro rodiče",
   subtitle:

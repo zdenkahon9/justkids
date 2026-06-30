@@ -1,11 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTE_IDS } from "../config/routes";
 import { rules } from "../data/rules";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 ---
 
-<section id="provozni-rad" class="section rules" aria-labelledby="rules-title">
+<section id={ROUTE_IDS.home.rules} class="section rules" aria-labelledby="rules-title">
   <div class="container-x">
     <header class="section-header reveal">
       <span class="eyebrow">Provozní řád</span>

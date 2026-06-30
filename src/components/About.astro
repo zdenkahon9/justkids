@@ -3,9 +3,10 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 import aboutMomBaby from "../assets/images/about-mom-baby-original.png";
+import { ROUTE_IDS } from "../config/routes";
 ---
 
-<section id="o-mne" class="section about" aria-labelledby="about-title">
+<section id={ROUTE_IDS.home.about} class="section about" aria-labelledby="about-title">
   <div class="container-x about__inner">
     <div class="about__media reveal">
       <div class="about__portrait-frame">

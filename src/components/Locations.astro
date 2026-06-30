@@ -2,6 +2,7 @@
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
+import { ROUTE_IDS } from "../config/routes";
 import { locations, locationsMeta } from "../data/locations";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
@@ -21,7 +22,11 @@ const splitLocationName = (name: string) => {
 };
 ---
 
-<section id="lokace" class="section locations" aria-labelledby="locations-title">
+<section
+  id={ROUTE_IDS.home.locations}
+  class="section locations"
+  aria-labelledby="locations-title"
+>
   <div class="container-x">
     <header class="section-header reveal">
       <span class="eyebrow">Kde nás najdete</span>

@@ -2,16 +2,12 @@ import { Fragment } from "preact";
 import type { ComponentChildren, TargetedMouseEvent } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
+import { ROUTES, type NavLink } from "../config/routes";
 import styles from "./Navbar.module.css";
 
-type NavLink = {
-  href: string;
-  label: string;
-};
-
 type NavbarProps = {
-  links: NavLink[];
-  mobileLinks?: NavLink[];
+  links: readonly NavLink[];
+  mobileLinks?: readonly NavLink[];
   reservationUrl: string;
   brand: string;
   children: ComponentChildren;
@@ -22,20 +18,20 @@ type NavbarProps = {
 
 /** Desktop submenu under „O mně“ — same section anchors as elsewhere on the site */
 const ABOUT_DROPDOWN_LINKS: NavLink[] = [
-  { href: "#o-mne", label: "Kdo jsem" },
-  { href: "/recenze", label: "Recenze" },
+  { href: ROUTES.home.about, label: "Kdo jsem" },
+  { href: ROUTES.reviews._, label: "Recenze" },
 ];
 
 /** Desktop submenu under „Další akce“ */
 const EVENTS_DROPDOWN_LINKS: NavLink[] = [
-  { href: "/workshopy", label: "Workshopy" },
-  { href: "/#kempy", label: "Kempy" },
+  { href: ROUTES.workshops._, label: "Workshopy" },
+  { href: ROUTES.home.camps, label: "Kempy" },
 ];
 
 /** Desktop submenu under „Cvičení pro děti“ */
 const EXERCISE_DROPDOWN_LINKS: NavLink[] = [
-  { href: "/vekove-kategorie", label: "Věkové kategorie" },
-  { href: "/#lokace", label: "Kde cvičíme" },
+  { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
+  { href: ROUTES.home.locations, label: "Kde cvičíme" },
 ];
 
 type NavDropdownId = "o-mne" | "cviceni-pro-deti" | "dalsi-akce";
@@ -45,7 +41,7 @@ const NAV_DROPDOWNS: Record<
   { match: (l: NavLink) => boolean; links: NavLink[] }
 > = {
   "o-mne": {
-    match: (l) => l.label === "O mně" && (l.href === "#o-mne" || l.href === "/#o-mne"),
+    match: (l) => l.label === "O mně" && l.href === ROUTES.home.about,
     links: ABOUT_DROPDOWN_LINKS,
   },
   "cviceni-pro-deti": {
@@ -58,17 +54,7 @@ const NAV_DROPDOWNS: Record<
   },
 };
 
-const getAboutDropdownLinks = (parentHref: string): NavLink[] =>
-  ABOUT_DROPDOWN_LINKS.map((sub) =>
-    sub.label === "Kdo jsem"
-      ? { ...sub, href: parentHref.startsWith("/") ? "/#o-mne" : "#o-mne" }
-      : sub,
-  );
-
-const getSubmenuLinks = (dropdownId: NavDropdownId, parentHref: string) =>
-  dropdownId === "o-mne"
-    ? getAboutDropdownLinks(parentHref)
-    : NAV_DROPDOWNS[dropdownId].links;
+const getSubmenuLinks = (dropdownId: NavDropdownId) => NAV_DROPDOWNS[dropdownId].links;
 
 const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
   for (const [id, config] of Object.entries(NAV_DROPDOWNS) as [
@@ -117,7 +103,7 @@ const Navbar = ({
   reservationUrl,
   brand,
   children,
-  logoHref = "#hero",
+  logoHref = ROUTES.home.hero,
   variant = "default",
 }: NavbarProps) => {
   const mobileItems = mobileLinks ?? links;
@@ -298,7 +284,7 @@ const Navbar = ({
             {links.map((l) => {
               const dropdownId = getNavDropdownId(l);
               if (dropdownId) {
-                const submenuLinks = getSubmenuLinks(dropdownId, l.href);
+                const submenuLinks = getSubmenuLinks(dropdownId);
                 return (
                   <li
                     key={l.href + l.label}

@@ -3,28 +3,23 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 import logo from "../assets/images/logo.png";
+import { NAV_LINKS, ROUTE_IDS, ROUTES } from "../config/routes";
 import { locations } from "../data/locations";
 import { site } from "../data/site";
 import FacebookIcon from "./FacebookIcon.astro";
 import InstagramIcon from "./InstagramIcon.astro";
 
-const navLinks = [
-  { href: "#o-mne", label: "O mně" },
-  { href: "/vekove-kategorie", label: "Věkové kategorie" },
-  { href: "#lokace", label: "Kde cvičíme" },
-  { href: "/workshopy", label: "Workshopy" },
-  { href: "#kempy", label: "Kempy & výjezdy" },
-  { href: "/recenze", label: "Recenze" },
-  { href: "#provozni-rad", label: "Provozní řád" },
-];
-
 const year = new Date().getFullYear();
 ---
 
-<footer id="kontakt" class="footer" aria-labelledby="footer-title">
+<footer id={ROUTE_IDS.home.contact} class="footer" aria-labelledby="footer-title">
   <div class="container-x footer__inner">
     <div class="footer__brand">
-      <a href="#hero" class="footer__brand-link" aria-label={`${site.name} - na začátek`}>
+      <a
+        href={ROUTES.home.hero}
+        class="footer__brand-link"
+        aria-label={`${site.name} - na začátek`}
+      >
         <Image src={logo} alt="" width={56} densities={[2, 3]} format="webp" />
         <div>
           <h2 id="footer-title">{site.name}</h2>
@@ -113,7 +108,7 @@ const year = new Date().getFullYear();
       <h3>Navigace</h3>
       <ul>
         {
-          navLinks.map((l) => (
+          NAV_LINKS.footer.map((l) => (
             <li>
               <a href={l.href}>{l.label}</a>
             </li>

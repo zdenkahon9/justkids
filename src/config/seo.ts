@@ -1,4 +1,5 @@
 import { site } from "../data/site";
+import { ROUTES } from "./routes";
 
 export const defaultSeo = {
   baseTitle: site.name,
@@ -21,14 +22,14 @@ type PageSeo = {
 
 export const pageSeo = {
   home: {
-    path: "/",
+    path: ROUTES.home._,
     title: "Pohybem k radosti",
     description: defaultSeo.metaDescription,
     llmsTitle: "Domů",
     sitemap: { changefreq: "weekly", priority: 1 },
   },
   ageGroups: {
-    path: "/vekove-kategorie",
+    path: ROUTES.ageGroups._,
     title: "Věkové kategorie",
     description:
       "Přehled věkových kategorií JustKids pro miminka a děti od 3 měsíců do 9 let. Nabízíme cvičení s rodiči pro děti od 3 měsíců do 3,5 let a cvičení bez rodičů pro děti od 3 do 9 let. Každá věková kategorie má vlastní náplň cvičení přizpůsobenou věku i tempu dítěte.",
@@ -36,7 +37,7 @@ export const pageSeo = {
     sitemap: { changefreq: "monthly", priority: 0.9 },
   },
   workshops: {
-    path: "/workshopy",
+    path: ROUTES.workshops._,
     title: "Workshopy pro rodiče",
     description:
       "Praktické workshopy nejen pro rodiče – první pomoc u dětí, handling a psychomotorický vývoj miminek. Dopřejte svému dítěti ten nejlepší start do života.",
@@ -44,7 +45,7 @@ export const pageSeo = {
     sitemap: { changefreq: "weekly", priority: 0.8 },
   },
   reviews: {
-    path: "/recenze",
+    path: ROUTES.reviews._,
     title: "Recenze od rodičů",
     description: "Recenze a zkušenosti rodičů s cvičením pro miminka a děti v JustKids.",
     llmsTitle: "Recenze",

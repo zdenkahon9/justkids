@@ -1,3 +1,5 @@
+import { ROUTE_IDS, ROUTES } from "../config/routes";
+
 export type WorkshopsHomeMeta = {
   sectionId: string;
   eyebrow: string;
@@ -19,7 +21,7 @@ export type WorkshopsHomeMeta = {
 };
 
 export const workshopsHomeMeta: WorkshopsHomeMeta = {
-  sectionId: "workshopy",
+  sectionId: ROUTE_IDS.home.workshops,
   eyebrow: "Další akce",
   title: "Workshopy",
   titleAccent: "pro rodiče",
@@ -31,7 +33,7 @@ export const workshopsHomeMeta: WorkshopsHomeMeta = {
   cardNoteDescription:
     "Naše workshopy vám pomohou získat jistotu, pochopit potřeby dítěte a podpořit jeho zdravý vývoj.",
   cardInfoText: "Aktuální termíny a místa konání najdete v detailu.",
-  detailHref: "/workshopy",
+  detailHref: ROUTES.workshops._,
   ctaLabel: "Všechny workshopy",
 };
 

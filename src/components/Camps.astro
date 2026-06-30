@@ -1,12 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTE_IDS } from "../config/routes";
 import { campFeatureIcons, camps, campsMeta } from "../data/camps";
 import { site } from "../data/site";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 ---
 
-<section id="kempy" class="section camps" aria-labelledby="camps-title">
+<section id={ROUTE_IDS.home.camps} class="section camps" aria-labelledby="camps-title">
   <div class="container-x">
     <header class="section-header reveal">
       <span class="eyebrow">Pojďte s námi ven</span>

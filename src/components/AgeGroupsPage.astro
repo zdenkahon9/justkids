@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 import heroBalloons from "../assets/images/hero-balloons.png";
+import { ROUTE_IDS } from "../config/routes";
 import { ageGroupsHomeCards } from "../data/ageGroupsHome";
 import {
   ageGroupsPageMeta,
@@ -15,11 +16,11 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 const meta = ageGroupsPageMeta;
 
 const agePageWithParentsSection = ageGroupsHomeCards.find(
-  (card) => card.id === "s-rodici",
+  (card) => card.id === ROUTE_IDS.ageGroups.withParents,
 )!;
 
 const agePageWithoutParentsSection = ageGroupsHomeCards.find(
-  (card) => card.id === "bez-rodicu",
+  (card) => card.id === ROUTE_IDS.ageGroups.withoutParents,
 )!;
 ---
 

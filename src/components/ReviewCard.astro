@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTES } from "../config/routes";
 import type { Review } from "../data/reviews";
 import { splitReviewText } from "../utils/splitReviewText";
 
@@ -65,7 +66,7 @@ const {
       showMore && (
         <footer class="review__footer">
           <span class="review__rule" aria-hidden="true" />
-          <a class="review__more" href="/recenze">
+          <a class="review__more" href={ROUTES.reviews._}>
             Celá recenze <span aria-hidden="true">→</span>
           </a>
         </footer>

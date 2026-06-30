@@ -2,16 +2,12 @@
 import { Image } from "astro:assets";
 
 import logo from "../assets/images/logo.png";
+import type { NavLink } from "../config/routes";
 import NavbarInteractive from "./NavbarInteractive";
 
-type NavLink = {
-  href: string;
-  label: string;
-};
-
 type Props = {
-  links: NavLink[];
-  mobileLinks?: NavLink[];
+  links: readonly NavLink[];
+  mobileLinks?: readonly NavLink[];
   reservationUrl: string;
   brand: string;
   logoHref?: string;

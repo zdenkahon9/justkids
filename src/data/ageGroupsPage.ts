@@ -1,3 +1,5 @@
+import { ROUTE_IDS } from "../config/routes";
+
 export type AgeGroupPage = {
   range: string;
   title: string;
@@ -17,7 +19,7 @@ export type AgeGroupsPageMeta = {
 };
 
 export const ageGroupsPageMeta: AgeGroupsPageMeta = {
-  sectionId: "vekove-skupiny",
+  sectionId: ROUTE_IDS.ageGroups.page,
   title: "Pro každý věk",
   titleAccent: "to pravé cvičení",
   subtitle:

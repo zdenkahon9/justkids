@@ -4,6 +4,7 @@ import "../styles/global.css";
 import MetaHead from "../components/Meta/Head.astro";
 import PreloadFonts from "../components/Meta/PreloadFonts.astro";
 import SchemaOrg from "../components/SchemaOrg.astro";
+import { ROUTE_IDS, ROUTES } from "../config/routes";
 import {
   createBreadcrumbSchema,
   createLocalBusinessSchema,
@@ -22,10 +23,10 @@ const siteUrl = Astro.site ?? new URL(site.url);
 const websiteSchema = createWebsiteSchema(siteUrl);
 const localBusinessSchema = createLocalBusinessSchema(siteUrl);
 const breadcrumbSchema =
-  Astro.url.pathname === "/"
+  Astro.url.pathname === ROUTES.home._
     ? undefined
     : createBreadcrumbSchema(siteUrl, [
-        { name: "Domů", path: "/" },
+        { name: "Domů", path: ROUTES.home._ },
         { name: title, path: Astro.url.pathname },
       ]);
 ---
@@ -42,7 +43,7 @@ const breadcrumbSchema =
   </MetaHead>
 
   <body>
-    <a href="#hero" class="skip-link">Přeskočit na obsah</a>
+    <a href={`#${ROUTE_IDS.home.hero}`} class="skip-link">Přeskočit na obsah</a>
     <slot />
 
     {/* Reveal-on-scroll observer (vanilla, lightweight) */}

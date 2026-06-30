@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTES } from "../config/routes";
 import { workshopIconById, workshops, workshopsHomeMeta } from "../data/workshopsHome";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
@@ -80,7 +81,7 @@ const meta = workshopsHomeMeta;
                         <h3 class="workshops-home__topic-label">
                           <a
                             class="workshops-home__topic-link"
-                            href={`${meta.detailHref}#${w.id}`}
+                            href={ROUTES.workshops.detail(w.id)}
                             data-workshops-home-arrow={w.id}
                             aria-label={`Přejít na workshop ${w.title}`}
                           >
@@ -98,7 +99,7 @@ const meta = workshopsHomeMeta;
                       </div>
                       <a
                         class="workshops-home__arrow"
-                        href={`${meta.detailHref}#${w.id}`}
+                        href={ROUTES.workshops.detail(w.id)}
                         data-workshops-home-arrow={w.id}
                         aria-label={`Přejít na workshop ${w.title}`}
                       >

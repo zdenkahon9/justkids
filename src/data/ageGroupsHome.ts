@@ -1,3 +1,5 @@
+import { ROUTE_IDS, ROUTES } from "../config/routes";
+
 export type AgeGroupHomeCard = {
   id: string;
   title: string;
@@ -25,13 +27,13 @@ export type AgeGroupsHomeMeta = {
 };
 
 export const ageGroupsHomeMeta: AgeGroupsHomeMeta = {
-  sectionId: "vekove-kategorie",
+  sectionId: ROUTE_IDS.home.ageGroups,
   eyebrow: "Věkové kategorie",
   title: "Pro každý věk",
   titleAccent: "to pravé cvičení",
   subtitle:
     "Od 3 měsíců do 9 let – každá věková skupina má vlastní cvičení přizpůsobené vývoji dítěte.",
-  detailHref: "/vekove-kategorie",
+  detailHref: ROUTES.ageGroups._,
   ctaLabel: "Zobrazit všechny kategorie",
   cardLinkLabel: "Zobrazit lekce",
 };
@@ -39,9 +41,9 @@ export const ageGroupsHomeMeta: AgeGroupsHomeMeta = {
 /** Teaser karty na homepage — 2 hlavní kategorie */
 export const ageGroupsHomeCards: AgeGroupHomeCard[] = [
   {
-    id: "s-rodici",
+    id: ROUTE_IDS.ageGroups.withParents,
     title: "Cvičení s rodiči",
-    detailHref: "/vekove-kategorie#s-rodici",
+    detailHref: ROUTES.ageGroups.withParents,
     ageRange: "3 měsíce - 3 roky",
     groups: ["Baby", "Mini", "Move", "Active"],
     summary: "Zdravý pohybový vývoj od prvních měsíců života.",
@@ -49,9 +51,9 @@ export const ageGroupsHomeCards: AgeGroupHomeCard[] = [
     accent: "blush-deep",
   },
   {
-    id: "bez-rodicu",
+    id: ROUTE_IDS.ageGroups.withoutParents,
     title: "Cvičení bez rodičů",
-    detailHref: "/vekove-kategorie#bez-rodicu",
+    detailHref: ROUTES.ageGroups.withoutParents,
     ageRange: "3 roky - 9 let",
     groups: ["Fit", "Pro"],
     summary: "Rozvoj samostatnosti, sebevědomí a radosti z pohybu.",

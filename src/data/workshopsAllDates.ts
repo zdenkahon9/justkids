@@ -1,3 +1,4 @@
+import { ROUTE_IDS } from "../config/routes";
 import { workshopsPage, type WorkshopPage } from "./workshopsPage";
 
 export type WorkshopsAllDatesMeta = {
@@ -10,7 +11,7 @@ export type WorkshopsAllDatesMeta = {
 };
 
 export const workshopsAllDatesMeta: WorkshopsAllDatesMeta = {
-  sectionId: "vsechny-terminy",
+  sectionId: ROUTE_IDS.workshops.allDates,
   title: "Všechny",
   titleAccent: "termíny",
 };

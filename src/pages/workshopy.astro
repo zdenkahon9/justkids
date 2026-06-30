@@ -3,28 +3,10 @@ import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import WorkshopsAllDates from "../components/WorkshopsAllDates.astro";
 import WorkshopsPage from "../components/WorkshopsPage.astro";
+import { NAV_LINKS } from "../config/routes";
 import { pageSeo } from "../config/seo";
 import { site } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const navLinks = [
-  { href: "/#o-mne", label: "O mně" },
-  { href: "/#vekove-kategorie", label: "Cvičení pro děti" },
-  { href: "/#workshopy", label: "Další akce" },
-  { href: "/#provozni-rad", label: "Provozní řád" },
-  { href: "/#kontakt", label: "Kontakt" },
-];
-
-const mobileNavLinks = [
-  { href: "/#o-mne", label: "O mně" },
-  { href: "/vekove-kategorie", label: "Věkové kategorie" },
-  { href: "/#lokace", label: "Kde cvičíme" },
-  { href: "/workshopy", label: "Workshopy" },
-  { href: "/#kempy", label: "Kempy & výjezdy" },
-  { href: "/recenze", label: "Recenze" },
-  { href: "/#provozni-rad", label: "Provozní řád" },
-  { href: "/#kontakt", label: "Kontakt" },
-];
 ---
 
 <BaseLayout title={pageSeo.workshops.title} description={pageSeo.workshops.description}>
@@ -36,11 +18,10 @@ const mobileNavLinks = [
   </script>
 
   <Navbar
-    links={navLinks}
-    mobileLinks={mobileNavLinks}
+    links={NAV_LINKS.primary}
+    mobileLinks={NAV_LINKS.mobile}
     reservationUrl={site.signupFormUrl}
     brand={site.name}
-    logoHref="/"
   />
 
   <main id="main">
