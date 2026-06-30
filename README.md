@@ -30,7 +30,7 @@ pnpm preview
 ```
 justkids/
 ├── public/                # statické soubory (favicon, fonty, manifest)
-│   ├── favicon.svg
+│   ├── favicon-96x96.png
 │   └── robots.txt
 ├── src/
 │   ├── assets/images/     # obrázky optimalizované přes Astro Image

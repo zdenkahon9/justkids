@@ -25,7 +25,6 @@ import { site } from "../data/site";
       widths={[640, 899]}
       sizes="(min-width: 1024px) 58vw, 0px"
       format="webp"
-      priority
     />
     <div class="hero__veil"></div>
   </div>
@@ -80,7 +79,6 @@ import { site } from "../data/site";
           widths={[320, 480, 623]}
           sizes="(min-width: 1024px) min(41vw, 419px), 0px"
           format="webp"
-          priority
         />
       </div>
     </div>
@@ -159,8 +157,13 @@ import { site } from "../data/site";
     object-position: center;
     filter: blur(5px) saturate(1.05);
     transform: scale(1.06);
-    will-change: transform;
-    animation: hero-drift 22s ease-in-out infinite alternate;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__photo {
+      will-change: transform;
+      animation: hero-drift 22s ease-in-out infinite alternate;
+    }
   }
 
   /* Gym photo — desktop only; asset is final, no filters applied */
