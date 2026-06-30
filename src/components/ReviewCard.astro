@@ -32,7 +32,7 @@ const {
   >
     {
       r.rating && (
-        <div class="review__stars" aria-label={`Hodnocení ${r.rating} z 5`}>
+        <div class="review__stars" role="img" aria-label={`Hodnocení ${r.rating} z 5`}>
           {Array.from({ length: 5 }, (_, k) => (
             <svg
               viewBox="0 0 24 24"
