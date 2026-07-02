@@ -30,7 +30,7 @@ const pageTitle = defaultSeo.pageTitle(title);
   {!ENV.IS_PRODUCTION && <DisallowRobots />}
   <Favicon />
   <CanonicalLink />
-  {!ENV.IS_LOCAL && <Analytics />}
+  {ENV.IS_PRODUCTION && !ENV.IS_LOCAL && <Analytics />}
   <OpenGraph
     title={pageTitle}
     description={description}
