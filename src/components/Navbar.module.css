@@ -193,8 +193,7 @@
     transform 220ms ease;
 }
 
-.dropdown:hover:not(.dropdownLocked) .dropdownChevron,
-.dropdown:focus-within:not(.dropdownLocked) .dropdownChevron {
+.dropdownOpen .dropdownChevron {
   color: var(--color-blush-deep);
   transform: rotate(180deg);
 }
@@ -214,17 +213,10 @@
     visibility 180ms ease;
 }
 
-.dropdown:hover .dropdownSurface,
-.dropdown:focus-within .dropdownSurface {
+.dropdownOpen .dropdownSurface {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-}
-
-.dropdown.dropdownLocked .dropdownSurface {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
 }
 
 .dropdownList {

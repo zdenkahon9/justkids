@@ -1,6 +1,7 @@
 import { Fragment } from "preact";
-import type { ComponentChildren, TargetedMouseEvent } from "preact";
+import type { ComponentChildren, RefObject, TargetedMouseEvent } from "preact";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
+import type { Dispatch, StateUpdater } from "preact/hooks";
 
 import { ROUTES, type NavLink } from "../config/routes";
 import styles from "./Navbar.module.css";
@@ -16,55 +17,43 @@ type NavbarProps = {
   variant?: "default" | "solid";
 };
 
-/** Desktop submenu under „O mně“ — same section anchors as elsewhere on the site */
-const ABOUT_DROPDOWN_LINKS: NavLink[] = [
-  { href: ROUTES.home.about, label: "Kdo jsem" },
-  { href: ROUTES.reviews._, label: "Recenze" },
-];
-
-/** Desktop submenu under „Další akce“ */
-const EVENTS_DROPDOWN_LINKS: NavLink[] = [
-  { href: ROUTES.workshops._, label: "Workshopy" },
-  { href: ROUTES.home.camps, label: "Kempy" },
-];
-
-/** Desktop submenu under „Cvičení pro děti“ */
-const EXERCISE_DROPDOWN_LINKS: NavLink[] = [
-  { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
-  { href: ROUTES.home.locations, label: "Kde cvičíme" },
-];
-
 type NavDropdownId = "o-mne" | "cviceni-pro-deti" | "dalsi-akce";
 
-const NAV_DROPDOWNS: Record<
-  NavDropdownId,
-  { match: (l: NavLink) => boolean; links: NavLink[] }
-> = {
-  "o-mne": {
+type NavDropdownConfig = {
+  id: NavDropdownId;
+  match: (link: NavLink) => boolean;
+  links: readonly NavLink[];
+};
+
+const NAV_DROPDOWNS = [
+  {
+    id: "o-mne",
     match: (l) => l.label === "O mně" && l.href === ROUTES.home.about,
-    links: ABOUT_DROPDOWN_LINKS,
+    links: [
+      { href: ROUTES.home.about, label: "Kdo jsem" },
+      { href: ROUTES.reviews._, label: "Recenze" },
+    ],
   },
-  "cviceni-pro-deti": {
+  {
+    id: "cviceni-pro-deti",
     match: (l) => l.label === "Cvičení pro děti",
-    links: EXERCISE_DROPDOWN_LINKS,
+    links: [
+      { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
+      { href: ROUTES.home.locations, label: "Kde cvičíme" },
+    ],
   },
-  "dalsi-akce": {
+  {
+    id: "dalsi-akce",
     match: (l) => l.label === "Další akce",
-    links: EVENTS_DROPDOWN_LINKS,
+    links: [
+      { href: ROUTES.workshops._, label: "Workshopy" },
+      { href: ROUTES.home.camps, label: "Kempy" },
+    ],
   },
-};
+] as const satisfies readonly NavDropdownConfig[];
 
-const getSubmenuLinks = (dropdownId: NavDropdownId) => NAV_DROPDOWNS[dropdownId].links;
-
-const getNavDropdownId = (l: NavLink): NavDropdownId | null => {
-  for (const [id, config] of Object.entries(NAV_DROPDOWNS) as [
-    NavDropdownId,
-    (typeof NAV_DROPDOWNS)[NavDropdownId],
-  ][]) {
-    if (config.match(l)) return id;
-  }
-  return null;
-};
+const getNavDropdown = (link: NavLink): NavDropdownConfig | undefined =>
+  NAV_DROPDOWNS.find((dropdown) => dropdown.match(link));
 
 /** Subscribe to scroll changes while the Navbar island is mounted. */
 const subscribeScroll = (onChange: () => void) => {
@@ -97,26 +86,26 @@ const useScrolledNav = (variant: NavbarProps["variant"]) => {
   return scrolled;
 };
 
-const Navbar = ({
-  links,
-  mobileLinks,
-  reservationUrl,
-  brand,
-  children,
-  logoHref = ROUTES.home._,
-  variant = "default",
-}: NavbarProps) => {
-  const mobileItems = mobileLinks ?? links;
-  const scrolled = useScrolledNav(variant);
-  const [open, setOpen] = useState(false);
-  const [lockedDropdown, setLockedDropdown] = useState<NavDropdownId | null>(null);
-  const openRef = useRef(open);
-  /** Hash to scroll to after mobile menu unlock — avoids restore scroll overwriting anchor nav */
-  const pendingHashRef = useRef<string | null>(null);
-  const dropdownRefs = useRef<Partial<Record<NavDropdownId, HTMLLIElement>>>({});
-  openRef.current = open;
+type SetOpen = Dispatch<StateUpdater<boolean>>;
+type SetOpenDropdownId = Dispatch<StateUpdater<NavDropdownId | null>>;
 
-  // Lock page scroll when mobile menu is open (html + body; fixed + scrollY for iOS Safari)
+type DesktopNavOptions = {
+  closeDropdownAfterClick?: boolean;
+  dropdownId?: NavDropdownId;
+};
+
+type MobileNavHandler = (
+  event: TargetedMouseEvent<HTMLAnchorElement>,
+  href: string,
+) => void;
+
+type DesktopNavHandler = (
+  event: TargetedMouseEvent<HTMLAnchorElement>,
+  href: string,
+  options?: DesktopNavOptions,
+) => void;
+
+const useBodyScrollLock = (open: boolean, pendingHashRef: RefObject<string | null>) => {
   useEffect(() => {
     if (!open) return;
 
@@ -136,6 +125,7 @@ const Navbar = ({
       bodyWidth: body.style.width,
     };
 
+    // Fixed body plus the saved scroll position keeps the page stable in iOS Safari.
     html.style.overflow = "hidden";
     html.style.overscrollBehavior = "none";
     body.style.overflow = "hidden";
@@ -161,7 +151,7 @@ const Navbar = ({
       pendingHashRef.current = null;
 
       if (hash) {
-        // Wait for fixed-body unlock before scrolling — single rAF was still racing layout
+        // A single animation frame still races the layout after the fixed body is unlocked.
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             const el = document.querySelector(hash);
@@ -175,17 +165,22 @@ const Navbar = ({
         window.scrollTo(0, scrollY);
       }
     };
-  }, [open]);
+  }, [open, pendingHashRef]);
+};
 
-  // Close on Escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+type UseHashNavigationOptions = {
+  openRef: RefObject<boolean>;
+  pendingHashRef: RefObject<string | null>;
+  setOpen: SetOpen;
+  setOpenDropdownId: SetOpenDropdownId;
+};
 
+const useHashNavigation = ({
+  openRef,
+  pendingHashRef,
+  setOpen,
+  setOpenDropdownId,
+}: UseHashNavigationOptions) => {
   const scrollToHash = useCallback((hash: string) => {
     const el = document.querySelector(hash);
     if (el) {
@@ -194,9 +189,8 @@ const Navbar = ({
     }
   }, []);
 
-  /** Mobile menu — same-page # anchors; unlock body before scroll when menu was open */
-  const handleMobileNav = useCallback(
-    (e: TargetedMouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleMobileNav = useCallback<MobileNavHandler>(
+    (event, href) => {
       const hashIdx = href.indexOf("#");
       if (hashIdx === -1) return;
 
@@ -209,7 +203,7 @@ const Navbar = ({
         return;
       }
 
-      e.preventDefault();
+      event.preventDefault();
 
       if (openRef.current) {
         pendingHashRef.current = hash;
@@ -218,23 +212,15 @@ const Navbar = ({
         scrollToHash(hash);
       }
     },
-    [scrollToHash],
+    [openRef, pendingHashRef, scrollToHash, setOpen],
   );
 
-  /** Desktop nav + dropdown submenu — page links, /# anchors, dropdown lock */
-  const handleDesktopNav = useCallback(
-    (
-      e: TargetedMouseEvent<HTMLAnchorElement>,
-      href: string,
-      options?: {
-        closeDropdownAfterClick?: boolean;
-        dropdownId?: NavDropdownId;
-      },
-    ) => {
+  const handleDesktopNav = useCallback<DesktopNavHandler>(
+    (event, href, options) => {
       const hashIdx = href.indexOf("#");
       const closeDropdown =
         options?.closeDropdownAfterClick && options.dropdownId
-          ? () => setLockedDropdown(options.dropdownId!)
+          ? () => setOpenDropdownId(null)
           : null;
 
       if (hashIdx === -1) {
@@ -251,12 +237,230 @@ const Navbar = ({
         return;
       }
 
-      e.preventDefault();
+      event.preventDefault();
       closeDropdown?.();
       scrollToHash(hash);
     },
-    [scrollToHash],
+    [scrollToHash, setOpenDropdownId],
   );
+
+  return { handleDesktopNav, handleMobileNav };
+};
+
+type NavDropdownProps = {
+  config: NavDropdownConfig;
+  link: NavLink;
+  onNavigate: DesktopNavHandler;
+  openDropdownId: NavDropdownId | null;
+  setOpenDropdownId: SetOpenDropdownId;
+};
+
+const NavDropdown = ({
+  config,
+  link,
+  onNavigate,
+  openDropdownId,
+  setOpenDropdownId,
+}: NavDropdownProps) => {
+  const dropdownId = config.id;
+  const isOpen = openDropdownId === dropdownId;
+
+  const closeDropdown = () => {
+    setOpenDropdownId((current) => (current === dropdownId ? null : current));
+  };
+
+  return (
+    <li
+      className={`${styles.dropdown} ${isOpen ? styles.dropdownOpen : ""}`}
+      onMouseEnter={() => setOpenDropdownId(dropdownId)}
+      onMouseLeave={closeDropdown}
+      onFocusIn={() => setOpenDropdownId(dropdownId)}
+      onFocusOut={(event) => {
+        const nextTarget = event.relatedTarget;
+        if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) {
+          closeDropdown();
+        }
+      }}
+    >
+      <button
+        type="button"
+        className={styles.dropdownTrigger}
+        aria-haspopup="true"
+        aria-controls={`nav-submenu-${dropdownId}`}
+        aria-expanded={isOpen}
+      >
+        <span className={styles.dropdownTriggerInner}>
+          {link.label}
+          <svg
+            className={styles.dropdownChevron}
+            width="16"
+            height="16"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M2.5 4.25L6 7.75L9.5 4.25"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </button>
+      <div className={styles.dropdownSurface}>
+        <ul id={`nav-submenu-${dropdownId}`} className={styles.dropdownList}>
+          {config.links.map((sub, index) => (
+            <Fragment key={sub.href + sub.label}>
+              {index > 0 ? (
+                <hr className={styles.dropdownDivider} aria-hidden="true" />
+              ) : null}
+              <li>
+                <a
+                  href={sub.href}
+                  onClick={(event) =>
+                    onNavigate(event, sub.href, {
+                      closeDropdownAfterClick: true,
+                      dropdownId,
+                    })
+                  }
+                >
+                  {sub.label}
+                </a>
+              </li>
+            </Fragment>
+          ))}
+        </ul>
+      </div>
+    </li>
+  );
+};
+
+type DesktopNavProps = {
+  links: readonly NavLink[];
+  onNavigate: DesktopNavHandler;
+  openDropdownId: NavDropdownId | null;
+  setOpenDropdownId: SetOpenDropdownId;
+};
+
+const DesktopNav = ({
+  links,
+  onNavigate,
+  openDropdownId,
+  setOpenDropdownId,
+}: DesktopNavProps) => (
+  <nav className={styles.navLinks} aria-label="Hlavní navigace">
+    <ul>
+      {links.map((link) => {
+        const dropdown = getNavDropdown(link);
+        if (dropdown) {
+          return (
+            <NavDropdown
+              key={link.href + link.label}
+              config={dropdown}
+              link={link}
+              onNavigate={onNavigate}
+              openDropdownId={openDropdownId}
+              setOpenDropdownId={setOpenDropdownId}
+            />
+          );
+        }
+
+        return (
+          <li key={link.href + link.label}>
+            <a href={link.href} onClick={(event) => onNavigate(event, link.href)}>
+              {link.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+);
+
+type MobileMenuProps = {
+  items: readonly NavLink[];
+  onClose: () => void;
+  onNavigate: MobileNavHandler;
+  open: boolean;
+  reservationUrl: string;
+};
+
+const MobileMenu = ({
+  items,
+  onClose,
+  onNavigate,
+  open,
+  reservationUrl,
+}: MobileMenuProps) => (
+  <div
+    id="mobile-menu"
+    className={styles.navMobile}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    hidden={!open}
+  >
+    <ul>
+      {items.map((link, index) => (
+        <li key={link.href} style={{ ["--i" as string]: index }}>
+          <a href={link.href} onClick={(event) => onNavigate(event, link.href)}>
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li style={{ ["--i" as string]: items.length }}>
+        <a
+          href={reservationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary"
+          onClick={onClose}
+        >
+          Rezervace
+          <span aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+);
+
+const NavbarInteractive = ({
+  links,
+  mobileLinks,
+  reservationUrl,
+  brand,
+  children,
+  logoHref = ROUTES.home._,
+  variant = "default",
+}: NavbarProps) => {
+  const mobileItems = mobileLinks ?? links;
+  const scrolled = useScrolledNav(variant);
+  const [open, setOpen] = useState(false);
+  const [openDropdownId, setOpenDropdownId] = useState<NavDropdownId | null>(null);
+  const openRef = useRef(open);
+  /** Hash to scroll to after mobile menu unlock so scroll restoration cannot override it. */
+  const pendingHashRef = useRef<string | null>(null);
+  openRef.current = open;
+
+  useBodyScrollLock(open, pendingHashRef);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const { handleDesktopNav, handleMobileNav } = useHashNavigation({
+    openRef,
+    pendingHashRef,
+    setOpen,
+    setOpenDropdownId,
+  });
 
   const showSolidNav = variant === "solid" || scrolled;
 
@@ -279,94 +483,12 @@ const Navbar = ({
           </span>
         </a>
 
-        <nav className={styles.navLinks} aria-label="Hlavní navigace">
-          <ul>
-            {links.map((l) => {
-              const dropdownId = getNavDropdownId(l);
-              if (dropdownId) {
-                const submenuLinks = getSubmenuLinks(dropdownId);
-                return (
-                  <li
-                    key={l.href + l.label}
-                    ref={(el) => {
-                      if (el) dropdownRefs.current[dropdownId] = el;
-                    }}
-                    className={`${styles.dropdown} ${lockedDropdown === dropdownId ? styles.dropdownLocked : ""}`}
-                    onMouseLeave={() => {
-                      if (lockedDropdown === dropdownId) setLockedDropdown(null);
-                    }}
-                  >
-                    <button
-                      type="button"
-                      className={styles.dropdownTrigger}
-                      aria-haspopup="true"
-                      aria-controls={`nav-submenu-${dropdownId}`}
-                      onMouseDown={() => {
-                        if (lockedDropdown === dropdownId) setLockedDropdown(null);
-                      }}
-                    >
-                      <span className={styles.dropdownTriggerInner}>
-                        {l.label}
-                        <svg
-                          className={styles.dropdownChevron}
-                          width="16"
-                          height="16"
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M2.5 4.25L6 7.75L9.5 4.25"
-                            stroke="currentColor"
-                            strokeWidth="1.75"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                    <div className={styles.dropdownSurface}>
-                      <ul
-                        id={`nav-submenu-${dropdownId}`}
-                        className={styles.dropdownList}
-                      >
-                        {submenuLinks.map((sub, i) => (
-                          <Fragment key={sub.href + sub.label}>
-                            {i > 0 ? (
-                              <hr className={styles.dropdownDivider} aria-hidden="true" />
-                            ) : null}
-                            <li>
-                              <a
-                                href={sub.href}
-                                onClick={(e) =>
-                                  handleDesktopNav(e, sub.href, {
-                                    closeDropdownAfterClick: true,
-                                    dropdownId,
-                                  })
-                                }
-                              >
-                                {sub.label}
-                              </a>
-                            </li>
-                          </Fragment>
-                        ))}
-                      </ul>
-                    </div>
-                  </li>
-                );
-              }
-
-              return (
-                <li key={l.href + l.label}>
-                  <a href={l.href} onClick={(e) => handleDesktopNav(e, l.href)}>
-                    {l.label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <DesktopNav
+          links={links}
+          onNavigate={handleDesktopNav}
+          openDropdownId={openDropdownId}
+          setOpenDropdownId={setOpenDropdownId}
+        />
 
         <a
           href={reservationUrl}
@@ -392,38 +514,15 @@ const Navbar = ({
         </button>
       </div>
 
-      <div
-        id="mobile-menu"
-        className={styles.navMobile}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Menu"
-        hidden={!open}
-      >
-        <ul>
-          {mobileItems.map((l, i) => (
-            <li key={l.href} style={{ ["--i" as string]: i }}>
-              <a href={l.href} onClick={(e) => handleMobileNav(e, l.href)}>
-                {l.label}
-              </a>
-            </li>
-          ))}
-          <li style={{ ["--i" as string]: mobileItems.length }}>
-            <a
-              href={reservationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              onClick={() => setOpen(false)}
-            >
-              Rezervace
-              <span aria-hidden="true">→</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <MobileMenu
+        items={mobileItems}
+        onClose={() => setOpen(false)}
+        onNavigate={handleMobileNav}
+        open={open}
+        reservationUrl={reservationUrl}
+      />
     </header>
   );
 };
 
-export default Navbar;
+export default NavbarInteractive;
