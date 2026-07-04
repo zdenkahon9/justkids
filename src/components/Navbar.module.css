@@ -234,13 +234,10 @@
     0 0 0 1px rgba(236, 47, 142, 0.1);
 }
 
-.dropdownDivider {
-  align-self: center;
-  width: 100%;
-  border: none;
-  height: 1px;
-  margin: var(--space-1) 0;
-  background: rgba(42, 31, 56, 0.12);
+.dropdownItemDivided {
+  margin-top: var(--space-1);
+  padding-top: calc(var(--space-2) + var(--space-1));
+  border-top: 1px solid rgba(42, 31, 56, 0.12);
 }
 
 .dropdownList a {
@@ -342,6 +339,10 @@
 
 .navMobile[hidden] {
   display: none;
+}
+
+.navMobile:focus {
+  outline: none;
 }
 
 .navMobile ul {
