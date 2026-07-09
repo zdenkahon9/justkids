@@ -77,6 +77,9 @@ const categories = workshopsAllDates
                           </span>
                         </div>
                         <div class="workshops-page__date-slot-body">
+                          <p class="workshops-page__date-slot-workshop">
+                            {date.workshopTitle}
+                          </p>
                           <p class="workshops-page__date-slot-venue">{date.venueName}</p>
                           <p class="workshops-page__date-slot-time">{date.time}</p>
                         </div>
@@ -326,6 +329,15 @@ const categories = workshopsAllDates
     gap: var(--space-3);
   }
 
+  .workshops-page__date-slot-workshop {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 700;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
   .workshops-page__date-slot-venue {
     margin: 0;
     font-family: var(--font-body);
@@ -344,12 +356,61 @@ const categories = workshopsAllDates
     color: var(--color-ink-soft);
   }
 
+  @media (max-width: 767px) {
+    .workshops-page__date-slot-row {
+      height: auto;
+      min-height: 6rem;
+      padding: var(--space-7) 0;
+      gap: var(--space-9);
+    }
+
+    .workshops-page__date-slot-body {
+      gap: var(--space-4);
+    }
+
+    .workshops-page__date-slot-venue {
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+  }
+
   @media (min-width: 768px) {
     .workshops-page__dates-grid {
       width: fit-content;
       max-width: 100%;
-      grid-template-columns: repeat(2, var(--card-grid-width-md));
+      grid-template-columns: min(
+        100%,
+        calc(2 * var(--card-grid-width-md) + var(--stack-gap))
+      );
       justify-content: center;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .workshops-page__date-slot-row {
+      height: auto;
+      min-height: 6.25rem;
+      padding: var(--space-8) 0;
+      gap: var(--space-10);
+    }
+
+    .workshops-page__date-slot-date {
+      width: 4.5rem;
+      min-height: 4.5rem;
+    }
+
+    .workshops-page__date-slot-body {
+      gap: var(--space-4);
+    }
+
+    .workshops-page__date-slot-workshop {
+      display: block;
+      max-width: 34rem;
+    }
+
+    .workshops-page__date-slot-venue {
+      font-size: var(--text-sm);
+      font-weight: 600;
     }
   }
 
@@ -368,6 +429,10 @@ const categories = workshopsAllDates
 
   @media (min-width: 1024px) {
     .workshops-page__dates-grid {
+      display: none;
+    }
+
+    .workshops-page__date-slot-workshop {
       display: none;
     }
 

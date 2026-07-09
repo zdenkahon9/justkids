@@ -358,6 +358,97 @@ const splitLocationName = (name: string) => {
     }
   }
 
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .locations-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--stack-gap);
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .locations__panel,
+    .locations__card,
+    .locations__body,
+    .locations-tabs__panels {
+      display: contents;
+    }
+
+    .locations-tabs__switcher,
+    .locations__rule {
+      display: none;
+    }
+
+    .locations-tabs__panels .locations-tabs__panel {
+      display: block;
+    }
+
+    .locations-tabs__panels .locations-tabs__panel:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: calc((100% - var(--stack-gap)) / 2);
+      max-width: var(--card-grid-width-md);
+    }
+
+    .location {
+      background: #fefefe;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: var(--card-border);
+      transition:
+        transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 280ms ease;
+    }
+
+    .locations__body .location {
+      border: var(--card-border);
+      border-radius: var(--radius-card);
+      background: #fefefe;
+      overflow: hidden;
+    }
+
+    .locations__body .location__details {
+      padding: var(--card-padding);
+      padding-bottom: 0;
+    }
+
+    .locations__body .location__head {
+      padding-top: var(--space-4);
+    }
+
+    .location__head-text {
+      text-align: center;
+    }
+
+    .location__head-text h3 {
+      margin: 0 0 var(--space-6);
+    }
+
+    .location__address {
+      justify-content: center;
+      text-align: center;
+    }
+
+    .locations__body .location__map-shell,
+    .location__map-shell {
+      width: 100%;
+      max-width: 100%;
+      margin-inline: unset;
+      margin-top: auto;
+      margin-bottom: 0;
+      height: 13rem;
+      max-height: none;
+    }
+
+    .location__map-link {
+      margin-top: 0;
+    }
+
+    .location__map-action {
+      margin-inline: var(--card-padding-x);
+    }
+  }
+
   @media (min-width: 1024px) {
     .locations-tabs {
       display: grid;

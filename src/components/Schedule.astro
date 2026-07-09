@@ -246,6 +246,58 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
     }
   }
 
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .schedule__panel--mobile .schedule__card {
+      --schedule-row-height: 3.125rem !important;
+      --schedule-axis-to-time-gap: var(--space-6) !important;
+      --schedule-time-to-activity-gap: var(--space-8) !important;
+      padding: var(--space-17) var(--space-18);
+    }
+
+    .schedule__pill-third {
+      min-height: calc(2.25rem + 1em * var(--line-height-base));
+      padding: var(--space-9) 0;
+      font-size: var(--text-lg);
+    }
+
+    .schedule__panel--mobile .schedule__card > .age-page__rule {
+      margin: var(--space-12) 0;
+    }
+
+    .schedule__panel--mobile :global(.schedule__slots) {
+      gap: var(--space-6);
+    }
+
+    .schedule__panel--mobile :global(.schedule__day-divider) {
+      margin: var(--space-12) 0;
+    }
+
+    .schedule__panel--mobile .schedule__timetable[data-location="zdice"]:not([hidden]) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-14);
+      align-items: start;
+    }
+
+    .schedule__panel--mobile
+      .schedule__timetable[data-location="zdice"]:not([hidden])
+      > :global(.schedule__day-block)
+      :global(.schedule__day-divider) {
+      display: none;
+    }
+
+    .schedule__panel--mobile
+      .schedule__timetable[data-location="zdice"]:not([hidden])
+      > :global(.schedule__venue) {
+      grid-column: 1 / -1;
+    }
+
+    .schedule__panel--mobile :global(.schedule__venue) {
+      margin-top: var(--space-12);
+      padding: var(--space-9) var(--space-14);
+    }
+  }
+
   @media (min-width: 1024px) {
     .schedule__panel--mobile {
       display: none;

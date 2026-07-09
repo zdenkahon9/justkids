@@ -458,13 +458,20 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     transform: translate3d(0, 0, 0) scale(0.98);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 920px) {
     .camps__list {
+      --camp-card-width: var(--card-grid-width-md);
       width: fit-content;
-      max-width: calc(2 * var(--card-grid-width) + var(--stack-gap));
-      grid-template-columns: repeat(2, var(--card-grid-width));
+      max-width: calc(2 * var(--camp-card-width) + var(--stack-gap));
+      grid-template-columns: repeat(2, var(--camp-card-width));
       gap: var(--stack-gap);
       margin-inline: auto;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .camps__list {
+      --camp-card-width: var(--card-grid-width);
     }
   }
 </style>
