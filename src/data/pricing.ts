@@ -17,7 +17,7 @@ export type CourseStart = {
   dateTime: string;
 };
 
-export type PricingTextPart = {
+type PricingTextPart = {
   text: string;
   emphasis?: boolean;
 };
