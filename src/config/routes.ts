@@ -17,6 +17,7 @@ export const ROUTE_IDS = {
     withParents: "s-rodici",
     withoutParents: "bez-rodicu",
     schedule: "rozvrh-lekci",
+    pricing: "cenik",
   },
   workshops: {
     page: "workshopy",
@@ -46,6 +47,7 @@ export const ROUTES = {
     withParents: withHash(AGE_GROUPS, ROUTE_IDS.ageGroups.withParents),
     withoutParents: withHash(AGE_GROUPS, ROUTE_IDS.ageGroups.withoutParents),
     schedule: withHash(AGE_GROUPS, ROUTE_IDS.ageGroups.schedule),
+    pricing: withHash(AGE_GROUPS, ROUTE_IDS.ageGroups.pricing),
   },
   workshops: {
     _: WORKSHOPS,
@@ -60,6 +62,7 @@ export const ROUTES = {
 export type NavLink = {
   href: string;
   label: string;
+  isNew?: boolean;
 };
 
 export const NAV_LINKS = {
@@ -73,6 +76,8 @@ export const NAV_LINKS = {
   mobile: [
     { href: ROUTES.home.about, label: "O mně" },
     { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
+    { href: ROUTES.ageGroups.schedule, label: "Rozvrh lekcí", isNew: true },
+    { href: ROUTES.ageGroups.pricing, label: "Ceník", isNew: true },
     { href: ROUTES.home.locations, label: "Kde cvičíme" },
     { href: ROUTES.workshops._, label: "Workshopy" },
     { href: ROUTES.home.camps, label: "Kempy & výjezdy" },

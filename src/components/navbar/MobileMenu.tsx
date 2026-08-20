@@ -73,27 +73,33 @@ const MobileMenu = ({
       hidden={!open}
       onKeyDown={trapFocus}
     >
-      <ul>
-        {items.map((link, index) => (
-          <li key={link.href} style={{ ["--i" as string]: index }}>
-            <a href={link.href} onClick={(event) => onNavigate(event, link.href)}>
-              {link.label}
-            </a>
-          </li>
-        ))}
-        <li style={{ ["--i" as string]: items.length }}>
-          <a
-            href={reservationUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-            onClick={onClose}
-          >
-            Rezervace
-            <span aria-hidden="true">→</span>
-          </a>
-        </li>
-      </ul>
+      <div className={styles.navMobileLinksFrame}>
+        <div className={styles.navMobileLinks}>
+          <ul>
+            {items.map((link, index) => (
+              <li key={link.href} style={{ ["--i" as string]: index }}>
+                <a href={link.href} onClick={(event) => onNavigate(event, link.href)}>
+                  <span>{link.label}</span>
+                  {link.isNew && <span className={styles.navMobileBadge}>Nové</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className={styles.navMobileFooter}>
+        <a
+          href={reservationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary"
+          onClick={onClose}
+        >
+          Rezervace
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   );
 };

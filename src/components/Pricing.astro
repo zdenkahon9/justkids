@@ -1,0 +1,513 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { courseStarts, pricingCourses, pricingMeta } from "../data/pricing";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+
+const meta = pricingMeta;
+const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(price);
+---
+
+<section id={meta.sectionId} class="section pricing" aria-labelledby="pricing-title">
+  <div class="container-x">
+    <header class="section-header reveal">
+      <p class="eyebrow">{meta.eyebrow}</p>
+      <h2 id="pricing-title">
+        {meta.title}
+        <span class="section-title-accent">{meta.titleAccent}</span>
+      </h2>
+    </header>
+
+    <article class="pricing__starts reveal" aria-labelledby="pricing-starts-title">
+      <h3 id="pricing-starts-title" class="pricing__starts-title">
+        <span class="pricing__starts-icon" aria-hidden="true">
+          <Icon is:inline name="ph:star-four-fill" class="pricing__starts-icon-graphic" />
+        </span>
+        STARTUJEME
+        <span class="pricing__starts-icon" aria-hidden="true">
+          <Icon is:inline name="ph:star-four-fill" class="pricing__starts-icon-graphic" />
+        </span>
+      </h3>
+
+      <hr class="pricing__starts-divider" aria-hidden="true" />
+
+      <ul class="pricing__starts-list">
+        {
+          courseStarts.map((start) => (
+            <li class="pricing__starts-item">
+              <span class="pricing__starts-location">{start.location}</span>
+              <time class="pricing__starts-date" datetime={start.dateTime}>
+                {start.date}
+              </time>
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+
+    <div class="pricing__courses">
+      {
+        pricingCourses.map((course) => (
+          <article
+            class="pricing__course reveal"
+            style={`--accent: ${cardAccentDeep(course.accent)}; --accent-soft: ${cardAccentSoft(course.accent)};`}
+          >
+            <svg
+              class="pricing__course-blob"
+              viewBox="-32 0 132 100"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
+            </svg>
+
+            <div class="pricing__course-body">
+              <h3 class="pricing__course-title">{course.title}</h3>
+              <p class="pricing__course-groups">
+                {course.groups.map((group, index) => (
+                  <>
+                    {index > 0 ? (
+                      <span class="pricing__course-groups-separator" aria-hidden="true">
+                        {" • "}
+                      </span>
+                    ) : null}
+                    {group}
+                  </>
+                ))}
+              </p>
+              <hr class="pricing__course-divider" aria-hidden="true" />
+
+              <div class="pricing__price">
+                <p class="pricing__price-total">
+                  <strong>{formatPrice(course.coursePriceCzk)} Kč</strong>
+                  <span>za celý kurz</span>
+                </p>
+
+                <div
+                  class:list={[
+                    "pricing__price-breakdown",
+                    { "pricing__price-breakdown--single": !course.pricePerLessonCzk },
+                  ]}
+                >
+                  <p class="pricing__price-breakdown-item">
+                    <Icon
+                      is:inline
+                      name="lineicons:calendar-days"
+                      class="pricing__price-metric-icon"
+                      aria-hidden="true"
+                    />
+                    <strong>{course.lessonCount} lekcí</strong>
+                    <span>v jednom kurzu</span>
+                  </p>
+
+                  {course.pricePerLessonCzk ? (
+                    <>
+                      <span class="pricing__price-divider" aria-hidden="true" />
+                      <p class="pricing__price-breakdown-item">
+                        <Icon
+                          is:inline
+                          name="ion:pricetag-outline"
+                          class="pricing__price-metric-icon"
+                          aria-hidden="true"
+                        />
+                        <strong>{formatPrice(course.pricePerLessonCzk)} Kč</strong>
+                        <span>za lekci</span>
+                      </p>
+                    </>
+                  ) : null}
+                </div>
+              </div>
+              <span class="pricing__rule" aria-hidden="true" />
+
+              <div class="pricing__replacement">
+                <p class="pricing__replacement-title">{course.replacementTitle}</p>
+                <p class="pricing__replacement-text">
+                  {course.replacementText.map((part) =>
+                    part.emphasis ? <strong>{part.text}</strong> : part.text,
+                  )}
+                </p>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <aside
+      class="pricing__insurance reveal"
+      aria-labelledby="pricing-sibling-discount-title"
+    >
+      <div class="pricing__insurance-heading">
+        <Icon
+          is:inline
+          name="ph:heart-thin"
+          class="pricing__insurance-icon"
+          aria-hidden="true"
+        />
+        <h3 id="pricing-sibling-discount-title" class="pricing__insurance-title">
+          {meta.siblingDiscountTitle}
+        </h3>
+      </div>
+      <p class="pricing__insurance-text">{meta.siblingDiscount}</p>
+    </aside>
+
+    <aside
+      class="pricing__insurance pricing__insurance--last reveal"
+      aria-labelledby="pricing-insurance-title"
+    >
+      <div class="pricing__insurance-heading">
+        <Icon
+          is:inline
+          name="ph:heart-thin"
+          class="pricing__insurance-icon"
+          aria-hidden="true"
+        />
+        <h3 id="pricing-insurance-title" class="pricing__insurance-title">
+          {meta.insuranceContributionTitle}
+        </h3>
+      </div>
+      <p class="pricing__insurance-text">{meta.insuranceContributionText}</p>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    --accent: var(--color-lilac-deep);
+    --accent-soft: var(--color-lilac-soft);
+    scroll-margin-top: var(--section-scroll-margin);
+    padding-bottom: 0;
+    background-color: var(--color-cream);
+  }
+
+  .pricing .section-title-accent {
+    color: var(--color-sky-deep);
+  }
+
+  .pricing__starts {
+    width: min(100%, var(--card-grid-width));
+    margin: 0 auto;
+    padding: var(--card-padding);
+    border: var(--card-border);
+    border-radius: var(--radius-card);
+    background: #fefefe;
+    overflow: hidden;
+  }
+
+  .pricing__starts-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5);
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .pricing__starts-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--text-xl);
+    height: var(--text-xl);
+    color: var(--color-blush-vivid);
+    transform: translateY(calc(-1 * var(--space-2)));
+  }
+
+  .pricing__starts-icon-graphic {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pricing__starts-icon-graphic :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pricing__starts-divider {
+    height: 1px;
+    margin: var(--space-10) 0;
+    border: none;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .pricing__starts-list {
+    display: grid;
+    gap: var(--space-8);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pricing__starts-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--space-13);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+  }
+
+  .pricing__starts-item:nth-child(1) {
+    background: var(--color-blush-soft);
+  }
+
+  .pricing__starts-item:nth-child(2) {
+    background-color: var(--color-lilac-soft);
+  }
+
+  .pricing__starts-item:nth-child(3) {
+    background: var(--color-sky-soft);
+  }
+
+  .pricing__starts-location,
+  .pricing__starts-date {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--line-height-xl);
+  }
+
+  .pricing__starts-location {
+    font-weight: 600;
+  }
+
+  .pricing__starts-date {
+    flex-shrink: 0;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pricing__courses {
+    display: grid;
+    grid-template-columns: min(100%, var(--card-grid-width));
+    justify-content: center;
+    gap: var(--stack-gap);
+    margin-top: var(--stack-gap);
+  }
+
+  .pricing__course {
+    position: relative;
+    box-sizing: border-box;
+    padding: var(--card-padding);
+    border: var(--card-border);
+    border-radius: var(--radius-card);
+    background: #fefefe;
+    overflow: hidden;
+  }
+
+  .pricing__course-blob {
+    position: absolute;
+    z-index: 0;
+    top: -1px;
+    right: -1px;
+    display: block;
+    width: 9.9rem;
+    height: 7.5rem;
+    pointer-events: none;
+  }
+
+  .pricing__course-blob path {
+    fill: var(--accent-soft);
+  }
+
+  .pricing__course-body {
+    position: relative;
+    z-index: 1;
+  }
+
+  .pricing__course-title {
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink);
+  }
+
+  .pricing__course-groups {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink-muted);
+  }
+
+  .pricing__course-groups-separator {
+    color: var(--accent);
+  }
+
+  .pricing__price {
+    display: block;
+    margin: 0;
+  }
+
+  .pricing__price-total {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0 0 var(--space-13);
+  }
+
+  .pricing__price-total strong {
+    font-family: var(--font-display);
+    font-size: var(--text-clamp-h2);
+    font-weight: 600;
+    line-height: var(--line-height-xs);
+    color: var(--accent);
+  }
+
+  .pricing__price-total span {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink-soft);
+  }
+
+  .pricing__price-breakdown {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: stretch;
+    margin-top: 0;
+  }
+
+  .pricing__price-breakdown--single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pricing__price-breakdown-item {
+    display: grid;
+    gap: var(--space-4);
+    margin: 0;
+    font-family: var(--font-body);
+  }
+
+  .pricing__price-breakdown-item strong {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    line-height: var(--line-height-lg);
+    color: var(--color-ink);
+  }
+
+  .pricing__price-breakdown-item span {
+    font-size: var(--text-sm);
+    line-height: var(--line-height-xl);
+    color: var(--color-ink-muted);
+  }
+
+  .pricing__price-metric-icon {
+    display: block;
+    flex-shrink: 0;
+    width: var(--text-xl);
+    height: var(--text-xl);
+    color: var(--accent);
+  }
+
+  .pricing__price-divider {
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: color-mix(in srgb, var(--color-ink) 14%, transparent);
+  }
+
+  .pricing__course-divider {
+    display: block;
+    height: 1px;
+    margin: var(--space-10) 0;
+    border: none;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .pricing__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-10) 0;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+  }
+
+  .pricing__replacement-title,
+  .pricing__replacement-text {
+    font-family: var(--font-body);
+    line-height: var(--line-height-base);
+  }
+
+  .pricing__replacement-title {
+    margin: 0 0 var(--space-6);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .pricing__replacement-text {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-ink);
+  }
+
+  .pricing__replacement-text strong {
+    font-weight: 600;
+  }
+
+  .pricing__insurance {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-10);
+    width: min(100%, var(--card-grid-width));
+    box-sizing: border-box;
+    overflow: hidden;
+    isolation: isolate;
+    margin: var(--stack-gap) auto 0;
+    padding: var(--card-padding);
+    border-radius: var(--radius-card);
+    background: var(--color-lilac-soft);
+  }
+
+  .pricing__insurance--last {
+    margin-bottom: var(--space-17);
+  }
+
+  .pricing__insurance-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  .pricing__insurance-icon {
+    display: block;
+    flex-shrink: 0;
+    width: var(--space-13);
+    height: var(--space-13);
+    color: var(--color-lilac-deep);
+  }
+
+  .pricing__insurance-title {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    line-height: var(--line-height-2xl);
+    color: var(--color-ink);
+  }
+
+  .pricing__insurance-text {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+    color: var(--color-ink-soft);
+  }
+</style>

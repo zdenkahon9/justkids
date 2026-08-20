@@ -107,7 +107,6 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 <style>
   .schedule {
     scroll-margin-top: var(--section-scroll-margin);
-    padding-bottom: 0;
     background-color: var(--color-cream);
   }
 
@@ -117,7 +116,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   .schedule__panel--mobile {
     width: min(100%, var(--card-grid-width));
-    margin: 0 auto var(--space-17);
+    margin: 0 auto;
   }
 
   .schedule__grid--desktop {
@@ -308,7 +307,7 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-8);
       width: 100%;
-      margin: 0 auto var(--space-17);
+      margin: 0 auto;
     }
 
     .schedule__grid--desktop .schedule__card:nth-child(2) :global(.schedule__day-block),

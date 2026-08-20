@@ -451,7 +451,7 @@ h3 {
 
 /* Příjezd ze šipek WorkshopsHome — navbar hned ve scrolled stavu, bez poskoku */
 html[data-workshops-home-arrival] [data-component="navbar"] {
-  background: rgba(255, 249, 244, 0.88);
+  background: #fff9f4;
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
   padding: var(--space-4) 0;

@@ -19,7 +19,7 @@
 }
 
 .nav.isScrolled {
-  background: rgba(255, 249, 244, 0.88);
+  background: #fff9f4;
   backdrop-filter: saturate(150%) blur(14px);
   -webkit-backdrop-filter: saturate(150%) blur(14px);
   padding: var(--space-4) 0;
@@ -320,21 +320,24 @@
 
 .navMobile {
   position: fixed;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
   left: 0;
   right: 0;
   top: var(--nav-height);
   height: calc(100svh - var(--nav-height));
+  max-height: calc(100svh - var(--nav-height));
   background: linear-gradient(170deg, #fff9f4 0%, #ffe1ed 50%, #d6ecfa 100%);
   padding-block: 0 var(--space-10);
   padding-inline: var(--space-10);
   z-index: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow: hidden;
 }
 
 .nav.isScrolled .navMobile {
   top: var(--nav-height-scrolled);
   height: calc(100svh - var(--nav-height-scrolled));
+  max-height: calc(100svh - var(--nav-height-scrolled));
 }
 
 .navMobile[hidden] {
@@ -345,17 +348,45 @@
   outline: none;
 }
 
-.navMobile ul {
+.navMobileLinksFrame {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.navMobileLinksFrame::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--space-15);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--color-ink-muted) 35%, transparent)
+  );
+  pointer-events: none;
+}
+
+.navMobileLinks {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.navMobileLinks ul {
   list-style: none;
-  padding: 0;
+  padding: 0 0 var(--space-8);
   margin: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  height: 100%;
 }
 
-.navMobile ul li:last-child {
+.navMobileFooter {
   padding-top: var(--space-8);
   display: flex;
   justify-content: center;
@@ -376,7 +407,9 @@
 }
 
 .navMobile a:not(:global(.btn)) {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
   padding: var(--space-7) var(--space-8);
   font-family: var(--font-display);
   font-size: var(--text-lg);
@@ -386,8 +419,19 @@
   border-bottom: 1px solid rgba(42, 31, 56, 0.08);
 }
 
+.navMobileBadge {
+  flex: none;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  color: var(--color-blush-vivid);
+  background: var(--color-blush-soft);
+  border-radius: var(--radius-full);
+}
+
 .navMobile :global(.btn) {
-  margin-top: auto;
   width: 90%;
   max-width: var(--card-grid-width);
   font-size: var(--text-base);

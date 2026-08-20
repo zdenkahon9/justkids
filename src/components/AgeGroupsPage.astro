@@ -70,14 +70,13 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
 
       <div class="age-page__pill age-page__pill--schedule">
         <a href={`#${scheduleMeta.sectionId}`} class="age-page__pill-schedule">
-          <span class="age-page__pill-schedule-icon" aria-hidden="true">
-            <Icon
-              is:inline
-              name="lineicons:calendar-days"
-              class="age-page__pill-schedule-graphic"
-            />
-          </span>
           Rozvrh lekcí
+        </a>
+        <a
+          href={`#${ROUTE_IDS.ageGroups.pricing}`}
+          class="age-page__pill-schedule age-page__pill-schedule--pricing"
+        >
+          Ceník
         </a>
       </div>
     </div>
@@ -426,7 +425,7 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
     align-items: stretch;
   }
 
-  /* Druhá pilulka — Rozvrh lekcí */
+  /* Druhá pilulka — odkazy na rozvrh a ceník */
   .age-page__pill-schedule {
     flex: 1;
     align-self: stretch;
@@ -434,10 +433,9 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    gap: var(--space-5);
     width: 100%;
     min-height: calc(2rem + 1em * var(--line-height-base));
-    padding: var(--space-8) var(--space-13);
+    padding: var(--space-8);
     color: var(--color-lilac-deep);
     --accent-soft: var(--color-lilac-soft);
     font: inherit;
@@ -449,33 +447,32 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
     transition: background-color 220ms ease;
   }
 
+  .age-page__pill-schedule + .age-page__pill-schedule {
+    position: relative;
+  }
+
+  .age-page__pill-schedule + .age-page__pill-schedule::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: calc(100% - var(--space-7));
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .age-page__pill-schedule--pricing {
+    color: var(--color-blush-deep);
+    --accent-soft: var(--color-blush-soft);
+  }
+
   .age-page__pill-schedule:hover,
   .age-page__pill-schedule:focus-visible,
   .age-page__pill-schedule:active {
     background: var(--accent-soft);
     outline: none;
-  }
-
-  .age-page__pill-schedule-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    color: var(--color-lilac-deep);
-  }
-
-  .age-page__pill-schedule-graphic {
-    display: block;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .age-page__pill-schedule-graphic :global(svg) {
-    display: block;
-    width: 100%;
-    height: 100%;
   }
 
   .age-page__filter + .age-page__group-heading,
@@ -723,12 +720,6 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
 
     .age-page__pill {
       font-size: var(--text-lg);
-    }
-
-    .age-page__pill-schedule-icon,
-    .age-page__pill-schedule-graphic {
-      width: var(--text-4xl);
-      height: var(--text-4xl);
     }
   }
 
