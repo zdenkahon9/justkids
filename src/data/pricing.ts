@@ -20,6 +20,7 @@ export type CourseStart = {
 type PricingTextPart = {
   text: string;
   emphasis?: boolean;
+  lineBreakBefore?: boolean;
 };
 
 export type PricingCourse = {
@@ -48,7 +49,7 @@ export const pricingMeta: PricingMeta = {
 
 export const courseStarts: CourseStart[] = [
   { location: "Zdice", date: "7. 9. 2026", dateTime: "2026-09-07" },
-  { location: "Hořovice", date: "7. 9. 2026", dateTime: "2026-09-07" },
+  { location: "Hořovice", date: "10. 9. 2026", dateTime: "2026-09-10" },
   { location: "Broumy", date: "17. 9. 2026", dateTime: "2026-09-17" },
 ];
 
@@ -68,12 +69,11 @@ export const pricingCourses: PricingCourse[] = [
       { text: " " },
       { text: "kurzu", emphasis: true },
       { text: " ve " },
-      { text: "Zdicích", emphasis: true },
-      { text: ", " },
+      { text: "Zdicích,", emphasis: true },
+      { text: " " },
       { text: "Hořovicích", emphasis: true },
       { text: " nebo " },
-      { text: "Broumech", emphasis: true },
-      { text: "." },
+      { text: "Broumech.", emphasis: true },
     ],
   },
   {
@@ -85,13 +85,11 @@ export const pricingCourses: PricingCourse[] = [
     lessonCount: 16,
     replacementTitle: "Náhrady lekcí",
     replacementText: [
-      { text: "Zameškané lekce " },
-      { text: "není možné", emphasis: true },
-      { text: " " },
-      { text: "nahradit", emphasis: true },
-      { text: ". Hradí se " },
-      { text: "celý kurz", emphasis: true },
-      { text: ", nikoliv jednotlivé lekce." },
+      { text: "Náhrada bude probíhat formou " },
+      { text: "dvou venkovních lekcí.", emphasis: true },
+      { text: " Hradí se ", lineBreakBefore: true },
+      { text: "celý kurz,", emphasis: true },
+      { text: " nikoliv jednotlivé lekce." },
     ],
   },
 ];

@@ -545,9 +545,19 @@ import { site } from "../data/site";
     }
 
     .hero__announcement {
+      position: relative;
+      top: calc(-1 * var(--space-20));
       margin: 0;
       padding: var(--space-4) var(--space-6);
       font-size: var(--text-base);
+    }
+
+    .hero__announcement-badge {
+      font-size: var(--text-xs);
+    }
+
+    .hero__announcement-arrow {
+      font-size: var(--text-lg);
     }
 
     .hero__title {

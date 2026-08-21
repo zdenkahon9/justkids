@@ -122,9 +122,12 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
               <div class="pricing__replacement">
                 <p class="pricing__replacement-title">{course.replacementTitle}</p>
                 <p class="pricing__replacement-text">
-                  {course.replacementText.map((part) =>
-                    part.emphasis ? <strong>{part.text}</strong> : part.text,
-                  )}
+                  {course.replacementText.map((part) => (
+                    <>
+                      {part.lineBreakBefore && <br class="pricing__replacement-break" />}
+                      {part.emphasis ? <strong>{part.text}</strong> : part.text}
+                    </>
+                  ))}
                 </p>
               </div>
             </div>
@@ -133,41 +136,43 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
       }
     </div>
 
-    <aside
-      class="pricing__insurance reveal"
-      aria-labelledby="pricing-sibling-discount-title"
-    >
-      <div class="pricing__insurance-heading">
-        <Icon
-          is:inline
-          name="ph:heart-thin"
-          class="pricing__insurance-icon"
-          aria-hidden="true"
-        />
-        <h3 id="pricing-sibling-discount-title" class="pricing__insurance-title">
-          {meta.siblingDiscountTitle}
-        </h3>
-      </div>
-      <p class="pricing__insurance-text">{meta.siblingDiscount}</p>
-    </aside>
+    <div class="pricing__notices">
+      <aside
+        class="pricing__insurance reveal"
+        aria-labelledby="pricing-sibling-discount-title"
+      >
+        <div class="pricing__insurance-heading">
+          <Icon
+            is:inline
+            name="ph:heart-thin"
+            class="pricing__insurance-icon"
+            aria-hidden="true"
+          />
+          <h3 id="pricing-sibling-discount-title" class="pricing__insurance-title">
+            {meta.siblingDiscountTitle}
+          </h3>
+        </div>
+        <p class="pricing__insurance-text">{meta.siblingDiscount}</p>
+      </aside>
 
-    <aside
-      class="pricing__insurance pricing__insurance--last reveal"
-      aria-labelledby="pricing-insurance-title"
-    >
-      <div class="pricing__insurance-heading">
-        <Icon
-          is:inline
-          name="ph:heart-thin"
-          class="pricing__insurance-icon"
-          aria-hidden="true"
-        />
-        <h3 id="pricing-insurance-title" class="pricing__insurance-title">
-          {meta.insuranceContributionTitle}
-        </h3>
-      </div>
-      <p class="pricing__insurance-text">{meta.insuranceContributionText}</p>
-    </aside>
+      <aside
+        class="pricing__insurance pricing__insurance--last reveal"
+        aria-labelledby="pricing-insurance-title"
+      >
+        <div class="pricing__insurance-heading">
+          <Icon
+            is:inline
+            name="ph:heart-thin"
+            class="pricing__insurance-icon"
+            aria-hidden="true"
+          />
+          <h3 id="pricing-insurance-title" class="pricing__insurance-title">
+            {meta.insuranceContributionTitle}
+          </h3>
+        </div>
+        <p class="pricing__insurance-text">{meta.insuranceContributionText}</p>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -247,12 +252,14 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
 
   .pricing__starts-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-8);
+    justify-content: center;
+    gap: var(--space-6);
     padding: var(--space-8) var(--space-13);
     border-radius: var(--radius-pill);
     color: var(--color-ink);
+    text-align: center;
   }
 
   .pricing__starts-item:nth-child(1) {
@@ -459,6 +466,14 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     font-weight: 600;
   }
 
+  .pricing__notices {
+    display: grid;
+    grid-template-columns: min(100%, var(--card-grid-width));
+    justify-content: center;
+    gap: var(--stack-gap);
+    margin-top: var(--stack-gap);
+  }
+
   .pricing__insurance {
     position: relative;
     display: grid;
@@ -468,7 +483,7 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     box-sizing: border-box;
     overflow: hidden;
     isolation: isolate;
-    margin: var(--stack-gap) auto 0;
+    margin: 0;
     padding: var(--card-padding);
     border-radius: var(--radius-card);
     background: var(--color-lilac-soft);
@@ -509,5 +524,83 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     font-weight: 400;
     line-height: var(--line-height-base);
     color: var(--color-ink-soft);
+  }
+
+  @media (min-width: 1024px) {
+    .pricing__starts,
+    .pricing__courses {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+    }
+
+    .pricing__notices {
+      width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
+      margin-inline: auto;
+    }
+
+    .pricing__starts-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+
+    .pricing__starts-item {
+      padding-inline: var(--space-8);
+    }
+
+    .pricing__starts-location,
+    .pricing__starts-date {
+      font-size: var(--text-lg);
+    }
+
+    .pricing__courses {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pricing__notices {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pricing__insurance {
+      width: 100%;
+      gap: var(--space-6);
+      padding-block: var(--space-10);
+    }
+
+    .pricing__insurance-title {
+      font-size: var(--text-xl);
+    }
+
+    .pricing__insurance-text {
+      font-size: var(--text-base);
+    }
+
+    .pricing__insurance-icon {
+      width: var(--space-14);
+      height: var(--space-14);
+    }
+
+    .pricing__price-total span {
+      font-size: var(--text-lg);
+    }
+
+    .pricing__price-breakdown-item span {
+      font-size: var(--text-base);
+    }
+
+    .pricing__replacement-title {
+      font-size: var(--text-lg);
+    }
+
+    .pricing__replacement-text {
+      font-size: var(--text-base);
+    }
+
+    .pricing__replacement-break {
+      display: none;
+    }
+
+    .pricing__courses {
+      margin-top: var(--space-17);
+      margin-inline: auto;
+    }
   }
 </style>

@@ -80,7 +80,7 @@ const MobileMenu = ({
               <li key={link.href} style={{ ["--i" as string]: index }}>
                 <a href={link.href} onClick={(event) => onNavigate(event, link.href)}>
                   <span>{link.label}</span>
-                  {link.isNew && <span className={styles.navMobileBadge}>Nové</span>}
+                  {link.isNew && <span className={styles.navNewBadge}>Nové</span>}
                 </a>
               </li>
             ))}

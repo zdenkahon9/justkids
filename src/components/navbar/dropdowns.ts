@@ -33,6 +33,8 @@ const NAV_DROPDOWNS = [
     match: (link) => link.label === "Cvičení pro děti",
     links: [
       { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
+      { href: ROUTES.ageGroups.schedule, label: "Rozvrh lekcí", isNew: true },
+      { href: ROUTES.ageGroups.pricing, label: "Ceník", isNew: true },
       { href: ROUTES.home.locations, label: "Kde cvičíme" },
     ],
   },

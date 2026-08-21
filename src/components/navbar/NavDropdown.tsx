@@ -112,7 +112,8 @@ const NavDropdown = ({
                   onNavigate(event, link.href, { closeDropdownAfterClick: true })
                 }
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.isNew && <span className={styles.navNewBadge}>Nové</span>}
               </a>
             </li>
           ))}

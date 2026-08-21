@@ -241,7 +241,10 @@
 }
 
 .dropdownList a {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
   padding: var(--space-5) var(--space-8);
   color: var(--color-ink);
   font-weight: 600;
@@ -419,7 +422,7 @@
   border-bottom: 1px solid rgba(42, 31, 56, 0.08);
 }
 
-.navMobileBadge {
+.navNewBadge {
   flex: none;
   padding: var(--space-2) var(--space-4);
   font-family: var(--font-body);
