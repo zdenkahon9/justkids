@@ -467,6 +467,8 @@ import { site } from "../data/site";
 
   @media (min-width: 640px) and (max-width: 1023px) {
     .hero__announcement {
+      position: relative;
+      top: calc(-1 * var(--space-20));
       margin-inline: max(0px, calc((100cqi - 38rem) / 2)) auto;
       padding: var(--space-4) var(--space-6);
       font-size: var(--text-base);
