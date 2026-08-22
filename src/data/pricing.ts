@@ -20,7 +20,6 @@ export type CourseStart = {
 type PricingTextPart = {
   text: string;
   emphasis?: boolean;
-  lineBreakBefore?: boolean;
 };
 
 export type PricingCourse = {
@@ -30,6 +29,7 @@ export type PricingCourse = {
   accent: "blush" | "sky";
   coursePriceCzk: number;
   lessonCount: number;
+  lessonCountLabel?: string;
   pricePerLessonCzk?: number;
   replacementTitle: string;
   replacementText: PricingTextPart[];
@@ -49,7 +49,7 @@ export const pricingMeta: PricingMeta = {
 
 export const courseStarts: CourseStart[] = [
   { location: "Zdice", date: "7. 9. 2026", dateTime: "2026-09-07" },
-  { location: "Hořovice", date: "10. 9. 2026", dateTime: "2026-09-10" },
+  { location: "Hořovice", date: "9. 9. 2026", dateTime: "2026-09-09" },
   { location: "Broumy", date: "17. 9. 2026", dateTime: "2026-09-17" },
 ];
 
@@ -83,13 +83,11 @@ export const pricingCourses: PricingCourse[] = [
     accent: "sky",
     coursePriceCzk: 2880,
     lessonCount: 16,
+    lessonCountLabel: "16 lekcí + 2 náhrady",
     replacementTitle: "Náhrady lekcí",
     replacementText: [
       { text: "Náhrada bude probíhat formou " },
-      { text: "dvou venkovních lekcí.", emphasis: true },
-      { text: " Hradí se ", lineBreakBefore: true },
-      { text: "celý kurz,", emphasis: true },
-      { text: " nikoliv jednotlivé lekce." },
+      { text: "dvou venkovních lekcí navíc.", emphasis: true },
     ],
   },
 ];

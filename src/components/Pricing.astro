@@ -96,7 +96,9 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
                       class="pricing__price-metric-icon"
                       aria-hidden="true"
                     />
-                    <strong>{course.lessonCount} lekcí</strong>
+                    <strong>
+                      {course.lessonCountLabel ?? `${course.lessonCount} lekcí`}
+                    </strong>
                     <span>v jednom kurzu</span>
                   </p>
 
@@ -122,12 +124,9 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
               <div class="pricing__replacement">
                 <p class="pricing__replacement-title">{course.replacementTitle}</p>
                 <p class="pricing__replacement-text">
-                  {course.replacementText.map((part) => (
-                    <>
-                      {part.lineBreakBefore && <br class="pricing__replacement-break" />}
-                      {part.emphasis ? <strong>{part.text}</strong> : part.text}
-                    </>
-                  ))}
+                  {course.replacementText.map((part) =>
+                    part.emphasis ? <strong>{part.text}</strong> : part.text,
+                  )}
                 </p>
               </div>
             </div>
@@ -592,10 +591,6 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
 
     .pricing__replacement-text {
       font-size: var(--text-base);
-    }
-
-    .pricing__replacement-break {
-      display: none;
     }
 
     .pricing__courses {
