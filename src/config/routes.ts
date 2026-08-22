@@ -88,6 +88,8 @@ export const NAV_LINKS = {
   footer: [
     { href: ROUTES.home.about, label: "O mně" },
     { href: ROUTES.ageGroups._, label: "Věkové kategorie" },
+    { href: ROUTES.ageGroups.schedule, label: "Rozvrh lekcí" },
+    { href: ROUTES.ageGroups.pricing, label: "Ceník" },
     { href: ROUTES.home.locations, label: "Kde cvičíme" },
     { href: ROUTES.workshops._, label: "Workshopy" },
     { href: ROUTES.home.camps, label: "Kempy & výjezdy" },
