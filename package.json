@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
+    "@iconify-json/el": "^1.2.2",
     "@iconify-json/emojione": "^1.2.3",
     "@iconify-json/fluent": "^1.2.57",
     "@iconify-json/fxemoji": "^1.2.2",

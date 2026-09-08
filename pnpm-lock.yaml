@@ -11,6 +11,9 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.10
         version: 0.9.10(prettier-plugin-astro@0.14.1)(prettier@3.9.6)(typescript@6.0.3)
+      '@iconify-json/el':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@iconify-json/emojione':
         specifier: ^1.2.3
         version: 1.2.3
@@ -995,6 +998,9 @@ packages:
         optional: true
       prettier-plugin-ember-template-tag:
         optional: true
+
+  '@iconify-json/el@1.2.2':
+    resolution: {integrity: sha512-tZV78JDjkMLCtXQoTJD2BSSkH953L9UkLms9KTyaiBq8DQ2MFxZ7P9Xn/lNxVi7H9MYo2jHWmNFFvgzEnZLj7A==}
 
   '@iconify-json/emojione@1.2.3':
     resolution: {integrity: sha512-T9+T3HIbJNLKKsmxYKlaYhvnHYkz/HNYTV7SHCXVZPfeUi4FqskY70YeN8yYAZT8cCv7w5vJxS4Q1m8zb9CMMg==}
@@ -4723,6 +4729,10 @@ snapshots:
       semver: 7.8.5
     transitivePeerDependencies:
       - supports-color
+
+  '@iconify-json/el@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/emojione@1.2.3':
     dependencies:
