@@ -137,21 +137,21 @@ export const scheduleLocations: ScheduleLocation[] = [
       },
     ],
   },
-  {
-    id: "broumy",
-    label: "Broumy",
-    accentClass: "schedule__pill-third--broumy",
-    accent: "sky-deep",
-    accentSoft: "sky-soft",
-    venue: venueFor("broumy", "Broumy", "Broumy"),
-    days: [
-      {
-        label: "Čtvrtek",
-        slots: [
-          { time: "13:30", activities: ["BABY + MINI"] },
-          { time: "14:30", activities: ["MOVE + ACTIVE"] },
-        ],
-      },
-    ],
-  },
+  // {
+  //   id: "broumy",
+  //   label: "Broumy",
+  //   accentClass: "schedule__pill-third--broumy",
+  //   accent: "sky-deep",
+  //   accentSoft: "sky-soft",
+  //   venue: venueFor("broumy", "Broumy", "Broumy"),
+  //   days: [
+  //     {
+  //       label: "Čtvrtek",
+  //       slots: [
+  //         { time: "13:30", activities: ["BABY + MINI"] },
+  //         { time: "14:30", activities: ["MOVE + ACTIVE"] },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
