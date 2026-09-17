@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
 
 import heroBalloons from "../assets/images/hero-balloons.png";
 import heroBoy from "../assets/images/hero-boy.png";
@@ -33,14 +32,9 @@ import { site } from "../data/site";
 
   <div class="container-x hero__inner">
     <div class="hero__copy">
-      <a href={ROUTES.ageGroups.schedule} class="hero__announcement">
-        <span class="hero__announcement-icon-wrap" aria-hidden="true">
-          <Icon is:inline name="el:fire" class="hero__announcement-icon" />
-        </span>
-        <span class="hero__announcement-copy">
-          <span class="hero__announcement-title">POSLEDNÍ VOLNÁ MÍSTA</span>
-          <span class="hero__announcement-label">Ještě se můžete přidat</span>
-        </span>
+      <a href={ROUTES.ageGroups.pricing} class="hero__announcement">
+        <span class="hero__announcement-badge">NOVINKA</span>
+        <span class="hero__announcement-label">Kurzy od září 2026</span>
         <span class="hero__announcement-arrow" aria-hidden="true">→</span>
       </a>
 
@@ -275,11 +269,11 @@ import { site } from "../data/site";
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: var(--space-10);
+    gap: var(--space-4);
     width: fit-content;
     max-width: 100%;
-    margin: 0 auto var(--space-2);
-    padding: var(--space-4) var(--space-8);
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-4);
     border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
     border-radius: var(--radius-full);
     background: color-mix(in srgb, var(--color-cream) 88%, transparent);
@@ -298,39 +292,19 @@ import { site } from "../data/site";
       transform 220ms ease;
   }
 
-  .hero__announcement-copy {
-    display: grid;
-    justify-items: center;
-    min-width: 0;
-    text-align: center;
-  }
-
-  .hero__announcement-icon-wrap {
-    display: grid;
-    place-items: center;
-    width: var(--space-18);
-    height: var(--space-18);
-    border-radius: 50%;
+  .hero__announcement-badge {
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-full);
     background: var(--color-blush-soft);
-  }
-
-  .hero__announcement-icon {
-    width: var(--space-14);
-    height: var(--space-14);
-    color: var(--color-blush-vivid);
-  }
-
-  .hero__announcement-title {
-    margin-bottom: var(--space-1);
-    color: var(--color-blush-vivid);
-    font-size: var(--text-base);
-    font-weight: 800;
+    color: var(--color-blush-deep);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    line-height: var(--line-height-base);
     white-space: nowrap;
   }
 
   .hero__announcement-label {
     min-width: 0;
-    color: var(--color-ink);
     white-space: nowrap;
   }
 
@@ -496,6 +470,7 @@ import { site } from "../data/site";
       position: relative;
       top: calc(-1 * var(--space-20));
       margin-inline: max(0px, calc((100cqi - 38rem) / 2)) auto;
+      padding: var(--space-4) var(--space-6);
       font-size: var(--text-base);
     }
 
@@ -574,8 +549,13 @@ import { site } from "../data/site";
     .hero__announcement {
       position: relative;
       top: calc(-1 * var(--space-20));
-      margin: 0 0 var(--space-2);
+      margin: 0;
+      padding: var(--space-4) var(--space-6);
       font-size: var(--text-base);
+    }
+
+    .hero__announcement-badge {
+      font-size: var(--text-xs);
     }
 
     .hero__announcement-arrow {

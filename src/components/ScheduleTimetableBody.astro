@@ -8,11 +8,6 @@ type Props = {
 };
 
 const { location } = Astro.props;
-
-const scheduleStatusLabels = {
-  full: "Obsazeno",
-  "last-spots": "Poslední místa",
-} as const;
 ---
 
 {
@@ -41,16 +36,6 @@ const scheduleStatusLabels = {
               <span class="schedule__activity">
                 {formatScheduleActivities(slot.activities)}
               </span>
-              {slot.status ? (
-                <span
-                  class:list={["schedule__status", `schedule__status--${slot.status}`]}
-                  aria-label={scheduleStatusLabels[slot.status]}
-                >
-                  <span class="schedule__status-text">
-                    {scheduleStatusLabels[slot.status]}
-                  </span>
-                </span>
-              ) : null}
             </li>
           ))}
         </ul>
@@ -187,28 +172,6 @@ const scheduleStatusLabels = {
     min-width: 0;
     margin-left: var(--schedule-time-to-activity-gap);
     letter-spacing: 0.02em;
-  }
-
-  .schedule__status {
-    flex: 0 0 auto;
-    align-self: center;
-    width: var(--space-8);
-    height: var(--space-8);
-    margin-left: var(--space-1);
-    padding: 0;
-    border-radius: 50%;
-  }
-
-  .schedule__status--full {
-    background: var(--color-status-full);
-  }
-
-  .schedule__status--last-spots {
-    background: var(--color-status-last-spots);
-  }
-
-  .schedule__status-text {
-    display: none;
   }
 
   .schedule__day-divider {

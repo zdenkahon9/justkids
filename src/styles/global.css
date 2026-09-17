@@ -44,12 +44,6 @@
   --color-ink-soft: #5b4d6b;
   --color-ink-muted: #8a7f99;
 
-  /* Course availability */
-  --color-status-full-soft: #fde9e9;
-  --color-status-full: #e03131;
-  --color-status-last-spots-soft: #e7f5eb;
-  --color-status-last-spots: #37b24d;
-
   /* Brand semantics */
   --color-brand: var(--color-blush-deep);
   --color-brand-strong: var(--color-blush-vivid);

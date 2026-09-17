@@ -50,7 +50,7 @@ export const pricingMeta: PricingMeta = {
 export const courseStarts: CourseStart[] = [
   { location: "Zdice", date: "7. 9. 2026", dateTime: "2026-09-07" },
   { location: "Hořovice", date: "9. 9. 2026", dateTime: "2026-09-09" },
-  // { location: "Broumy", date: "17. 9. 2026", dateTime: "2026-09-17" },
+  { location: "Broumy", date: "17. 9. 2026", dateTime: "2026-09-17" },
 ];
 
 export const pricingCourses: PricingCourse[] = [
@@ -64,24 +64,16 @@ export const pricingCourses: PricingCourse[] = [
     pricePerLessonCzk: 180,
     replacementTitle: "Náhrady lekcí",
     replacementText: [
-      // { text: "Náhrady je možné vybrat na " },
-      // { text: "paralelním", emphasis: true },
-      // { text: " " },
-      // { text: "kurzu", emphasis: true },
-      // { text: " ve " },
-      // { text: "Zdicích,", emphasis: true },
-      // { text: " " },
-      // { text: "Hořovicích", emphasis: true },
-      // { text: " nebo " },
-      // { text: "Broumech.", emphasis: true },
       { text: "Náhrady je možné vybrat na " },
       { text: "paralelním", emphasis: true },
       { text: " " },
       { text: "kurzu", emphasis: true },
       { text: " ve " },
-      { text: "Zdicích", emphasis: true },
-      { text: " nebo v " },
-      { text: "Hořovicích.", emphasis: true },
+      { text: "Zdicích,", emphasis: true },
+      { text: " " },
+      { text: "Hořovicích", emphasis: true },
+      { text: " nebo " },
+      { text: "Broumech.", emphasis: true },
     ],
   },
   {

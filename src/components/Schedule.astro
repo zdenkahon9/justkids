@@ -34,28 +34,6 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
         {meta.title}{" "}
         <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
-      <aside class="schedule__availability" aria-label="Dostupnost kurzů">
-        <p class="schedule__availability-copy">
-          <span class="schedule__availability-lead">Ještě se k nám můžete přidat</span>{
-            " "
-          }
-          <span class="schedule__availability-detail">– zbývá pár volných míst.</span>
-        </p>
-        <ul class="schedule__availability-legend" aria-label="Význam dostupnosti lekcí">
-          <li class="schedule__availability-item schedule__availability-item--full">
-            <span
-              class="schedule__availability-dot schedule__availability-dot--full"
-              aria-hidden="true"></span>
-            <span>Obsazeno</span>
-          </li>
-          <li class="schedule__availability-item schedule__availability-item--last-spots">
-            <span
-              class="schedule__availability-dot schedule__availability-dot--last-spots"
-              aria-hidden="true"></span>
-            <span>Poslední místa</span>
-          </li>
-        </ul>
-      </aside>
     </header>
 
     <div class="schedule__panel schedule__panel--mobile reveal">
@@ -143,77 +121,6 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
   .schedule__grid--desktop {
     display: none;
-  }
-
-  .schedule__availability {
-    display: block;
-    text-align: center;
-  }
-
-  .schedule__availability-copy {
-    margin: 0;
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    font-weight: 400;
-    line-height: var(--line-height-base);
-  }
-
-  .schedule__availability-lead {
-    font-size: var(--text-lg);
-    font-weight: 600;
-  }
-
-  .schedule__availability-detail {
-    font-weight: 400;
-  }
-
-  .schedule__availability-legend {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin: var(--space-6) 0 0;
-    padding: 0;
-    list-style: none;
-    color: var(--color-ink);
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    line-height: var(--line-height-base);
-  }
-
-  .schedule__availability-item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-5);
-    border-radius: calc(var(--radius-pill) + var(--space-4));
-    white-space: nowrap;
-  }
-
-  .schedule__availability-item--full {
-    background: var(--color-status-full-soft);
-  }
-
-  .schedule__availability-item--last-spots {
-    background: var(--color-status-last-spots-soft);
-  }
-
-  .schedule__availability-dot {
-    flex: 0 0 var(--space-8);
-    width: var(--space-8);
-    height: var(--space-8);
-    border-radius: 50%;
-  }
-
-  .schedule__availability-dot--full {
-    background: var(--color-status-full);
-  }
-
-  .schedule__availability-dot--last-spots {
-    background: var(--color-status-last-spots);
   }
 
   .schedule__pill {
@@ -397,10 +304,9 @@ const cardStyle = (location: (typeof scheduleLocations)[number]) =>
 
     .schedule__grid--desktop {
       display: grid;
-      /* grid-template-columns: repeat(3, minmax(0, 1fr)); */
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-8);
-      width: min(100%, calc(2 * var(--card-grid-width) + var(--space-8)));
+      width: 100%;
       margin: 0 auto;
     }
 

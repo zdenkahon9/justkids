@@ -29,7 +29,6 @@ export default defineConfig({
     icon({
       include: {
         emojione: ["monkey-face"],
-        el: ["fire"],
         fluent: [
           "briefcase-medical-24-regular",
           "chat-multiple-20-regular",
