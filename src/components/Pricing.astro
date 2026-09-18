@@ -63,62 +63,148 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
 
             <div class="pricing__course-body">
               <h3 class="pricing__course-title">{course.title}</h3>
-              <p class="pricing__course-groups">
-                {course.groups.map((group, index) => (
-                  <>
-                    {index > 0 ? (
-                      <span class="pricing__course-groups-separator" aria-hidden="true">
-                        {" • "}
-                      </span>
-                    ) : null}
-                    {group}
-                  </>
-                ))}
-              </p>
-              <hr class="pricing__course-divider" aria-hidden="true" />
+              {course.variants ? (
+                <div class="pricing__course-tabs" data-pricing-tabs>
+                  <div
+                    class="pricing__course-tabs-list"
+                    role="tablist"
+                    aria-label="Vyberte věkovou kategorii"
+                  >
+                    {course.variants.map((variant, index) => {
+                      const variantId = `${course.id}-${variant.title.toLowerCase()}`;
 
-              <div class="pricing__price">
-                <p class="pricing__price-total">
-                  <strong>{formatPrice(course.coursePriceCzk)} Kč</strong>
-                  <span>za celý kurz</span>
-                </p>
+                      return (
+                        <button
+                          type="button"
+                          id={`pricing-tab-${variantId}`}
+                          class="pricing__course-tab"
+                          role="tab"
+                          aria-selected={index === 0 ? "true" : "false"}
+                          aria-controls={`pricing-panel-${variantId}`}
+                          tabindex={index === 0 ? 0 : -1}
+                        >
+                          {variant.title}
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                <div
-                  class:list={[
-                    "pricing__price-breakdown",
-                    { "pricing__price-breakdown--single": !course.pricePerLessonCzk },
-                  ]}
-                >
-                  <p class="pricing__price-breakdown-item">
-                    <Icon
-                      is:inline
-                      name="lineicons:calendar-days"
-                      class="pricing__price-metric-icon"
-                      aria-hidden="true"
-                    />
-                    <strong>
-                      {course.lessonCountLabel ?? `${course.lessonCount} lekcí`}
-                    </strong>
-                    <span>v jednom kurzu</span>
+                  <hr class="pricing__course-divider" aria-hidden="true" />
+
+                  <div class="pricing__course-options">
+                    {course.variants.map((variant, index) => {
+                      const variantId = `${course.id}-${variant.title.toLowerCase()}`;
+
+                      return (
+                        <section
+                          id={`pricing-panel-${variantId}`}
+                          class="pricing__course-option"
+                          role="tabpanel"
+                          aria-labelledby={`pricing-tab-${variantId}`}
+                          hidden={index !== 0}
+                        >
+                          <div class="pricing__course-option-content">
+                            <header class="pricing__course-option-identity">
+                              <h4 class="pricing__course-option-title">
+                                {variant.title}
+                              </h4>
+                              <span aria-hidden="true">•</span>
+                              <p class="pricing__course-option-age">{variant.ageRange}</p>
+                            </header>
+
+                            <p class="pricing__course-option-total">
+                              <strong>{formatPrice(variant.coursePriceCzk)} Kč</strong>
+                              <span>za celý kurz</span>
+                            </p>
+
+                            <div class="pricing__course-option-lessons">
+                              <Icon
+                                is:inline
+                                name="lineicons:calendar-days"
+                                class="pricing__price-metric-icon"
+                                aria-hidden="true"
+                              />
+                              <p class="pricing__course-option-lessons-count">
+                                <strong>{variant.lessonCount} lekcí</strong>
+                                {variant.lessonCountLabel.slice(
+                                  `${variant.lessonCount} lekcí`.length,
+                                )}
+                              </p>
+                              <span class="pricing__course-option-lessons-caption">
+                                v jednom kurzu
+                              </span>
+                            </div>
+                          </div>
+                        </section>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p class="pricing__course-groups">
+                    {course.groups.map((group, index) => (
+                      <>
+                        {index > 0 ? (
+                          <span
+                            class="pricing__course-groups-separator"
+                            aria-hidden="true"
+                          >
+                            {" • "}
+                          </span>
+                        ) : null}
+                        <span class="pricing__course-group-label">{group}</span>
+                      </>
+                    ))}
                   </p>
+                  <hr class="pricing__course-divider" aria-hidden="true" />
 
-                  {course.pricePerLessonCzk ? (
-                    <>
-                      <span class="pricing__price-divider" aria-hidden="true" />
+                  <div class="pricing__price">
+                    <p class="pricing__price-total">
+                      <strong>{formatPrice(course.coursePriceCzk)} Kč</strong>
+                      <span>za celý kurz</span>
+                    </p>
+
+                    <div
+                      class:list={[
+                        "pricing__price-breakdown",
+                        {
+                          "pricing__price-breakdown--single": !course.pricePerLessonCzk,
+                        },
+                      ]}
+                    >
                       <p class="pricing__price-breakdown-item">
                         <Icon
                           is:inline
-                          name="ion:pricetag-outline"
+                          name="lineicons:calendar-days"
                           class="pricing__price-metric-icon"
                           aria-hidden="true"
                         />
-                        <strong>{formatPrice(course.pricePerLessonCzk)} Kč</strong>
-                        <span>za lekci</span>
+                        <strong>
+                          {course.lessonCountLabel ?? `${course.lessonCount} lekcí`}
+                        </strong>
+                        <span>v jednom kurzu</span>
                       </p>
-                    </>
-                  ) : null}
-                </div>
-              </div>
+
+                      {course.pricePerLessonCzk ? (
+                        <>
+                          <span class="pricing__price-divider" aria-hidden="true" />
+                          <p class="pricing__price-breakdown-item">
+                            <Icon
+                              is:inline
+                              name="ion:pricetag-outline"
+                              class="pricing__price-metric-icon"
+                              aria-hidden="true"
+                            />
+                            <strong>{formatPrice(course.pricePerLessonCzk)} Kč</strong>
+                            <span>za lekci</span>
+                          </p>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+                </>
+              )}
               <span class="pricing__rule" aria-hidden="true" />
 
               <div class="pricing__replacement">
@@ -338,16 +424,208 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
   }
 
   .pricing__course-groups {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(var(--space-15) + var(--space-6));
+    min-height: calc(var(--space-15) + var(--space-6));
+    box-sizing: border-box;
+    overflow: hidden;
     margin: 0;
+    padding: 0;
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    color: var(--accent);
+    text-align: center;
+    cursor: default;
+    user-select: none;
+  }
+
+  .pricing__course-group-label {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 100%;
+    padding-inline: var(--space-3);
+  }
+
+  .pricing__course-groups-separator {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: transparent;
+    font-size: 0;
+    line-height: 1;
+  }
+
+  .pricing__course-tabs-list {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0;
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    border-radius: var(--radius-pill);
+    background: transparent;
+  }
+
+  .pricing__course-tab {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: var(--space-8) var(--space-6);
+    border: 0;
+    background: transparent;
+    color: var(--color-ink-soft);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--line-height-base);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .pricing__course-tab[aria-selected="true"] {
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+
+  .pricing__course-tab[aria-selected="false"]:hover {
+    background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+    color: var(--color-ink);
+  }
+
+  .pricing__course-tab:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: none;
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 58%, white);
+  }
+
+  .pricing__course-options {
+    display: grid;
+  }
+
+  .pricing__course-option {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+  }
+
+  .pricing__course-option[hidden] {
+    display: none;
+  }
+
+  .pricing__course-option-content {
+    display: grid;
+    gap: 0;
+    min-width: 0;
+  }
+
+  .pricing__course-option-identity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-4);
+    min-width: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--line-height-lg);
+    margin-bottom: var(--space-5);
+  }
+
+  .pricing__course-option-title,
+  .pricing__course-option-age,
+  .pricing__course-option-total,
+  .pricing__course-option-lessons {
+    margin: 0;
+  }
+
+  .pricing__course-option-title {
+    font: inherit;
+    color: var(--color-ink);
+  }
+
+  .pricing__course-option-identity > span {
+    color: var(--accent);
+  }
+
+  .pricing__course-option-age {
+    font: inherit;
+    color: var(--accent);
+  }
+
+  .pricing__course-option-total {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-13);
+  }
+
+  .pricing__course-option-total strong {
+    font-family: var(--font-display);
+    font-size: var(--text-clamp-h2);
+    font-weight: 600;
+    line-height: var(--line-height-xs);
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .pricing__course-option-total span {
     font-family: var(--font-body);
     font-size: var(--text-base);
     font-weight: 600;
     line-height: var(--line-height-xl);
-    color: var(--color-ink-muted);
+    color: var(--color-ink-soft);
   }
 
-  .pricing__course-groups-separator {
-    color: var(--accent);
+  .pricing__course-option-lessons {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-4);
+  }
+
+  .pricing__course-option-lessons-count {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    line-height: var(--line-height-lg);
+    color: var(--color-ink);
+  }
+
+  .pricing__course-option-lessons-count strong {
+    font-weight: 600;
+  }
+
+  .pricing__course-option-lessons-caption {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-xl);
+    color: var(--color-ink-muted);
   }
 
   .pricing__price {
@@ -554,6 +832,22 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .pricing__course-tabs-list {
+      height: calc(var(--space-15) + var(--space-6));
+      min-height: calc(var(--space-15) + var(--space-6));
+    }
+
+    .pricing__course-tab {
+      height: 100%;
+      min-height: 0;
+      padding: var(--space-4) var(--space-6);
+      font-size: var(--text-base);
+    }
+
+    .pricing__course-option-identity {
+      display: none;
+    }
+
     .pricing__notices {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -577,11 +871,13 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
       height: var(--space-14);
     }
 
-    .pricing__price-total span {
+    .pricing__price-total span,
+    .pricing__course-option-total span {
       font-size: var(--text-lg);
     }
 
-    .pricing__price-breakdown-item span {
+    .pricing__price-breakdown-item span,
+    .pricing__course-option-lessons-caption {
       font-size: var(--text-base);
     }
 
@@ -599,3 +895,59 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     }
   }
 </style>
+
+<script>
+  const setupPricingTabs = () => {
+    document.querySelectorAll<HTMLElement>("[data-pricing-tabs]").forEach((tabsRoot) => {
+      if (tabsRoot.dataset.tabsReady === "true") return;
+      tabsRoot.dataset.tabsReady = "true";
+
+      const tabs = Array.from(
+        tabsRoot.querySelectorAll<HTMLButtonElement>("[role='tab']"),
+      );
+      const panels = Array.from(
+        tabsRoot.querySelectorAll<HTMLElement>("[role='tabpanel']"),
+      );
+
+      const selectTab = (selectedTab: HTMLButtonElement, moveFocus = false) => {
+        tabs.forEach((tab) => {
+          const isSelected = tab === selectedTab;
+          tab.setAttribute("aria-selected", String(isSelected));
+          tab.tabIndex = isSelected ? 0 : -1;
+        });
+
+        panels.forEach((panel) => {
+          panel.hidden = panel.id !== selectedTab.getAttribute("aria-controls");
+        });
+
+        if (moveFocus) selectedTab.focus();
+      };
+
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => selectTab(tab));
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex: number | undefined;
+
+          if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+          if (event.key === "ArrowLeft") {
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
+          }
+          if (event.key === "Home") nextIndex = 0;
+          if (event.key === "End") nextIndex = tabs.length - 1;
+
+          if (nextIndex === undefined) return;
+          event.preventDefault();
+          selectTab(tabs[nextIndex], true);
+        });
+      });
+
+      const selectedTab = tabs.find(
+        (tab) => tab.getAttribute("aria-selected") === "true",
+      );
+      if (selectedTab) selectTab(selectedTab);
+    });
+  };
+
+  setupPricingTabs();
+  document.addEventListener("astro:page-load", setupPricingTabs);
+</script>

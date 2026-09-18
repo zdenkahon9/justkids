@@ -44,6 +44,12 @@
   --color-ink-soft: #5b4d6b;
   --color-ink-muted: #8a7f99;
 
+  /* Course availability */
+  --color-status-full-soft: #fde9e9;
+  --color-status-full: #e03131;
+  --color-status-last-spots-soft: #e7f5eb;
+  --color-status-last-spots: #37b24d;
+
   /* Brand semantics */
   --color-brand: var(--color-blush-deep);
   --color-brand-strong: var(--color-blush-vivid);
@@ -65,6 +71,7 @@
   --text-3xl: 1.5rem; /* 1.5rem (24px) */
   --text-4xl: 1.625rem; /* 1.625rem (26px) */
   --text-5xl: 1.75rem; /* 1.5rem (28px) */
+  --text-6xl: 2rem; /* 2rem (32px) */
   --text-clamp-h2: clamp(2.5rem, 4.5vw, 3.5rem);
   --text-clamp-h2-mobile: clamp(2.25rem, 4.5vw, 3.5rem);
 

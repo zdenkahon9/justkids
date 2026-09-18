@@ -10,6 +10,7 @@ export type ScheduleMeta = {
 type ScheduleSlot = {
   time: string;
   activities: string[];
+  status?: "full" | "last-spots";
 };
 
 type ScheduleDay = {
@@ -101,18 +102,18 @@ export const scheduleLocations: ScheduleLocation[] = [
       {
         label: "Pondělí",
         slots: [
-          { time: "9:00", activities: ["MINI"] },
-          { time: "10:00", activities: ["MOVE"] },
-          { time: "11:00", activities: ["ACTIVE"] },
-          { time: "12:00", activities: ["BABY"] },
+          { time: "9:00", activities: ["MINI"], status: "full" },
+          { time: "10:00", activities: ["MOVE"], status: "full" },
+          { time: "11:00", activities: ["ACTIVE"], status: "full" },
+          // { time: "12:00", activities: ["BABY"] },
         ],
       },
       {
         label: "Úterý",
         slots: [
-          { time: "14:30", activities: ["ACTIVE"] },
-          { time: "15:30", activities: ["FIT"] },
-          { time: "16:30", activities: ["PRO"] },
+          // { time: "14:30", activities: ["ACTIVE"], status: "last-spots" },
+          { time: "15:30", activities: ["FIT"], status: "full" },
+          { time: "16:30", activities: ["PRO"], status: "full" },
         ],
       },
     ],
@@ -128,29 +129,29 @@ export const scheduleLocations: ScheduleLocation[] = [
       {
         label: "Středa",
         slots: [
-          { time: "9:00", activities: ["MINI"] },
-          { time: "10:00", activities: ["MOVE"] },
-          { time: "11:00", activities: ["ACTIVE"] },
-          { time: "12:00", activities: ["BABY"] },
+          { time: "9:00", activities: ["MINI"], status: "last-spots" },
+          { time: "10:00", activities: ["MOVE"], status: "last-spots" },
+          { time: "11:00", activities: ["ACTIVE"], status: "last-spots" },
+          { time: "12:00", activities: ["BABY"], status: "last-spots" },
         ],
       },
     ],
   },
-  {
-    id: "broumy",
-    label: "Broumy",
-    accentClass: "schedule__pill-third--broumy",
-    accent: "sky-deep",
-    accentSoft: "sky-soft",
-    venue: venueFor("broumy", "Broumy", "Broumy"),
-    days: [
-      {
-        label: "Čtvrtek",
-        slots: [
-          { time: "13:30", activities: ["BABY + MINI"] },
-          { time: "14:30", activities: ["MOVE + ACTIVE"] },
-        ],
-      },
-    ],
-  },
+  // {
+  //   id: "broumy",
+  //   label: "Broumy",
+  //   accentClass: "schedule__pill-third--broumy",
+  //   accent: "sky-deep",
+  //   accentSoft: "sky-soft",
+  //   venue: venueFor("broumy", "Broumy", "Broumy"),
+  //   days: [
+  //     {
+  //       label: "Čtvrtek",
+  //       slots: [
+  //         { time: "13:30", activities: ["BABY + MINI"] },
+  //         { time: "14:30", activities: ["MOVE + ACTIVE"] },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];

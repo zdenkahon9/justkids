@@ -22,18 +22,40 @@ type PricingTextPart = {
   emphasis?: boolean;
 };
 
-export type PricingCourse = {
+type PricingCourseBase = {
   id: "with-parents" | "without-parents";
   title: string;
   groups: string[];
   accent: "blush" | "sky";
+  replacementTitle: string;
+  replacementText: PricingTextPart[];
+};
+
+type PricingCourseVariant = {
+  title: string;
+  ageRange: string;
+  coursePriceCzk: number;
+  lessonCount: number;
+  lessonCountLabel: string;
+};
+
+type PricingSingleCourse = PricingCourseBase & {
   coursePriceCzk: number;
   lessonCount: number;
   lessonCountLabel?: string;
   pricePerLessonCzk?: number;
-  replacementTitle: string;
-  replacementText: PricingTextPart[];
+  variants?: never;
 };
+
+type PricingVariantCourse = PricingCourseBase & {
+  variants: PricingCourseVariant[];
+  coursePriceCzk?: never;
+  lessonCount?: never;
+  lessonCountLabel?: never;
+  pricePerLessonCzk?: never;
+};
+
+export type PricingCourse = PricingSingleCourse | PricingVariantCourse;
 
 export const pricingMeta: PricingMeta = {
   sectionId: ROUTE_IDS.ageGroups.pricing,
@@ -50,7 +72,11 @@ export const pricingMeta: PricingMeta = {
 export const courseStarts: CourseStart[] = [
   { location: "Zdice", date: "7. 9. 2026", dateTime: "2026-09-07" },
   { location: "Hořovice", date: "9. 9. 2026", dateTime: "2026-09-09" },
-  { location: "Broumy", date: "17. 9. 2026", dateTime: "2026-09-17" },
+  {
+    location: "Zdice – Pro (6-9 let)",
+    date: "6. 10. 2026",
+    dateTime: "2026-10-06",
+  },
 ];
 
 export const pricingCourses: PricingCourse[] = [
@@ -64,16 +90,24 @@ export const pricingCourses: PricingCourse[] = [
     pricePerLessonCzk: 180,
     replacementTitle: "Náhrady lekcí",
     replacementText: [
+      // { text: "Náhrady je možné vybrat na " },
+      // { text: "paralelním", emphasis: true },
+      // { text: " " },
+      // { text: "kurzu", emphasis: true },
+      // { text: " ve " },
+      // { text: "Zdicích,", emphasis: true },
+      // { text: " " },
+      // { text: "Hořovicích", emphasis: true },
+      // { text: " nebo " },
+      // { text: "Broumech.", emphasis: true },
       { text: "Náhrady je možné vybrat na " },
       { text: "paralelním", emphasis: true },
       { text: " " },
       { text: "kurzu", emphasis: true },
       { text: " ve " },
-      { text: "Zdicích,", emphasis: true },
-      { text: " " },
-      { text: "Hořovicích", emphasis: true },
-      { text: " nebo " },
-      { text: "Broumech.", emphasis: true },
+      { text: "Zdicích", emphasis: true },
+      { text: " nebo v " },
+      { text: "Hořovicích.", emphasis: true },
     ],
   },
   {
@@ -81,9 +115,22 @@ export const pricingCourses: PricingCourse[] = [
     title: "Cvičení bez rodičů",
     groups: ["Fit", "Pro"],
     accent: "sky",
-    coursePriceCzk: 2880,
-    lessonCount: 16,
-    lessonCountLabel: "16 lekcí + 2 náhrady",
+    variants: [
+      {
+        title: "Fit",
+        ageRange: "3–6 let",
+        coursePriceCzk: 2880,
+        lessonCount: 16,
+        lessonCountLabel: "16 lekcí + 2 náhrady",
+      },
+      {
+        title: "Pro",
+        ageRange: "6–9 let",
+        coursePriceCzk: 2400,
+        lessonCount: 12,
+        lessonCountLabel: "12 lekcí + 2 náhrady",
+      },
+    ],
     replacementTitle: "Náhrady lekcí",
     replacementText: [
       { text: "Náhrada bude probíhat formou " },
