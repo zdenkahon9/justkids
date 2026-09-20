@@ -1,4 +1,4 @@
-export type LessonEntry = readonly [iso: string, status: number | string];
+type LessonEntry = readonly [iso: string, status: number | string];
 
 export type LessonDate = {
   iso: string;
@@ -17,7 +17,7 @@ export type LessonDay = {
   dates: LessonDate[];
 };
 
-export const PRAGUE_TIME_ZONE = "Europe/Prague";
+const PRAGUE_TIME_ZONE = "Europe/Prague";
 
 const formatDate = (iso: string, includeYear = false) => {
   const [year, month, day] = iso.split("-").map(Number);
