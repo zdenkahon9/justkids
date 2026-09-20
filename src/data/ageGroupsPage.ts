@@ -71,7 +71,7 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     range: "3-6 let",
     title: "Fit",
     description:
-      "Pohyb jako radost, jistota i zdravý základ do života – děti si budují vztah ke sportu hravou a přirozenou cestou.",
+      "Pohyb jako radost, jistota i zdravý základ do života – děti si budují vztah ke sportu hravou a přirozenou cestou.\nNa lekcích nechybí základy gymnastiky, písničky, různé pomůcky ani pohybové výzvy.",
     icon: "noto:seedling",
     accent: "apricot",
   },
@@ -79,7 +79,7 @@ export const ageGroupsPageWithoutParents: AgeGroupPage[] = [
     range: "6-9 let",
     title: "Pro",
     description:
-      "Energie, pohyb a zábava v jednom. Děti si budují zdravý vztah k pohybu, získávají sebevědomí a především si užívají aktivní čas plný radosti a nových zážitků.",
+      "Energie, pohyb a zábava v jednom. Děti si budují zdravý vztah k pohybu, získávají sebevědomí a především si užívají aktivní čas plný radosti a nových zážitků.\nDěti se můžou těšit na zumbu, trampolíny, gymnastiku i pohybové hry.",
     icon: "fxemoji:rocket",
     accent: "lilac",
   },

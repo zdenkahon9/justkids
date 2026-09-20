@@ -33,16 +33,32 @@ import { site } from "../data/site";
 
   <div class="container-x hero__inner">
     <div class="hero__copy">
-      <a href={ROUTES.ageGroups.schedule} class="hero__announcement">
-        <span class="hero__announcement-icon-wrap" aria-hidden="true">
-          <Icon is:inline name="el:fire" class="hero__announcement-icon" />
-        </span>
-        <span class="hero__announcement-copy">
-          <span class="hero__announcement-title">POSLEDNÍ VOLNÁ MÍSTA</span>
-          <span class="hero__announcement-label">Ještě se můžete přidat</span>
-        </span>
-        <span class="hero__announcement-arrow" aria-hidden="true">→</span>
-      </a>
+      <div class="hero__announcements" aria-label="Novinky">
+        <a
+          href={ROUTES.ageGroups.schedule}
+          class="hero__announcement hero__announcement--availability"
+        >
+          <span class="hero__announcement-icon-wrap" aria-hidden="true">
+            <Icon is:inline name="el:fire" class="hero__announcement-icon" />
+          </span>
+          <span class="hero__announcement-copy">
+            <span class="hero__announcement-title">POSLEDNÍ VOLNÁ MÍSTA</span>
+            <span class="hero__announcement-label">Ještě se můžete přidat</span>
+          </span>
+          <span class="hero__announcement-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a
+          href={ROUTES.ageGroups.pricingPro}
+          class="hero__announcement hero__announcement--pro"
+        >
+          <span class="hero__announcement-icon-wrap hero__announcement-new">NOVÉ</span>
+          <span class="hero__announcement-copy">
+            <span class="hero__announcement-title">CVIČENÍ 6–9 LET</span>
+          </span>
+          <span class="hero__announcement-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
 
       <h1 class="hero__title">
         Pohybem<br />
@@ -271,14 +287,24 @@ import { site } from "../data/site";
     }
   }
 
+  .hero__announcements {
+    display: grid;
+    gap: var(--space-4);
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto var(--space-2);
+  }
+
   .hero__announcement {
+    --announcement-accent: var(--color-blush-deep);
+    --announcement-accent-strong: var(--color-blush-vivid);
+    --announcement-soft: var(--color-blush-soft);
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: var(--space-10);
-    width: fit-content;
+    width: 100%;
     max-width: 100%;
-    margin: 0 auto var(--space-2);
     padding: var(--space-4) var(--space-8);
     border: 1px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
     border-radius: var(--radius-full);
@@ -298,6 +324,32 @@ import { site } from "../data/site";
       transform 220ms ease;
   }
 
+  .hero__announcement--pro {
+    --announcement-accent: var(--color-lilac-deep);
+    --announcement-accent-strong: var(--color-lilac-deep);
+    --announcement-soft: var(--color-lilac-soft);
+  }
+
+  .hero__announcement--pro .hero__announcement-icon-wrap {
+    width: auto;
+    min-width: var(--space-17);
+    height: var(--space-15);
+    padding-inline: var(--space-12);
+  }
+
+  .hero__announcement--pro .hero__announcement-title {
+    margin-bottom: 0;
+  }
+
+  .hero__announcement--pro .hero__announcement-new {
+    color: var(--color-lilac-deep);
+    background: var(--color-lilac-soft);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    line-height: var(--line-height-xs);
+  }
+
   .hero__announcement-copy {
     display: grid;
     justify-items: center;
@@ -311,18 +363,18 @@ import { site } from "../data/site";
     width: var(--space-18);
     height: var(--space-18);
     border-radius: 50%;
-    background: var(--color-blush-soft);
+    background: var(--announcement-soft);
   }
 
   .hero__announcement-icon {
     width: var(--space-14);
     height: var(--space-14);
-    color: var(--color-blush-vivid);
+    color: var(--announcement-accent-strong);
   }
 
   .hero__announcement-title {
     margin-bottom: var(--space-1);
-    color: var(--color-blush-vivid);
+    color: var(--announcement-accent-strong);
     font-size: var(--text-base);
     font-weight: 800;
     white-space: nowrap;
@@ -335,15 +387,15 @@ import { site } from "../data/site";
   }
 
   .hero__announcement-arrow {
-    color: var(--color-blush-deep);
+    color: var(--announcement-accent);
     font-size: var(--text-lg);
     line-height: var(--line-height-xs);
   }
 
   .hero__announcement:hover,
   .hero__announcement:focus-visible {
-    border-color: color-mix(in srgb, var(--color-blush-deep) 45%, transparent);
-    background: color-mix(in srgb, var(--color-blush-soft) 58%, var(--color-cream));
+    border-color: color-mix(in srgb, var(--announcement-accent) 45%, transparent);
+    background: color-mix(in srgb, var(--announcement-soft) 58%, var(--color-cream));
     outline: none;
     transform: translateY(calc(-1 * var(--space-2)));
   }
@@ -481,7 +533,7 @@ import { site } from "../data/site";
   }
 
   @media (max-width: 639px) {
-    .hero__announcement {
+    .hero__announcements {
       position: relative;
       top: calc(-1 * var(--space-17));
     }
@@ -492,10 +544,13 @@ import { site } from "../data/site";
   }
 
   @media (min-width: 640px) and (max-width: 1023px) {
-    .hero__announcement {
+    .hero__announcements {
       position: relative;
       top: calc(-1 * var(--space-20));
       margin-inline: max(0px, calc((100cqi - 38rem) / 2)) auto;
+    }
+
+    .hero__announcement {
       font-size: var(--text-base);
     }
 
@@ -571,10 +626,13 @@ import { site } from "../data/site";
       animation: fade-up-desktop 800ms 100ms ease both;
     }
 
-    .hero__announcement {
+    .hero__announcements {
       position: relative;
-      top: calc(-1 * var(--space-20));
+      top: calc(-1 * var(--space-19));
       margin: 0 0 var(--space-2);
+    }
+
+    .hero__announcement {
       font-size: var(--text-base);
     }
 

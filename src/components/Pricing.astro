@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
+import { ROUTE_IDS } from "../config/routes";
 import { courseStarts, pricingCourses, pricingMeta } from "../data/pricing";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
@@ -49,6 +50,9 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
       {
         pricingCourses.map((course) => (
           <article
+            id={
+              course.id === "without-parents" ? ROUTE_IDS.ageGroups.pricingPro : undefined
+            }
             class="pricing__course reveal"
             style={`--accent: ${cardAccentDeep(course.accent)}; --accent-soft: ${cardAccentSoft(course.accent)};`}
           >
@@ -82,6 +86,11 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
                           aria-selected={index === 0 ? "true" : "false"}
                           aria-controls={`pricing-panel-${variantId}`}
                           tabindex={index === 0 ? 0 : -1}
+                          data-pricing-hash-target={
+                            variant.title === "Pro"
+                              ? ROUTE_IDS.ageGroups.pricingPro
+                              : undefined
+                          }
                         >
                           {variant.title}
                         </button>
@@ -955,9 +964,10 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
         });
       });
 
-      const selectedTab = tabs.find(
-        (tab) => tab.getAttribute("aria-selected") === "true",
-      );
+      const selectedTab =
+        tabs.find(
+          (tab) => tab.dataset.pricingHashTarget === window.location.hash.slice(1),
+        ) ?? tabs.find((tab) => tab.getAttribute("aria-selected") === "true");
       if (selectedTab) selectTab(selectedTab);
     });
   };

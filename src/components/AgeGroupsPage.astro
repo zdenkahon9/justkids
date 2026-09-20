@@ -68,9 +68,18 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
         </a>
       </nav>
 
-      <div class="age-page__pill age-page__pill--schedule">
+      <nav
+        class="age-page__pill age-page__pill--schedule"
+        aria-label="Přejít na informace o kurzech"
+      >
         <a href={`#${scheduleMeta.sectionId}`} class="age-page__pill-schedule">
           Rozvrh lekcí
+        </a>
+        <a
+          href={`#${ROUTE_IDS.ageGroups.lessonDates}`}
+          class="age-page__pill-schedule age-page__pill-schedule--dates"
+        >
+          Termíny lekcí
         </a>
         <a
           href={`#${ROUTE_IDS.ageGroups.pricing}`}
@@ -78,7 +87,7 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
         >
           Ceník
         </a>
-      </div>
+      </nav>
     </div>
 
     <h2
@@ -129,7 +138,14 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
                     ) : null}
                   </div>
                   <span class="age-page__rule" aria-hidden="true" />
-                  <p class="age-page__summary">{g.description}</p>
+                  <p class="age-page__summary">
+                    {g.description.split("\n").map((line, index) => (
+                      <>
+                        {index > 0 ? <br /> : null}
+                        {line}
+                      </>
+                    ))}
+                  </p>
                 </div>
               </div>
             </article>
@@ -186,7 +202,14 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
                     ) : null}
                   </div>
                   <span class="age-page__rule" aria-hidden="true" />
-                  <p class="age-page__summary">{g.description}</p>
+                  <p class="age-page__summary">
+                    {g.description.split("\n").map((line, index) => (
+                      <>
+                        {index > 0 ? <br /> : null}
+                        {line}
+                      </>
+                    ))}
+                  </p>
                 </div>
               </div>
             </article>
@@ -464,8 +487,13 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
   }
 
   .age-page__pill-schedule--pricing {
-    color: var(--color-blush-deep);
-    --accent-soft: var(--color-blush-soft);
+    color: var(--color-apricot-deep);
+    --accent-soft: var(--color-apricot-soft);
+  }
+
+  .age-page__pill-schedule--dates {
+    color: var(--color-meadow-deep);
+    --accent-soft: var(--color-meadow-soft);
   }
 
   .age-page__pill-schedule:hover,
@@ -698,6 +726,49 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
 
     .age-page__pill {
       font-size: var(--text-lg);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .age-page__pill--schedule {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-8) 0;
+      min-height: 0;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule {
+      border: 1.5px solid rgba(42, 31, 56, 0.12);
+      background: #fefefe;
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule:first-child {
+      border-right: 0;
+      border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule:nth-child(2) {
+      border-left: 0;
+      border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule--pricing {
+      grid-column: 1 / -1;
+      border-radius: var(--radius-pill);
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule--pricing::before {
+      display: none;
+    }
+
+    .age-page__pill--schedule .age-page__pill-schedule:hover,
+    .age-page__pill--schedule .age-page__pill-schedule:focus-visible,
+    .age-page__pill--schedule .age-page__pill-schedule:active {
+      background: var(--accent-soft);
     }
   }
 
