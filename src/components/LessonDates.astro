@@ -1,0 +1,1096 @@
+---
+import { Icon } from "astro-icon/components";
+
+import { lessonDays, lessonIcons, lessonTopics } from "../data/lessonDates";
+import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
+
+const defaultDayId = "monday";
+const defaultDay = lessonDays.find((day) => day.id === defaultDayId) ?? lessonDays[0];
+const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-soft: ${cardAccentSoft(defaultDay.accent)}`;
+---
+
+<section
+  id="terminy-lekci"
+  class="section lesson-dates"
+  aria-labelledby="lesson-dates-title"
+>
+  <div class="container-x">
+    <header class="section-header reveal">
+      <h2 id="lesson-dates-title">
+        Termíny <span class="section-title-accent">lekcí</span>
+      </h2>
+    </header>
+
+    <div class="lesson-dates__calendar reveal" style={calendarStyle} data-lesson-calendar>
+      <div
+        class="lesson-dates__day-tabs"
+        role="tablist"
+        aria-label="Vyberte den lekce"
+        aria-orientation="horizontal"
+      >
+        {
+          lessonDays.map((day) => {
+            const isSelected = day.id === defaultDayId;
+            return (
+              <button
+                type="button"
+                id={`lesson-day-tab-${day.id}`}
+                class="lesson-dates__day-tab"
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls={`lesson-day-panel-${day.id}`}
+                tabindex={isSelected ? 0 : -1}
+                data-accent={cardAccentDeep(day.accent)}
+                data-accent-soft={cardAccentSoft(day.accent)}
+                style={`--accent: ${cardAccentDeep(day.accent)}; --accent-soft: ${cardAccentSoft(day.accent)}`}
+              >
+                {day.label}
+              </button>
+            );
+          })
+        }
+      </div>
+      <span class="lesson-dates__rule" aria-hidden="true"></span>
+
+      {
+        lessonDays.map((day) => {
+          const isSelectedDay = day.id === defaultDayId;
+          return (
+            <section
+              id={`lesson-day-panel-${day.id}`}
+              class="lesson-dates__day-panel"
+              role="tabpanel"
+              aria-labelledby={`lesson-day-tab-${day.id}`}
+              hidden={!isSelectedDay}
+              data-lesson-day-panel
+            >
+              <div class="lesson-dates__date-picker">
+                <button
+                  type="button"
+                  class="lesson-dates__rail-arrow lesson-dates__rail-arrow--previous"
+                  aria-label={`Předchozí termíny – ${day.label}`}
+                  data-date-scroll="previous"
+                >
+                  <span aria-hidden="true">‹</span>
+                </button>
+
+                <div
+                  class="lesson-dates__date-rail"
+                  role="tablist"
+                  aria-label={`Termíny pro ${day.label.toLowerCase()}`}
+                  aria-orientation="horizontal"
+                  data-date-rail
+                >
+                  {day.dates.map((date, index) => {
+                    const isFirst = index === 0;
+                    const isBreak = Boolean(date.note);
+                    const dateId = `${day.id}-${date.iso}`;
+                    const dateStatus = date.lesson
+                      ? `${date.lesson}. lekce, téma ${lessonTopics[date.lesson]}`
+                      : date.note;
+                    return (
+                      <button
+                        type="button"
+                        id={`lesson-date-tab-${dateId}`}
+                        class:list={[
+                          "lesson-dates__date-tab",
+                          { "lesson-dates__date-tab--break": isBreak },
+                        ]}
+                        role="tab"
+                        aria-selected={isFirst}
+                        aria-controls={`lesson-date-panel-${dateId}`}
+                        aria-label={`${day.label} ${date.fullDate}, ${dateStatus}`}
+                        tabindex={isFirst ? 0 : -1}
+                      >
+                        <span class="lesson-dates__date-weekday">{day.abbreviation}</span>
+                        <time datetime={date.iso}>{date.shortDate}</time>
+                        <span class="lesson-dates__date-dot" aria-hidden="true" />
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  class="lesson-dates__rail-arrow lesson-dates__rail-arrow--next"
+                  aria-label={`Další termíny – ${day.label}`}
+                  data-date-scroll="next"
+                >
+                  <span aria-hidden="true">›</span>
+                </button>
+              </div>
+
+              <div class="lesson-dates__details">
+                {day.dates.map((date, index) => {
+                  const dateId = `${day.id}-${date.iso}`;
+                  const topicIcon = date.lesson ? lessonIcons[date.lesson] : undefined;
+                  const topicIcons = topicIcon
+                    ? Array.isArray(topicIcon)
+                      ? topicIcon
+                      : [topicIcon]
+                    : [];
+                  return (
+                    <article
+                      id={`lesson-date-panel-${dateId}`}
+                      class:list={[
+                        "lesson-dates__detail",
+                        { "lesson-dates__detail--break": Boolean(date.note) },
+                      ]}
+                      role="tabpanel"
+                      aria-labelledby={`lesson-date-tab-${dateId}`}
+                      tabindex="0"
+                      hidden={index !== 0}
+                    >
+                      {topicIcons.length > 0 && (
+                        <span
+                          class:list={[
+                            "lesson-dates__detail-topic-icon",
+                            {
+                              "lesson-dates__detail-topic-icon--pair":
+                                topicIcons.length === 2,
+                            },
+                          ]}
+                          aria-hidden="true"
+                        >
+                          {topicIcons.map((iconName) => (
+                            <Icon
+                              is:inline
+                              name={iconName}
+                              class="lesson-dates__detail-topic-icon-graphic"
+                            />
+                          ))}
+                        </span>
+                      )}
+                      <p class="lesson-dates__detail-weekday">{day.label}</p>
+                      <time class="lesson-dates__detail-date" datetime={date.iso}>
+                        {date.fullDate}
+                      </time>
+                      <p class="lesson-dates__detail-status">
+                        {date.lesson ? `${date.lesson}. lekce` : date.note}
+                      </p>
+                      {date.lesson && (
+                        <p class="lesson-dates__detail-topic">
+                          Téma: {lessonTopics[date.lesson]}
+                        </p>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+
+              <div class="lesson-dates__sidebar">
+                <h3 class="lesson-dates__sidebar-title">Praktické informace</h3>
+                <div
+                  class="lesson-dates__meta"
+                  aria-label={`Informace o kurzu – ${day.label}`}
+                >
+                  <p class="lesson-dates__meta-item lesson-dates__meta-item--location">
+                    <Icon
+                      is:inline
+                      name="ph:map-pin"
+                      class="lesson-dates__meta-icon"
+                      aria-hidden="true"
+                    />
+                    <span>{day.location}</span>
+                  </p>
+                  <p class="lesson-dates__meta-item lesson-dates__meta-item--lessons">
+                    <Icon
+                      is:inline
+                      name="streamline:layers-1"
+                      class="lesson-dates__meta-icon"
+                      aria-hidden="true"
+                    />
+                    <span>16 lekcí</span>
+                  </p>
+                  <p class="lesson-dates__meta-item lesson-dates__meta-item--breaks">
+                    <Icon
+                      is:inline
+                      name="lineicons:calendar-days"
+                      class="lesson-dates__meta-icon"
+                      aria-hidden="true"
+                    />
+                    <span>4× necvičíme</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="lesson-dates__summary-wrap">
+                <span class="lesson-dates__summary-rule" aria-hidden="true" />
+                <aside
+                  class="lesson-dates__summary"
+                  aria-label="Informace o průběhu kurzu"
+                >
+                  <svg
+                    class="lesson-dates__summary-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="9"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                    />
+                    <path
+                      d="M12 10.75V17"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-linecap="round"
+                    />
+                    <circle cx="12" cy="7.25" r="1" fill="currentColor" />
+                  </svg>
+                  <p class="lesson-dates__summary-text">
+                    <span>Kurzy probíhají od září 2026 do ledna 2027.</span>
+                  </p>
+                </aside>
+              </div>
+            </section>
+          );
+        })
+      }
+
+      <p
+        class="lesson-dates__announcement"
+        aria-live="polite"
+        aria-atomic="true"
+        data-date-announcement
+      >
+      </p>
+      <noscript>
+        <style>
+          .lesson-dates__day-tabs,
+          .lesson-dates__rule,
+          .lesson-dates__date-picker,
+          .lesson-dates__announcement {
+            display: none !important;
+          }
+
+          .lesson-dates__day-panel[hidden],
+          .lesson-dates__detail[hidden] {
+            display: block !important;
+          }
+
+          .lesson-dates__day-panel + .lesson-dates__day-panel {
+            margin-top: var(--space-8);
+          }
+
+          .lesson-dates__detail + .lesson-dates__detail {
+            margin-top: var(--space-4);
+          }
+        </style>
+      </noscript>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lesson-dates {
+    scroll-margin-top: var(--section-scroll-margin);
+    background-color: var(--color-cream);
+  }
+
+  .lesson-dates .section-title-accent {
+    color: var(--color-blush-vivid);
+  }
+
+  .lesson-dates__calendar {
+    position: relative;
+    box-sizing: border-box;
+    width: min(100%, var(--card-grid-width));
+    margin-inline: auto;
+    padding: var(--card-padding);
+    overflow: hidden;
+    border: var(--card-border);
+    border-radius: var(--radius-card);
+    background: #fefefe;
+    box-shadow: none;
+  }
+
+  .lesson-dates__day-tabs {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: 0;
+    overflow: hidden;
+    border: 1.5px solid rgba(42, 31, 56, 0.12);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: var(--line-height-base);
+    white-space: nowrap;
+  }
+
+  .lesson-dates__day-tab {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: calc(2rem + 1em * var(--line-height-base));
+    padding: var(--space-8) 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: var(--line-height-base);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 220ms ease,
+      color 220ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .lesson-dates__day-tab[aria-selected="true"] {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .lesson-dates__day-tab[aria-selected="false"]:hover {
+    background: color-mix(in srgb, var(--color-ink) 4%, #fefefe);
+  }
+
+  .lesson-dates__day-tab:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: none;
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 58%, white);
+  }
+
+  .lesson-dates__rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-10) 0;
+    border: 0;
+    background: rgba(42, 31, 56, 0.12);
+  }
+
+  .lesson-dates__date-tab:focus-visible,
+  .lesson-dates__rail-arrow:focus-visible {
+    outline: 3px solid var(--color-sky-deep);
+    outline-offset: 2px;
+  }
+
+  .lesson-dates__day-panel {
+    padding-top: 0;
+  }
+
+  .lesson-dates__date-picker {
+    position: relative;
+    margin-inline: calc(-1 * var(--card-padding-x));
+    padding-inline: var(--space-15);
+  }
+
+  .lesson-dates__date-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 4.25rem;
+    gap: var(--space-4);
+    overflow-x: auto;
+    padding-block: var(--space-1) var(--space-5);
+    padding-inline: var(--space-3);
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .lesson-dates__date-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lesson-dates__date-tab {
+    display: grid;
+    place-items: center;
+    gap: var(--space-1);
+    min-height: 6.5rem;
+    padding: var(--space-5) var(--space-3);
+    border: 1px solid transparent;
+    border-radius: var(--radius-2xl);
+    background: color-mix(in srgb, var(--color-status-last-spots-soft) 72%, white);
+    color: var(--color-ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--line-height-lg);
+    scroll-snap-align: center;
+    cursor: pointer;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .lesson-dates__date-tab time {
+    color: var(--color-ink);
+    font-size: var(--text-base);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .lesson-dates__date-tab--break {
+    background: var(--color-status-full-soft);
+    color: var(--color-status-full);
+  }
+
+  .lesson-dates__date-tab--break time {
+    color: var(--color-status-full);
+  }
+
+  .lesson-dates__date-tab[aria-selected="true"] {
+    border-color: var(--color-status-last-spots);
+    box-shadow: 0 8px 22px -14px rgba(55, 178, 77, 0.7);
+    transform: translateY(-1px);
+  }
+
+  .lesson-dates__date-tab--break[aria-selected="true"] {
+    border-color: var(--color-status-full);
+    box-shadow: 0 8px 22px -14px
+      color-mix(in srgb, var(--color-status-full) 75%, transparent);
+  }
+
+  .lesson-dates__date-dot {
+    width: var(--space-6);
+    height: var(--space-6);
+    border-radius: 50%;
+    background: var(--color-status-last-spots);
+  }
+
+  .lesson-dates__date-tab--break .lesson-dates__date-dot {
+    background: var(--color-status-full);
+  }
+
+  .lesson-dates__rail-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0 0 var(--space-1);
+    border: 1px solid var(--accent-soft);
+    border-radius: 50%;
+    background: color-mix(in srgb, white 88%, var(--color-blush-soft));
+    color: var(--color-ink);
+    box-shadow: 0 7px 20px -12px rgba(42, 31, 56, 0.5);
+    font-family: var(--font-body);
+    font-size: var(--text-4xl);
+    line-height: 1;
+    transform: translateY(-50%);
+    transition:
+      border-color 220ms ease,
+      opacity 180ms ease;
+    cursor: pointer;
+  }
+
+  .lesson-dates__rail-arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .lesson-dates__rail-arrow--previous {
+    left: 0;
+  }
+  .lesson-dates__rail-arrow--next {
+    right: 0;
+  }
+
+  .lesson-dates__details {
+    margin-top: var(--space-12);
+  }
+
+  .lesson-dates__detail {
+    position: relative;
+    min-height: 9rem;
+    padding: var(--space-15) var(--space-14);
+    border: 1px solid var(--accent-soft);
+    border-radius: var(--radius-card);
+    background: #fefefe;
+    box-shadow: var(--shadow-soft);
+    transition: border-color 220ms ease;
+  }
+
+  .lesson-dates__detail-topic-icon {
+    position: absolute;
+    top: var(--space-12);
+    right: var(--space-12);
+    display: grid;
+    width: var(--space-20);
+    height: var(--space-20);
+    place-items: center;
+    border-radius: var(--radius-full);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent-soft) 72%, white);
+  }
+
+  .lesson-dates__detail-topic-icon-graphic {
+    width: var(--space-15);
+    height: var(--space-15);
+  }
+
+  .lesson-dates__detail-topic-icon--pair {
+    position: absolute;
+  }
+
+  .lesson-dates__detail-topic-icon--pair .lesson-dates__detail-topic-icon-graphic {
+    position: absolute;
+    width: var(--space-12);
+    height: var(--space-12);
+  }
+
+  .lesson-dates__detail-topic-icon--pair
+    .lesson-dates__detail-topic-icon-graphic:first-child {
+    top: var(--space-4);
+    left: var(--space-5);
+  }
+
+  .lesson-dates__detail-topic-icon--pair
+    .lesson-dates__detail-topic-icon-graphic:last-child {
+    right: var(--space-5);
+    bottom: var(--space-4);
+  }
+
+  .lesson-dates__detail-weekday {
+    margin: 0 0 var(--space-3);
+    color: var(--color-ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 500;
+    line-height: var(--line-height-lg);
+  }
+
+  .lesson-dates__detail-date,
+  .lesson-dates__detail-status {
+    display: block;
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: var(--line-height-lg);
+  }
+
+  .lesson-dates__detail-date {
+    margin-bottom: var(--space-6);
+    color: var(--color-ink);
+    font-size: var(--text-6xl);
+  }
+
+  .lesson-dates__detail-status {
+    margin-bottom: var(--space-4);
+    color: var(--color-status-last-spots);
+    font-size: var(--text-4xl);
+  }
+
+  .lesson-dates__detail--break .lesson-dates__detail-status {
+    margin-bottom: 0;
+    color: var(--color-status-full);
+  }
+
+  .lesson-dates__detail-topic {
+    margin: 0;
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: var(--line-height-2xl);
+  }
+
+  .lesson-dates__meta {
+    display: grid;
+    grid-template-columns: 0.8fr 0.9fr 1.3fr;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .lesson-dates__sidebar {
+    display: contents;
+  }
+
+  .lesson-dates__sidebar-title {
+    display: none;
+  }
+
+  .lesson-dates__meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    gap: var(--space-2);
+    margin: 0;
+    padding: var(--space-4) var(--space-2);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: var(--line-height-lg);
+    white-space: nowrap;
+  }
+
+  .lesson-dates__meta-item--location,
+  .lesson-dates__meta-item--breaks {
+    background: color-mix(in srgb, var(--color-blush-soft) 72%, white);
+  }
+
+  .lesson-dates__meta-item--lessons {
+    gap: var(--space-4);
+    background: color-mix(in srgb, var(--color-lilac-soft) 72%, white);
+  }
+
+  .lesson-dates__meta-item--breaks {
+    color: var(--color-blush-vivid);
+  }
+
+  .lesson-dates__meta-icon {
+    flex: 0 0 auto;
+    width: var(--text-lg);
+    height: var(--text-lg);
+  }
+
+  .lesson-dates__meta-item--location .lesson-dates__meta-icon {
+    color: var(--color-blush-deep);
+  }
+
+  .lesson-dates__meta-item--lessons .lesson-dates__meta-icon {
+    width: var(--text-base);
+    height: var(--text-base);
+    color: var(--color-lilac-deep);
+  }
+
+  .lesson-dates__meta-item--breaks .lesson-dates__meta-icon {
+    color: var(--color-blush-vivid);
+  }
+
+  .lesson-dates__meta-item span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .lesson-dates__summary-rule {
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin: var(--space-12) 0;
+    background: color-mix(in srgb, var(--accent) 30%, var(--color-ink) 8%);
+    transition: background 220ms ease;
+  }
+
+  .lesson-dates__announcement {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .lesson-dates__summary {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-8);
+    padding: var(--space-12);
+    border-radius: var(--radius-2xl);
+    background: color-mix(in srgb, var(--color-lilac-soft) 72%, white);
+  }
+
+  .lesson-dates__summary-icon {
+    width: var(--text-3xl);
+    height: var(--text-3xl);
+    color: var(--color-lilac-deep);
+  }
+
+  .lesson-dates__summary-text {
+    margin: 0;
+    color: var(--color-ink-soft);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    line-height: var(--line-height-base);
+  }
+
+  .lesson-dates__summary-text span {
+    display: block;
+  }
+
+  @media (max-width: 639px) {
+    .lesson-dates__meta {
+      grid-template-columns: 1fr 0.78fr 1.22fr;
+      width: calc(100% + var(--space-8) + var(--space-8));
+      margin-inline: calc(0px - var(--space-8));
+    }
+
+    .lesson-dates__date-tab {
+      gap: var(--space-2);
+      min-height: 5.75rem;
+      padding-block: var(--space-4);
+    }
+
+    .lesson-dates__detail {
+      min-height: 0;
+      padding: var(--space-12) var(--space-10);
+    }
+
+    .lesson-dates__detail-date,
+    .lesson-dates__detail-status {
+      font-family: var(--font-body);
+    }
+
+    .lesson-dates__detail-date {
+      margin-bottom: var(--space-6);
+      font-size: var(--text-lg);
+    }
+
+    .lesson-dates__detail-status {
+      margin-bottom: var(--space-3);
+      font-size: var(--text-lg);
+    }
+
+    .lesson-dates__detail-topic {
+      font-size: var(--text-base);
+    }
+
+    .lesson-dates__detail--break .lesson-dates__detail-status {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lesson-dates__calendar {
+      width: min(100%, calc(2 * var(--card-grid-width) + var(--space-8)));
+    }
+
+    .lesson-dates__day-panel[hidden] {
+      display: none;
+    }
+
+    .lesson-dates__day-panel:not([hidden]) {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      column-gap: var(--space-12);
+      row-gap: var(--space-10);
+      align-items: stretch;
+    }
+
+    .lesson-dates__date-picker {
+      grid-column: 1 / -1;
+    }
+
+    .lesson-dates__details {
+      grid-column: 1;
+      min-width: 0;
+      margin-top: 0;
+    }
+
+    .lesson-dates__detail {
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    .lesson-dates__detail-topic-icon {
+      top: var(--space-18);
+      right: var(--space-18);
+      width: calc(var(--space-20) + var(--space-6));
+      height: calc(var(--space-20) + var(--space-6));
+    }
+
+    .lesson-dates__detail-topic-icon-graphic {
+      width: var(--space-17);
+      height: var(--space-17);
+    }
+
+    .lesson-dates__detail-topic-icon--pair .lesson-dates__detail-topic-icon-graphic {
+      width: var(--space-15);
+      height: var(--space-15);
+    }
+
+    .lesson-dates__detail-topic-icon--pair
+      .lesson-dates__detail-topic-icon-graphic:first-child {
+      top: var(--space-6);
+      left: var(--space-8);
+    }
+
+    .lesson-dates__detail-topic-icon--pair
+      .lesson-dates__detail-topic-icon-graphic:last-child {
+      right: var(--space-8);
+      bottom: var(--space-6);
+    }
+
+    .lesson-dates__sidebar {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      grid-column: 2;
+      min-width: 0;
+      padding: var(--space-10);
+      border: 1px solid var(--accent-soft);
+      border-radius: var(--radius-card);
+      background: #fefefe;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .lesson-dates__sidebar-title {
+      display: block;
+      margin: 0 0 var(--space-6);
+      color: var(--color-ink);
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      font-weight: 700;
+      line-height: var(--line-height-lg);
+    }
+
+    .lesson-dates__meta {
+      grid-template-columns: minmax(0, 1fr);
+      margin-top: 0;
+    }
+
+    .lesson-dates__meta-item {
+      justify-content: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-6) var(--space-8);
+      font-size: var(--text-base);
+    }
+
+    .lesson-dates__summary-wrap {
+      grid-column: 1 / -1;
+    }
+
+    .lesson-dates__summary-rule {
+      margin: 0 0 var(--space-8);
+    }
+
+    .lesson-dates__summary {
+      gap: var(--space-4);
+      padding: var(--space-8);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lesson-dates__date-rail {
+      scroll-behavior: auto;
+    }
+  }
+</style>
+
+<script>
+  import { findCurrentDateIndex, getIsoDateInTimeZone } from "../data/lessonDates";
+
+  const setupLessonCalendar = () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-lesson-calendar]")
+      .forEach((calendar) => {
+        if (calendar.dataset.calendarReady === "true") return;
+        calendar.dataset.calendarReady = "true";
+
+        const dayTabs = Array.from(
+          calendar.querySelectorAll<HTMLButtonElement>(
+            ".lesson-dates__day-tabs [role='tab']",
+          ),
+        );
+        const dayPanels = Array.from(
+          calendar.querySelectorAll<HTMLElement>("[data-lesson-day-panel]"),
+        );
+        const announcement = calendar.querySelector<HTMLElement>(
+          "[data-date-announcement]",
+        );
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        const todayIso = getIsoDateInTimeZone();
+
+        const centerDateTab = (
+          selectedDate: HTMLElement,
+          behavior: ScrollBehavior = "smooth",
+        ) => {
+          const rail = selectedDate.closest<HTMLElement>("[data-date-rail]");
+          if (!rail || rail.clientWidth === 0) return;
+          const centeredPosition =
+            selectedDate.offsetLeft - (rail.clientWidth - selectedDate.offsetWidth) / 2;
+          rail.scrollTo({
+            left: centeredPosition,
+            behavior: prefersReducedMotion ? "auto" : behavior,
+          });
+        };
+
+        const selectDay = (selectedTab: HTMLButtonElement, moveFocus = false) => {
+          dayTabs.forEach((tab) => {
+            const isSelected = tab === selectedTab;
+            tab.setAttribute("aria-selected", String(isSelected));
+            tab.tabIndex = isSelected ? 0 : -1;
+          });
+          const selectedPanelId = selectedTab.getAttribute("aria-controls");
+          dayPanels.forEach((panel) => {
+            panel.hidden = panel.id !== selectedPanelId;
+          });
+
+          const accent = selectedTab.dataset.accent;
+          const accentSoft = selectedTab.dataset.accentSoft;
+          if (accent) calendar.style.setProperty("--accent", accent);
+          if (accentSoft) calendar.style.setProperty("--accent-soft", accentSoft);
+          const selectedPanel = dayPanels.find((panel) => panel.id === selectedPanelId);
+          const selectedDate = selectedPanel?.querySelector<HTMLElement>(
+            ".lesson-dates__date-tab[aria-selected='true']",
+          );
+          if (selectedDate) centerDateTab(selectedDate);
+          if (moveFocus) selectedTab.focus();
+        };
+
+        dayTabs.forEach((tab, index) => {
+          tab.addEventListener("click", () => selectDay(tab));
+          tab.addEventListener("keydown", (event) => {
+            let nextIndex: number | undefined;
+            if (event.key === "ArrowRight") nextIndex = (index + 1) % dayTabs.length;
+            if (event.key === "ArrowLeft")
+              nextIndex = (index - 1 + dayTabs.length) % dayTabs.length;
+            if (event.key === "Home") nextIndex = 0;
+            if (event.key === "End") nextIndex = dayTabs.length - 1;
+            if (nextIndex === undefined) return;
+            event.preventDefault();
+            selectDay(dayTabs[nextIndex], true);
+          });
+        });
+
+        dayPanels.forEach((dayPanel) => {
+          const dateTabs = Array.from(
+            dayPanel.querySelectorAll<HTMLButtonElement>(
+              ".lesson-dates__date-rail [role='tab']",
+            ),
+          );
+          const datePanels = Array.from(
+            dayPanel.querySelectorAll<HTMLElement>(
+              ".lesson-dates__details [role='tabpanel']",
+            ),
+          );
+          const previousArrow = dayPanel.querySelector<HTMLButtonElement>(
+            "[data-date-scroll='previous']",
+          );
+          const nextArrow = dayPanel.querySelector<HTMLButtonElement>(
+            "[data-date-scroll='next']",
+          );
+
+          const updateArrowState = (selectedIndex: number) => {
+            if (previousArrow) previousArrow.disabled = selectedIndex <= 0;
+            if (nextArrow) nextArrow.disabled = selectedIndex >= dateTabs.length - 1;
+          };
+
+          const selectDate = (
+            selectedTab: HTMLButtonElement,
+            moveFocus = false,
+            smoothScroll = true,
+            announce = false,
+          ) => {
+            dateTabs.forEach((tab) => {
+              const isSelected = tab === selectedTab;
+              tab.setAttribute("aria-selected", String(isSelected));
+              tab.tabIndex = isSelected ? 0 : -1;
+            });
+            datePanels.forEach((panel) => {
+              panel.hidden = panel.id !== selectedTab.getAttribute("aria-controls");
+            });
+            if (moveFocus) selectedTab.focus({ preventScroll: true });
+            centerDateTab(selectedTab, smoothScroll ? "smooth" : "auto");
+            updateArrowState(dateTabs.indexOf(selectedTab));
+            if (announce && announcement) {
+              const selectedPanel = datePanels.find(
+                (panel) => panel.id === selectedTab.getAttribute("aria-controls"),
+              );
+              const fullDate = selectedPanel
+                ?.querySelector(".lesson-dates__detail-date")
+                ?.textContent?.trim();
+              const status = selectedPanel
+                ?.querySelector(".lesson-dates__detail-status")
+                ?.textContent?.trim();
+              const topic = selectedPanel
+                ?.querySelector(".lesson-dates__detail-topic")
+                ?.textContent?.trim();
+              const dayLabel = dayPanel
+                .getAttribute("aria-labelledby")
+                ?.replace("lesson-day-tab-", "");
+              const readableDay = dayTabs
+                .find((tab) => tab.id.endsWith(dayLabel ?? ""))
+                ?.textContent?.trim();
+              announcement.textContent = [
+                readableDay ? `Vybráno ${readableDay}` : "Vybrán termín",
+                fullDate,
+                status,
+                topic,
+              ]
+                .filter(Boolean)
+                .join(", ");
+            }
+          };
+
+          dateTabs.forEach((tab, index) => {
+            tab.addEventListener("click", () => selectDate(tab, false, true, true));
+            tab.addEventListener("keydown", (event) => {
+              let nextIndex: number | undefined;
+              if (event.key === "ArrowRight") nextIndex = (index + 1) % dateTabs.length;
+              if (event.key === "ArrowLeft")
+                nextIndex = (index - 1 + dateTabs.length) % dateTabs.length;
+              if (event.key === "Home") nextIndex = 0;
+              if (event.key === "End") nextIndex = dateTabs.length - 1;
+              if (nextIndex === undefined) return;
+              event.preventDefault();
+              selectDate(dateTabs[nextIndex], true, true, true);
+            });
+          });
+
+          updateArrowState(
+            dateTabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"),
+          );
+
+          dayPanel
+            .querySelectorAll<HTMLButtonElement>("[data-date-scroll]")
+            .forEach((arrow) => {
+              arrow.addEventListener("click", () => {
+                const direction = arrow.dataset.dateScroll === "previous" ? -1 : 1;
+                const selectedIndex = dateTabs.findIndex(
+                  (tab) => tab.getAttribute("aria-selected") === "true",
+                );
+                const nextIndex = selectedIndex + direction;
+                const nextTab = dateTabs[nextIndex];
+                if (nextTab) selectDate(nextTab, true, true, true);
+              });
+            });
+
+          const currentDateIndex = findCurrentDateIndex(
+            dateTabs.map((tab) => ({
+              iso: tab.querySelector("time")?.dateTime ?? "",
+            })),
+            todayIso,
+          );
+          dateTabs.forEach((tab) => {
+            const isToday = tab.querySelector("time")?.dateTime === todayIso;
+            if (isToday) tab.setAttribute("aria-current", "date");
+            else tab.removeAttribute("aria-current");
+          });
+          const currentDateTab = dateTabs[currentDateIndex];
+          if (currentDateTab) selectDate(currentDateTab, false, false);
+        });
+      });
+  };
+
+  setupLessonCalendar();
+  document.addEventListener("astro:page-load", setupLessonCalendar);
+</script>

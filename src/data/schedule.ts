@@ -113,7 +113,7 @@ export const scheduleLocations: ScheduleLocation[] = [
         slots: [
           // { time: "14:30", activities: ["ACTIVE"], status: "last-spots" },
           { time: "15:30", activities: ["FIT"], status: "full" },
-          { time: "16:30", activities: ["PRO"], status: "full" },
+          { time: "16:30", activities: ["PRO"], status: "last-spots" },
         ],
       },
     ],

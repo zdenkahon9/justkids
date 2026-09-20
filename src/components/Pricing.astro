@@ -523,6 +523,20 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent) 58%, white);
   }
 
+  @media (max-width: 767px) {
+    .pricing__course-tabs-list {
+      height: calc(var(--space-15) + var(--space-6));
+      min-height: calc(var(--space-15) + var(--space-6));
+    }
+
+    .pricing__course-tab {
+      height: 100%;
+      min-height: 0;
+      padding: 0 var(--space-6);
+      font-size: var(--text-base);
+    }
+  }
+
   .pricing__course-options {
     display: grid;
   }
