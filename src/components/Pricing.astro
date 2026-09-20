@@ -972,6 +972,20 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     });
   };
 
+  const selectPricingHashTarget = () => {
+    const hashTarget = window.location.hash.slice(1);
+    if (!hashTarget) return;
+
+    const targetTab = Array.from(
+      document.querySelectorAll<HTMLButtonElement>("[data-pricing-hash-target]"),
+    ).find((tab) => tab.dataset.pricingHashTarget === hashTarget);
+
+    targetTab?.click();
+  };
+
   setupPricingTabs();
+  selectPricingHashTarget();
+  window.addEventListener("hashchange", selectPricingHashTarget);
   document.addEventListener("astro:page-load", setupPricingTabs);
+  document.addEventListener("astro:page-load", selectPricingHashTarget);
 </script>
