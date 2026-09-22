@@ -103,7 +103,7 @@ export const scheduleLocations: ScheduleLocation[] = [
         label: "Pondělí",
         slots: [
           { time: "9:00", activities: ["MINI"], status: "full" },
-          { time: "10:00", activities: ["MOVE"], status: "last-spots" },
+          { time: "10:00", activities: ["MOVE"], status: "full" },
           { time: "11:00", activities: ["ACTIVE"], status: "full" },
           // { time: "12:00", activities: ["BABY"] },
         ],
