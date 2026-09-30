@@ -20,115 +20,113 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     </header>
 
     <ol class="camps__list">
-      {
-        camps.map((c, i) => (
-          <li
-            class={`camp camp--${c.accent} reveal`}
-            style={`--accent: ${cardAccentDeep(c.accent)}; --accent-soft: ${cardAccentSoft(c.accent)}; transition-delay: ${i * 100}ms`}
-          >
-            <div class="camp__body">
-              <p class="camp__location-badge">
+      {camps.map((c, i) => (
+        <li
+          class={`camp camp--${c.accent} reveal`}
+          style={`--accent: ${cardAccentDeep(c.accent)}; --accent-soft: ${cardAccentSoft(c.accent)}; transition-delay: ${i * 100}ms`}
+        >
+          <div class="camp__body">
+            <p class="camp__location-badge">
+              <Icon
+                is:inline
+                name="ph:map-pin"
+                class="camp__location-icon"
+                aria-hidden="true"
+              />
+              {c.city}
+            </p>
+            <h3>{c.title}</h3>
+            <div class="camp__icons" aria-hidden="true">
+              {campFeatureIcons.map((item) => (
+                <span
+                  class="camp__icon-ring"
+                  style={`--accent: ${item.accentDeep}; --accent-soft: ${item.accentSoft};`}
+                >
+                  <Icon
+                    is:inline
+                    name={item.icon}
+                    class="camp__icon-graphic card-icon-graphic"
+                  />
+                </span>
+              ))}
+            </div>
+            <span class="camp__rule" aria-hidden="true" />
+            <div class="camp__daily">
+              <p class="camp__daily-badge">{campsMeta.dailyLabel}</p>
+              <ul class="camp__daily-list" aria-label={campsMeta.dailyLabel}>
+                {campsMeta.dailyProgram.map((item) => (
+                  <li class="camp__daily-item">{item}</li>
+                ))}
+              </ul>
+            </div>
+            <span class="camp__rule" aria-hidden="true" />
+            <div class="camp__meta">
+              <p class="camp__meta-row">
                 <Icon
                   is:inline
-                  name="ph:map-pin"
-                  class="camp__location-icon"
+                  name="lineicons:calendar-days"
+                  class="camp__meta-icon"
                   aria-hidden="true"
                 />
-                {c.city}
+                {c.dateRange}
               </p>
-              <h3>{c.title}</h3>
-              <div class="camp__icons" aria-hidden="true">
-                {campFeatureIcons.map((item) => (
-                  <span
-                    class="camp__icon-ring"
-                    style={`--accent: ${item.accentDeep}; --accent-soft: ${item.accentSoft};`}
-                  >
-                    <Icon
-                      is:inline
-                      name={item.icon}
-                      class="camp__icon-graphic card-icon-graphic"
-                    />
-                  </span>
-                ))}
-              </div>
-              <span class="camp__rule" aria-hidden="true" />
-              <div class="camp__daily">
-                <p class="camp__daily-badge">{campsMeta.dailyLabel}</p>
-                <ul class="camp__daily-list" aria-label={campsMeta.dailyLabel}>
-                  {campsMeta.dailyProgram.map((item) => (
-                    <li class="camp__daily-item">{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <span class="camp__rule" aria-hidden="true" />
-              <div class="camp__meta">
-                <p class="camp__meta-row">
-                  <Icon
-                    is:inline
-                    name="lineicons:calendar-days"
-                    class="camp__meta-icon"
-                    aria-hidden="true"
-                  />
-                  {c.dateRange}
-                </p>
-                <p class="camp__meta-row">
-                  <Icon
-                    is:inline
-                    name="ph:clock"
-                    class="camp__meta-icon"
-                    aria-hidden="true"
-                  />
-                  {c.time}
-                </p>
-                <p class="camp__meta-row camp__meta-row--venue">
-                  <Icon
-                    is:inline
-                    name="fluent:home-heart-24-regular"
-                    class="camp__meta-icon"
-                    aria-hidden="true"
-                  />
-                  <span class="camp__meta-venue">
-                    <span>{c.venue.name}</span>
-                    {c.venue.address ? (
-                      <span class="camp__meta-venue-address">{c.venue.address}</span>
-                    ) : null}
-                  </span>
-                </p>
-                <p class="camp__meta-row camp__meta-row--audience">
-                  <Icon
-                    is:inline
-                    name="fluent:people-24-regular"
-                    class="camp__meta-icon"
-                    aria-hidden="true"
-                  />
-                  <span class="camp__meta-audience">
-                    <span>{c.audience.primary}</span>
-                    <span>{c.audience.secondary}</span>
-                  </span>
-                </p>
-              </div>
+              <p class="camp__meta-row">
+                <Icon
+                  is:inline
+                  name="ph:clock"
+                  class="camp__meta-icon"
+                  aria-hidden="true"
+                />
+                {c.time}
+              </p>
+              <p class="camp__meta-row camp__meta-row--venue">
+                <Icon
+                  is:inline
+                  name="fluent:home-heart-24-regular"
+                  class="camp__meta-icon"
+                  aria-hidden="true"
+                />
+                <span class="camp__meta-venue">
+                  <span>{c.venue.name}</span>
+                  {c.venue.address ? (
+                    <span class="camp__meta-venue-address">{c.venue.address}</span>
+                  ) : null}
+                </span>
+              </p>
+              <p class="camp__meta-row camp__meta-row--audience">
+                <Icon
+                  is:inline
+                  name="fluent:people-24-regular"
+                  class="camp__meta-icon"
+                  aria-hidden="true"
+                />
+                <span class="camp__meta-audience">
+                  <span>{c.audience.primary}</span>
+                  <span>{c.audience.secondary}</span>
+                </span>
+              </p>
             </div>
+          </div>
 
-            <div class="camp__footer">
-              <p class="camp__price">
-                <span class="camp__price-label">{campsMeta.priceLabel}</span>
-                <span class="camp__price-value">{c.price}</span>
-              </p>
-              <div class="camp__cta">
-                <a
-                  href={site.signupFormUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn btn-primary"
-                >
-                  {campsMeta.signupLabel}
-                  <span aria-hidden="true">→</span>
-                </a>
-              </div>
+          <div class="camp__footer">
+            <p class="camp__price">
+              <span class="camp__price-label">{campsMeta.priceLabel}</span>
+              <span class="camp__price-value">{c.price}</span>
+            </p>
+            <div class="camp__cta">
+              <a
+                href={site.signupFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary"
+              >
+                {campsMeta.signupLabel}
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
-          </li>
-        ))
-      }
+          </div>
+        </li>
+      ))}
     </ol>
   </div>
 </section>

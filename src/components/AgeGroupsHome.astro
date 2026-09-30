@@ -12,72 +12,69 @@ const meta = ageGroupsHomeMeta;
     <header class="section-header reveal">
       <span class="eyebrow">{meta.eyebrow}</span>
       <h2 id="age-home-title">
-        {meta.title}{" "}
-        <span class="section-title-accent">{meta.titleAccent}</span>
+        {meta.title} <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
       <p class="section-subtitle">{meta.subtitle}</p>
     </header>
 
     <ul class="age-home__grid">
-      {
-        ageGroupsHomeCards.map((card, i) => (
-          <li>
-            <div
-              class="age-home__card reveal"
-              style={`--accent: ${cardAccentDeep(card.accent)}; --accent-soft: ${cardAccentSoft(card.accent)}; transition-delay: ${i * 80}ms;`}
+      {ageGroupsHomeCards.map((card, i) => (
+        <li>
+          <div
+            class="age-home__card reveal"
+            style={`--accent: ${cardAccentDeep(card.accent)}; --accent-soft: ${cardAccentSoft(card.accent)}; transition-delay: ${i * 80}ms;`}
+          >
+            <svg
+              class="age-home__blob"
+              viewBox="-32 0 132 100"
+              aria-hidden="true"
+              focusable="false"
             >
-              <svg
-                class="age-home__blob"
-                viewBox="-32 0 132 100"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
-              </svg>
-              <div class="age-home__body">
-                <div class="age-home__content">
-                  <h3 class="age-home__heading">
-                    <a class="age-home__card-link" href={meta.detailHref}>
-                      {card.title}
-                    </a>
-                    <span class="age-home__heading-plain">{card.title}</span>
-                  </h3>
-                  <div class="age-home__age-row">
-                    <span class="age-home__age">{card.ageRange}</span>
-                    <div class="age-home__illustration" aria-hidden="true">
-                      <span class="age-home__icon-ring">
-                        <Icon is:inline name={card.icon} class="age-home__icon-graphic" />
-                      </span>
-                    </div>
-                  </div>
-                  <p class="age-home__groups">
-                    {card.groups.map((group, index) => (
-                      <>
-                        {index > 0 ? (
-                          <span class="age-home__groups-sep" aria-hidden="true">
-                            {" • "}
-                          </span>
-                        ) : null}
-                        {group}
-                      </>
-                    ))}
-                  </p>
-                  <span class="age-home__rule" aria-hidden="true" />
-                  <p class="age-home__summary">{card.summary}</p>
-                  <a
-                    class="age-home__more"
-                    href={card.detailHref}
-                    data-age-home-section={card.id}
-                  >
-                    {meta.cardLinkLabel}
-                    <span aria-hidden="true">→</span>
+              <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
+            </svg>
+            <div class="age-home__body">
+              <div class="age-home__content">
+                <h3 class="age-home__heading">
+                  <a class="age-home__card-link" href={meta.detailHref}>
+                    {card.title}
                   </a>
+                  <span class="age-home__heading-plain">{card.title}</span>
+                </h3>
+                <div class="age-home__age-row">
+                  <span class="age-home__age">{card.ageRange}</span>
+                  <div class="age-home__illustration" aria-hidden="true">
+                    <span class="age-home__icon-ring">
+                      <Icon is:inline name={card.icon} class="age-home__icon-graphic" />
+                    </span>
+                  </div>
                 </div>
+                <p class="age-home__groups">
+                  {card.groups.map((group, index) => (
+                    <>
+                      {index > 0 ? (
+                        <span class="age-home__groups-sep" aria-hidden="true">
+                          {" • "}
+                        </span>
+                      ) : null}
+                      {group}
+                    </>
+                  ))}
+                </p>
+                <span class="age-home__rule" aria-hidden="true" />
+                <p class="age-home__summary">{card.summary}</p>
+                <a
+                  class="age-home__more"
+                  href={card.detailHref}
+                  data-age-home-section={card.id}
+                >
+                  {meta.cardLinkLabel}
+                  <span aria-hidden="true">→</span>
+                </a>
               </div>
             </div>
-          </li>
-        ))
-      }
+          </div>
+        </li>
+      ))}
     </ul>
 
     <div class="age-home__cta reveal">

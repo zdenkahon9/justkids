@@ -42,8 +42,7 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
       <header class="section-header reveal">
         <div class="age-page__head">
           <h1 id="age-page-title">
-            {meta.title}{" "}
-            <span class="section-title-accent">{meta.titleAccent}</span>
+            {meta.title} <span class="section-title-accent">{meta.titleAccent}</span>
           </h1>
           <p class="section-subtitle">{meta.subtitle}</p>
         </div>
@@ -106,52 +105,48 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
     </h2>
 
     <ul class="age-page__grid">
-      {
-        ageGroupsPageWithParents.map((g) => (
-          <li>
-            <article
-              class="age-page__card"
-              style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)};`}
+      {ageGroupsPageWithParents.map((g) => (
+        <li>
+          <article
+            class="age-page__card"
+            style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)};`}
+          >
+            <svg
+              class="age-page__blob"
+              viewBox="-32 0 132 100"
+              aria-hidden="true"
+              focusable="false"
             >
-              <svg
-                class="age-page__blob"
-                viewBox="-32 0 132 100"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
-              </svg>
-              <div class="age-page__body">
-                <div class="age-page__content">
-                  <h3 class="age-page__heading">{g.title}</h3>
-                  <div class="age-page__age-block">
-                    <div class="age-page__age-row">
-                      <span class="age-page__age">{g.range}</span>
-                      <div class="age-page__illustration" aria-hidden="true">
-                        <span class="age-page__icon-ring">
-                          <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
-                        </span>
-                      </div>
+              <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
+            </svg>
+            <div class="age-page__body">
+              <div class="age-page__content">
+                <h3 class="age-page__heading">{g.title}</h3>
+                <div class="age-page__age-block">
+                  <div class="age-page__age-row">
+                    <span class="age-page__age">{g.range}</span>
+                    <div class="age-page__illustration" aria-hidden="true">
+                      <span class="age-page__icon-ring">
+                        <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
+                      </span>
                     </div>
-                    {g.groupsLabel ? (
-                      <p class="age-page__groups">{g.groupsLabel}</p>
-                    ) : null}
                   </div>
-                  <span class="age-page__rule" aria-hidden="true" />
-                  <p class="age-page__summary">
-                    {g.description.split("\n").map((line, index) => (
-                      <>
-                        {index > 0 ? <br /> : null}
-                        {line}
-                      </>
-                    ))}
-                  </p>
+                  {g.groupsLabel ? <p class="age-page__groups">{g.groupsLabel}</p> : null}
                 </div>
+                <span class="age-page__rule" aria-hidden="true" />
+                <p class="age-page__summary">
+                  {g.description.split("\n").map((line, index) => (
+                    <>
+                      {index > 0 ? <br /> : null}
+                      {line}
+                    </>
+                  ))}
+                </p>
               </div>
-            </article>
-          </li>
-        ))
-      }
+            </div>
+          </article>
+        </li>
+      ))}
     </ul>
 
     <h2
@@ -170,52 +165,48 @@ const agePageWithoutParentsSection = ageGroupsHomeCards.find(
     </h2>
 
     <ul class="age-page__grid">
-      {
-        ageGroupsPageWithoutParents.map((g) => (
-          <li>
-            <article
-              class="age-page__card"
-              style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)};`}
+      {ageGroupsPageWithoutParents.map((g) => (
+        <li>
+          <article
+            class="age-page__card"
+            style={`--accent: ${cardAccentDeep(g.accent)}; --accent-soft: ${cardAccentSoft(g.accent)};`}
+          >
+            <svg
+              class="age-page__blob"
+              viewBox="-32 0 132 100"
+              aria-hidden="true"
+              focusable="false"
             >
-              <svg
-                class="age-page__blob"
-                viewBox="-32 0 132 100"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
-              </svg>
-              <div class="age-page__body">
-                <div class="age-page__content">
-                  <h3 class="age-page__heading">{g.title}</h3>
-                  <div class="age-page__age-block">
-                    <div class="age-page__age-row">
-                      <span class="age-page__age">{g.range}</span>
-                      <div class="age-page__illustration" aria-hidden="true">
-                        <span class="age-page__icon-ring">
-                          <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
-                        </span>
-                      </div>
+              <path d="M100 0 H-32 L0 0 A100 100 0 0 1 100 90 Z" />
+            </svg>
+            <div class="age-page__body">
+              <div class="age-page__content">
+                <h3 class="age-page__heading">{g.title}</h3>
+                <div class="age-page__age-block">
+                  <div class="age-page__age-row">
+                    <span class="age-page__age">{g.range}</span>
+                    <div class="age-page__illustration" aria-hidden="true">
+                      <span class="age-page__icon-ring">
+                        <Icon is:inline name={g.icon} class="age-page__icon-graphic" />
+                      </span>
                     </div>
-                    {g.groupsLabel ? (
-                      <p class="age-page__groups">{g.groupsLabel}</p>
-                    ) : null}
                   </div>
-                  <span class="age-page__rule" aria-hidden="true" />
-                  <p class="age-page__summary">
-                    {g.description.split("\n").map((line, index) => (
-                      <>
-                        {index > 0 ? <br /> : null}
-                        {line}
-                      </>
-                    ))}
-                  </p>
+                  {g.groupsLabel ? <p class="age-page__groups">{g.groupsLabel}</p> : null}
                 </div>
+                <span class="age-page__rule" aria-hidden="true" />
+                <p class="age-page__summary">
+                  {g.description.split("\n").map((line, index) => (
+                    <>
+                      {index > 0 ? <br /> : null}
+                      {line}
+                    </>
+                  ))}
+                </p>
               </div>
-            </article>
-          </li>
-        ))
-      }
+            </div>
+          </article>
+        </li>
+      ))}
     </ul>
   </div>
 </section>
