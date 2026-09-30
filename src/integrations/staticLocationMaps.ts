@@ -57,7 +57,7 @@ export const staticLocationMaps = (apiKey: string): AstroIntegration => ({
   name: "static-location-maps",
   hooks: {
     "astro:config:setup": async ({ command, logger }) => {
-      if (command !== "build" && command !== "dev") return;
+      if (command !== "build") return;
 
       if (!apiKey) {
         throw new Error(
