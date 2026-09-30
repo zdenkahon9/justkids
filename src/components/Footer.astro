@@ -63,8 +63,9 @@ const year = new Date().getFullYear();
 
         <li class="footer__phone">
           <Icon is:inline name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
-          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>{site.contact.phone}</a
-          >
+          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>
+            {site.contact.phone}
+          </a>
         </li>
         <li class="footer__email">
           <Icon
@@ -81,46 +82,44 @@ const year = new Date().getFullYear();
     <div class="footer__col footer__col--lokace">
       <h3>Lokace</h3>
       <ul>
-        {
-          locations.map((l) => (
-            <li>
-              <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
-                <span class="footer__location-title">
-                  <strong>{l.name}</strong>
-                  <Icon
-                    is:inline
-                    name="wordpress:external"
-                    class="footer__location-external"
-                    aria-hidden="true"
-                  />
-                </span>
-                <span>
-                  {l.street}, {l.city}
-                </span>
-              </a>
-            </li>
-          ))
-        }
+        {locations.map((l) => (
+          <li>
+            <a href={l.mapUrl} target="_blank" rel="noopener noreferrer">
+              <span class="footer__location-title">
+                <strong>{l.name}</strong>
+                <Icon
+                  is:inline
+                  name="wordpress:external"
+                  class="footer__location-external"
+                  aria-hidden="true"
+                />
+              </span>
+              <span>
+                {l.street}, {l.city}
+              </span>
+            </a>
+          </li>
+        ))}
       </ul>
     </div>
 
     <div class="footer__col footer__col--navigace">
       <h3>Navigace</h3>
       <ul>
-        {
-          NAV_LINKS.footer.map((l) => (
-            <li>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))
-        }
+        {NAV_LINKS.footer.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
       </ul>
     </div>
   </div>
 
   <div class="footer__bottom">
     <div class="container-x footer__bottom-inner">
-      <span>© {year} {site.name}. Všechna práva vyhrazena.</span>
+      <span>
+        © {year} {site.name}. Všechna práva vyhrazena.
+      </span>
     </div>
   </div>
 </footer>

@@ -38,8 +38,7 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
       <header class="section-header">
         <div class="reviews-page__head">
           <h1 id="reviews-page-title">
-            {meta.title}{" "}
-            <span class="section-title-accent">{meta.titleAccent}</span>
+            {meta.title} <span class="section-title-accent">{meta.titleAccent}</span>
           </h1>
           <p class="section-subtitle">
             Přečtěte si, co o nás napsali rodiče na našem{" "}
@@ -72,36 +71,34 @@ const getFirstName = (fullName: string) => fullName.trim().split(" ")[0];
     </div>
 
     <ol class="reviews-page__list" role="list">
-      {
-        reviews.map((r) => (
-          <li class="reviews-page__item">
-            <div class="reviews-page__stars" role="img" aria-label="Hodnocení 5 z 5">
-              {Array.from({ length: 5 }, () => (
-                <svg viewBox="0 0 24 24" aria-hidden="true" class="is-on">
-                  <path
-                    d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              ))}
-            </div>
+      {reviews.map((r) => (
+        <li class="reviews-page__item">
+          <div class="reviews-page__stars" role="img" aria-label="Hodnocení 5 z 5">
+            {Array.from({ length: 5 }, () => (
+              <svg viewBox="0 0 24 24" aria-hidden="true" class="is-on">
+                <path
+                  d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
+                  fill="currentColor"
+                />
+              </svg>
+            ))}
+          </div>
 
-            <blockquote class="reviews-page__text">
-              {splitReviewText(r.text).map((part) =>
-                part.emoji ? (
-                  <span class="reviews-page__emoji">{part.value}</span>
-                ) : (
-                  part.value
-                ),
-              )}
-            </blockquote>
+          <blockquote class="reviews-page__text">
+            {splitReviewText(r.text).map((part) =>
+              part.emoji ? (
+                <span class="reviews-page__emoji">{part.value}</span>
+              ) : (
+                part.value
+              ),
+            )}
+          </blockquote>
 
-            <span class="reviews-page__date">
-              {getFirstName(r.user.name)}, {formatMonthYear(r.date)}
-            </span>
-          </li>
-        ))
-      }
+          <span class="reviews-page__date">
+            {getFirstName(r.user.name)}, {formatMonthYear(r.date)}
+          </span>
+        </li>
+      ))}
     </ol>
 
     <div class="reviews-page__footer">

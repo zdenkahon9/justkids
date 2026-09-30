@@ -31,47 +31,41 @@ const {
     class:list={["review", { reveal, "review--clamped": clamp }]}
     style={`--accent: ${accent}; transition-delay: ${i * 90}ms;${clamp ? ` --review-clamp-lines: ${clampLines};` : ""}`}
   >
-    {
-      r.rating && (
-        <div class="review__stars" role="img" aria-label={`Hodnocení ${r.rating} z 5`}>
-          {Array.from({ length: 5 }, (_, k) => (
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              class={k < (r.rating ?? 0) ? "is-on" : ""}
-            >
-              <path
-                d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
-                fill="currentColor"
-              />
-            </svg>
-          ))}
-        </div>
-      )
-    }
+    {r.rating && (
+      <div class="review__stars" role="img" aria-label={`Hodnocení ${r.rating} z 5`}>
+        {Array.from({ length: 5 }, (_, k) => (
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class={k < (r.rating ?? 0) ? "is-on" : ""}
+          >
+            <path
+              d="M 12 2 L 14.5 8.5 L 21 9 L 16 13.5 L 17.5 20 L 12 16.5 L 6.5 20 L 8 13.5 L 3 9 L 9.5 8.5 Z"
+              fill="currentColor"
+            />
+          </svg>
+        ))}
+      </div>
+    )}
 
     <span class="review__quote" aria-hidden="true">
       <Icon is:inline name="raphael:quote" class="review__quote-icon" />
     </span>
 
     <blockquote class:list={["review__text", { "review__text--clamp": clamp }]}>
-      {
-        splitReviewText(r.text).map((part) =>
-          part.emoji ? <span class="review__emoji">{part.value}</span> : part.value,
-        )
-      }
+      {splitReviewText(r.text).map((part) =>
+        part.emoji ? <span class="review__emoji">{part.value}</span> : part.value,
+      )}
     </blockquote>
 
-    {
-      showMore && (
-        <footer class="review__footer">
-          <span class="review__rule" aria-hidden="true" />
-          <a class="review__more" href={ROUTES.reviews._}>
-            Celá recenze <span aria-hidden="true">→</span>
-          </a>
-        </footer>
-      )
-    }
+    {showMore && (
+      <footer class="review__footer">
+        <span class="review__rule" aria-hidden="true" />
+        <a class="review__more" href={ROUTES.reviews._}>
+          Celá recenze <span aria-hidden="true">→</span>
+        </a>
+      </footer>
+    )}
   </article>
 </li>
 

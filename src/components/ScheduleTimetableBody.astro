@@ -15,52 +15,50 @@ const scheduleStatusLabels = {
 } as const;
 ---
 
-{
-  location.days.map((day, dayIndex) => (
-    <div class="schedule__day-block">
-      {day.label ? <p class="schedule__day">{day.label}</p> : null}
-      <div class="schedule__timeline">
-        <span class="schedule__axis-line" aria-hidden="true">
-          <svg
-            class="schedule__axis-line-graphic"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <rect class="schedule__axis-line-fill" />
-          </svg>
-        </span>
-        <ul class="schedule__slots">
-          {day.slots.map((slot) => (
-            <li class="schedule__slot">
-              <span class="schedule__axis" aria-hidden="true">
-                <svg class="schedule__axis-dot" viewBox="0 0 10 10" aria-hidden="true">
-                  <circle class="schedule__axis-dot-fill" cx="5" cy="5" r="5" />
-                </svg>
-              </span>
-              <span class="schedule__time">{slot.time}</span>
-              <span class="schedule__activity">
-                {formatScheduleActivities(slot.activities)}
-              </span>
-              {slot.status ? (
-                <span
-                  class:list={["schedule__status", `schedule__status--${slot.status}`]}
-                  aria-label={scheduleStatusLabels[slot.status]}
-                >
-                  <span class="schedule__status-text">
-                    {scheduleStatusLabels[slot.status]}
-                  </span>
+{location.days.map((day, dayIndex) => (
+  <div class="schedule__day-block">
+    {day.label ? <p class="schedule__day">{day.label}</p> : null}
+    <div class="schedule__timeline">
+      <span class="schedule__axis-line" aria-hidden="true">
+        <svg
+          class="schedule__axis-line-graphic"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <rect class="schedule__axis-line-fill" />
+        </svg>
+      </span>
+      <ul class="schedule__slots">
+        {day.slots.map((slot) => (
+          <li class="schedule__slot">
+            <span class="schedule__axis" aria-hidden="true">
+              <svg class="schedule__axis-dot" viewBox="0 0 10 10" aria-hidden="true">
+                <circle class="schedule__axis-dot-fill" cx="5" cy="5" r="5" />
+              </svg>
+            </span>
+            <span class="schedule__time">{slot.time}</span>
+            <span class="schedule__activity">
+              {formatScheduleActivities(slot.activities)}
+            </span>
+            {slot.status ? (
+              <span
+                class:list={["schedule__status", `schedule__status--${slot.status}`]}
+                aria-label={scheduleStatusLabels[slot.status]}
+              >
+                <span class="schedule__status-text">
+                  {scheduleStatusLabels[slot.status]}
                 </span>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {dayIndex < location.days.length - 1 ? (
-        <hr class="schedule__day-divider" aria-hidden="true" />
-      ) : null}
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ul>
     </div>
-  ))
-}
+    {dayIndex < location.days.length - 1 ? (
+      <hr class="schedule__day-divider" aria-hidden="true" />
+    ) : null}
+  </div>
+))}
 
 <div class="schedule__venue">
   <Icon is:inline name="ph:map-pin" class="schedule__venue-icon" aria-hidden="true" />
@@ -77,10 +75,9 @@ const scheduleStatusLabels = {
       </a>
     </p>
     <p class="schedule__venue-address">
-      <span class="schedule__venue-street">{location.venue.street}</span><span
-        class="schedule__venue-address-sep"
-        >,
-      </span><span class="schedule__venue-city">{location.venue.city}</span>
+      <span class="schedule__venue-street">{location.venue.street}</span>
+      <span class="schedule__venue-address-sep">,&nbsp;</span>
+      <span class="schedule__venue-city">{location.venue.city}</span>
     </p>
   </div>
 </div>
@@ -280,6 +277,7 @@ const scheduleStatusLabels = {
   }
 
   .schedule__venue-address {
+    display: flex;
     margin: var(--space-2) 0 0;
     font-family: var(--font-body);
     font-size: var(--text-sm);
@@ -291,6 +289,7 @@ const scheduleStatusLabels = {
 
   @media (min-width: 1024px) and (max-width: 1179px) {
     .schedule__venue-address {
+      flex-direction: column;
       margin: var(--space-1) 0 0;
     }
 
