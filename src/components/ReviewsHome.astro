@@ -32,18 +32,16 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
 
     <div class="reviews__mobile" aria-roledescription="carousel">
       <ul class="reviews__track" role="list">
-        {
-          homeReviews.map((r, i) => (
-            <ReviewCard
-              review={r}
-              index={i}
-              accent={accentMap[r.accent]}
-              clamp
-              showMore
-              reveal={false}
-            />
-          ))
-        }
+        {homeReviews.map((r, i) => (
+          <ReviewCard
+            review={r}
+            index={i}
+            accent={accentMap[r.accent]}
+            clamp
+            showMore
+            reveal={false}
+          />
+        ))}
         <li class="reviews__slide reviews__slide--cta">
           <article
             class="review review--cta"
@@ -70,27 +68,23 @@ const homeReviews = reviews.slice(0, HOME_REVIEW_COUNT);
       </ul>
 
       <div class="reviews__dots" role="tablist" aria-label="Recenze">
-        {
-          Array.from({ length: MOBILE_SLIDE_COUNT }, (_, i) => (
-            <button
-              type="button"
-              class={`reviews__dot${i === 0 ? " is-active" : ""}`}
-              role="tab"
-              aria-label={i < HOME_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"}
-              aria-selected={i === 0 ? "true" : "false"}
-              data-index={i}
-            />
-          ))
-        }
+        {Array.from({ length: MOBILE_SLIDE_COUNT }, (_, i) => (
+          <button
+            type="button"
+            class={`reviews__dot${i === 0 ? " is-active" : ""}`}
+            role="tab"
+            aria-label={i < HOME_REVIEW_COUNT ? `Recenze ${i + 1}` : "Všechny recenze"}
+            aria-selected={i === 0 ? "true" : "false"}
+            data-index={i}
+          />
+        ))}
       </div>
     </div>
 
     <ul class="reviews__grid reviews__grid--desktop" role="list">
-      {
-        homeReviews.map((r, i) => (
-          <ReviewCard review={r} index={i} accent={accentMap[r.accent]} clamp showMore />
-        ))
-      }
+      {homeReviews.map((r, i) => (
+        <ReviewCard review={r} index={i} accent={accentMap[r.accent]} clamp showMore />
+      ))}
     </ul>
 
     <div class="reviews__all reveal">

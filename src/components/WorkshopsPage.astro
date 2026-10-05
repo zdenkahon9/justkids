@@ -54,22 +54,22 @@ const pageMeta = workshopsPageMeta;
       <div class="workshops-page__nav">
         <div class="workshops-page__nav-scroll" data-workshops-nav-scroll>
           <nav class="workshops-page__nav-track" aria-label="Přejít na workshop">
-            {
-              workshopsPage.map((w) => (
-                <div
-                  class="workshops-page__pill workshops-page__pill--nav"
-                  style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
-                >
-                  <a href={`#${w.id}`} class="workshops-page__pill-link">
-                    {w.title}
-                  </a>
-                </div>
-              ))
-            }
+            {workshopsPage.map((w) => (
+              <div
+                class="workshops-page__pill workshops-page__pill--nav"
+                style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
+              >
+                <a href={`#${w.id}`} class="workshops-page__pill-link">
+                  {w.title}
+                </a>
+              </div>
+            ))}
           </nav>
         </div>
         <div class="workshops-page__nav-scrollbar" aria-hidden="true">
-          <span class="workshops-page__nav-scrollbar-thumb" data-workshops-nav-thumb
+          <span
+            class="workshops-page__nav-scrollbar-thumb"
+            data-workshops-nav-thumb
           ></span>
         </div>
       </div>
@@ -92,134 +92,130 @@ const pageMeta = workshopsPageMeta;
     </div>
 
     <ul id={workshopsPageGridId} class="workshops__grid">
-      {
-        workshopsPage.map((w) => (
-          <li
-            id={w.id}
-            class="workshop"
-            style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}`}
-          >
-            <span class="workshop__icon" aria-hidden="true">
-              <Icon
-                is:inline
-                name={workshopIconById[w.id] ?? "streamline-sharp:health-care-2"}
-                class="workshop__icon-graphic"
-              />
-            </span>
-            <div class="workshop__header">
-              <div class="workshop__lead">
-                <h3>{w.title}</h3>
-              </div>
-              {w.ageRange ? <span class="workshop__age">{w.ageRange}</span> : null}
+      {workshopsPage.map((w) => (
+        <li
+          id={w.id}
+          class="workshop"
+          style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)}`}
+        >
+          <span class="workshop__icon" aria-hidden="true">
+            <Icon
+              is:inline
+              name={workshopIconById[w.id] ?? "streamline-sharp:health-care-2"}
+              class="workshop__icon-graphic"
+            />
+          </span>
+          <div class="workshop__header">
+            <div class="workshop__lead">
+              <h3>{w.title}</h3>
             </div>
-            <span class="workshops-page__rule" aria-hidden="true" />
+            {w.ageRange ? <span class="workshop__age">{w.ageRange}</span> : null}
+          </div>
+          <span class="workshops-page__rule" aria-hidden="true" />
 
-            <div class="workshop__details">
-              <p class="workshop__highlights-label">Co vás čeká</p>
-              <ul class="workshop__highlights">
-                {w.highlights.map((item) => (
-                  <li>
-                    <Icon
-                      is:inline
-                      name="ph:check-circle-fill"
-                      class="workshop__highlight-icon"
+          <div class="workshop__details">
+            <p class="workshop__highlights-label">Co vás čeká</p>
+            <ul class="workshop__highlights">
+              {w.highlights.map((item) => (
+                <li>
+                  <Icon
+                    is:inline
+                    name="ph:check-circle-fill"
+                    class="workshop__highlight-icon"
+                    aria-hidden="true"
+                  />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <hr class="workshops-page__divider" aria-hidden="true" />
+            {w.price ? (
+              <>
+                <div class="workshop__price">
+                  <p class="workshop__price-label">{pageMeta.priceLabel}</p>
+                  <p class="workshop__price-value">{w.price ?? pageMeta.defaultPrice}</p>
+                </div>
+                <hr class="workshops-page__divider" aria-hidden="true" />
+              </>
+            ) : null}
+            {w.dates?.length ? (
+              <>
+                <div class="workshop__terms" data-workshop-terms>
+                  <button
+                    type="button"
+                    class="workshop__terms-toggle"
+                    aria-expanded="false"
+                    aria-controls={`workshop-dates-${w.id}`}
+                  >
+                    <span
+                      class="workshop__terms-label"
+                      id={`workshop-terms-label-${w.id}`}
+                    >
+                      {pageMeta.termsLabel}
+                    </span>
+                    <svg
+                      class="workshop__terms-chevron"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <hr class="workshops-page__divider" aria-hidden="true" />
-              {w.price ? (
-                <>
-                  <div class="workshop__price">
-                    <p class="workshop__price-label">{pageMeta.priceLabel}</p>
-                    <p class="workshop__price-value">
-                      {w.price ?? pageMeta.defaultPrice}
-                    </p>
-                  </div>
-                  <hr class="workshops-page__divider" aria-hidden="true" />
-                </>
-              ) : null}
-              {w.dates?.length ? (
-                <>
-                  <div class="workshop__terms" data-workshop-terms>
-                    <button
-                      type="button"
-                      class="workshop__terms-toggle"
-                      aria-expanded="false"
-                      aria-controls={`workshop-dates-${w.id}`}
                     >
-                      <span
-                        class="workshop__terms-label"
-                        id={`workshop-terms-label-${w.id}`}
-                      >
-                        {pageMeta.termsLabel}
-                      </span>
-                      <svg
-                        class="workshop__terms-chevron"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M2.5 4.25L6 7.75L9.5 4.25"
-                          stroke="currentColor"
-                          stroke-width="1.75"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                    </button>
-                    <ul
-                      id={`workshop-dates-${w.id}`}
-                      class="workshop__dates"
-                      role="region"
-                      aria-labelledby={`workshop-terms-label-${w.id}`}
-                    >
-                      {sortWorkshopDates(w.dates ?? []).map((date) => (
-                        <li>
-                          <a
-                            class="workshop__date-card"
-                            href={date.href ?? site.signupFormUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
-                          >
-                            <div class="workshop__date-card-date" aria-hidden="true">
-                              <span class="workshop__date-day">{date.day}</span>
-                              <span class="workshop__date-month">{date.month}</span>
-                            </div>
-                            <div class="workshop__date-card-body">
-                              <p class="workshop__date-venue">{date.venueName}</p>
-                              <p class="workshop__date-time">{date.time}</p>
-                            </div>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <hr class="workshops-page__divider" aria-hidden="true" />
-                  <div class="workshops-page__cta">
-                    <a
-                      class="btn btn-primary"
-                      href={site.signupFormUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {pageMeta.signupLabel}
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                </>
-              ) : null}
-            </div>
-          </li>
-        ))
-      }
+                      <path
+                        d="M2.5 4.25L6 7.75L9.5 4.25"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <ul
+                    id={`workshop-dates-${w.id}`}
+                    class="workshop__dates"
+                    role="region"
+                    aria-labelledby={`workshop-terms-label-${w.id}`}
+                  >
+                    {sortWorkshopDates(w.dates ?? []).map((date) => (
+                      <li>
+                        <a
+                          class="workshop__date-card"
+                          href={date.href ?? site.signupFormUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
+                        >
+                          <div class="workshop__date-card-date" aria-hidden="true">
+                            <span class="workshop__date-day">{date.day}</span>
+                            <span class="workshop__date-month">{date.month}</span>
+                          </div>
+                          <div class="workshop__date-card-body">
+                            <p class="workshop__date-venue">{date.venueName}</p>
+                            <p class="workshop__date-time">{date.time}</p>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <hr class="workshops-page__divider" aria-hidden="true" />
+                <div class="workshops-page__cta">
+                  <a
+                    class="btn btn-primary"
+                    href={site.signupFormUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {pageMeta.signupLabel}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </>
+            ) : null}
+          </div>
+        </li>
+      ))}
     </ul>
   </div>
 </section>

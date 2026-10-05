@@ -50,107 +50,101 @@ const splitLocationName = (name: string) => {
             role="tablist"
             aria-label="Vyberte pobočku"
           >
-            {
-              locations.map((l, i) => (
-                <button
-                  type="button"
-                  role="tab"
-                  id={`location-tab-${l.id}`}
-                  class="locations-tabs__tab"
-                  aria-selected={i === 0 ? "true" : "false"}
-                  aria-controls={`location-panel-${l.id}`}
-                  tabindex={i === 0 ? 0 : -1}
-                  data-accent={cardAccentDeep(l.accent)}
-                  data-accent-soft={cardAccentSoft(l.accent)}
-                  style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}`}
-                >
-                  {l.city}
-                </button>
-              ))
-            }
+            {locations.map((l, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`location-tab-${l.id}`}
+                class="locations-tabs__tab"
+                aria-selected={i === 0 ? "true" : "false"}
+                aria-controls={`location-panel-${l.id}`}
+                tabindex={i === 0 ? 0 : -1}
+                data-accent={cardAccentDeep(l.accent)}
+                data-accent-soft={cardAccentSoft(l.accent)}
+                style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}`}
+              >
+                {l.city}
+              </button>
+            ))}
           </div>
           <span class="locations__rule" aria-hidden="true"></span>
           <div class="locations__body">
             <div class="locations-tabs__panels">
-              {
-                locations.map((l, i) => {
-                  const nameParts = splitLocationName(l.name);
+              {locations.map((l, i) => {
+                const nameParts = splitLocationName(l.name);
 
-                  return (
-                    <div
-                      class="locations-tabs__panel"
-                      id={`location-panel-${l.id}`}
-                      role="tabpanel"
-                      aria-labelledby={`location-tab-${l.id}`}
+                return (
+                  <div
+                    class="locations-tabs__panel"
+                    id={`location-panel-${l.id}`}
+                    role="tabpanel"
+                    aria-labelledby={`location-tab-${l.id}`}
+                  >
+                    <article
+                      class="location reveal"
+                      style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
                     >
-                      <article
-                        class="location reveal"
-                        style={`--accent: ${cardAccentDeep(l.accent)}; --accent-soft: ${cardAccentSoft(l.accent)}; transition-delay: ${i * 100}ms`}
-                      >
-                        <div class="location__details">
-                          <div class="location__head">
-                            <div class="location__head-text">
-                              <h3>
-                                <span class="location__name-first">
-                                  {nameParts.first}
-                                </span>
-                                <span class="location__name-rest">{nameParts.rest}</span>
-                              </h3>
-                              <address class="location__address">
-                                <span class="location__address-street">{l.street}</span>
-                                <span class="location__address-sep">,&nbsp;</span>
-                                <span class="location__address-locality">
-                                  {l.zip} {l.city}
-                                </span>
-                              </address>
-                            </div>
+                      <div class="location__details">
+                        <div class="location__head">
+                          <div class="location__head-text">
+                            <h3>
+                              <span class="location__name-first">{nameParts.first}</span>
+                              <span class="location__name-rest">{nameParts.rest}</span>
+                            </h3>
+                            <address class="location__address">
+                              <span class="location__address-street">{l.street}</span>
+                              <span class="location__address-sep">,&nbsp;</span>
+                              <span class="location__address-locality">
+                                {l.zip} {l.city}
+                              </span>
+                            </address>
                           </div>
-                          <span class="location__rule" aria-hidden="true" />
                         </div>
+                        <span class="location__rule" aria-hidden="true" />
+                      </div>
 
-                        <a
-                          href={l.mapUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="location__map-link"
-                          aria-label={`Otevřít trasu do ${l.name} v Google Maps (nové okno)`}
-                        >
-                          <span class="location__map-action">
-                            Navigovat v Google Maps
-                            <svg
-                              class="location__extern-icon"
-                              viewBox="0 0 24 24"
-                              width="16"
-                              height="16"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
-                              />
-                              <path
-                                fill="currentColor"
-                                d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
-                              />
-                            </svg>
-                          </span>
-                          <span class="location__map-shell">
-                            <Image
-                              class="location__map-frame"
-                              src={locationMapImage(l.id)}
-                              alt=""
-                              widths={[326, 652]}
-                              sizes="(min-width: 1024px) 326px, (min-width: 768px) 728px, min(calc(100vw - 3rem), 412px)"
-                              format="webp"
-                              loading="lazy"
+                      <a
+                        href={l.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="location__map-link"
+                        aria-label={`Otevřít trasu do ${l.name} v Google Maps (nové okno)`}
+                      >
+                        <span class="location__map-action">
+                          Navigovat v Google Maps
+                          <svg
+                            class="location__extern-icon"
+                            viewBox="0 0 24 24"
+                            width="16"
+                            height="16"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3z"
                             />
-                          </span>
-                        </a>
-                      </article>
-                    </div>
-                  );
-                })
-              }
+                            <path
+                              fill="currentColor"
+                              d="M5 5h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6h-2v6H5V5z"
+                            />
+                          </svg>
+                        </span>
+                        <span class="location__map-shell">
+                          <Image
+                            class="location__map-frame"
+                            src={locationMapImage(l.id)}
+                            alt=""
+                            widths={[326, 652]}
+                            sizes="(min-width: 1024px) 326px, (min-width: 768px) 728px, min(calc(100vw - 3rem), 412px)"
+                            format="webp"
+                            loading="lazy"
+                          />
+                        </span>
+                      </a>
+                    </article>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

@@ -6,8 +6,6 @@ const fonts = [
 ] as const;
 ---
 
-{
-  fonts.map((href) => (
-    <link rel="preload" href={href} as="font" type="font/woff2" crossorigin="anonymous" />
-  ))
-}
+{fonts.map((href) => (
+  <link rel="preload" href={href} as="font" type="font/woff2" crossorigin="anonymous" />
+))}

@@ -17,63 +17,61 @@ import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
     </header>
 
     <ol class="rules__list">
-      {
-        rules.map((rule, i) => (
-          <li
-            class="rules__item"
-            style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)}; --rules-row: ${Math.floor(i / 2) + 1};`}
-          >
-            <div class="rules__content">
-              {rule.icon ? (
-                <div class="rules__illustration" aria-hidden="true">
-                  <span class="rules__icon-ring">
-                    {rule.icon === "local:phone-off" ? (
-                      <svg
-                        class="rules__icon-graphic"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <rect x="5.5" y="1.5" width="9" height="17" rx="2.5" />
-                        <circle
-                          cx="10"
-                          cy="15.4"
-                          r="0.7"
-                          fill="currentColor"
-                          stroke="none"
-                        />
-                        <path d="M3 2.5 17 17.5" />
-                      </svg>
-                    ) : (
-                      <Icon
-                        is:inline
-                        name={rule.icon}
-                        class={`rules__icon-graphic${rule.icon === "material-symbols-light:handshake-outline-rounded" ? " rules__icon-graphic--bold" : ""}${rule.icon === "fluent:hand-open-heart-20-regular" ? " rules__icon-graphic--lg" : ""}`}
+      {rules.map((rule, i) => (
+        <li
+          class="rules__item"
+          style={`--accent: ${cardAccentDeep(rule.accent)}; --accent-soft: ${cardAccentSoft(rule.accent)}; --rules-row: ${Math.floor(i / 2) + 1};`}
+        >
+          <div class="rules__content">
+            {rule.icon ? (
+              <div class="rules__illustration" aria-hidden="true">
+                <span class="rules__icon-ring">
+                  {rule.icon === "local:phone-off" ? (
+                    <svg
+                      class="rules__icon-graphic"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <rect x="5.5" y="1.5" width="9" height="17" rx="2.5" />
+                      <circle
+                        cx="10"
+                        cy="15.4"
+                        r="0.7"
+                        fill="currentColor"
+                        stroke="none"
                       />
-                    )}
-                  </span>
-                </div>
-              ) : null}
-              <div class="rules__text">
-                <h3 class="rules__title">{rule.title.replace(/\n/g, " ")}</h3>
-                <p class="rules__detail">{rule.detail}</p>
-                <svg class="rules__scribble" viewBox="0 0 140 12" aria-hidden="true">
-                  <path
-                    d="M6,10 C45,2 95,3 134,9"
-                    stroke="currentColor"
-                    stroke-width="3"
-                    stroke-linecap="round"
-                    fill="none"
-                  />
-                </svg>
+                      <path d="M3 2.5 17 17.5" />
+                    </svg>
+                  ) : (
+                    <Icon
+                      is:inline
+                      name={rule.icon}
+                      class={`rules__icon-graphic${rule.icon === "material-symbols-light:handshake-outline-rounded" ? " rules__icon-graphic--bold" : ""}${rule.icon === "fluent:hand-open-heart-20-regular" ? " rules__icon-graphic--lg" : ""}`}
+                    />
+                  )}
+                </span>
               </div>
+            ) : null}
+            <div class="rules__text">
+              <h3 class="rules__title">{rule.title.replace(/\n/g, " ")}</h3>
+              <p class="rules__detail">{rule.detail}</p>
+              <svg class="rules__scribble" viewBox="0 0 140 12" aria-hidden="true">
+                <path
+                  d="M6,10 C45,2 95,3 134,9"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  fill="none"
+                />
+              </svg>
             </div>
-          </li>
-        ))
-      }
+          </div>
+        </li>
+      ))}
     </ol>
   </div>
 </section>
