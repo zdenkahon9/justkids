@@ -28,236 +28,228 @@ const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-
         aria-label="Vyberte den lekce"
         aria-orientation="horizontal"
       >
-        {
-          lessonDays.map((day) => {
-            const isSelected = day.id === defaultDayId;
-            return (
-              <button
-                type="button"
-                id={`lesson-day-tab-${day.id}`}
-                class="lesson-dates__day-tab"
-                role="tab"
-                aria-selected={isSelected}
-                aria-controls={`lesson-day-panel-${day.id}`}
-                tabindex={isSelected ? 0 : -1}
-                data-accent={cardAccentDeep(day.accent)}
-                data-accent-soft={cardAccentSoft(day.accent)}
-                style={`--accent: ${cardAccentDeep(day.accent)}; --accent-soft: ${cardAccentSoft(day.accent)}`}
-              >
-                {day.label}
-              </button>
-            );
-          })
-        }
+        {lessonDays.map((day) => {
+          const isSelected = day.id === defaultDayId;
+          return (
+            <button
+              type="button"
+              id={`lesson-day-tab-${day.id}`}
+              class="lesson-dates__day-tab"
+              role="tab"
+              aria-selected={isSelected}
+              aria-controls={`lesson-day-panel-${day.id}`}
+              tabindex={isSelected ? 0 : -1}
+              data-accent={cardAccentDeep(day.accent)}
+              data-accent-soft={cardAccentSoft(day.accent)}
+              style={`--accent: ${cardAccentDeep(day.accent)}; --accent-soft: ${cardAccentSoft(day.accent)}`}
+            >
+              {day.label}
+            </button>
+          );
+        })}
       </div>
       <span class="lesson-dates__rule" aria-hidden="true"></span>
 
-      {
-        lessonDays.map((day) => {
-          const isSelectedDay = day.id === defaultDayId;
-          return (
-            <section
-              id={`lesson-day-panel-${day.id}`}
-              class="lesson-dates__day-panel"
-              role="tabpanel"
-              aria-labelledby={`lesson-day-tab-${day.id}`}
-              hidden={!isSelectedDay}
-              data-lesson-day-panel
-            >
-              <div class="lesson-dates__date-picker">
-                <button
-                  type="button"
-                  class="lesson-dates__rail-arrow lesson-dates__rail-arrow--previous"
-                  aria-label={`Předchozí termíny – ${day.label}`}
-                  data-date-scroll="previous"
-                >
-                  <span aria-hidden="true">‹</span>
-                </button>
+      {lessonDays.map((day) => {
+        const isSelectedDay = day.id === defaultDayId;
+        return (
+          <section
+            id={`lesson-day-panel-${day.id}`}
+            class="lesson-dates__day-panel"
+            role="tabpanel"
+            aria-labelledby={`lesson-day-tab-${day.id}`}
+            hidden={!isSelectedDay}
+            data-lesson-day-panel
+          >
+            <div class="lesson-dates__date-picker">
+              <button
+                type="button"
+                class="lesson-dates__rail-arrow lesson-dates__rail-arrow--previous"
+                aria-label={`Předchozí termíny – ${day.label}`}
+                data-date-scroll="previous"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
 
-                <div
-                  class="lesson-dates__date-rail"
-                  role="tablist"
-                  aria-label={`Termíny pro ${day.label.toLowerCase()}`}
-                  aria-orientation="horizontal"
-                  data-date-rail
-                >
-                  {day.dates.map((date, index) => {
-                    const isFirst = index === 0;
-                    const isBreak = Boolean(date.note);
-                    const dateId = `${day.id}-${date.iso}`;
-                    const dateStatus = date.lesson
-                      ? `${date.lesson}. lekce, téma ${lessonTopics[date.lesson]}`
-                      : date.note;
-                    return (
-                      <button
-                        type="button"
-                        id={`lesson-date-tab-${dateId}`}
-                        class:list={[
-                          "lesson-dates__date-tab",
-                          { "lesson-dates__date-tab--break": isBreak },
-                        ]}
-                        role="tab"
-                        aria-selected={isFirst}
-                        aria-controls={`lesson-date-panel-${dateId}`}
-                        aria-label={`${day.label} ${date.fullDate}, ${dateStatus}`}
-                        tabindex={isFirst ? 0 : -1}
-                      >
-                        <span class="lesson-dates__date-weekday">{day.abbreviation}</span>
-                        <time datetime={date.iso}>{date.shortDate}</time>
-                        <span class="lesson-dates__date-dot" aria-hidden="true" />
-                      </button>
-                    );
-                  })}
-                </div>
-
-                <button
-                  type="button"
-                  class="lesson-dates__rail-arrow lesson-dates__rail-arrow--next"
-                  aria-label={`Další termíny – ${day.label}`}
-                  data-date-scroll="next"
-                >
-                  <span aria-hidden="true">›</span>
-                </button>
-              </div>
-
-              <div class="lesson-dates__details">
+              <div
+                class="lesson-dates__date-rail"
+                role="tablist"
+                aria-label={`Termíny pro ${day.label.toLowerCase()}`}
+                aria-orientation="horizontal"
+                data-date-rail
+              >
                 {day.dates.map((date, index) => {
+                  const isFirst = index === 0;
+                  const isBreak = Boolean(date.note);
                   const dateId = `${day.id}-${date.iso}`;
-                  const topicIcon = date.lesson ? lessonIcons[date.lesson] : undefined;
-                  const topicIcons = topicIcon
-                    ? Array.isArray(topicIcon)
-                      ? topicIcon
-                      : [topicIcon]
-                    : [];
+                  const dateStatus = date.lesson
+                    ? `${date.lesson}. lekce, téma ${lessonTopics[date.lesson]}`
+                    : date.note;
                   return (
-                    <article
-                      id={`lesson-date-panel-${dateId}`}
+                    <button
+                      type="button"
+                      id={`lesson-date-tab-${dateId}`}
                       class:list={[
-                        "lesson-dates__detail",
-                        { "lesson-dates__detail--break": Boolean(date.note) },
+                        "lesson-dates__date-tab",
+                        { "lesson-dates__date-tab--break": isBreak },
                       ]}
-                      role="tabpanel"
-                      aria-labelledby={`lesson-date-tab-${dateId}`}
-                      tabindex="0"
-                      hidden={index !== 0}
+                      role="tab"
+                      aria-selected={isFirst}
+                      aria-controls={`lesson-date-panel-${dateId}`}
+                      aria-label={`${day.label} ${date.fullDate}, ${dateStatus}`}
+                      tabindex={isFirst ? 0 : -1}
                     >
-                      {topicIcons.length > 0 && (
-                        <span
-                          class:list={[
-                            "lesson-dates__detail-topic-icon",
-                            {
-                              "lesson-dates__detail-topic-icon--pair":
-                                topicIcons.length === 2,
-                            },
-                          ]}
-                          aria-hidden="true"
-                        >
-                          {topicIcons.map((iconName) => (
-                            <Icon
-                              is:inline
-                              name={iconName}
-                              class="lesson-dates__detail-topic-icon-graphic"
-                            />
-                          ))}
-                        </span>
-                      )}
-                      <p class="lesson-dates__detail-weekday">{day.label}</p>
-                      <time class="lesson-dates__detail-date" datetime={date.iso}>
-                        {date.fullDate}
-                      </time>
-                      <p class="lesson-dates__detail-status">
-                        {date.lesson ? `${date.lesson}. lekce` : date.note}
-                      </p>
-                      {date.lesson && (
-                        <p class="lesson-dates__detail-topic">
-                          Téma: {lessonTopics[date.lesson]}
-                        </p>
-                      )}
-                    </article>
+                      <span class="lesson-dates__date-weekday">{day.abbreviation}</span>
+                      <time datetime={date.iso}>{date.shortDate}</time>
+                      <span class="lesson-dates__date-dot" aria-hidden="true" />
+                    </button>
                   );
                 })}
               </div>
 
-              <div class="lesson-dates__sidebar">
-                <h3 class="lesson-dates__sidebar-title">Praktické informace</h3>
-                <div
-                  class="lesson-dates__meta"
-                  aria-label={`Informace o kurzu – ${day.label}`}
-                >
-                  <p class="lesson-dates__meta-item lesson-dates__meta-item--location">
-                    <Icon
-                      is:inline
-                      name="ph:map-pin"
-                      class="lesson-dates__meta-icon"
-                      aria-hidden="true"
-                    />
-                    <span>{day.location}</span>
-                  </p>
-                  <p class="lesson-dates__meta-item lesson-dates__meta-item--lessons">
-                    <Icon
-                      is:inline
-                      name="streamline:layers-1"
-                      class="lesson-dates__meta-icon"
-                      aria-hidden="true"
-                    />
-                    <span>16 lekcí</span>
-                  </p>
-                  <p class="lesson-dates__meta-item lesson-dates__meta-item--breaks">
-                    <Icon
-                      is:inline
-                      name="lineicons:calendar-days"
-                      class="lesson-dates__meta-icon"
-                      aria-hidden="true"
-                    />
-                    <span>4× necvičíme</span>
-                  </p>
-                </div>
-              </div>
+              <button
+                type="button"
+                class="lesson-dates__rail-arrow lesson-dates__rail-arrow--next"
+                aria-label={`Další termíny – ${day.label}`}
+                data-date-scroll="next"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
+            </div>
 
-              <div class="lesson-dates__summary-wrap">
-                <span class="lesson-dates__summary-rule" aria-hidden="true" />
-                <aside
-                  class="lesson-dates__summary"
-                  aria-label="Informace o průběhu kurzu"
-                >
-                  <svg
-                    class="lesson-dates__summary-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    aria-hidden="true"
+            <div class="lesson-dates__details">
+              {day.dates.map((date, index) => {
+                const dateId = `${day.id}-${date.iso}`;
+                const topicIcon = date.lesson ? lessonIcons[date.lesson] : undefined;
+                const topicIcons = topicIcon
+                  ? Array.isArray(topicIcon)
+                    ? topicIcon
+                    : [topicIcon]
+                  : [];
+                return (
+                  <article
+                    id={`lesson-date-panel-${dateId}`}
+                    class:list={[
+                      "lesson-dates__detail",
+                      { "lesson-dates__detail--break": Boolean(date.note) },
+                    ]}
+                    role="tabpanel"
+                    aria-labelledby={`lesson-date-tab-${dateId}`}
+                    tabindex="0"
+                    hidden={index !== 0}
                   >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="9"
-                      stroke="currentColor"
-                      stroke-width="1.75"
-                    />
-                    <path
-                      d="M12 10.75V17"
-                      stroke="currentColor"
-                      stroke-width="1.75"
-                      stroke-linecap="round"
-                    />
-                    <circle cx="12" cy="7.25" r="1" fill="currentColor" />
-                  </svg>
-                  <p class="lesson-dates__summary-text">
-                    <span>Kurzy probíhají od září 2026 do ledna 2027.</span>
-                  </p>
-                </aside>
+                    {topicIcons.length > 0 && (
+                      <span
+                        class:list={[
+                          "lesson-dates__detail-topic-icon",
+                          {
+                            "lesson-dates__detail-topic-icon--pair":
+                              topicIcons.length === 2,
+                          },
+                        ]}
+                        aria-hidden="true"
+                      >
+                        {topicIcons.map((iconName) => (
+                          <Icon
+                            is:inline
+                            name={iconName}
+                            class="lesson-dates__detail-topic-icon-graphic"
+                          />
+                        ))}
+                      </span>
+                    )}
+                    <p class="lesson-dates__detail-weekday">{day.label}</p>
+                    <time class="lesson-dates__detail-date" datetime={date.iso}>
+                      {date.fullDate}
+                    </time>
+                    <p class="lesson-dates__detail-status">
+                      {date.lesson ? `${date.lesson}. lekce` : date.note}
+                    </p>
+                    {date.lesson && (
+                      <p class="lesson-dates__detail-topic">
+                        Téma: {lessonTopics[date.lesson]}
+                      </p>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+
+            <div class="lesson-dates__sidebar">
+              <h3 class="lesson-dates__sidebar-title">Praktické informace</h3>
+              <div
+                class="lesson-dates__meta"
+                aria-label={`Informace o kurzu – ${day.label}`}
+              >
+                <p class="lesson-dates__meta-item lesson-dates__meta-item--location">
+                  <Icon
+                    is:inline
+                    name="ph:map-pin"
+                    class="lesson-dates__meta-icon"
+                    aria-hidden="true"
+                  />
+                  <span>{day.location}</span>
+                </p>
+                <p class="lesson-dates__meta-item lesson-dates__meta-item--lessons">
+                  <Icon
+                    is:inline
+                    name="streamline:layers-1"
+                    class="lesson-dates__meta-icon"
+                    aria-hidden="true"
+                  />
+                  <span>16 lekcí</span>
+                </p>
+                <p class="lesson-dates__meta-item lesson-dates__meta-item--breaks">
+                  <Icon
+                    is:inline
+                    name="lineicons:calendar-days"
+                    class="lesson-dates__meta-icon"
+                    aria-hidden="true"
+                  />
+                  <span>4× necvičíme</span>
+                </p>
               </div>
-            </section>
-          );
-        })
-      }
+            </div>
+
+            <div class="lesson-dates__summary-wrap">
+              <span class="lesson-dates__summary-rule" aria-hidden="true" />
+              <aside class="lesson-dates__summary" aria-label="Informace o průběhu kurzu">
+                <svg
+                  class="lesson-dates__summary-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="9"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                  />
+                  <path
+                    d="M12 10.75V17"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="12" cy="7.25" r="1" fill="currentColor" />
+                </svg>
+                <p class="lesson-dates__summary-text">
+                  <span>Kurzy probíhají od září 2026 do ledna 2027.</span>
+                </p>
+              </aside>
+            </div>
+          </section>
+        );
+      })}
 
       <p
         class="lesson-dates__announcement"
         aria-live="polite"
         aria-atomic="true"
         data-date-announcement
-      >
-      </p>
+      ></p>
       <noscript>
         <style>
           .lesson-dates__day-tabs,

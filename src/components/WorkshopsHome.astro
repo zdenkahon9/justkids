@@ -17,8 +17,7 @@ const meta = workshopsHomeMeta;
     <header class="section-header reveal">
       <span class="eyebrow">{meta.eyebrow}</span>
       <h2 id="workshops-title">
-        {meta.title}{" "}
-        <span class="section-title-accent">{meta.titleAccent}</span>
+        {meta.title} <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
       <p class="section-subtitle">{meta.subtitle}</p>
     </header>
@@ -48,9 +47,7 @@ const meta = workshopsHomeMeta;
                 </span>
               </span>
             </p>
-            <p class="workshops-home__note-description">
-              {meta.cardNoteDescription}
-            </p>
+            <p class="workshops-home__note-description">{meta.cardNoteDescription}</p>
             <a class="workshops-home__card-cta btn btn-primary" href={meta.detailHref}>
               {meta.ctaLabel}
               <span aria-hidden="true">→</span>
@@ -58,61 +55,57 @@ const meta = workshopsHomeMeta;
           </div>
           <div class="workshops-home__body">
             <ul class="workshops-home__topics">
-              {
-                workshops.map((w, index) => (
-                  <li
-                    class="workshops-home__topic"
-                    style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
-                  >
-                    {index > 0 ? (
-                      <span class="workshops-home__rule" aria-hidden="true" />
-                    ) : null}
-                    <div class="workshops-home__topic-row">
-                      <span class="workshops-home__topic-icon" aria-hidden="true">
-                        <Icon
-                          is:inline
-                          name={
-                            workshopIconById[w.id] ?? "streamline-sharp:health-care-2"
-                          }
-                          class="workshops-home__topic-icon-graphic"
-                        />
-                      </span>
-                      <div class="workshops-home__topic-copy">
-                        <h3 class="workshops-home__topic-label">
-                          <a
-                            class="workshops-home__topic-link"
-                            href={ROUTES.workshops.detail(w.id)}
-                            data-workshops-home-arrow={w.id}
-                            aria-label={`Přejít na workshop ${w.title}`}
-                          >
-                            {w.title}
-                          </a>
-                          <span class="workshops-home__topic-label-plain">{w.title}</span>
-                        </h3>
-                        <span class="workshops-home__topic-rule" aria-hidden="true" />
-                        {w.ageRange ? (
-                          <span class="workshop__age">{w.ageRange}</span>
-                        ) : null}
-                        {w.homeSummary ? (
-                          <p class="workshops-home__topic-summary">{w.homeSummary}</p>
-                        ) : null}
-                      </div>
-                      <a
-                        class="workshops-home__arrow"
-                        href={ROUTES.workshops.detail(w.id)}
-                        data-workshops-home-arrow={w.id}
-                        aria-label={`Přejít na workshop ${w.title}`}
-                      >
-                        <Icon
-                          is:inline
-                          name="iconamoon:arrow-right-2-light"
-                          class="workshops-home__arrow-graphic"
-                        />
-                      </a>
+              {workshops.map((w, index) => (
+                <li
+                  class="workshops-home__topic"
+                  style={`--accent: ${cardAccentDeep(w.accent)}; --accent-soft: ${cardAccentSoft(w.accent)};`}
+                >
+                  {index > 0 ? (
+                    <span class="workshops-home__rule" aria-hidden="true" />
+                  ) : null}
+                  <div class="workshops-home__topic-row">
+                    <span class="workshops-home__topic-icon" aria-hidden="true">
+                      <Icon
+                        is:inline
+                        name={workshopIconById[w.id] ?? "streamline-sharp:health-care-2"}
+                        class="workshops-home__topic-icon-graphic"
+                      />
+                    </span>
+                    <div class="workshops-home__topic-copy">
+                      <h3 class="workshops-home__topic-label">
+                        <a
+                          class="workshops-home__topic-link"
+                          href={ROUTES.workshops.detail(w.id)}
+                          data-workshops-home-arrow={w.id}
+                          aria-label={`Přejít na workshop ${w.title}`}
+                        >
+                          {w.title}
+                        </a>
+                        <span class="workshops-home__topic-label-plain">{w.title}</span>
+                      </h3>
+                      <span class="workshops-home__topic-rule" aria-hidden="true" />
+                      {w.ageRange ? (
+                        <span class="workshop__age">{w.ageRange}</span>
+                      ) : null}
+                      {w.homeSummary ? (
+                        <p class="workshops-home__topic-summary">{w.homeSummary}</p>
+                      ) : null}
                     </div>
-                  </li>
-                ))
-              }
+                    <a
+                      class="workshops-home__arrow"
+                      href={ROUTES.workshops.detail(w.id)}
+                      data-workshops-home-arrow={w.id}
+                      aria-label={`Přejít na workshop ${w.title}`}
+                    >
+                      <Icon
+                        is:inline
+                        name="iconamoon:arrow-right-2-light"
+                        class="workshops-home__arrow-graphic"
+                      />
+                    </a>
+                  </div>
+                </li>
+              ))}
             </ul>
             <p class="workshops-home__info">
               <span class="workshops-home__info-inner">
