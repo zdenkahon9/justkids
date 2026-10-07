@@ -4,9 +4,10 @@ export default {
   astro: {
     config: ["astro.config.{js,cjs,mjs,ts,mts}"],
     entry: [
-      "src/pages/**/*.{astro,mdx,ts}",
+      "src/pages/**/*.{astro,md,mdx,ts}",
       "!src/pages/**/_*",
       "!src/pages/**/_*/**",
+      "src/layouts/LegalPageLayout.astro",
       "scripts/fetch-reviews.mjs",
     ],
     project: ["src/**/*"],
