@@ -56,27 +56,45 @@ const year = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="footer__col footer__col--kontakt">
-      <h3>Kontakt</h3>
-      <ul>
-        <li class="footer__instructor">{site.contact.instructorName}</li>
+    <div class="footer__contact-stack">
+      <div class="footer__col footer__col--kontakt">
+        <h3>Kontakt</h3>
+        <ul>
+          <li class="footer__instructor">{site.contact.instructorName}</li>
 
-        <li class="footer__phone">
-          <Icon is:inline name="ph:phone" class="footer__phone-icon" aria-hidden="true" />
-          <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>
-            {site.contact.phone}
-          </a>
-        </li>
-        <li class="footer__email">
-          <Icon
-            is:inline
-            name="ph:envelope-simple"
-            class="footer__email-icon"
-            aria-hidden="true"
-          />
-          <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
-        </li>
-      </ul>
+          <li class="footer__phone">
+            <Icon
+              is:inline
+              name="ph:phone"
+              class="footer__phone-icon"
+              aria-hidden="true"
+            />
+            <a href={`tel:${site.contact.phone.replace(/\s/g, "")}`}>
+              {site.contact.phone}
+            </a>
+          </li>
+          <li class="footer__email">
+            <Icon
+              is:inline
+              name="ph:envelope-simple"
+              class="footer__email-icon"
+              aria-hidden="true"
+            />
+            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer__col footer__col--legal">
+        <h3>Důležité informace</h3>
+        <ul>
+          <li>
+            <a class="footer__legal-link" href={ROUTES.terms._}>
+              Obchodní podmínky
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="footer__col footer__col--lokace">
@@ -202,6 +220,14 @@ const year = new Date().getFullYear();
     border-top: 1px solid rgba(236, 47, 142, 0.16);
   }
 
+  .footer__contact-stack {
+    display: contents;
+  }
+
+  .footer__col--legal {
+    order: 1;
+  }
+
   .footer__social-wrap {
     display: inline-flex;
     flex-direction: column;
@@ -297,6 +323,10 @@ const year = new Date().getFullYear();
     gap: var(--space-6);
   }
 
+  .footer__col.footer__col--legal ul {
+    gap: var(--space-6);
+  }
+
   .footer__col a {
     color: var(--color-ink);
     text-decoration: none;
@@ -310,6 +340,12 @@ const year = new Date().getFullYear();
 
   .footer__col a:hover {
     color: var(--color-blush-vivid);
+  }
+
+  .footer__col .footer__legal-link {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-1);
   }
 
   .footer__col a strong {
@@ -381,6 +417,16 @@ const year = new Date().getFullYear();
   /* Media queries — layout only; spacing & sizes stay from mobile base */
 
   @media (min-width: 640px) {
+    .footer__contact-stack {
+      display: grid;
+      gap: var(--space-14);
+    }
+
+    .footer__col--legal {
+      padding-top: 0;
+      border-top: 0;
+    }
+
     .footer__bottom-inner {
       justify-content: space-between;
       text-align: unset;
@@ -402,7 +448,7 @@ const year = new Date().getFullYear();
       grid-area: brand;
     }
 
-    .footer__col--kontakt {
+    .footer__contact-stack {
       grid-area: kontakt;
     }
 
@@ -425,7 +471,7 @@ const year = new Date().getFullYear();
       grid-area: auto;
     }
 
-    .footer__col--kontakt,
+    .footer__contact-stack,
     .footer__col--lokace,
     .footer__col--navigace {
       grid-area: auto;
@@ -452,6 +498,10 @@ const year = new Date().getFullYear();
     .footer__col {
       padding-top: 0;
       border-top: none;
+    }
+
+    .footer__col--legal {
+      margin-top: calc(var(--space-16) + var(--space-17));
     }
 
     .footer__instructor,

@@ -31,6 +31,7 @@ const HOME = "/" as const;
 const AGE_GROUPS = "/vekove-kategorie" as const;
 const WORKSHOPS = "/workshopy" as const;
 const REVIEWS = "/recenze" as const;
+const TERMS = "/obchodni-podminky" as const;
 
 export const ROUTES = {
   home: {
@@ -60,6 +61,9 @@ export const ROUTES = {
   },
   reviews: {
     _: REVIEWS,
+  },
+  terms: {
+    _: TERMS,
   },
 } as const;
 

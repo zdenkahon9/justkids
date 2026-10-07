@@ -1,0 +1,262 @@
+---
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import { NAV_LINKS } from "../config/routes";
+import { site } from "../data/site";
+import BaseLayout from "./BaseLayout.astro";
+
+type Frontmatter = {
+  title: string;
+  description: string;
+  effectiveDate: string;
+  version: string;
+  draft?: boolean;
+  spacedParagraphs?: boolean;
+};
+
+type Props = {
+  frontmatter: Frontmatter;
+};
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title} description={frontmatter.description}>
+  {frontmatter.draft && <meta slot="head" name="robots" content="noindex, nofollow" />}
+
+  <Navbar
+    links={NAV_LINKS.primary}
+    mobileLinks={NAV_LINKS.mobile}
+    reservationUrl={site.signupFormUrl}
+    brand={site.name}
+  />
+
+  <main id="main" class="legal-page">
+    <header class="legal-page__header container-x">
+      <p class="legal-page__eyebrow">Právní informace</p>
+      <h1>{frontmatter.title}</h1>
+      <p class="legal-page__description">{frontmatter.description}</p>
+      <dl class="legal-page__meta">
+        <div>
+          <dt>{frontmatter.draft ? "Datum návrhu" : "Datum účinnosti"}</dt>
+          <dd>{frontmatter.effectiveDate}</dd>
+        </div>
+        <div>
+          <dt>Verze</dt>
+          <dd>{frontmatter.version}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <article
+      class:list={[
+        "legal-page__content container-x",
+        { "legal-page__content--spaced": frontmatter.spacedParagraphs },
+      ]}
+    >
+      <slot />
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding-top: calc(var(--nav-height) + var(--space-16));
+  }
+
+  .legal-page__header {
+    max-width: 58rem;
+    padding-block: var(--space-18) var(--space-16);
+    text-align: center;
+  }
+
+  .legal-page__eyebrow {
+    margin: 0 0 var(--space-6);
+    color: var(--color-blush-vivid);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .legal-page__header h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+  }
+
+  .legal-page__description {
+    max-width: 44rem;
+    margin: var(--space-10) auto 0;
+    color: var(--color-ink-soft);
+    font-size: var(--text-lg);
+  }
+
+  .legal-page__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-8) var(--space-16);
+    margin: var(--space-12) 0 0;
+  }
+
+  .legal-page__meta div {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .legal-page__meta dt {
+    color: var(--color-ink-soft);
+    font-weight: 600;
+  }
+
+  .legal-page__meta dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .legal-page__content {
+    max-width: 52rem;
+    padding-block: var(--space-8) var(--space-20);
+  }
+
+  .legal-page__content :global(.legal-draft-notice) {
+    margin-bottom: var(--space-16);
+    padding: var(--space-12) var(--space-14);
+    border: 2px solid var(--color-apricot-deep);
+    border-radius: var(--radius-2xl);
+    background: var(--color-apricot-soft);
+  }
+
+  .legal-page__content :global(.legal-summary) {
+    margin-bottom: var(--space-18);
+    padding: var(--space-12) var(--space-14);
+    border-left: 5px solid var(--color-sky-deep);
+    border-radius: var(--radius-sm) var(--radius-2xl) var(--radius-2xl) var(--radius-sm);
+    background: var(--color-sky-soft);
+  }
+
+  .legal-page__content :global(.legal-toc) {
+    margin-bottom: var(--space-18);
+    padding: var(--space-14);
+    border: var(--card-border);
+    border-radius: var(--radius-card);
+    background: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .legal-page__content :global(.legal-toc h2) {
+    margin-top: 0;
+    font-size: var(--text-3xl);
+  }
+
+  .legal-page__content :global(.legal-toc ol) {
+    columns: 1;
+  }
+
+  .legal-page__content :global(h2) {
+    scroll-margin-top: calc(var(--nav-height-scrolled) + var(--space-12));
+    margin: var(--space-20) 0 var(--space-8);
+    font-size: clamp(1.7rem, 4vw, 2.25rem);
+  }
+
+  .legal-page__content :global(h3) {
+    margin: var(--space-15) 0 var(--space-6);
+    font-size: var(--text-2xl);
+  }
+
+  .legal-page__content :global(p),
+  .legal-page__content :global(li) {
+    color: var(--color-ink-soft);
+  }
+
+  .legal-page__content--spaced :global(p + p) {
+    margin-top: var(--space-8);
+  }
+
+  .legal-page__content :global(li + li) {
+    margin-top: var(--space-4);
+  }
+
+  .legal-page__content :global(a) {
+    color: #775099;
+    font-weight: 600;
+    text-decoration-thickness: 0.1em;
+    text-underline-offset: 0.18em;
+  }
+
+  .legal-page__content :global(a:hover) {
+    color: var(--color-blush-vivid);
+  }
+
+  .legal-page__content :global(a:focus-visible) {
+    border-radius: var(--radius-sm);
+  }
+
+  .legal-page__content :global(address) {
+    color: var(--color-ink-soft);
+    font-style: normal;
+  }
+
+  .legal-page__content :global(table) {
+    display: block;
+    width: 100%;
+    margin-block: var(--space-12) var(--space-16);
+    overflow-x: auto;
+    border-spacing: 0;
+    border: var(--card-border);
+    border-radius: var(--radius-2xl);
+    background: white;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .legal-page__content :global(th),
+  .legal-page__content :global(td) {
+    min-width: 10.5rem;
+    padding: var(--space-8) var(--space-9);
+    border-right: 1px solid color-mix(in srgb, var(--color-ink) 9%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 9%, transparent);
+    color: var(--color-ink-soft);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .legal-page__content :global(th) {
+    color: var(--color-ink);
+    background: var(--color-lilac-soft);
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+
+  .legal-page__content :global(th:first-child),
+  .legal-page__content :global(td:first-child) {
+    position: sticky;
+    left: 0;
+    min-width: 9rem;
+    background: var(--color-cream);
+    box-shadow: 5px 0 10px -10px var(--color-ink);
+  }
+
+  .legal-page__content :global(th:first-child) {
+    z-index: 1;
+    background: var(--color-blush-soft);
+  }
+
+  .legal-page__content :global(tr:last-child td) {
+    border-bottom: 0;
+  }
+
+  .legal-page__content :global(th:last-child),
+  .legal-page__content :global(td:last-child) {
+    border-right: 0;
+  }
+
+  @media (min-width: 720px) {
+    .legal-page__content :global(.legal-toc ol) {
+      columns: 2;
+      column-gap: var(--space-18);
+    }
+  }
+</style>
