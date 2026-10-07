@@ -32,6 +32,7 @@ const AGE_GROUPS = "/vekove-kategorie" as const;
 const WORKSHOPS = "/workshopy" as const;
 const REVIEWS = "/recenze" as const;
 const TERMS = "/obchodni-podminky" as const;
+const PRIVACY = "/ochrana-osobnich-udaju" as const;
 
 export const ROUTES = {
   home: {
@@ -64,6 +65,9 @@ export const ROUTES = {
   },
   terms: {
     _: TERMS,
+  },
+  privacy: {
+    _: PRIVACY,
   },
 } as const;
 

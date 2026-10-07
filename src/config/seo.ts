@@ -14,6 +14,7 @@ type PageSeo = {
   title: string;
   description: string;
   llmsTitle: string;
+  indexable: boolean;
   sitemap: {
     changefreq: "weekly" | "monthly";
     priority: number;
@@ -26,6 +27,7 @@ export const pageSeo = {
     title: "Pohybem k radosti",
     description: defaultSeo.metaDescription,
     llmsTitle: "Domů",
+    indexable: true,
     sitemap: { changefreq: "weekly", priority: 1 },
   },
   ageGroups: {
@@ -34,6 +36,7 @@ export const pageSeo = {
     description:
       "Přehled věkových kategorií JustKids pro miminka a děti od 3 měsíců do 9 let. Nabízíme cvičení s rodiči pro děti od 3 měsíců do 3,5 let a cvičení bez rodičů pro děti od 3 do 9 let. Každá věková kategorie má vlastní náplň cvičení přizpůsobenou věku i tempu dítěte.",
     llmsTitle: "Věkové kategorie",
+    indexable: true,
     sitemap: { changefreq: "monthly", priority: 0.9 },
   },
   workshops: {
@@ -42,6 +45,7 @@ export const pageSeo = {
     description:
       "Praktické workshopy nejen pro rodiče – první pomoc u dětí, handling a psychomotorický vývoj miminek. Dopřejte svému dítěti ten nejlepší start do života.",
     llmsTitle: "Workshopy",
+    indexable: true,
     sitemap: { changefreq: "weekly", priority: 0.8 },
   },
   reviews: {
@@ -49,11 +53,30 @@ export const pageSeo = {
     title: "Recenze od rodičů",
     description: "Recenze a zkušenosti rodičů s cvičením pro miminka a děti v JustKids.",
     llmsTitle: "Recenze",
+    indexable: true,
     sitemap: { changefreq: "monthly", priority: 0.7 },
+  },
+  terms: {
+    path: ROUTES.terms._,
+    title: "Obchodní podmínky",
+    description:
+      "Obchodní podmínky JustKids pro kurzy cvičení, jednorázové lekce, workshopy a kempy.",
+    llmsTitle: "Obchodní podmínky",
+    indexable: false,
+    sitemap: { changefreq: "monthly", priority: 0.3 },
+  },
+  privacy: {
+    path: ROUTES.privacy._,
+    title: "Zásady ochrany osobních údajů",
+    description:
+      "Informace o zpracování osobních údajů rodičů, dětí a návštěvníků webu JustKids.",
+    llmsTitle: "Zásady ochrany osobních údajů",
+    indexable: false,
+    sitemap: { changefreq: "monthly", priority: 0.3 },
   },
 } as const satisfies Record<string, PageSeo>;
 
-export const pageSeoEntries = Object.values(pageSeo);
+export const pageSeoEntries = Object.values(pageSeo).filter(({ indexable }) => indexable);
 
 export const normalizePagePath = (url: string | URL) => {
   const pathname = new URL(url, site.url).pathname.replace(/\/$/, "");

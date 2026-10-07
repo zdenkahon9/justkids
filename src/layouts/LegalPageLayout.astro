@@ -179,14 +179,22 @@ const { frontmatter } = Astro.props;
   }
 
   .legal-page__content :global(a) {
-    color: #775099;
+    color: #1877f2;
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #1877f2;
     text-decoration-thickness: 0.1em;
     text-underline-offset: 0.18em;
+    transition:
+      color 180ms ease,
+      text-decoration-color 180ms ease;
   }
 
-  .legal-page__content :global(a:hover) {
-    color: var(--color-blush-vivid);
+  .legal-page__content :global(a:hover),
+  .legal-page__content :global(a:focus-visible),
+  .legal-page__content :global(a:active) {
+    color: #166fe5;
+    text-decoration-color: #166fe5;
   }
 
   .legal-page__content :global(a:focus-visible) {
@@ -196,6 +204,35 @@ const { frontmatter } = Astro.props;
   .legal-page__content :global(address) {
     color: var(--color-ink-soft);
     font-style: normal;
+  }
+
+  .legal-page__content :global(.legal-retention-list) {
+    margin: var(--space-10) 0 var(--space-12);
+    overflow: hidden;
+    border: var(--card-border);
+    border-radius: var(--radius-2xl);
+    background: color-mix(in srgb, var(--color-lilac-soft) 32%, white);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .legal-page__content :global(.legal-retention-list > div) {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-8) var(--space-10);
+  }
+
+  .legal-page__content :global(.legal-retention-list > div + div) {
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  }
+
+  .legal-page__content :global(.legal-retention-list dt) {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .legal-page__content :global(.legal-retention-list dd) {
+    margin: 0;
+    color: var(--color-ink-soft);
   }
 
   .legal-page__content :global(table) {
@@ -257,6 +294,12 @@ const { frontmatter } = Astro.props;
     .legal-page__content :global(.legal-toc ol) {
       columns: 2;
       column-gap: var(--space-18);
+    }
+
+    .legal-page__content :global(.legal-retention-list > div) {
+      grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 1.7fr);
+      gap: var(--space-12);
+      align-items: baseline;
     }
   }
 </style>

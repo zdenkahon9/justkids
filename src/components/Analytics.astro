@@ -7,4 +7,17 @@ const config = {
 } as const;
 ---
 
-<script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
+<script is:inline define:vars={{ config }}>
+  (() => {
+    if (!config.websiteId || document.querySelector("[data-umami-loaded]")) return;
+
+    const script = document.createElement("script");
+    script.src = config.url;
+    script.defer = true;
+    script.dataset.websiteId = config.websiteId;
+    script.dataset.doNotTrack = "true";
+    script.dataset.excludeSearch = "true";
+    script.dataset.umamiLoaded = "true";
+    document.head.append(script);
+  })();
+</script>

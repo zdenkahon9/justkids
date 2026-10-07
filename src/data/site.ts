@@ -24,6 +24,16 @@ export const site = {
     instructorName: "Mgr. Aneta Justychová",
   },
 
+  // Veřejné údaje ověřené v živnostenském rejstříku dne 6. 10. 2026
+  business: {
+    name: "Mgr. Aneta Justychová",
+    registrationNumber: "07312709",
+    registeredOffice: "Havlíčkova 866, 267 51 Zdice",
+    register:
+      "Fyzická osoba zapsaná v živnostenském rejstříku; příslušný úřad: Městský úřad Beroun",
+    isVatPayer: false,
+  },
+
   // Sociální sítě
   social: {
     facebook: "https://www.facebook.com/profile.php?id=61564479295700",
