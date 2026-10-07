@@ -82,9 +82,11 @@ const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-
                   const isFirst = index === 0;
                   const isBreak = Boolean(date.note);
                   const dateId = `${day.id}-${date.iso}`;
-                  const dateStatus = date.lesson
-                    ? `${date.lesson}. lekce, téma ${lessonTopics[date.lesson]}`
-                    : date.note;
+                  const topicLesson = date.topicLesson ?? date.lesson;
+                  const dateStatus =
+                    date.lesson && topicLesson
+                      ? `${date.lesson}. lekce, téma ${lessonTopics[topicLesson]}`
+                      : date.note;
                   return (
                     <button
                       type="button"
@@ -120,7 +122,8 @@ const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-
             <div class="lesson-dates__details">
               {day.dates.map((date, index) => {
                 const dateId = `${day.id}-${date.iso}`;
-                const topicIcon = date.lesson ? lessonIcons[date.lesson] : undefined;
+                const topicLesson = date.topicLesson ?? date.lesson;
+                const topicIcon = topicLesson ? lessonIcons[topicLesson] : undefined;
                 const topicIcons = topicIcon
                   ? Array.isArray(topicIcon)
                     ? topicIcon
@@ -165,9 +168,9 @@ const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-
                     <p class="lesson-dates__detail-status">
                       {date.lesson ? `${date.lesson}. lekce` : date.note}
                     </p>
-                    {date.lesson && (
+                    {date.lesson && topicLesson && (
                       <p class="lesson-dates__detail-topic">
-                        Téma: {lessonTopics[date.lesson]}
+                        Téma: {lessonTopics[topicLesson]}
                       </p>
                     )}
                   </article>

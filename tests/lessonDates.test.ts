@@ -5,6 +5,7 @@ import {
   findCurrentDateIndex,
   getIsoDateInTimeZone,
   lessonDays,
+  lessonTopics,
   validateLessonCalendar,
 } from "../src/data/lessonDates.ts";
 
@@ -12,6 +13,16 @@ const mondayDates = lessonDays[0].dates;
 
 test("kalendářová data splňují všechna pravidla", () => {
   assert.doesNotThrow(() => validateLessonCalendar());
+});
+
+test("úterní a středeční lekce mají prohozený Podzim a Halloween", () => {
+  for (const day of lessonDays.filter(({ id }) => id !== "monday")) {
+    const sixthLesson = day.dates.find(({ lesson }) => lesson === 6);
+    const seventhLesson = day.dates.find(({ lesson }) => lesson === 7);
+
+    assert.equal(lessonTopics[sixthLesson?.topicLesson ?? 6], "Podzim");
+    assert.equal(lessonTopics[seventhLesson?.topicLesson ?? 7], "Halloween");
+  }
 });
 
 test("před začátkem kurzu vybere první termín", () => {

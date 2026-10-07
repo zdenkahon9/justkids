@@ -1,10 +1,11 @@
-type LessonEntry = readonly [iso: string, status: number | string];
+type LessonEntry = readonly [iso: string, status: number | string, topicLesson?: number];
 
 export type LessonDate = {
   iso: string;
   shortDate: string;
   fullDate: string;
   lesson?: number;
+  topicLesson?: number;
   note?: string;
 };
 
@@ -25,11 +26,12 @@ const formatDate = (iso: string, includeYear = false) => {
 };
 
 const createDates = (entries: readonly LessonEntry[]): LessonDate[] =>
-  entries.map(([iso, status]) => ({
+  entries.map(([iso, status, topicLesson]) => ({
     iso,
     shortDate: formatDate(iso),
     fullDate: formatDate(iso, true),
     ...(typeof status === "number" ? { lesson: status } : { note: status }),
+    ...(topicLesson === undefined ? {} : { topicLesson }),
   }));
 
 export const lessonTopics: Record<number, string> = {
@@ -112,8 +114,8 @@ export const lessonDays: LessonDay[] = [
       ["2026-09-22", 3],
       ["2026-09-29", 4],
       ["2026-10-06", 5],
-      ["2026-10-13", 6],
-      ["2026-10-20", 7],
+      ["2026-10-13", 6, 7],
+      ["2026-10-20", 7, 6],
       ["2026-10-27", "Volno – necvičí se"],
       ["2026-11-03", 8],
       ["2026-11-10", 9],
@@ -141,8 +143,8 @@ export const lessonDays: LessonDay[] = [
       ["2026-09-23", 3],
       ["2026-09-30", 4],
       ["2026-10-07", 5],
-      ["2026-10-14", 6],
-      ["2026-10-21", 7],
+      ["2026-10-14", 6, 7],
+      ["2026-10-21", 7, 6],
       ["2026-10-28", "Státní svátek – necvičí se"],
       ["2026-11-04", 8],
       ["2026-11-11", 9],
