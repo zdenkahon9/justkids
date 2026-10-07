@@ -25,9 +25,13 @@ const parseTime = (time: string) => {
   return Number.parseInt(match[1], 10) * 60 + Number.parseInt(match[2], 10);
 };
 
-/** Termíny vzestupně: měsíc → den → čas */
+/** Termíny vzestupně: rok → měsíc → den → čas */
 export const sortWorkshopDates = <T extends WorkshopDateSlot>(dates: T[]): T[] =>
   [...dates].sort((a, b) => {
+    const yearA = Number.parseInt(a.year, 10);
+    const yearB = Number.parseInt(b.year, 10);
+    if (yearA !== yearB) return yearA - yearB;
+
     const monthA = monthOrder[a.month.toUpperCase()] ?? 99;
     const monthB = monthOrder[b.month.toUpperCase()] ?? 99;
     if (monthA !== monthB) return monthA - monthB;

@@ -55,7 +55,7 @@ export const camps: Camp[] = [
   {
     title: "Letní příměstský kemp",
     city: "Zdice",
-    dateRange: "7. – 10. července",
+    dateRange: "7. – 10. července 2026",
     time: "9:00 – 12:00",
     venue: {
       name: "Dětská skupina Špunti",
@@ -71,7 +71,7 @@ export const camps: Camp[] = [
   {
     title: "Letní příměstský kemp",
     city: "Broumy",
-    dateRange: "17. – 21. srpna",
+    dateRange: "17. – 21. srpna 2026",
     time: "9:00 – 12:00",
     venue: {
       name: "Centrum Rosenbaum",

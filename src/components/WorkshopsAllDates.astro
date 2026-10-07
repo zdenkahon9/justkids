@@ -62,7 +62,7 @@ const categories = workshopsAllDates
                       target="_blank"
                       rel="noopener noreferrer"
                       style={`--accent: ${date.accentDeep}; --accent-soft: ${date.accentSoft};`}
-                      aria-label={`Rezervovat ${date.workshopTitle}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
+                      aria-label={`Rezervovat ${date.workshopTitle}, ${date.day}. ${date.month} ${date.year}, ${date.time}, ${date.venueName}`}
                     >
                       <div
                         class="workshops-page__date-slot-date"
@@ -71,6 +71,7 @@ const categories = workshopsAllDates
                       >
                         <span class="workshops-page__date-slot-day">{date.day}</span>
                         <span class="workshops-page__date-slot-month">{date.month}</span>
+                        <span class="workshops-page__date-slot-year">{date.year}</span>
                       </div>
                       <div class="workshops-page__date-slot-body">
                         <p class="workshops-page__date-slot-workshop">
@@ -114,6 +115,7 @@ const categories = workshopsAllDates
                       <span class="workshops-cats__slot-date" aria-hidden="true">
                         <span class="workshops-cats__slot-day">{date.day}</span>
                         <span class="workshops-cats__slot-month">{date.month}</span>
+                        <span class="workshops-cats__slot-year">{date.year}</span>
                       </span>
                       <span class="workshops-cats__slot-info">
                         <span class="workshops-cats__slot-venue">{date.venueName}</span>
@@ -312,6 +314,13 @@ const categories = workshopsAllDates
     font-size: var(--text-sm);
     font-weight: 500;
     line-height: var(--line-height-base);
+  }
+
+  .workshops-page__date-slot-year {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    line-height: var(--line-height-xs);
   }
 
   .workshops-page__date-slot-body {
@@ -555,6 +564,13 @@ const categories = workshopsAllDates
       font-family: var(--font-body);
       font-size: var(--text-sm);
       font-weight: 600;
+    }
+
+    .workshops-cats__slot-year {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      line-height: var(--line-height-xs);
     }
 
     .workshops-cats__slot-info {

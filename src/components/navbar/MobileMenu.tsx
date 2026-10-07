@@ -96,7 +96,7 @@ const MobileMenu = ({
           className="btn btn-primary"
           onClick={onClose}
         >
-          Rezervace
+          Přihláška
           <span aria-hidden="true">→</span>
         </a>
       </div>

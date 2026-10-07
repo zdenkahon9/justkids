@@ -37,6 +37,7 @@ export type WorkshopDateSlot = {
   day: string;
   /** Zkratka měsíce v `.workshop__date-month` */
   month: string;
+  year: string;
   time: string;
   venueName: string;
   href?: string;
@@ -60,18 +61,21 @@ const prvniPomocDates: WorkshopDateSlot[] = [
   {
     day: "4",
     month: "KVĚ",
+    year: "2026",
     time: "od 18:15",
     venueName: "Centrum Rosenbaum",
   },
   {
     day: "7",
     month: "KVĚ",
+    year: "2026",
     time: "od 16:00",
     venueName: "Fitcentrum Zdice",
   },
   {
     day: "16",
     month: "KVĚ",
+    year: "2026",
     time: "od 9:00",
     venueName: "Yogasee Hořovice",
   },
@@ -81,18 +85,21 @@ const handlingDates: WorkshopDateSlot[] = [
   {
     day: "12",
     month: "KVĚ",
+    year: "2026",
     time: "od 20:00",
     venueName: "Centrum Rosenbaum",
   },
   {
     day: "15",
     month: "KVĚ",
+    year: "2026",
     time: "od 17:00",
     venueName: "Fitcentrum Zdice",
   },
   {
     day: "16",
     month: "KVĚ",
+    year: "2026",
     time: "od 11:00",
     venueName: "Yogasee Hořovice",
   },
@@ -102,18 +109,21 @@ const prevenceDates: WorkshopDateSlot[] = [
   {
     day: "25",
     month: "KVĚ",
+    year: "2026",
     time: "od 18:15",
     venueName: "Centrum Rosenbaum",
   },
   {
     day: "21",
     month: "KVĚ",
+    year: "2026",
     time: "od 16:00",
     venueName: "Fitcentrum Zdice",
   },
   {
     day: "16",
     month: "KVĚ",
+    year: "2026",
     time: "od 13:00",
     venueName: "Yogasee Hořovice",
   },

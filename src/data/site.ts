@@ -13,7 +13,7 @@ export const site = {
   // ⚠️ NAHRAĎ tímto odkazem na rezervační systém (Reservio nebo Reservanto), až bude vybrán
   // reservationUrl: "https://www.reservio.com/",
 
-  // Odkaz na přihlašovací Google formulář (tlačítka „Rezervace“ v navigaci)
+  // Odkaz na přihlašovací Google formulář (tlačítka „Přihláška“ v navigaci)
   signupFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSdlOtohR3h9nuEMzEfoGYKpwgP9PWaQWJiikB_oXtQYvNat-w/viewform",
 

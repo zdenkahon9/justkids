@@ -116,7 +116,7 @@ const NavbarInteractive = ({
           rel="noopener noreferrer"
           className={`btn btn-primary btn-sm ${styles.navCta}`}
         >
-          Rezervace
+          Přihláška
           <span aria-hidden="true">→</span>
         </a>
 

@@ -184,11 +184,12 @@ const pageMeta = workshopsPageMeta;
                           href={date.href ?? site.signupFormUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month}, ${date.time}, ${date.venueName}`}
+                          aria-label={`Rezervovat ${w.title}, ${date.day}. ${date.month} ${date.year}, ${date.time}, ${date.venueName}`}
                         >
                           <div class="workshop__date-card-date" aria-hidden="true">
                             <span class="workshop__date-day">{date.day}</span>
                             <span class="workshop__date-month">{date.month}</span>
+                            <span class="workshop__date-year">{date.year}</span>
                           </div>
                           <div class="workshop__date-card-body">
                             <p class="workshop__date-venue">{date.venueName}</p>
@@ -842,6 +843,13 @@ const pageMeta = workshopsPageMeta;
     font-size: var(--text-sm);
     font-weight: 700;
     line-height: var(--line-height-base);
+  }
+
+  .workshop__date-year {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    line-height: var(--line-height-xs);
   }
 
   .workshop__date-day {
