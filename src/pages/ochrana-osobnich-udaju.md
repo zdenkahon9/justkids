@@ -3,7 +3,7 @@ layout: ../layouts/LegalPageLayout.astro
 title: Zásady ochrany osobních údajů
 description:
   Informace o zpracování osobních údajů rodičů, dětí a návštěvníků webu JustKids.
-effectiveDate: 7. října 2026
+effectiveDate: 1. září 2026
 version: "1.0"
 draft: false
 spacedParagraphs: true
@@ -73,7 +73,7 @@ Osobní údaje uchováváme pouze po nezbytnou dobu:
 <dl class="legal-retention-list">
   <div>
     <dt>Nedokončená přihláška</dt>
-    <dd>Nejvýše 3 měsíce od jejího vyřízení.</dd>
+    <dd>Nejvýše 3 roky od jejího vyřízení.</dd>
   </div>
   <div>
     <dt>Organizace služby</dt>

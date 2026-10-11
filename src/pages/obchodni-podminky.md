@@ -3,7 +3,7 @@ layout: ../layouts/LegalPageLayout.astro
 title: Obchodní podmínky
 description:
   Obchodní podmínky JustKids pro kurzy cvičení, jednorázové lekce, workshopy a kempy.
-effectiveDate: 6. října 2026
+effectiveDate: 1. září 2026
 version: "1.0"
 spacedParagraphs: true
 ---
