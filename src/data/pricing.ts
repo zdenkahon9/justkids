@@ -11,12 +11,6 @@ export type PricingMeta = {
   insuranceContributionText: string;
 };
 
-export type CourseStart = {
-  location: string;
-  date: string;
-  dateTime: string;
-};
-
 type PricingTextPart = {
   text: string;
   emphasis?: boolean;
@@ -59,7 +53,7 @@ export type PricingCourse = PricingSingleCourse | PricingVariantCourse;
 
 export const pricingMeta: PricingMeta = {
   sectionId: ROUTE_IDS.ageGroups.pricing,
-  eyebrow: "Kurzy od září 2026",
+  eyebrow: "Podzimní semestr 2026/2027",
   title: "Ceník a",
   titleAccent: "praktické informace",
   siblingDiscountTitle: "10 % sleva pro sourozence",
@@ -68,16 +62,6 @@ export const pricingMeta: PricingMeta = {
   insuranceContributionText:
     "Na kurz můžete využít příspěvek na pohybové aktivity dětí v rámci preventivních programů zdravotních pojišťoven.",
 };
-
-export const courseStarts: CourseStart[] = [
-  { location: "Zdice", date: "7. 9. 2026", dateTime: "2026-09-07" },
-  { location: "Hořovice", date: "9. 9. 2026", dateTime: "2026-09-09" },
-  {
-    location: "Zdice – Pro (6-9 let)",
-    date: "6. 10. 2026",
-    dateTime: "2026-10-06",
-  },
-];
 
 export const pricingCourses: PricingCourse[] = [
   {

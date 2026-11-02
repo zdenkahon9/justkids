@@ -49,19 +49,6 @@ import { site } from "../data/site";
             →
           </span>
         </a>
-
-        <a
-          href={ROUTES.ageGroups.pricingPro}
-          class="hero__announcement hero__announcement--pro"
-        >
-          <span class="hero__announcement-icon-wrap hero__announcement-new">NOVÉ</span>
-          <span class="hero__announcement-copy">
-            <span class="hero__announcement-title">CVIČENÍ 6–9 LET</span>
-          </span>
-          <span class="hero__announcement-arrow" aria-hidden="true">
-            →
-          </span>
-        </a>
       </div>
 
       <h1 class="hero__title">
@@ -329,32 +316,6 @@ import { site } from "../data/site";
       border-color 220ms ease,
       background-color 220ms ease,
       transform 220ms ease;
-  }
-
-  .hero__announcement--pro {
-    --announcement-accent: var(--color-lilac-deep);
-    --announcement-accent-strong: var(--color-lilac-deep);
-    --announcement-soft: var(--color-lilac-soft);
-  }
-
-  .hero__announcement--pro .hero__announcement-icon-wrap {
-    width: auto;
-    min-width: var(--space-17);
-    height: var(--space-15);
-    padding-inline: var(--space-12);
-  }
-
-  .hero__announcement--pro .hero__announcement-title {
-    margin-bottom: 0;
-  }
-
-  .hero__announcement--pro .hero__announcement-new {
-    color: var(--color-lilac-deep);
-    background: var(--color-lilac-soft);
-    border-radius: var(--radius-full);
-    font-size: var(--text-xs);
-    font-weight: 800;
-    line-height: var(--line-height-xs);
   }
 
   .hero__announcement-copy {

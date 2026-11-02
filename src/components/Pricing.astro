@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 
 import { ROUTE_IDS } from "../config/routes";
-import { courseStarts, pricingCourses, pricingMeta } from "../data/pricing";
+import { pricingCourses, pricingMeta } from "../data/pricing";
 import { cardAccentDeep, cardAccentSoft } from "../utils/cardAccent";
 
 const meta = pricingMeta;
@@ -18,31 +18,6 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
         <span class="section-title-accent">{meta.titleAccent}</span>
       </h2>
     </header>
-
-    <article class="pricing__starts reveal" aria-labelledby="pricing-starts-title">
-      <h3 id="pricing-starts-title" class="pricing__starts-title">
-        <span class="pricing__starts-icon" aria-hidden="true">
-          <Icon is:inline name="ph:star-four-fill" class="pricing__starts-icon-graphic" />
-        </span>
-        STARTUJEME
-        <span class="pricing__starts-icon" aria-hidden="true">
-          <Icon is:inline name="ph:star-four-fill" class="pricing__starts-icon-graphic" />
-        </span>
-      </h3>
-
-      <hr class="pricing__starts-divider" aria-hidden="true" />
-
-      <ul class="pricing__starts-list">
-        {courseStarts.map((start) => (
-          <li class="pricing__starts-item">
-            <span class="pricing__starts-location">{start.location}</span>
-            <time class="pricing__starts-date" datetime={start.dateTime}>
-              {start.date}
-            </time>
-          </li>
-        ))}
-      </ul>
-    </article>
 
     <div class="pricing__courses">
       {pricingCourses.map((course) => (
@@ -272,108 +247,6 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
 
   .pricing .section-title-accent {
     color: var(--color-sky-deep);
-  }
-
-  .pricing__starts {
-    width: min(100%, var(--card-grid-width));
-    margin: 0 auto;
-    padding: var(--card-padding);
-    border: var(--card-border);
-    border-radius: var(--radius-card);
-    background: #fefefe;
-    overflow: hidden;
-  }
-
-  .pricing__starts-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-5);
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-h3);
-    font-weight: 600;
-    line-height: var(--line-height-xl);
-    color: var(--color-ink);
-  }
-
-  .pricing__starts-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: var(--text-xl);
-    height: var(--text-xl);
-    color: var(--color-blush-vivid);
-    transform: translateY(calc(-1 * var(--space-2)));
-  }
-
-  .pricing__starts-icon-graphic {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .pricing__starts-icon-graphic :global(svg) {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .pricing__starts-divider {
-    height: 1px;
-    margin: var(--space-10) 0;
-    border: none;
-    background: rgba(42, 31, 56, 0.12);
-  }
-
-  .pricing__starts-list {
-    display: grid;
-    gap: var(--space-8);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .pricing__starts-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-6);
-    padding: var(--space-8) var(--space-13);
-    border-radius: var(--radius-pill);
-    color: var(--color-ink);
-    text-align: center;
-  }
-
-  .pricing__starts-item:nth-child(1) {
-    background: var(--color-blush-soft);
-  }
-
-  .pricing__starts-item:nth-child(2) {
-    background-color: var(--color-lilac-soft);
-  }
-
-  .pricing__starts-item:nth-child(3) {
-    background: var(--color-sky-soft);
-  }
-
-  .pricing__starts-location,
-  .pricing__starts-date {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    line-height: var(--line-height-xl);
-  }
-
-  .pricing__starts-location {
-    font-weight: 600;
-  }
-
-  .pricing__starts-date {
-    flex-shrink: 0;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
   }
 
   .pricing__courses {
@@ -818,7 +691,6 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
   }
 
   @media (min-width: 1024px) {
-    .pricing__starts,
     .pricing__courses {
       width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
     }
@@ -826,20 +698,6 @@ const formatPrice = (price: number) => new Intl.NumberFormat("cs-CZ").format(pri
     .pricing__notices {
       width: min(100%, calc(2 * var(--card-grid-width-md) + var(--stack-gap)));
       margin-inline: auto;
-    }
-
-    .pricing__starts-list {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-6);
-    }
-
-    .pricing__starts-item {
-      padding-inline: var(--space-8);
-    }
-
-    .pricing__starts-location,
-    .pricing__starts-date {
-      font-size: var(--text-lg);
     }
 
     .pricing__courses {
