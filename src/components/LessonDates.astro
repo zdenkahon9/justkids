@@ -93,7 +93,10 @@ const calendarStyle = `--accent: ${cardAccentDeep(defaultDay.accent)}; --accent-
                       id={`lesson-date-tab-${dateId}`}
                       class:list={[
                         "lesson-dates__date-tab",
-                        { "lesson-dates__date-tab--break": isBreak },
+                        {
+                          "lesson-dates__date-tab--break":
+                            isBreak || date.iso === "2026-11-18",
+                        },
                       ]}
                       role="tab"
                       aria-selected={isFirst}
